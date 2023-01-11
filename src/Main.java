@@ -3,7 +3,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-
         String[] games = {"102453786", "123740658", "023156478", "413728065", "145236078", "123456870"};
         String[] gameNames = {"Easy Board", "Game1", "Game2", "Game3", "Game4", "Game5 No Solution"};
         Game game = new Game();

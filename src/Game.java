@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.util.*;
 
 public class Game {
@@ -29,6 +28,7 @@ public class Game {
         Board currentBoard = new Board(theBoard.getId());
         int queueAdded = 0;
         int queueRemoved = 0;
+        boolean solved = true;
 
         while (!currentBoard.isSolved(currentState.getId())) {
             if (currentBoard.slideRight() && !visitedState.contains(currentState)) {
@@ -59,16 +59,22 @@ public class Game {
                 queueAdded++;
                 currentBoard.slideUp();
             }
-            currentState = movesToDo.removeFront();
-            currentBoard = new Board(currentState.getId());
-            queueRemoved++;
+            if (movesToDo.getSIZE() > 0) {
+                currentState = movesToDo.removeFront();
+                currentBoard = new Board(currentState.getId());
+                queueRemoved++;
+            } else {
+                System.out.println("Couldn't find solution");
+                solved = false;
+                break;
+            }
         }
-
-        System.out.println("Moves Required: " + currentState.getSteps() + "(" + currentState.getSteps().length() + ")");
-        System.out.println("Queue added=" + queueAdded + " Removed=" + queueRemoved);
+        if (solved) {
+            System.out.println("Moves Required: " + currentState.getSteps() + "(" + currentState.getSteps().length() + ")");
+            System.out.println("Queue added=" + queueAdded + " Removed=" + queueRemoved);
+        }
+        System.out.println();
     }
-
-
 
 
     /**

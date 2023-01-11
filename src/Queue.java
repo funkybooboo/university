@@ -9,7 +9,7 @@ public class Queue<E> {
 
     private Node<E> head;
     private Node<E> tail;
-    private static int SIZE = 0;
+    private int SIZE = 0;
 
     public void add(E data) {
         if (tail == null) {
@@ -22,7 +22,7 @@ public class Queue<E> {
         SIZE++;
     }
 
-    public static int getSIZE() {
+    public int getSIZE() {
         return SIZE;
     }
 

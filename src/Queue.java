@@ -9,7 +9,7 @@ public class Queue<E> {
 
     private Node<E> head;
     private Node<E> tail;
-    public static int SIZE = 0;
+    private static int SIZE = 0;
 
     public void add(E data) {
         if (tail == null) {
@@ -22,22 +22,38 @@ public class Queue<E> {
         SIZE++;
     }
 
-    public void remove(E data) {
+    public static int getSIZE() {
+        return SIZE;
+    }
+
+    public E removeFront() {
+        if (head == null) {
+            return null;
+        }
+        Node<E> temp = head;
+        head = head.next;
+        SIZE--;
+        return temp.data;
+    }
+
+    public E removeAnyData(E data) {
         if (head != null) {
             if (head.data == data) {
+                Node<E> temp = head;
                 head = head.next;
                 SIZE--;
+                return temp.data;
             }
             else {
                 Node<E> prevNode = head;
                 Node<E> currentNode = head.next;
                 while(true) {
-                    if (currentNode == null) break;
+                    if (currentNode == null) return null;
                     if (currentNode.data == data) {
                         if (currentNode == tail) tail = prevNode;
                         prevNode.next = currentNode.next;
                         SIZE--;
-                        break;
+                        return currentNode.data;
                     } else {
                         prevNode = currentNode;
                         currentNode = currentNode.next;
@@ -45,6 +61,7 @@ public class Queue<E> {
                 }
             }
         }
+        return null;
     }
 
     public void printContents (){

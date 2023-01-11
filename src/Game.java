@@ -22,19 +22,54 @@ public class Game {
     }
 
     public void solve() {
-        Queue<Board> movesToDo = new Queue<>();
-        if (theBoard.slideRight()) {
+        System.out.println("Working on solving board");
+        Queue<State> movesToDo = new Queue<>();
+        State currentState = new State(theBoard.getId(), "");
+        List<State> visitedState = new ArrayList<>();
+        Board currentBoard = new Board(theBoard.getId());
+        int queueAdded = 0;
+        int queueRemoved = 0;
 
-        } else if (theBoard.slideLeft()) {
+        while (!currentBoard.isSolved(currentState.getId())) {
+            if (currentBoard.slideRight() && !visitedState.contains(currentState)) {
+                State moveRightState = new State(currentBoard.getId(), currentState.getSteps() + "R");
+                visitedState.add(moveRightState);
+                movesToDo.add(moveRightState);
+                queueAdded++;
+                currentBoard.slideLeft();
+            }
+            if (currentBoard.slideLeft() && !visitedState.contains(currentState)) {
+                State moveLeftState = new State(currentBoard.getId(), currentState.getSteps() + "L");
+                visitedState.add(moveLeftState);
+                movesToDo.add(moveLeftState);
+                queueAdded++;
+                currentBoard.slideRight();
+            }
+            if (currentBoard.slideUp() && !visitedState.contains(currentState)) {
+                State moveUpState = new State(currentBoard.getId(), currentState.getSteps() + "U");
+                visitedState.add(moveUpState);
+                movesToDo.add(moveUpState);
+                queueAdded++;
+                currentBoard.slideDown();
+            }
+            if (currentBoard.slideDown() && !visitedState.contains(currentState)) {
+                State moveDownState = new State(currentBoard.getId(), currentState.getSteps() + "D");
+                visitedState.add(moveDownState);
+                movesToDo.add(moveDownState);
+                queueAdded++;
+                currentBoard.slideUp();
+            }
+            currentState = movesToDo.removeFront();
+            currentBoard = new Board(currentState.getId());
+            queueRemoved++;
+        }
 
-        } else if (theBoard.slideUp()) {
-
-        } else if (theBoard.slideDown()) {
-
-        } 
-
-
+        System.out.println("Moves Required: " + currentState.getSteps() + "(" + currentState.getSteps().length() + ")");
+        System.out.println("Queue added=" + queueAdded + " Removed=" + queueRemoved);
     }
+
+
+
 
     /**
      * Create a random board (which is solvable) by jumbling jumnbleCount times.

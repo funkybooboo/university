@@ -10,14 +10,29 @@ public class Game {
     /**
      *  Solve the provided board
      * @param label Name of board (for printing)
-     * @param b Board to be solved
+     * @param board Board to be solved
      */
-    public void playGiven(String label, Board b) {
-        theBoard = b;
-        originalBoardID = b.getId();
+    public void playGiven(String label, Board board) {
+        theBoard = board;
+        originalBoardID = board.getId();
         boardName = label;
         System.out.println("Board initial: " + boardName + " \n" + theBoard.toString());
-        //solve();
+        solve();
+
+    }
+
+    public void solve() {
+        Queue<Board> movesToDo = new Queue<>();
+        if (theBoard.slideRight()) {
+
+        } else if (theBoard.slideLeft()) {
+
+        } else if (theBoard.slideUp()) {
+
+        } else if (theBoard.slideDown()) {
+
+        } 
+
 
     }
 
@@ -35,53 +50,4 @@ public class Game {
 
 
     }
-
-
-
-    public static void main(String[] args) {
-
-        Queue<Integer> queue = new Queue<>();
-        queue.add(5);
-        queue.add(6);
-        queue.add(7);
-        queue.add(8);
-        queue.add(9);
-
-        queue.printContents();
-
-        queue.remove(6);
-        queue.remove(5);
-
-        queue.printContents();
-
-//        String[] games = {"102453786", "123740658", "023156478", "413728065", "145236078", "123456870"};
-//        String[] gameNames = {"Easy Board", "Game1", "Game2", "Game3", "Game4", "Game5 No Solution"};
-//        Game g = new Game();
-//        Scanner in = new Scanner(System.in);
-//        Board b;
-//        String resp;
-//        for (int i = 0; i < games.length - 1; i++) {
-//            b = new Board(games[i]);
-//            g.playGiven(gameNames[i], b);
-//            System.out.println("Click any key to continue\n");
-//            resp = in.nextLine();
-//        }
-//
-//
-//        boolean playAgain = true;
-//        //playAgain = false;
-//
-//        int JUMBLECT = 18;  // how much jumbling to do in random board
-//        while (playAgain) {
-//            g.playRandom("Random Board", JUMBLECT);
-//
-//            System.out.println("Play Again?  Answer Y for yes\n");
-//            resp = in.nextLine().toUpperCase();
-//            playAgain = (resp != "") && (resp.charAt(0) == 'Y');
-//        }
-
-
-    }
-
-
 }

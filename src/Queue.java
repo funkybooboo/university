@@ -28,9 +28,15 @@ public class Queue<E> {
 
     public E removeFront() {
         if (head == null) {
+            if (tail != null) {
+                head = tail;
+                SIZE--;
+                return head.data;
+            }
             return null;
         }
         Node<E> temp = head;
+
         head = head.next;
         SIZE--;
         return temp.data;

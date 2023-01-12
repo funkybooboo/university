@@ -3,8 +3,8 @@ Very simple object to contain steps and id. The board does the heavy lifting.
  */
 
 public class State {
-    private String steps;
-    private String id;
+    private final String steps;
+    private final String id;
 
     State(String id, String steps) {
         this.steps = steps;

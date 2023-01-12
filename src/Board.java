@@ -4,7 +4,7 @@ import java.util.Random;
 public class Board {
     private static final int SIZE = 3;
     private static final String SOLVED_ID = "123456780";
-    private int[][] board;  // Values of board
+    private final int[][] board;  // Values of board
     private int blankRow;   // Row location of blank
     private int blankCol;   // Column location of blank
 
@@ -51,7 +51,7 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         for (int[] i : board) {
             for (int j : i) {
-                sb.append(j + " ");
+                sb.append(j).append(" ");
             }
             sb.append("\n");
         }
@@ -104,16 +104,9 @@ public class Board {
     boolean slideUp()  // If possible, slides a tile up into the blank position.  Returns success of operation.
     {
         if (blankRow == SIZE - 1) return false;
-        if (blankRow == SIZE - 1) {
-            board[blankRow][blankCol] = board[0][blankCol];
-            board[0][blankCol] = 0;
-            blankRow = 0;
-        } else {
-
             board[blankRow][blankCol] = board[blankRow + 1][blankCol];
             board[blankRow + 1][blankCol] = 0;
             blankRow += 1;
-        }
         return true;
     }
 
@@ -125,15 +118,9 @@ public class Board {
     boolean slideDown()  // If possible, slides a tile down into the blank position.  Returns success of operation.
     {
         if (blankRow == 0) return false;
-        if (blankRow == 0) {
-            board[blankRow][blankCol] = board[SIZE - 1][blankCol];
-            board[SIZE - 1][blankCol] = 0;
-            blankRow = SIZE - 1;
-        } else {
             board[blankRow][blankCol] = board[blankRow - 1][blankCol];
             board[blankRow - 1][blankCol] = 0;
             blankRow -= 1;
-        }
         return true;
     }
 
@@ -145,15 +132,9 @@ public class Board {
     boolean slideLeft()  // If possible, slides a tile left into the blank position.  Returns success of operation.
     {
         if (blankCol == SIZE - 1) return false;
-        if (blankCol == SIZE - 1) {
-            board[blankRow][blankCol] = board[0][blankCol];
-            board[0][blankCol] = 0;
-            blankCol = 0;
-        } else {
             board[blankRow][blankCol] = board[blankRow][blankCol + 1];
             board[blankRow][blankCol + 1] = 0;
             blankCol += 1;
-        }
         return true;
     }
 
@@ -165,30 +146,23 @@ public class Board {
     boolean slideRight()  // If possible, slides a tile right into the blank position.  Returns success of operation.
     {
         if (blankCol == 0) return false;
-        if (blankCol == 0) {
-            board[blankRow][blankCol] = board[blankRow][SIZE - 1];
-            board[blankRow][SIZE - 1] = 0;
-            blankCol = SIZE - 1;
-        } else {
             board[blankRow][blankCol] = board[blankRow][blankCol - 1];
             board[blankRow][blankCol - 1] = 0;
             blankCol -= 1;
-        }
-
         return true;
     }
 
     /**
      * Randomly apply ct moves to the board, making sure they are legal and don't undo the previous move
      *
-     * @param ct
+     * @param moves
      */
-    void jumble(int ct) {
+    void jumble(int moves) {
         Random rand = new Random();
         String moveStr = "UDLR";  // Moves representing Up, Down, Left, Right
         char lastMove = ' ';
         char thisMove;
-        for (int i = 0; i < ct; i++) {
+        for (int i = 0; i < moves; i++) {
             thisMove = moveStr.charAt(rand.nextInt(4));
             while (!makeMove(thisMove, lastMove)) {
                 thisMove = moveStr.charAt(rand.nextInt(4));
@@ -236,16 +210,12 @@ public class Board {
      * @return String version of board
      */
     public String getId() {
-        String id = "";
-        for (int i[] : board) {
-            for (int j : i) {
-                id += j;
+        StringBuilder id = new StringBuilder();
+        for (int[] row : board) {
+            for (int cell : row) {
+                id.append(cell);
             }
         }
-        return id;
+        return id.toString();
     }
 }
-
-
-
-

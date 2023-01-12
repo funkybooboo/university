@@ -24,39 +24,28 @@ public class Game {
         System.out.println("Working on solving board");
         Queue<State> movesToDo = new Queue<>();
         State currentState = new State(theBoard.getId(), "");
-        List<State> visitedState = new ArrayList<>();
         Board currentBoard = new Board(theBoard.getId());
+        Set<String> visitedStates = new HashSet<>();
         int queueAdded = 0;
         int queueRemoved = 0;
         boolean solved = true;
 
         while (!currentBoard.isSolved(currentState.getId())) {
-            if (currentBoard.slideRight() && !visitedState.contains(currentState)) {
-                State moveRightState = new State(currentBoard.getId(), currentState.getSteps() + "R");
-                visitedState.add(moveRightState);
-                movesToDo.add(moveRightState);
-                queueAdded++;
+
+            if (currentBoard.slideRight() && !visitedStates.contains(currentBoard.getId())) {
+                queueAdded = addToQueue(movesToDo, currentState, currentBoard, visitedStates, queueAdded, "R");
                 currentBoard.slideLeft();
             }
-            if (currentBoard.slideLeft() && !visitedState.contains(currentState)) {
-                State moveLeftState = new State(currentBoard.getId(), currentState.getSteps() + "L");
-                visitedState.add(moveLeftState);
-                movesToDo.add(moveLeftState);
-                queueAdded++;
+            if (currentBoard.slideLeft() && !visitedStates.contains(currentBoard.getId())) {
+                queueAdded = addToQueue(movesToDo, currentState, currentBoard, visitedStates, queueAdded, "L");
                 currentBoard.slideRight();
             }
-            if (currentBoard.slideUp() && !visitedState.contains(currentState)) {
-                State moveUpState = new State(currentBoard.getId(), currentState.getSteps() + "U");
-                visitedState.add(moveUpState);
-                movesToDo.add(moveUpState);
-                queueAdded++;
+            if (currentBoard.slideUp() && !visitedStates.contains(currentBoard.getId())) {
+                queueAdded = addToQueue(movesToDo, currentState, currentBoard, visitedStates, queueAdded, "U");
                 currentBoard.slideDown();
             }
-            if (currentBoard.slideDown() && !visitedState.contains(currentState)) {
-                State moveDownState = new State(currentBoard.getId(), currentState.getSteps() + "D");
-                visitedState.add(moveDownState);
-                movesToDo.add(moveDownState);
-                queueAdded++;
+            if (currentBoard.slideDown() && !visitedStates.contains(currentBoard.getId())) {
+                queueAdded = addToQueue(movesToDo, currentState, currentBoard, visitedStates, queueAdded, "D");
                 currentBoard.slideUp();
             }
             if (movesToDo.getSIZE() > 0) {
@@ -64,18 +53,24 @@ public class Game {
                 currentBoard = new Board(currentState.getId());
                 queueRemoved++;
             } else {
-                System.out.println("Couldn't find solution");
+                System.out.println("There is no solution");
                 solved = false;
                 break;
             }
         }
         if (solved) {
-            System.out.println("Moves Required: " + currentState.getSteps() + "(" + currentState.getSteps().length() + ")");
+            System.out.println("Moves Required: " + currentState.getSteps() + "(" + currentState.getNumSteps() + ")");
             System.out.println("Queue added=" + queueAdded + " Removed=" + queueRemoved);
         }
         System.out.println();
     }
 
+    private int addToQueue(Queue<State> movesToDo, State currentState, Board currentBoard, Set<String> visitedStates, int queueAdded, String letter) {
+        State movedState = new State(currentBoard.getId(), currentState.getSteps() + letter);
+        visitedStates.add(movedState.getId());
+        movesToDo.add(movedState);
+        return ++queueAdded;
+    }
 
     /**
      * Create a random board (which is solvable) by jumbling jumnbleCount times.

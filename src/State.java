@@ -30,6 +30,7 @@ public class State {
     public int getNumSteps() {
         return steps.length();
     }
+
     public String toString(){
         return "State " + id + " steps: " + steps;
 

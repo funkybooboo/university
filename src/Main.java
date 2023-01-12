@@ -4,17 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        Queue<Integer> queue = new Queue<>();
-//        for (int i = 0; i < 4000; i++) {
-//            queue.add(i);
-//        }
-//        System.out.println(queue.getSIZE());
-//        for (int i = 1; i < 1000; i *= 2) {
-//            queue.removeFront();
-//        }
-//        System.out.println(queue.getSIZE());
-
-        //String[] games = {"423156780","102453786", "023156478", "413728065", "145236078", "123456870"};
         String[] games = {"102453786", "123740658", "023156478", "413728065", "145236078", "123456870"};
         String[] gameNames = {"Easy Board", "Game1", "Game2", "Game3", "Game4", "Game5 No Solution"};
         Game game = new Game();

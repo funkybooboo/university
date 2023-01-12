@@ -39,7 +39,7 @@ public class Game {
     // So my theory is that a board is unsolvable if starting board looks like the winning board (123456780) but has two blocks swapped (horizontally or vertically).
     // Examples: 132456780, 123465780, 123756480, 423156780
 
-    public void solve() {
+    private void solve() {
         Queue<State> movesToDo = new Queue<>();
         State currentState = new State(theBoard.getId(), "");
         Board currentBoard = new Board(theBoard.getId());
@@ -47,7 +47,9 @@ public class Game {
         int queueAdded = 0;
         int queueRemoved = 0;
         boolean solved = true;
+        int numOfIterations = 0;
         visitedStates.add(currentState.getId());
+        System.out.println("[" + currentState + "]");
         while (!currentBoard.isSolved(currentState.getId())) {
             char lastMove = currentState.getLast();
             if (lastMove != 'L') {
@@ -74,11 +76,14 @@ public class Game {
                     currentBoard.slideDown();
                 }
             }
+            if (numOfIterations < 2) {
+                System.out.println("[" + movesToDo + "\b]");
+            }
             if (visitedStates.size() > 1_000_000){
                 System.out.println("There is no solution");
                 solved = false;
                 break;
-            } else if (movesToDo.getSIZE() > 0) {
+            } else if (movesToDo.getSize() > 0) {
                 currentState = movesToDo.removeFront();
                 currentBoard = new Board(currentState.getId());
                 queueRemoved++;
@@ -87,12 +92,40 @@ public class Game {
                 solved = false;
                 break;
             }
+            numOfIterations++;
         }
         if (solved) {
+            showHowToSolve(theBoard, currentState);
+            System.out.println();
             System.out.println("Moves Required: " + currentState.getSteps() + "(" + currentState.getNumSteps() + ")");
             System.out.println("Queue added=" + queueAdded + " Removed=" + queueRemoved);
         }
         System.out.println();
+    }
+
+    private void showHowToSolve(Board originalBoard, State solvedState) {
+        System.out.println("Solution");
+        System.out.println(originalBoard);
+        Board board = new Board(originalBoard.getId());
+        String steps = solvedState.getSteps();
+        for (int i = 0; i < steps.length(); i++) {
+            char step = steps.charAt(i);
+            System.out.println(step + "==>");
+            if (step == 'R') {
+                board.slideRight();
+                System.out.println(board);
+            } else if (step == 'L') {
+                board.slideLeft();
+                System.out.println(board);
+            } else if (step == 'U') {
+                board.slideUp();
+                System.out.println(board);
+            } else if (step == 'D') {
+                board.slideDown();
+                System.out.println(board);
+            }
+        }
+
     }
 
     private int addToQueue(Queue<State> movesToDo, State currentState, Board currentBoard, List<String> visitedStates, int queueAdded, String letter) {

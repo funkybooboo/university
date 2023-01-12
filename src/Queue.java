@@ -9,7 +9,7 @@ public class Queue<E> {
 
     private Node<E> head;
     private Node<E> tail;
-    private int SIZE = 0;
+    private int size = 0;
 
     public void add(E data) {
         if (tail == null) {
@@ -19,18 +19,18 @@ public class Queue<E> {
             tail.next = new Node<>(data);
             tail = tail.next;
         }
-        SIZE++;
+        size++;
     }
 
-    public int getSIZE() {
-        return SIZE;
+    public int getSize() {
+        return size;
     }
 
     public E removeFront() {
         if (head == null) {
             if (tail != null) {
                 head = tail;
-                SIZE--;
+                size--;
                 return head.data;
             }
             return null;
@@ -38,7 +38,7 @@ public class Queue<E> {
         Node<E> temp = head;
 
         head = head.next;
-        SIZE--;
+        size--;
         return temp.data;
     }
 
@@ -47,7 +47,7 @@ public class Queue<E> {
             if (head.data == data) {
                 Node<E> temp = head;
                 head = head.next;
-                SIZE--;
+                size--;
                 return temp.data;
             }
             else {
@@ -58,7 +58,7 @@ public class Queue<E> {
                     if (currentNode.data == data) {
                         if (currentNode == tail) tail = prevNode;
                         prevNode.next = currentNode.next;
-                        SIZE--;
+                        size--;
                         return currentNode.data;
                     } else {
                         prevNode = currentNode;
@@ -80,5 +80,19 @@ public class Queue<E> {
             System.out.print(currentNode.data + " ");
             printContents(currentNode.next);
         }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder();
+        return toString(stringBuilder, head);
+    }
+
+    private String toString(StringBuilder stringBuilder, Node<E> currentNode) {
+        if (currentNode != null) {
+            stringBuilder.append(currentNode.data).append(" ");
+            toString(stringBuilder, currentNode.next);
+        }
+        return stringBuilder.toString();
     }
 }

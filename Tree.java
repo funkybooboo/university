@@ -13,6 +13,29 @@ class UnderflowException extends RuntimeException {
 }
 
 public class Tree<E extends Comparable<? super E>> {
+    private static class BinaryNode<E> {
+        E element;            // The data in the node
+        BinaryNode<E> left;   // Left child
+        BinaryNode<E> right;  // Right child
+
+        // Constructors
+        BinaryNode(E theElement) {
+            this(theElement, null, null);
+        }
+
+        BinaryNode(E theElement, BinaryNode<E> lt, BinaryNode<E> rt) {
+            element = theElement;
+            left = lt;
+            right = rt;
+        }
+
+        // toString for BinaryNode
+        public String toString() {
+            return "Node:" +
+                    element;
+        }
+    }
+
     private BinaryNode<E> root;  // Root of tree
     private String treeName;     // Name of tree
 
@@ -35,8 +58,8 @@ public class Tree<E extends Comparable<? super E>> {
         treeName = label;
         if (ordered) {
             root = null;
-            for (int i = 0; i < arr.length; i++) {
-                bstInsert(arr[i]);
+            for (E e : arr) {
+                bstInsert(e);
             }
         } else root = buildUnordered(arr, 0, arr.length - 1);
     }
@@ -68,11 +91,23 @@ public class Tree<E extends Comparable<? super E>> {
      * Return a string displaying the tree contents as a single line
      */
     public String toString() {
-        if (root == null)
+        StringBuilder stringBuilder = new StringBuilder();
+        if (root == null) {
             return treeName + " Empty tree";
-        else
-            return treeName + " Please write the code to print me";
+        } else {
+            StringBuilder stringBuilder1 = new StringBuilder();
+            return stringBuilder.append(treeName).append("\n").append(toString(root, stringBuilder1, 1)).toString();
+        }
     }
+
+    private StringBuilder toString(BinaryNode<E> currentNode, StringBuilder stringBuilder, int depth) {
+        if (currentNode == null) return stringBuilder;
+        toString(currentNode.right, stringBuilder, depth + 2);
+        stringBuilder.append(String.format("%" + depth + "d\n", currentNode.element));
+        toString(currentNode.left, stringBuilder, depth + 2);
+        return stringBuilder;
+    }
+
     /**
      * Return a string displaying the tree contents as a single line
      */
@@ -91,11 +126,9 @@ public class Tree<E extends Comparable<? super E>> {
      */
     private String toString2(BinaryNode<E> t) {
         if (t == null) return "";
-        StringBuilder sb = new StringBuilder();
-        sb.append(toString2(t.left));
-        sb.append(t.element.toString() + " ");
-        sb.append(toString2(t.right));
-        return sb.toString();
+        return toString2(t.left) +
+                t.element.toString() + " " +
+                toString2(t.right);
     }
 
 
@@ -210,6 +243,7 @@ public class Tree<E extends Comparable<? super E>> {
      * @param sum: minimum path sum allowed in final tree
      */
     public void pruneK(Integer sum) {
+
     }
 
     /**
@@ -255,30 +289,6 @@ public class Tree<E extends Comparable<? super E>> {
     }
 
     // Basic node stored in unbalanced binary  trees
-    private static class BinaryNode<E> {
-        E element;            // The data in the node
-        BinaryNode<E> left;   // Left child
-        BinaryNode<E> right;  // Right child
 
-        // Constructors
-        BinaryNode(E theElement) {
-            this(theElement, null, null);
-        }
-
-        BinaryNode(E theElement, BinaryNode<E> lt, BinaryNode<E> rt) {
-            element = theElement;
-            left = lt;
-            right = rt;
-        }
-
-        // toString for BinaryNode
-        public String toString() {
-            StringBuilder sb = new StringBuilder();
-            sb.append("Node:");
-            sb.append(element);
-            return sb.toString();
-        }
-
-    }
 
 }

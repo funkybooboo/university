@@ -11,6 +11,7 @@ public class TreeTester {
         Tree<Integer> treeOne = new Tree<>(list1, "TreeOne:",true);
 
         //Problem 1
+        System.out.println("Problem 1");
         System.out.println(treeOne.toString());
         System.out.println(treeOne.toString2());
 
@@ -18,48 +19,58 @@ public class TreeTester {
 
         Tree<Integer> treeTwo = new Tree<>(list2, "TreeTwo:", false);
         System.out.println(treeTwo.toString());
+        System.out.println(treeTwo.toString2());
+        System.out.println("--------------------------------");
 
         //Problem 2
+        System.out.println("Problem 2");
         treeTwo.flip();
         treeTwo.changeName("Tree Two Now flipped");
         System.out.println( treeTwo.toString());
         treeTwo.flip();   //Flip back
         treeTwo.changeName("TreeTwo");
         System.out.println(treeTwo.toString());
+        System.out.println("--------------------------------");
 
+        //Problem 3
+        System.out.println("Problem 3");
         final int SIZE = 10;
         Integer[] list3 = {111, 176, 67, 77, 112, 119, 120, 70, 92, 153};
         Tree<Integer> treeThree = new Tree<Integer>(list3, "TreeThree:", true);
         System.out.println(treeThree.toString());
 
-//        //Problem 3
-//        System.out.println("Deepest Node of treeOne " + treeOne.deepestNode());
-//        System.out.println("Deepest Node of treeThree " + treeThree.deepestNode());
-//
-//
-//        //Problem 4
-//        int mylevel=3;
-//        System.out.println("Number nodes at level " + mylevel + " is " + treeThree.nodesInLevel(mylevel));
-//        mylevel=4;
-//        System.out.println("Number nodes at level " + mylevel + " is " + treeThree.nodesInLevel(mylevel));
-//
-//        //Problem 5
-//        System.out.println("All paths from treeThree");
-//        treeThree.printAllPaths();
-//
-//
-//        Integer[] list4= {21, 8, 25, 6, 7, 19, 10, 40, 43, 52, 64, 80};
-//        Tree<Integer> treeFour = new Tree<Integer>(list4, "treeFour", false);
-//        //Problem 6
-//        treeFour.pruneK(60);
-//        treeFour.changeName("treeFour after pruning 60");
-//        System.out.println(treeFour.toString());
-//
-//        System.out.println(treeTwo.toString());
-//        treeTwo.pruneK(290);
-//        treeTwo.changeName("treeTwo after pruning 290");
-//        System.out.println(treeTwo.toString());
-//
+        System.out.println("Deepest Node of treeOne " + treeOne.deepestNode());
+        System.out.println("Deepest Node of treeTwo " + treeTwo.deepestNode());
+        System.out.println("Deepest Node of treeThree " + treeThree.deepestNode());
+        System.out.println("--------------------------------");
+
+        //Problem 4
+        System.out.println("Problem 4");
+        int mylevel=3;
+        System.out.println("TreeThree: Number nodes at level " + mylevel + " is " + treeThree.nodesInLevel(mylevel));
+        mylevel=4;
+        System.out.println("TreeThree: Number nodes at level " + mylevel + " is " + treeThree.nodesInLevel(mylevel));
+        System.out.println("--------------------------------");
+
+        //Problem 5
+        System.out.println("Problem 5");
+        System.out.println("All paths from treeThree");
+        treeThree.printAllPaths();
+        System.out.println("--------------------------------");
+
+        //Problem 6
+        Integer[] list4= {21, 8, 25, 6, 7, 19, 10, 40, 43, 52, 64, 80};
+        Tree<Integer> treeFour = new Tree<Integer>(list4, "treeFour", false);
+
+        treeFour.pruneK(60);
+        treeFour.changeName("treeFour after pruning 60");
+        System.out.println(treeFour.toString());
+
+        System.out.println(treeTwo.toString());
+        treeTwo.pruneK(290);
+        treeTwo.changeName("treeTwo after pruning 290");
+        System.out.println(treeTwo.toString());
+
 //        //Problem 7
 //        System.out.println(treeOne.toString());
 //        System.out.println("treeOne Least Common Ancestor of (10,15) " + treeOne.lca(10, 15) + ENDLINE);
@@ -97,7 +108,7 @@ public class TreeTester {
 //        System.out.println(treeFour.toString());
 //        System.out.println("treeFour Contains BST: " + treeFour.countBST());
 //
-//        //Bonus
+//        // Problem 11
 //
 //        Integer[] inorder = {4, 2, 1, 7, 5, 8, 3, 6};
 //        Integer[] preorder = {1, 2, 4, 3, 5, 7, 8, 6};

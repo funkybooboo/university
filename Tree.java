@@ -1,6 +1,11 @@
 // ******************ERRORS********************************
 // Throws UnderflowException as appropriate
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 class UnderflowException extends RuntimeException {
     /**
      * Construct this exception object.
@@ -39,6 +44,8 @@ public class Tree<E extends Comparable<? super E>> {
     private BinaryNode<E> root;  // Root of tree
     private String treeName;     // Name of tree
 
+    private int numberOfNodes;
+
     /**
      * Create an empty tree
      * @param label Name of tree
@@ -52,7 +59,7 @@ public class Tree<E extends Comparable<? super E>> {
      * Create tree from list
      * @param arr   List of elements
      * @param label Name of tree
-     * @ordered true if want an ordered tree
+     * @ordered true if you want an ordered tree
      */
     public Tree(E[] arr, String label, boolean ordered) {
         treeName = label;
@@ -102,9 +109,10 @@ public class Tree<E extends Comparable<? super E>> {
 
     private StringBuilder toString(BinaryNode<E> currentNode, StringBuilder stringBuilder, int depth) {
         if (currentNode == null) return stringBuilder;
-        toString(currentNode.right, stringBuilder, depth + 2);
+        int spacing = 5;
+        toString(currentNode.right, stringBuilder, depth + spacing);
         stringBuilder.append(String.format("%" + depth + "d\n", currentNode.element));
-        toString(currentNode.left, stringBuilder, depth + 2);
+        toString(currentNode.left, stringBuilder, depth + spacing);
         return stringBuilder;
     }
 
@@ -137,7 +145,29 @@ public class Tree<E extends Comparable<? super E>> {
      * @return
      */
     public E deepestNode() {
-        return null;
+        ArrayList<DataStore<Integer, E>> map = new ArrayList<>();
+        deepestNode(root, 0, map);
+        ArrayList<E> topStuff = new ArrayList<>();
+        int maxDepth = 0;
+        if (map.isEmpty()) return null;
+        for (DataStore<Integer, E> store : map) {
+            if (store.data1 >= maxDepth){
+                maxDepth = store.data1;
+                topStuff.add(store.data2);
+            }
+        }
+        return topStuff.get(topStuff.size()-1);
+
+    }
+
+    private void deepestNode(BinaryNode<E> currentNode, int depth, ArrayList<DataStore<Integer, E>> map) {
+        if (currentNode == null) return;
+        deepestNode(currentNode.left, depth + 1, map);
+        deepestNode(currentNode.right, depth + 1, map);
+        DataStore<Integer, E> store = new DataStore<>();
+        store.data1 = depth;
+        store.data2 = currentNode.element;
+        map.add(store);
     }
 
     /**
@@ -145,17 +175,63 @@ public class Tree<E extends Comparable<? super E>> {
      * reverse left and right children recursively
      */
     public void flip() {
-        //flip(root);
+        flip(root);
+    }
+
+    private void flip(BinaryNode<E> currentNode) {
+        if (currentNode == null) return;
+        BinaryNode<E> tempNode;
+        tempNode = currentNode.left;
+        currentNode.left = currentNode.right;
+        currentNode.right = tempNode;
+        flip(currentNode.left);
+        flip(currentNode.right);
     }
 
     /**
      * Counts number of nodes in specified level
      * The complexity of nodesInLevel is O(???)
-     * @param level Level in tree, root is zero
+     * @param wantedLevel Level in tree, root is zero
      * @return count of number of nodes at specified level
      */
-    public int nodesInLevel(int level) {
-        return 0;
+    public int nodesInLevel(int wantedLevel) {
+        ArrayList<DataStore<Integer, E>> map = new ArrayList<>();
+        nodesInLevel(root, 0, map);
+        int count = 0;
+        for (DataStore<Integer, E> store : map) {
+            if (store.data1 == wantedLevel) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private void nodesInLevel(BinaryNode<E> currentNode, int level, ArrayList<DataStore<Integer, E>> map) {
+        if (currentNode == null) return;
+        nodesInLevel(currentNode.left, level + 1, map);
+        nodesInLevel(currentNode.right, level + 1, map);
+        DataStore<Integer, E> store = new DataStore<>();
+        store.data1 = level;
+        store.data2 = currentNode.element;
+        map.add(store);
+    }
+
+    private static class DataStore<E, T> {
+        E data1;
+        T data2;
+    }
+
+    public int getNumberOfNodes() {
+        numberOfNodes = 0;
+        getNumberOfNodes(root);
+        return numberOfNodes;
+    }
+
+    private void getNumberOfNodes(BinaryNode<E> currentNode) {
+        if (currentNode == null) return;
+        getNumberOfNodes(currentNode.left);
+        getNumberOfNodes(currentNode.right);
+        numberOfNodes++;
     }
 
     /**
@@ -163,9 +239,22 @@ public class Tree<E extends Comparable<? super E>> {
      * The complexity of printAllPaths is O(???)
      */
     public void printAllPaths() {
-
+        E[] path = (E[]) new Comparable[getNumberOfNodes()+100];
+        printAllPaths(root, path, 0);
     }
 
+    private void printAllPaths(BinaryNode<E> currentNode, E[] path, int pathLength) {
+        if (currentNode == null) return;
+        path[pathLength] = currentNode.element;
+        pathLength++;
+        if (currentNode.left == null && currentNode.right == null) {
+            for (int i = 0; i < pathLength; i++) System.out.print(path[i] + " ");
+            System.out.println();
+            return;
+        }
+        printAllPaths(currentNode.left, path, pathLength);
+        printAllPaths(currentNode.right, path, pathLength);
+    }
 
     /**
      * Counts all non-null binary search trees embedded in tree

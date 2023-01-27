@@ -59,6 +59,7 @@ public class TreeTester {
         System.out.println("--------------------------------");
 
         //Problem 6
+        System.out.println("Problem 6");
         Integer[] list4= {21, 8, 25, 6, 7, 19, 10, 40, 43, 52, 64, 80};
         Tree<Integer> treeFour = new Tree<Integer>(list4, "treeFour", false);
 
@@ -70,6 +71,7 @@ public class TreeTester {
         treeTwo.pruneK(290);
         treeTwo.changeName("treeTwo after pruning 290");
         System.out.println(treeTwo.toString());
+        System.out.println("--------------------------------");
 
 //        //Problem 7
 //        System.out.println(treeOne.toString());

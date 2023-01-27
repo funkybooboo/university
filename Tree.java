@@ -1,10 +1,7 @@
 // ******************ERRORS********************************
 // Throws UnderflowException as appropriate
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class UnderflowException extends RuntimeException {
     /**
@@ -43,8 +40,6 @@ public class Tree<E extends Comparable<? super E>> {
 
     private BinaryNode<E> root;  // Root of tree
     private String treeName;     // Name of tree
-
-    private int numberOfNodes;
 
     /**
      * Create an empty tree
@@ -222,16 +217,16 @@ public class Tree<E extends Comparable<? super E>> {
     }
 
     public int getNumberOfNodes() {
-        numberOfNodes = 0;
-        getNumberOfNodes(root);
+        int numberOfNodes = 0;
+        numberOfNodes = getNumberOfNodes(root, numberOfNodes);
         return numberOfNodes;
     }
 
-    private void getNumberOfNodes(BinaryNode<E> currentNode) {
-        if (currentNode == null) return;
-        getNumberOfNodes(currentNode.left);
-        getNumberOfNodes(currentNode.right);
-        numberOfNodes++;
+    private int getNumberOfNodes(BinaryNode<E> currentNode, int numberOfNodes) {
+        if (currentNode == null) return numberOfNodes;
+        numberOfNodes = getNumberOfNodes(currentNode.left, numberOfNodes);
+        numberOfNodes = getNumberOfNodes(currentNode.right, numberOfNodes);
+        return ++numberOfNodes;
     }
 
     /**
@@ -239,16 +234,18 @@ public class Tree<E extends Comparable<? super E>> {
      * The complexity of printAllPaths is O(???)
      */
     public void printAllPaths() {
-        E[] path = (E[]) new Comparable[getNumberOfNodes()+100];
+        Object[] path = new Object[getNumberOfNodes()];
         printAllPaths(root, path, 0);
     }
 
-    private void printAllPaths(BinaryNode<E> currentNode, E[] path, int pathLength) {
+    private void printAllPaths(BinaryNode<E> currentNode, Object[] path, int pathLength) {
         if (currentNode == null) return;
         path[pathLength] = currentNode.element;
         pathLength++;
         if (currentNode.left == null && currentNode.right == null) {
-            for (int i = 0; i < pathLength; i++) System.out.print(path[i] + " ");
+            for (int i = 0; i < pathLength; i++) {
+                System.out.print(path[i] + " ");
+            }
             System.out.println();
             return;
         }
@@ -309,20 +306,20 @@ public class Tree<E extends Comparable<? super E>> {
      * This routine runs in O(log n) as there is only one recursive call that is executed and the work
      * associated with a single call is independent of the size of the tree: a=1, b=2, k=0
      *
-     * @param x is item to search for.
-     * @param t the node that roots the subtree.
+     * @param item is item to search for.
+     * @param node the node that roots the subtree.
      * @return node containing the matched item.
      */
-    private boolean contains(E x, BinaryNode<E> t) {
-        if (t == null)
+    private boolean contains(E item, BinaryNode<E> node) {
+        if (node == null)
             return false;
 
-        int compareResult = x.compareTo(t.element);
+        int compareResult = item.compareTo(node.element);
 
         if (compareResult < 0)
-            return contains(x, t.left);
+            return contains(item, node.left);
         else if (compareResult > 0)
-            return contains(x, t.right);
+            return contains(item, node.right);
         else {
             return true;    // Match
         }
@@ -332,7 +329,42 @@ public class Tree<E extends Comparable<? super E>> {
      * @param sum: minimum path sum allowed in final tree
      */
     public void pruneK(Integer sum) {
+        pruneK(root, sum, 0);
+    }
 
+    private void pruneK(BinaryNode<E> currentNode, Integer sum, int pathSum) {
+
+    }
+
+    private BinaryNode<E> remove(E item, BinaryNode<E> currentNode) {
+        if (currentNode == null) return currentNode;
+        int compareResult = item.compareTo(currentNode.element);
+        if (compareResult < 0) currentNode.left = remove(item, currentNode.left);
+        else if (compareResult > 0) currentNode.right = remove(item, currentNode.right);
+        else {
+            if (currentNode.left != null && currentNode.right != null) {
+                currentNode.element = findMin(currentNode.right).element;
+                currentNode.right = remove(currentNode.element, currentNode.right);
+            } else {
+                if (currentNode.left != null) currentNode = currentNode.left;
+                else currentNode = currentNode.right;
+            }
+        }
+        return currentNode;
+    }
+
+    private BinaryNode<E> findMin(BinaryNode<E> currentNode) {
+        if (currentNode != null) {
+            while (currentNode.left != null) {
+                currentNode = currentNode.left;
+            }
+        }
+        return currentNode;
+    }
+
+    private int maxLevel (BinaryNode<E> currentNode) {
+        if (currentNode == null) return -1;
+        return 1 + Math.max(maxLevel(currentNode.left), maxLevel(currentNode.right));
     }
 
     /**

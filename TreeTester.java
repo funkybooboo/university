@@ -1,14 +1,12 @@
-import java.util.Arrays;
-import java.util.Random;
-
 public class TreeTester {
 
     // Test program
     public static void main(String[] args) {
         final String ENDLINE = "\n";
-
         Integer[] list1 = {25, 10, 60, 55, 58, 56, 14, 63, 8, 50, 6, 9, 15,27,29,61};
         Tree<Integer> treeOne = new Tree<>(list1, "TreeOne:",true);
+
+
 
         //Problem 1
         System.out.println("Problem 1");
@@ -63,6 +61,7 @@ public class TreeTester {
         Integer[] list4= {21, 8, 25, 6, 7, 19, 10, 40, 43, 52, 64, 80};
         Tree<Integer> treeFour = new Tree<Integer>(list4, "treeFour", false);
 
+        System.out.println(treeFour.toString());
         treeFour.pruneK(60);
         treeFour.changeName("treeFour after pruning 60");
         System.out.println(treeFour.toString());
@@ -73,51 +72,58 @@ public class TreeTester {
         System.out.println(treeTwo.toString());
         System.out.println("--------------------------------");
 
-//        //Problem 7
-//        System.out.println(treeOne.toString());
-//        System.out.println("treeOne Least Common Ancestor of (10,15) " + treeOne.lca(10, 15) + ENDLINE);
-//        System.out.println("treeOne Least Common Ancestor of (55,61) " + treeOne.lca(55, 61) + ENDLINE);
-//        System.out.println("treeOne Least Common Ancestor of (9,50) " + treeOne.lca(9, 50) + ENDLINE);
-//        System.out.println("treeOne Least Common Ancestor of (29,62) " + treeOne.lca(29, 62) + ENDLINE);
-//
-//        //Problem 8
-//        Integer[] v5 = {15, 1,2,3,5,10, 65, 66,67,68,83, 70, 90,69,6,8};
-//        Tree<Integer> treeFive = new Tree<Integer>(v5, "TreeFive:",true);
-//        System.out.println(treeFive.toString());
-//        treeFive.balanceTree();
-//        treeFive.changeName("treeFive after balancing");
-//        System.out.println(treeFive.toString());
-//
-//        //Problem 9
-//        System.out.println(treeOne.toString());
-//        treeOne.keepRange(14, 50);
-//        treeOne.changeName("treeOne after keeping only nodes between 14 and 50");
-//        System.out.println(treeOne.toString());
-//
-//
-//        treeFive.changeName("treeFive");
-//        System.out.println(treeFive.toString());
-//        treeFive.keepRange(3, 69);
-//        treeFive.changeName("treeFive after keeping only nodes between 3  and 69");
-//        System.out.println(treeFive.toString());
-//
-//        // Problem 10
-//        treeTwo = new Tree<Integer>(list2, "TreeTwo:", false);
-//        System.out.println(treeTwo.toString());
-//        System.out.println("treeTwo Contains BST: " + treeTwo.countBST());
-//
-//        treeFour = new Tree<Integer>(list4, "treeFour", false);
-//        System.out.println(treeFour.toString());
-//        System.out.println("treeFour Contains BST: " + treeFour.countBST());
-//
-//        // Problem 11
-//
-//        Integer[] inorder = {4, 2, 1, 7, 5, 8, 3, 6};
-//        Integer[] preorder = {1, 2, 4, 3, 5, 7, 8, 6};
-//        Tree<Integer> treeBonus = new Tree<Integer>("TreeBonus");
-//        treeBonus.buildTreeTraversals(inorder, preorder);
-//        treeBonus.changeName("TreeBonus built from inorder and preorder traversals");
-//        System.out.println(treeBonus.toString());
+        //Problem 7
+        System.out.println("Problem 7");
+        System.out.println(treeOne.toString());
+        System.out.println("treeOne Least Common Ancestor of (10,15) " + treeOne.lca(10, 15) + ENDLINE);
+        System.out.println("treeOne Least Common Ancestor of (55,61) " + treeOne.lca(55, 61) + ENDLINE);
+        System.out.println("treeOne Least Common Ancestor of (9,50) " + treeOne.lca(9, 50) + ENDLINE);
+        System.out.println("treeOne Least Common Ancestor of (29,62) " + treeOne.lca(29, 62) + ENDLINE);
+        System.out.println("--------------------------------");
+
+        //Problem 8
+        System.out.println("Problem 8");
+        Integer[] v5 = {15, 1,2,3,5,10, 65, 66,67,68,83, 70, 90,69,6,8};
+        Tree<Integer> treeFive = new Tree<Integer>(v5, "TreeFive:",true);
+        System.out.println(treeFive.toString());
+        treeFive.balanceTree();
+        treeFive.changeName("treeFive after balancing");
+        System.out.println(treeFive.toString());
+        System.out.println("--------------------------------");
+
+        //Problem 9
+        System.out.println("Problem 9");
+        System.out.println(treeOne.toString());
+        treeOne.keepRange(14, 50);
+        treeOne.changeName("treeOne after keeping only nodes between 14 and 50");
+        System.out.println(treeOne.toString());
+
+        treeFive.changeName("treeFive");
+        System.out.println(treeFive.toString());
+        treeFive.keepRange(3, 69);
+        treeFive.changeName("treeFive after keeping only nodes between 3  and 69");
+        System.out.println(treeFive.toString());
+        System.out.println("--------------------------------");
+
+        // Problem 10
+        System.out.println("Problem 10");
+        treeTwo = new Tree<Integer>(list2, "TreeTwo:", false);
+        System.out.println(treeTwo.toString());
+        System.out.println("treeTwo Contains BST: " + treeTwo.countBST());
+        System.out.println("--------------------------------");
+        treeFour = new Tree<Integer>(list4, "treeFour", false);
+        System.out.println(treeFour.toString());
+        System.out.println("treeFour Contains BST: " + treeFour.countBST());
+
+        // Problem 11
+        System.out.println("Problem 11");
+        Integer[] inorder = {4, 2, 1, 7, 5, 8, 3, 6};
+        Integer[] preorder = {1, 2, 4, 3, 5, 7, 8, 6};
+        Tree<Integer> treeBonus = new Tree<Integer>("TreeBonus");
+        treeBonus.buildTreeTraversals(inorder, preorder);
+        treeBonus.changeName("TreeBonus built from inorder and preorder traversals");
+        System.out.println(treeBonus.toString());
+        System.out.println("--------------------------------");
 
     }
 }

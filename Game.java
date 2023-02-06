@@ -125,7 +125,6 @@ public class Game {
                 System.out.println(board);
             }
         }
-
     }
 
     private int addToQueue(Queue<State> movesToDo, State currentState, Board currentBoard, List<String> visitedStates, int queueAdded, String letter) {

@@ -1,7 +1,6 @@
 /*
 Very simple object to contain steps and id. The board does the heavy lifting.
- */
-
+*/
 public class State {
     private final String steps;
     private final String id;
@@ -19,6 +18,7 @@ public class State {
         int last = steps.length();
         return steps.charAt(last-1);
     }
+
     public String getId() {
         return id;
     }

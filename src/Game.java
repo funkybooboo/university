@@ -40,52 +40,51 @@ public class Game {
     // Examples: 132456780, 123465780, 123756480, 423156780
     
     private void solve() {
-        Queue<State> movesToDo = new Queue<>();
-        State currentState = new State(theBoard.getId(), "");
+        //Queue<Board> movesToDo = new Queue<>();
+        AVLTree<Board> movesToDo = new AVLTree<>();
         Board currentBoard = new Board(theBoard.getId());
         List<String> visitedStates = new ArrayList<>();
         int queueAdded = 0;
         int queueRemoved = 0;
         boolean solved = true;
         int numOfIterations = 0;
-        visitedStates.add(currentState.getId());
-        System.out.println("[" + currentState + "]");
-        while (!currentBoard.isSolved(currentState.getId())) {
-            char lastMove = currentState.getLast();
+        visitedStates.add(currentBoard.getId());
+        System.out.println("[" + currentBoard.stateAndStepsToString() + "]");
+        while (!currentBoard.isSolved(currentBoard.getId())) {
+            char lastMove = currentBoard.getLast();
             if (lastMove != 'L') {
                 if (currentBoard.slideRight()) {
-                    queueAdded = addToQueue(movesToDo, currentState, currentBoard, visitedStates, queueAdded, "R");
+                    queueAdded = addToQueue(movesToDo, currentBoard, visitedStates, queueAdded, "R");
                     currentBoard.slideLeft();
                 }
             }
             if (lastMove  != 'R') {
                 if (currentBoard.slideLeft()) {
-                    queueAdded = addToQueue(movesToDo, currentState, currentBoard, visitedStates, queueAdded, "L");
+                    queueAdded = addToQueue(movesToDo, currentBoard, visitedStates, queueAdded, "L");
                     currentBoard.slideRight();
                 }
             }
             if (lastMove != 'D') {
                 if (currentBoard.slideUp()) {
-                    queueAdded = addToQueue(movesToDo, currentState, currentBoard, visitedStates, queueAdded, "U");
+                    queueAdded = addToQueue(movesToDo, currentBoard, visitedStates, queueAdded, "U");
                     currentBoard.slideDown();
                 }
             }
             if (lastMove != 'U') {
                 if (currentBoard.slideDown()) {
-                    queueAdded = addToQueue(movesToDo, currentState, currentBoard, visitedStates, queueAdded, "D");
+                    queueAdded = addToQueue(movesToDo, currentBoard, visitedStates, queueAdded, "D");
                     currentBoard.slideDown();
                 }
             }
             if (numOfIterations < 2) {
                 System.out.println("[" + movesToDo + "\b]");
             }
-            if (visitedStates.size() > 1_000_000){
+            if (visitedStates.size() > 100_000){
                 System.out.println("There is no solution");
                 solved = false;
                 break;
-            } else if (movesToDo.getSize() > 0) {
-                currentState = movesToDo.removeFront();
-                currentBoard = new Board(currentState.getId());
+            } else if (!movesToDo.isEmpty()) {
+                currentBoard = movesToDo.deleteMin();
                 queueRemoved++;
             } else {
                 System.out.println("Unable to determine if there is a solution");
@@ -95,19 +94,19 @@ public class Game {
             numOfIterations++;
         }
         if (solved) {
-            showHowToSolve(theBoard, currentState);
+            showHowToSolve(theBoard, currentBoard);
             System.out.println();
-            System.out.println("Moves Required: " + currentState.getSteps() + "(" + currentState.getNumSteps() + ")");
+            System.out.println("Moves Required: " + currentBoard.getSteps() + "(" + currentBoard.getNumSteps() + ")");
             System.out.println("Queue added=" + queueAdded + " Removed=" + queueRemoved);
         }
         System.out.println();
     }
 
-    private void showHowToSolve(Board originalBoard, State solvedState) {
+    private void showHowToSolve(Board originalBoard, Board solvedBoard) {
         System.out.println("Solution");
         System.out.println(originalBoard);
         Board board = new Board(originalBoard.getId());
-        String steps = solvedState.getSteps();
+        String steps = solvedBoard.getSteps();
         for (int i = 0; i < steps.length(); i++) {
             char step = steps.charAt(i);
             System.out.println(step + "==>");
@@ -127,10 +126,10 @@ public class Game {
         }
     }
 
-    private int addToQueue(Queue<State> movesToDo, State currentState, Board currentBoard, List<String> visitedStates, int queueAdded, String letter) {
-        State movedState = new State(currentBoard.getId(), currentState.getSteps() + letter);
-        visitedStates.add(movedState.getId());
-        movesToDo.add(movedState);
+    private int addToQueue(AVLTree<Board> movesToDo, Board currentBoard, List<String> visitedStates, int queueAdded, String letter) {
+        currentBoard.setSteps(letter);
+        visitedStates.add(currentBoard.getId());
+        movesToDo.insert(currentBoard);
         return ++queueAdded;
     }
 

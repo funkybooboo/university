@@ -1,19 +1,60 @@
 import java.util.Random;
 
 //functional handling of an instance of the board. Can be created using an id.
-public class Board {
+public class Board implements Comparable<Board> {
     private static final int SIZE = 3;
     private static final String SOLVED_ID = "123456780";
     private final int[][] board;  // Values of board
     private int blankRow;   // Row location of blank
     private int blankCol;   // Column location of blank
-
+    private String steps;
 
     /**
      * Generate a new board
      */
     public Board() {
         board = new int[SIZE][SIZE];
+        this.steps = "";
+    }
+
+    public char getLast(){
+        if (steps.equals("")) return '*';
+        int last = steps.length();
+        return steps.charAt(last-1);
+    }
+
+    public String getSteps() {
+        return steps;
+    }
+
+    public int getNumSteps() {
+        return steps.length();
+    }
+
+    public String stateAndStepsToString(){
+        return "State " + getId() + " steps: " + steps;
+
+    }
+
+    public void setSteps(String steps) {
+        this.steps += steps;
+    }
+
+    private int getPriority() {
+        return getHammingDistance() + getNumMoves();
+    }
+
+    private int getHammingDistance() {
+        String id = getId();
+        int count = 0;
+        for (int i = 0; i < id.length(); i++) {
+            if (id.charAt(i) != SOLVED_ID.charAt(i)) count++;
+        }
+        return count;
+    }
+
+    private int getNumMoves() {
+        return getNumSteps();
     }
 
     /**
@@ -217,5 +258,15 @@ public class Board {
             }
         }
         return id.toString();
+    }
+
+    @Override
+    public int compareTo(Board otherBoard) {
+        if (this.getPriority() > otherBoard.getPriority()) {
+            return 1;
+        } else if (this.getPriority() < otherBoard.getPriority()) {
+            return -1;
+        }
+        return 0;
     }
 }

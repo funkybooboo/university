@@ -40,7 +40,6 @@ public class Game {
     // Examples: 132456780, 123465780, 123756480, 423156780
     
     private void solve() {
-        //Queue<Board> movesToDo = new Queue<>();
         AVLTree<Board> movesToDo = new AVLTree<>();
         Board currentBoard = new Board(theBoard.getId());
         List<String> visitedStates = new ArrayList<>();

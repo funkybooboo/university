@@ -63,7 +63,7 @@ public class AVLTree<E extends Comparable<? super E>> {
      * @param data the item to remove.
      */
     public void remove(E data) {
-        root = remove( data, root );
+        root = remove(data, root);
     }
 
     /**
@@ -73,17 +73,16 @@ public class AVLTree<E extends Comparable<? super E>> {
      * @return the new root of the subtree.
      */
     private Node<E> remove(E data, Node<E> node) {
-        if( node == null ) return node;
+        if(node == null) return node;
         int compareResult = data.compareTo(node.data);
-        if( compareResult < 0 ) {
+        if(compareResult < 0) {
             node.left = remove(data, node.left);
         } else if(compareResult > 0) {
             node.right = remove(data, node.right);
         } else if(node.left != null && node.right != null) {
             node.data = findMin(node.right).data;
             node.right = remove(node.data, node.right);
-        }
-        else {
+        } else {
             node = (node.left != null) ? node.left : node.right;
         }
         return balance(node);
@@ -153,10 +152,10 @@ public class AVLTree<E extends Comparable<? super E>> {
         if(node == null) return node;
         if(height(node.left) - height(node.right) > ALLOWED_IMBALANCE) {
             if(height(node.left.left) >= height(node.left.right)) {
-                node = rightRotation( node );
+                node = rightRotation(node);
             }
             else {
-                node = doubleRightRotation( node );
+                node = doubleRightRotation(node);
             }
         } else {
             if(height(node.right) - height(node.left) > ALLOWED_IMBALANCE) {
@@ -219,42 +218,48 @@ public class AVLTree<E extends Comparable<? super E>> {
         return node;
     }
 
-    public E deleteMin() {
-        Pair<Node<E>> pair = deleteMin(root);
-        root = pair.data1;
-        return pair.data2.data;
-    }
-
-    /**
+     /*
      * returns the new tree after the smallest node has been
      * deleted from the subtree rooted at node
      */
-   private Pair<Node<E>> deleteMin(Node<E> node) {
-       if (node == null) return null;
-       Node<E> minParent = node;
-       Pair<Node<E>> pair = new Pair<>();
-       pair.data1 = node;
-       pair.data2 = minParent;
-       if (minParent.left == null) return pair;
+    public E deleteMin() {
+        if (root == null) return null;
+        if (root.left == null) {
+            Node<E> temp = root;
+            root = null;
+            return temp.data;
+        }
+        E min = findMin();
+        Pair<Node<E>> pair = deleteMin(root.left, root, min);
+        root = pair.parent;
+        return pair.child.data;
+    }
 
-       Node<E> min = minParent.left;
-       while(min != null) {
-           minParent = minParent.left;
-           min = min.left;
-       }
-       minParent.left = null;
-       balance(minParent);
-       pair.data1 = node;
-       pair.data2 = min;
-       return pair;
+    private Pair<Node<E>> deleteMin(Node<E> node, Node<E> parent, E min){
+        if (node.left == null) return new Pair<>(node, parent);
+        Pair<Node<E>> pair = deleteMin(node.left, node, min);
+        node = pair.child;
+        parent.left = pair.parent;
+        if (node.right != null) {
+            parent.left.left = node.right;
+            parent.left = balance(parent.left);
+        } else if (parent.left.left.data == min){
+            parent.left.left = null;
+            parent.left = balance(parent.left);
+        }
+        return new Pair<>(node, balance(parent));
     }
 
     private static class Pair<T> {
-       T data1;
-       T data2;
+        T child;
+        T parent;
+        public Pair(T child, T parent) {
+            this.child = child;
+            this.parent = parent;
+        }
     }
 
-    /**
+    /*
      * Internal method to find the largest item in a subtree.
      * @param node the node that roots the tree.
      * @return node containing the largest item.
@@ -361,23 +366,37 @@ public class AVLTree<E extends Comparable<? super E>> {
     // Test program
     public static void main(String[] args) {
         AVLTree<Integer> tree1 = new AVLTree<>();
-        AVLTree<Dwarf> tree2 = new AVLTree<>();
+        //int[] ints = {2,5,6,3,8,9,0,1,69,70,71,90,4,7};
+        int[] ints = {2,5,6,3,8,9,0,-1,-2,1,-3,-4,-5,-6,69,70,71,90,4,7};
+        for (int i : ints) tree1.insert(i);
+        tree1.printTree("Tree1");
 
-        String[] nameList = {"Snowflake", "Sneezy", "Doc", "Grumpy", "Bashful", "Dopey", "Happy", "Doc", "Grumpy", "Bashful", "Doc", "Grumpy", "Bashful"};
-        for (String s : nameList) {
-            tree2.insert(new Dwarf(s));
-        }
 
-        tree2.printTree("The Tree");
+//        tree1.remove(0);
+//        tree1.printTree("Tree1 after remove 0");
 
-        tree2.remove(new Dwarf("Bashful"));
+        int j = tree1.deleteMin();
+        System.out.println("got rid of: " + j);
+        tree1.printTree("got rid of lowest node");
+        System.out.println("-------------");
 
-        tree2.printTree( "The Tree after delete Bashful" );
-
-        for (int i = 0; i < 8; i++) {
-            tree2.deleteMin();
-            tree2.printTree("\n\n The Tree after deleteMin");
-        }
+//        AVLTree<Dwarf> tree2 = new AVLTree<>();
+//
+//        String[] nameList = {"Snowflake", "Sneezy", "Doc", "Grumpy", "Bashful", "Dopey", "Happy", "Doc", "Grumpy", "Bashful", "Doc", "Grumpy", "Bashful"};
+//        for (String s : nameList) {
+//            tree2.insert(new Dwarf(s));
+//        }
+//
+//        tree2.printTree("The Tree");
+//
+//        tree2.remove(new Dwarf("Bashful"));
+//
+//        tree2.printTree( "The Tree after delete Bashful" );
+//
+//        for (int i = 0; i < 8; i++) {
+//            tree2.deleteMin();
+//            tree2.printTree("\n\n The Tree after deleteMin");
+//        }
 
     }
 

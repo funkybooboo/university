@@ -7,7 +7,7 @@ public class Board implements Comparable<Board> {
     private final int[][] board;  // Values of board
     private int blankRow;   // Row location of blank
     private int blankCol;   // Column location of blank
-    private String steps;
+    private String steps = "";
 
     /**
      * Generate a new board
@@ -15,6 +15,27 @@ public class Board implements Comparable<Board> {
     public Board() {
         board = new int[SIZE][SIZE];
         this.steps = "";
+    }
+
+    /**
+     * Create board from string version
+     *
+     * @param id
+     */
+    public Board(String id, String steps) {
+        board = new int[SIZE][SIZE];
+        int c = 0;
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (id.charAt(c) == '0') {
+                    blankRow = i;
+                    blankCol = j;
+                }
+                //assigns each item of the string to the board as an int.
+                board[i][j] = Integer.parseInt(id.substring(c, ++c));
+            }
+        }
+        this.steps = steps;
     }
 
     public char getLast(){
@@ -31,9 +52,8 @@ public class Board implements Comparable<Board> {
         return steps.length();
     }
 
-    public String stateAndStepsToString(){
+    public String stateAndStepsToString() {
         return "State " + getId() + " steps: " + steps;
-
     }
 
     public void setSteps(String steps) {
@@ -41,7 +61,7 @@ public class Board implements Comparable<Board> {
     }
 
     private int getPriority() {
-        return getHammingDistance() + getNumMoves();
+        return getHammingDistance() + getNumSteps();
     }
 
     private int getHammingDistance() {
@@ -53,10 +73,6 @@ public class Board implements Comparable<Board> {
         return count;
     }
 
-    private int getNumMoves() {
-        return getNumSteps();
-    }
-
     /**
      * @param state String representation of the board
      * @return true if board state is the solution
@@ -65,24 +81,7 @@ public class Board implements Comparable<Board> {
         return state.equals(SOLVED_ID);
     }
 
-    /**
-     * Create board from string version
-     *
-     * @param id
-     */
-    Board(String id) {
-        board = new int[SIZE][SIZE];
-        int c = 0;
-        for (int i = 0; i < SIZE; i++)
-            for (int j = 0; j < SIZE; j++) {
-                if (id.charAt(c) == '0') {
-                    blankRow = i;
-                    blankCol = j;
-                }
-                //assigns each item of the string to the board as an int.
-                board[i][j] = Integer.parseInt(id.substring(c, ++c));
-            }
-    }
+
 
     @Override
     /**
@@ -145,9 +144,9 @@ public class Board implements Comparable<Board> {
     boolean slideUp()  // If possible, slides a tile up into the blank position.  Returns success of operation.
     {
         if (blankRow == SIZE - 1) return false;
-            board[blankRow][blankCol] = board[blankRow + 1][blankCol];
-            board[blankRow + 1][blankCol] = 0;
-            blankRow += 1;
+        board[blankRow][blankCol] = board[blankRow + 1][blankCol];
+        board[blankRow + 1][blankCol] = 0;
+        blankRow += 1;
         return true;
     }
 
@@ -159,9 +158,9 @@ public class Board implements Comparable<Board> {
     boolean slideDown()  // If possible, slides a tile down into the blank position.  Returns success of operation.
     {
         if (blankRow == 0) return false;
-            board[blankRow][blankCol] = board[blankRow - 1][blankCol];
-            board[blankRow - 1][blankCol] = 0;
-            blankRow -= 1;
+        board[blankRow][blankCol] = board[blankRow - 1][blankCol];
+        board[blankRow - 1][blankCol] = 0;
+        blankRow -= 1;
         return true;
     }
 
@@ -173,9 +172,9 @@ public class Board implements Comparable<Board> {
     boolean slideLeft()  // If possible, slides a tile left into the blank position.  Returns success of operation.
     {
         if (blankCol == SIZE - 1) return false;
-            board[blankRow][blankCol] = board[blankRow][blankCol + 1];
-            board[blankRow][blankCol + 1] = 0;
-            blankCol += 1;
+        board[blankRow][blankCol] = board[blankRow][blankCol + 1];
+        board[blankRow][blankCol + 1] = 0;
+        blankCol += 1;
         return true;
     }
 
@@ -187,9 +186,9 @@ public class Board implements Comparable<Board> {
     boolean slideRight()  // If possible, slides a tile right into the blank position.  Returns success of operation.
     {
         if (blankCol == 0) return false;
-            board[blankRow][blankCol] = board[blankRow][blankCol - 1];
-            board[blankRow][blankCol - 1] = 0;
-            blankCol -= 1;
+        board[blankRow][blankCol] = board[blankRow][blankCol - 1];
+        board[blankRow][blankCol - 1] = 0;
+        blankCol -= 1;
         return true;
     }
 

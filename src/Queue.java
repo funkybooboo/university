@@ -1,4 +1,4 @@
-public class Queue<E> {
+public class Queue<E> implements Store<E>{
     private static class Node<T> {
         T data;
         Node<T> next;
@@ -11,7 +11,11 @@ public class Queue<E> {
     private Node<E> tail;
     private int size = 0;
 
-    public void add(E data) {
+    public boolean isNotEmpty() {
+        return getSize() > 0;
+    }
+
+    public void insert(E data) {
         if (tail == null) {
             tail = new Node<>(data);
             head = tail;
@@ -26,7 +30,7 @@ public class Queue<E> {
         return size;
     }
 
-    public E removeFront() {
+    public E deleteMin() {
         if (head == null) {
             if (tail != null) {
                 head = tail;
@@ -40,6 +44,11 @@ public class Queue<E> {
         head = head.next;
         size--;
         return temp.data;
+    }
+
+    @Override
+    public void print(String label) {
+
     }
 
     public E removeAnyData(E data) {

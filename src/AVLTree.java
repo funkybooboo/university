@@ -20,7 +20,7 @@
  * Note that all "matching" is based on the compareTo method.
  * @author Mark Allen Weiss
  */
-public class AVLTree<E extends Comparable<? super E>> {
+public class AVLTree<E extends Comparable<? super E>> implements Store<E>{
 
     private static class Node<T> {
         T data;
@@ -132,10 +132,14 @@ public class AVLTree<E extends Comparable<? super E>> {
         return root == null;
     }
 
+    public boolean isNotEmpty() {
+        return root != null;
+    }
+
     /**
      * Print the tree contents in sorted order.
      */
-    public void printTree(String label) {
+    public void print(String label) {
         System.out.println(label);
         if(isEmpty()) {
             System.out.println("Empty tree");
@@ -229,33 +233,37 @@ public class AVLTree<E extends Comparable<? super E>> {
             root = null;
             return temp.data;
         }
-        E min = findMin();
-        Pair<Node<E>> pair = deleteMin(root.left, root, min);
-        root = pair.parent;
-        return pair.child.data;
+        Store<Node<E>> store = deleteMin(root.left, root, false);
+        root = store.parent;
+        return store.child.data;
     }
 
-    private Pair<Node<E>> deleteMin(Node<E> node, Node<E> parent, E min){
-        if (node.left == null) return new Pair<>(node, parent);
-        Pair<Node<E>> pair = deleteMin(node.left, node, min);
-        node = pair.child;
-        parent.left = pair.parent;
-        if (node.right != null) {
+    private Store<Node<E>> deleteMin(Node<E> node, Node<E> parent, boolean removed){
+        if (node.left == null) return new Store<>(node, parent, removed);
+        Store<Node<E>> store = deleteMin(node.left, node, removed);
+        node = store.child;
+        parent.left = store.parent;
+        removed = store.removed;
+        if (node.right != null && !removed) {
             parent.left.left = node.right;
             parent.left = balance(parent.left);
-        } else if (parent.left.left.data == min){
+            removed = true;
+        } else if (!removed){
             parent.left.left = null;
             parent.left = balance(parent.left);
+            removed = true;
         }
-        return new Pair<>(node, balance(parent));
+        return new Store<>(node, balance(parent), removed);
     }
 
-    private static class Pair<T> {
+    private static class Store<T> {
         T child;
         T parent;
-        public Pair(T child, T parent) {
+        boolean removed;
+        public Store(T child, T parent, boolean removed) {
             this.child = child;
             this.parent = parent;
+            this.removed = removed;
         }
     }
 
@@ -365,39 +373,24 @@ public class AVLTree<E extends Comparable<? super E>> {
 
     // Test program
     public static void main(String[] args) {
+        System.out.println("No right child");
         AVLTree<Integer> tree1 = new AVLTree<>();
-        //int[] ints = {2,5,6,3,8,9,0,1,69,70,71,90,4,7};
-        int[] ints = {2,5,6,3,8,9,0,-1,-2,1,-3,-4,-5,-6,69,70,71,90,4,7};
-        for (int i : ints) tree1.insert(i);
-        tree1.printTree("Tree1");
-
-
-//        tree1.remove(0);
-//        tree1.printTree("Tree1 after remove 0");
-
+        int[] ints1 = {2,5,6,3,8,9,0,-1,-2,1,-3,-4,-5,-6,-7,69,70,71,90,4,7};
+        for (int i : ints1) tree1.insert(i);
+        tree1.print("Tree1");
         int j = tree1.deleteMin();
         System.out.println("got rid of: " + j);
-        tree1.printTree("got rid of lowest node");
+        tree1.print("got rid of lowest node");
         System.out.println("-------------");
-
-//        AVLTree<Dwarf> tree2 = new AVLTree<>();
-//
-//        String[] nameList = {"Snowflake", "Sneezy", "Doc", "Grumpy", "Bashful", "Dopey", "Happy", "Doc", "Grumpy", "Bashful", "Doc", "Grumpy", "Bashful"};
-//        for (String s : nameList) {
-//            tree2.insert(new Dwarf(s));
-//        }
-//
-//        tree2.printTree("The Tree");
-//
-//        tree2.remove(new Dwarf("Bashful"));
-//
-//        tree2.printTree( "The Tree after delete Bashful" );
-//
-//        for (int i = 0; i < 8; i++) {
-//            tree2.deleteMin();
-//            tree2.printTree("\n\n The Tree after deleteMin");
-//        }
-
+        System.out.println("With right child");
+        AVLTree<Integer> tree2 = new AVLTree<>();
+        int[] ints2 = {2,5,6,3,8,9,0,-1,-2,1,-3,-4,-5,-6,-8,-7,69,70,71,90,4,7};
+        for (int i : ints2) tree2.insert(i);
+        tree2.print("Tree1");
+        int k = tree2.deleteMin();
+        System.out.println("got rid of: " + k);
+        tree2.print("got rid of lowest node");
+        System.out.println("-------------");
     }
 
 }

@@ -112,6 +112,7 @@ public class SliderGame {
         List<String> visitedStates = new ArrayList<>();
         int queueAdded = 1;
         int queueRemoved = 0;
+        int numLoops = 0;
         visitedStates.add(currentBoard.getId());
         while (!currentBoard.isSolved(currentBoard.getId())) {
             char lastMove = currentBoard.getLast();
@@ -143,13 +144,14 @@ public class SliderGame {
                     currentBoard.slideUp();
                 }
             }
-            if (visitedStates.size() > 500_000){
+            if (numLoops > 500_000){
                 System.out.println("Queue added=" + queueAdded + " Removed=" + queueRemoved);
                 return new Board(currentBoard.getId(), currentBoard.getSteps());
             } else if (movesToDo.isNotEmpty()) {
                 currentBoard = movesToDo.deleteMin();
                 queueRemoved++;
             }
+            numLoops++;
         }
         Board boardCopy = new Board(currentBoard.getId(), currentBoard.getSteps());
         if (show) {

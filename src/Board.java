@@ -8,6 +8,7 @@ public class Board implements Comparable<Board> {
     private int blankRow;   // Row location of blank
     private int blankCol;   // Column location of blank
     private String steps = "";
+    private final int priority;
 
     /**
      * Generate a new board
@@ -15,6 +16,7 @@ public class Board implements Comparable<Board> {
     public Board() {
         board = new int[SIZE][SIZE];
         this.steps = "";
+        this.priority = getPriority();
     }
 
     /**
@@ -36,6 +38,7 @@ public class Board implements Comparable<Board> {
             }
         }
         this.steps = steps;
+        this.priority = getPriority();
     }
 
     public char getLast(){
@@ -261,9 +264,9 @@ public class Board implements Comparable<Board> {
 
     @Override
     public int compareTo(Board otherBoard) {
-        if (this.getPriority() > otherBoard.getPriority()) {
+        if (this.priority > otherBoard.priority) {
             return 1;
-        } else if (this.getPriority() < otherBoard.getPriority()) {
+        } else if (this.priority < otherBoard.priority) {
             return -1;
         }
         return 0;

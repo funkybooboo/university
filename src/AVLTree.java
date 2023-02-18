@@ -228,43 +228,16 @@ public class AVLTree<E extends Comparable<? super E>> implements Store<E>{
      */
     public E deleteMin() {
         if (root == null) return null;
-        if (root.left == null) {
-            Node<E> temp = root;
-            root = null;
-            return temp.data;
-        }
-        Store<Node<E>> store = deleteMin(root.left, root, false);
-        root = store.parent;
-        return store.child.data;
+        E min = findMin();
+        root = deleteMin(root);
+        return min;
     }
 
-    private Store<Node<E>> deleteMin(Node<E> node, Node<E> parent, boolean removed){
-        if (node.left == null) return new Store<>(node, parent, removed);
-        Store<Node<E>> store = deleteMin(node.left, node, removed);
-        node = store.child;
-        parent.left = store.parent;
-        removed = store.removed;
-        if (node.right != null && !removed) {
-            parent.left.left = node.right;
-            parent.left = balance(parent.left);
-            removed = true;
-        } else if (!removed){
-            parent.left.left = null;
-            parent.left = balance(parent.left);
-            removed = true;
-        }
-        return new Store<>(node, balance(parent), removed);
-    }
-
-    private static class Store<T> {
-        T child;
-        T parent;
-        boolean removed;
-        public Store(T child, T parent, boolean removed) {
-            this.child = child;
-            this.parent = parent;
-            this.removed = removed;
-        }
+    private Node<E> deleteMin(Node<E> node) {
+        if (node == null) return null;
+        if (node.left == null) return node.right;
+        node.left = deleteMin(node.left);
+        return balance(node);
     }
 
     /*

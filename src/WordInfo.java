@@ -1,4 +1,4 @@
-import java.util.Objects;
+import hashtables.HashTable;
 
 public class WordInfo {
     private final String word;
@@ -119,12 +119,17 @@ public class WordInfo {
 
     @Override
     public int hashCode() {
-        return Objects.hash(word);
+        int hashValue = HashTable.nextPrime(size);
+        int nextPrime = HashTable.nextPrime(hashValue);
+        for (int i = 0; i < word.length(); i++) {
+            hashValue = ((hashValue * nextPrime) + word.charAt(i));
+        }
+        return hashValue;
     }
 
     @Override
     public String toString() {
-        return "WordInfo{" + "word='" + word + '\'' + ", size=" + size + ", sumOfLetterValues=" + sumOfLetterValues + ", lengthValue=" + lengthValue + ", wordFrequency=" + wordFrequency + '}';
+        return "WordInfo{word='"+word+"', wordFrequency="+wordFrequency+"}";
     }
 
     public static void main(String[] args){
@@ -134,6 +139,7 @@ public class WordInfo {
         int aHash = a.hashCode();
         int bHash = b.hashCode();
         int cHash = c.hashCode();
+
         if (a.equals(b)) {
             System.out.println("a = b");
         } else {

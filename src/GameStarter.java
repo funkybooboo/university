@@ -1,10 +1,8 @@
 import hashtables.DoubleHashTable;
 import hashtables.HashTable;
-import hashtables.QuadraticHashTable;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class GameStarter {
@@ -26,27 +24,37 @@ public class GameStarter {
 
     public void playGame(String filename) {
         System.out.println("FILE " + filename);
-        ArrayList<WordInfo> validWords = new ArrayList<>();
+        int gameScore = 0;
         try {
-            Scanner scanner = new Scanner(new File(filename));
-            while (scanner.hasNext()) {
-                String word = scanner.next();
-                if (!DICTIONARY.contains(word)) continue;
-                WordInfo wordInfo = new WordInfo(word);
-                if (!H.insert(wordInfo)) {
-                    H.find(wordInfo).incrementWordFrequency();
-                } else {
-                    validWords.add(wordInfo);
-                }
-            }
+            getValidWords(filename);
+            gameScore = getGameScore(filename, gameScore);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        int gameScore = 0;
-        for (WordInfo wordInfo : validWords) {
+        printGameResults(gameScore);
+    }
+
+    private int getGameScore(String filename, int gameScore) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(filename));
+        while (scanner.hasNext()) {
+            String word = scanner.next();
+            if (!DICTIONARY.contains(word)) continue;
+            WordInfo wordInfo = H.find(new WordInfo(word));
             gameScore += wordInfo.computeScore();
         }
-        printGameResults(gameScore);
+        return gameScore;
+    }
+
+    private void getValidWords(String filename) throws FileNotFoundException {
+        Scanner scanner = new Scanner(new File(filename));
+        while (scanner.hasNext()) {
+            String word = scanner.next();
+            if (!DICTIONARY.contains(word)) continue;
+            WordInfo wordInfo = new WordInfo(word);
+            if (!H.insert(wordInfo)) {
+                H.find(wordInfo).incrementWordFrequency();
+            }
+        }
     }
 
     private void printGameResults(int gameScore) {

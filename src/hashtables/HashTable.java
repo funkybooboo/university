@@ -170,7 +170,7 @@ public abstract class HashTable<E> {
         array = new HashEntry[nextPrime(arraySize)];
     }
 
-    protected static int nextPrime(int startingNumber) {
+    public static int nextPrime(int startingNumber) {
         if (startingNumber % 2 == 0) {
             startingNumber++;
         }

@@ -2,6 +2,10 @@ package heap.leftist_heap;
 
 public class MaxLeftistHeap<E extends Comparable<? super E>> extends LeftistHeap<E> {
 
+    public MaxLeftistHeap() {
+        super();
+    }
+
     public MaxLeftistHeap(E[] data) {
         super(data);
     }

@@ -1,8 +1,6 @@
 package heap.leftist_heap;
 
-import heap.Heap;
-
-public abstract class LeftistHeap<E extends Comparable<? super E>> extends Heap {
+public abstract class LeftistHeap<E extends Comparable<? super E>> {
 
     protected static class Node<E> {
         E data;
@@ -99,6 +97,7 @@ public abstract class LeftistHeap<E extends Comparable<? super E>> extends Heap 
 
         LeftistHeap<Integer> minLeftistHeap = new MinLeftistHeap<>(data);
         minLeftistHeap.print();
+        System.out.println("--------------------");
         LeftistHeap<Integer> maxLeftistHeap = new MaxLeftistHeap<>(data);
         maxLeftistHeap.print();
 

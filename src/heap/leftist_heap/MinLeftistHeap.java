@@ -2,6 +2,10 @@ package heap.leftist_heap;
 
 public class MinLeftistHeap<E extends Comparable<? super E>> extends LeftistHeap<E> {
 
+    public MinLeftistHeap() {
+        super();
+    }
+
     public MinLeftistHeap(E[] data) {
         super(data);
     }
@@ -18,7 +22,6 @@ public class MinLeftistHeap<E extends Comparable<? super E>> extends LeftistHeap
             return swap(heap2, heap1);
         }
     }
-
 
 
 }

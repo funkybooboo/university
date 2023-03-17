@@ -1,4 +1,4 @@
-public class Disk {
+public class Disk implements Comparable<Disk> {
 
     String contents;
     int remainingSpace;
@@ -13,12 +13,17 @@ public class Disk {
     public boolean add(int oneFileSize){
         if (remainingSpace<oneFileSize) return false;
         remainingSpace-=oneFileSize;
-        contents+= " "  + oneFileSize;
+        contents += " "  + oneFileSize;
         return true;
     }
 
     public String toString(){
         return id + "(" + remainingSpace + ")  :" + contents;
      }
+
+    @Override
+    public int compareTo(Disk otherDisk) {
+        return Integer.compare(this.remainingSpace, otherDisk.remainingSpace);
+    }
 
 }

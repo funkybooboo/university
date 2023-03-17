@@ -1,8 +1,6 @@
 package heap.heap_sort;
 
-import heap.Heap;
-
-public abstract class HeapSort<E extends Comparable<? super E>> extends Heap {
+public abstract class HeapSort<E extends Comparable<? super E>> {
 
     public void sort(E[] arr) {
         int n = arr.length;

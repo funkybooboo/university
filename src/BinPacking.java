@@ -12,6 +12,7 @@ public class BinPacking {
 
     private static final int BINSIZE = 100;
     private final int[] requests;
+    private final int printSize = 100;
 
     public BinPacking(int size){
         Random rand  = new Random(size); //Seed will cause the same sequence of numbers to be generated each test
@@ -19,7 +20,7 @@ public class BinPacking {
         for (int i = 0; i < size; i++){
             requests[i] = rand.nextInt(BINSIZE)+1;
         }
-        if (size <= 100){
+        if (size <= printSize){
             System.out.println("Size " + size + " " + Arrays.toString(requests));
         }
     }
@@ -55,7 +56,7 @@ public class BinPacking {
 
         while (!maxLeftistHeap.isEmpty()) {
             Disk disk = maxLeftistHeap.delete();
-            if (size <= 100) {
+            if (size <= printSize) {
                 System.out.println("\t"+disk.toString());
             }
             numDisksUsed++;
@@ -85,7 +86,7 @@ public class BinPacking {
         for (int i = 0; i < size; i++) {
             requests[i] = tempRequests[i];
         }
-        if (size <= 100){
+        if (size <= printSize){
             System.out.println(Arrays.toString(requests));
         }
         return scheduleOnLineWorstFit("Decreasing Worst Fit Disk Packing");

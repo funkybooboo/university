@@ -29,7 +29,7 @@ public class WaterPercolationGrid {
     }
 
     private int getCellID(int x, int y) {
-        return (SIZE*y)+x;
+        return (SIZE*x)+y;
     }
 
     private int[] getCellXY(int id) {

@@ -9,7 +9,6 @@ public class WaterPercolationGrid {
     private final int topCellID;
     private final int bottomCellID;
 
-
     public WaterPercolationGrid(int size) {
         this.SIZE = size;
         topCellID = SIZE*SIZE;
@@ -45,13 +44,13 @@ public class WaterPercolationGrid {
     // ANSI Colors Java
     private String getStringColor(String color) {
         if (Objects.equals(color, "black")) {
-            return "\u001B[40m X \u001B[0m";
+            return "\u001B[40m ` \u001B[0m";
         } else if (Objects.equals(color, "white")) {
-            return "\u001B[31m X \u001B[0m";
+            return "\u001B[31m ` \u001B[0m";
         } else if (Objects.equals(color, "blue")) {
-            return "\u001B[44m X \u001B[0m";
+            return "\u001B[44m ` \u001B[0m";
         } else {
-            return "\u001B[41m X \u001B[0m";
+            return "\u001B[41m ` \u001B[0m";
         }
     }
 
@@ -104,7 +103,7 @@ public class WaterPercolationGrid {
 
     private void redify(int x, int y) {
         if (x < 0 || y < 0 || x > SIZE-1 || y > SIZE-1) return;
-        if (Objects.equals(GRID[x][y], "black") || Objects.equals(GRID[x][y], "white") ) return;
+        if (Objects.equals(GRID[x][y], "black") || Objects.equals(GRID[x][y], "white")) return;
         if (x != SIZE-1 && Objects.equals(GRID[x + 1][y], "blue")) {
             GRID[x + 1][y] = "red";
             redify(x + 1, y);
@@ -199,13 +198,27 @@ public class WaterPercolationGrid {
 
     public static void main(String[] args) {
         int size = 20;
+        int numberOfTrials = 5;
+        int count = numberOfTrials;
+        double[] stats = new double[count];
         int numBlocks = size*size;
-        WaterPercolationGrid waterPercolationGrid = new WaterPercolationGrid(size);
-        int numberOfCellsOpened = waterPercolationGrid.runSimulation();
-        double percentage = 100*((double) numberOfCellsOpened / (double) numBlocks);
-        System.out.println("Grid size: "+size+"x"+size);
-        System.out.println("Number of cells: "+numBlocks);
-        System.out.printf("Percentage of grid open: %.2f", percentage);
+        while (count > 0) {
+            WaterPercolationGrid waterPercolationGrid = new WaterPercolationGrid(size);
+            int numberOfCellsOpened = waterPercolationGrid.runSimulation();
+            double percentage = 100*((double) numberOfCellsOpened / (double) numBlocks);
+            stats[count-1] = percentage;
+            System.out.println("Grid size: "+size+"x"+size);
+            System.out.println("Number of cells: "+numBlocks);
+            System.out.printf("Percentage of grid open: %.2f", percentage);
+            System.out.println("%\n");
+            count--;
+        }
+        double sum = 0;
+        for (double stat : stats) {
+            sum += stat;
+        }
+        double overallPercentage = sum / (double) numberOfTrials;
+        System.out.printf("\nAverage percentage after "+numberOfTrials+" simulations: %.2f", overallPercentage);
         System.out.println("%");
     }
 

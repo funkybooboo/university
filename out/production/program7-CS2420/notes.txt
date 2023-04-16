@@ -2,3 +2,8 @@ Given a graph I need to find the cheapest paths with the maximum amount of flow.
 To do this I need to use the bellmanford algorithm to find the shortest one at a time.
 Once I have found a shortest path I need to update the residual matrix so that when I come to find the next shortest path there will be negative flows avalible to me,
 so when the next cheapest path is found it will take the negative flows so that many flows can get from source to sink
+        // only care about path from source to sink
+        // update residual, so I cant take that path again then do bellmanFord
+        // flow for the path = lowest flow for path
+        // bellman returns true if it finds a path from source to sick, if not then I know I have found the max flow
+        // at the end look at capacity vs residual to find out the final paths and max flow

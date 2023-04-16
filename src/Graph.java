@@ -107,31 +107,42 @@ public class Graph {
 
     private String getSourceToSinkPath() {
         StringBuilder path = new StringBuilder();
-        path.append(sink);
+        path.append(sink).append(" ");
         int pred = sink;
         while (pred != source) {
-            path.append(predecessors[pred]);
+            path.append(predecessors[pred]).append(" ");
             pred = predecessors[pred];
         }
-        return path.reverse().toString();
+        reverse(path);
+        return path.toString().trim();
     }
 
-    private int getFlow(String path) {
+    private void reverse(StringBuilder path) {
+        String[] splitPath = path.toString().trim().split(" ");
+        path.setLength(0);
+        for (int i = splitPath.length-1; i >= 0; i--) {
+            path.append(splitPath[i]).append(" ");
+        }
+    }
+
+    private int getFlow(String path, int[][] array) {
+        String[] splitPath = path.split(" ");
         int flow = 0;
-        for (int i = 0, j = 1; i < path.length() && j < path.length(); i++, j++) {
-            int a = Integer.parseInt(String.valueOf(path.charAt(i)));
-            int b = Integer.parseInt(String.valueOf(path.charAt(j)));
-            if (residualCapacity[a][b] > flow) {
-                flow = residualCapacity[a][b];
+        for (int i = 0, j = 1; i < splitPath.length && j < splitPath.length; i++, j++) {
+            int a = Integer.parseInt(splitPath[i]);
+            int b = Integer.parseInt(splitPath[j]);
+            if (array[a][b] > flow) {
+                flow = array[a][b];
             }
         }
         return flow;
     }
 
     private void updateResidual(String path) {
-        for (int i = 0, j = 1; i < path.length() && j < path.length(); i++, j++) {
-            int a = Integer.parseInt(String.valueOf(path.charAt(i)));
-            int b = Integer.parseInt(String.valueOf(path.charAt(j)));
+        String[] splitPath = path.split(" ");
+        for (int i = 0, j = 1; i < splitPath.length && j < splitPath.length; i++, j++) {
+            int a = Integer.parseInt(splitPath[i]);
+            int b = Integer.parseInt(splitPath[j]);
             int temp = residualCapacity[a][b];
             residualCapacity[a][b] = 0;
             residualCapacity[b][a] = -temp;
@@ -139,28 +150,43 @@ public class Graph {
     }
 
     private String getFinalPaths() {
-        StringBuilder pathsToSink = new StringBuilder();
-        for (int i = 0; i < vertexCount; i++) {
+        StringBuilder paths = new StringBuilder();
+        int row = 0;
+        for (int col = 0; col < vertexCount; col++) {
             StringBuilder path = new StringBuilder();
-            path.append(i);
-            for (int j = 0; j < vertexCount; j++) {
-                if (originalCapacity[i][j] == 1 && residualCapacity[i][j] == 0) {
-                    path.append(j);
-
+            if (originalCapacity[row][col] > 0 && residualCapacity[row][col] == 0) {
+                path.append(row).append(" ");
+                path.append(col).append(" ");
+                int next = col;
+                do {
+                    next = buildPath(next);
+                    if (next > 0) {
+                        path.append(next).append(" ");
+                    }
+                } while (next != sink && next != -1);
+                if (next != -1) {
+                    paths.append(path.toString().trim()).append("\n");
                 }
             }
-            pathsToSink.append(path).append("\n");
         }
+        return paths.toString();
+    }
 
-        return pathsToSink.toString();
+    private int buildPath(int row) {
+        for (int col = 0; col < vertexCount; col++) {
+            if (originalCapacity[row][col] > 0 && residualCapacity[row][col] == 0) {
+                return col;
+            }
+        }
+        return -1;
     }
 
     private void findWeightedFlow() {
         System.out.println("working on getting paths");
         while(bellmanFord()) {
             String path = getSourceToSinkPath();
-            int flow = getFlow(path);
-            System.out.println("Found flow and path: "+flow+" "+path);
+            int flow = getFlow(path, residualCapacity);
+            System.out.println("Found flow: "+flow+" path: "+path);
             updateResidual(path);
         }
     }
@@ -170,8 +196,8 @@ public class Graph {
         int totalFlow = 0;
         String[] paths = getFinalPaths().split("\n");
         for (String path : paths) {
-            int flow = getFlow(path);
-            System.out.println("flow and path: "+flow+" "+path);
+            int flow = getFlow(path, originalCapacity);
+            System.out.println("Found flow: "+flow+" path: "+path);
             totalFlow += flow;
         }
         System.out.println("total flow: "+totalFlow);
@@ -185,16 +211,10 @@ public class Graph {
     }
 
     public static void main(String[] args) {
-        // testing
-        Graph graph = new Graph("data/match0.txt");
-        graph.minCostMaxFlow();
+        String[] files = {"data/match0.txt", "data/match1.txt", "data/match2.txt", "data/match3.txt", "data/match4.txt", "data/match5.txt","data/match6.txt", "data/match7.txt", "data/match8.txt", "data/match9.txt"};
+        for (String fileName : files) {
+            Graph graph = new Graph(fileName);
+            graph.minCostMaxFlow();
+        }
     }
-
-//    public static void main(String[] args) {
-//        String[] files = {"data/match0.txt", "data/match1.txt", "data/match2.txt", "data/match3.txt", "data/match4.txt", "data/match5.txt","data/match6.txt", "data/match7.txt", "data/match8.txt", "data/match9.txt"};
-//        for (String fileName : files) {
-//            Graph graph = new Graph(fileName);
-//            graph.minCostMaxFlow();
-//        }
-//    }
 }

@@ -86,7 +86,7 @@ public class Graph {
         for (int repeat = 1; repeat < vertexCount; repeat++) {
             for (int i = 0; i < vertexCount; i++) {
                 for (int j = 0; j < vertexCount; j++) {
-                    if (residualCapacity[i][j] != 0 && costsFromSource[i] + edgeCosts[i][j] < costsFromSource[j]) {
+                    if (residualCapacity[i][j] > 0 && costsFromSource[i] + edgeCosts[i][j] < costsFromSource[j]) {
                         costsFromSource[j] = costsFromSource[i] + edgeCosts[i][j];
                         predecessors[j] = i;
                     }
@@ -127,39 +127,50 @@ public class Graph {
 
     private int getFlow(String path, int[][] array) {
         String[] splitPath = path.split(" ");
-        int flow = 0;
+        int flow = INFINITY;
         for (int i = 0, j = 1; i < splitPath.length && j < splitPath.length; i++, j++) {
             int a = Integer.parseInt(splitPath[i]);
             int b = Integer.parseInt(splitPath[j]);
-            if (array[a][b] > flow) {
+            if (array[a][b] < flow) {
                 flow = array[a][b];
             }
         }
         return flow;
     }
 
-    private void updateResidual(String path) {
+    private int getPathCost(String path) {
+        String[] splitPath = path.split(" ");
+        int cost = 0;
+        for (int i = 0, j = 1; i < splitPath.length && j < splitPath.length; i++, j++) {
+            int a = Integer.parseInt(splitPath[i]);
+            int b = Integer.parseInt(splitPath[j]);
+            cost += edgeCosts[a][b];
+        }
+        return cost;
+    }
+
+    private void updateMatrix(int flow, String path, int[][] array) {
         String[] splitPath = path.split(" ");
         for (int i = 0, j = 1; i < splitPath.length && j < splitPath.length; i++, j++) {
             int a = Integer.parseInt(splitPath[i]);
             int b = Integer.parseInt(splitPath[j]);
-            int temp = residualCapacity[a][b];
-            residualCapacity[a][b] = 0;
-            residualCapacity[b][a] = -temp;
+            array[a][b] = array[a][b] - flow;
+            array[b][a] = array[b][a] + flow;
         }
     }
 
+    // This method is unneeded for assignment, but it gets final paths after bellmanFord is done.
     private String getFinalPaths() {
         StringBuilder paths = new StringBuilder();
-        int row = 0;
+        int[][] tempResidual = residualCapacity.clone();
         for (int col = 0; col < vertexCount; col++) {
             StringBuilder path = new StringBuilder();
-            if (originalCapacity[row][col] > 0 && residualCapacity[row][col] == 0) {
-                path.append(row).append(" ");
+            if (originalCapacity[source][col] > 0 && tempResidual[source][col] != 0) {
+                path.append(source).append(" ");
                 path.append(col).append(" ");
                 int next = col;
                 do {
-                    next = buildPath(next);
+                    next = buildPath(next, tempResidual);
                     if (next > 0) {
                         path.append(next).append(" ");
                     }
@@ -167,14 +178,15 @@ public class Graph {
                 if (next != -1) {
                     paths.append(path.toString().trim()).append("\n");
                 }
+                int flow = getFlow(path.toString(), tempResidual);
+                updateMatrix(flow, path.toString(), tempResidual);
             }
         }
         return paths.toString();
     }
-
-    private int buildPath(int row) {
+    private int buildPath(int row, int[][] tempResidual) {
         for (int col = 0; col < vertexCount; col++) {
-            if (originalCapacity[row][col] > 0 && residualCapacity[row][col] == 0) {
+            if (originalCapacity[row][col] > 0 && tempResidual[source][col] != 0) {
                 return col;
             }
         }
@@ -182,25 +194,26 @@ public class Graph {
     }
 
     private void findWeightedFlow() {
-        System.out.println("working on getting paths");
+        System.out.println("Paths found in order");
         while(bellmanFord()) {
             String path = getSourceToSinkPath();
             int flow = getFlow(path, residualCapacity);
-            System.out.println("Found flow: "+flow+" path: "+path);
-            updateResidual(path);
+            int pathCost = getPathCost(path);
+            System.out.println("Flow "+path+" ("+flow+")"+" $"+pathCost);
+            updateMatrix(flow, path, residualCapacity);
         }
     }
 
     private void finalEdgeFlow() {
-        System.out.println("Final paths");
-        int totalFlow = 0;
-        String[] paths = getFinalPaths().split("\n");
-        for (String path : paths) {
-            int flow = getFlow(path, originalCapacity);
-            System.out.println("Found flow: "+flow+" path: "+path);
-            totalFlow += flow;
+        System.out.println("Final flow on each edge");
+        for (int i = 1; i < vertexCount-1; i++) {
+            for (int j = 1; j < vertexCount-1; j++) {
+                if (originalCapacity[i][j] > 0 && residualCapacity[i][j] < originalCapacity[i][j]) {
+                    int flow = originalCapacity[i][j] - residualCapacity[i][j];
+                    System.out.println("Flow "+i+"->"+j+" ("+flow+") $"+edgeCosts[i][j]);
+                }
+            }
         }
-        System.out.println("total flow: "+totalFlow);
     }
 
     public void minCostMaxFlow(){

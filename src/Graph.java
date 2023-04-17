@@ -162,7 +162,7 @@ public class Graph {
     // This method is unneeded for assignment, but it gets final paths after bellmanFord is done.
     private String getFinalPaths() {
         StringBuilder paths = new StringBuilder();
-        int[][] tempResidual = residualCapacity.clone();
+        int[][] tempResidual = originalCapacity.clone();
         for (int col = 0; col < vertexCount; col++) {
             StringBuilder path = new StringBuilder();
             if (originalCapacity[source][col] > 0 && tempResidual[source][col] != 0) {

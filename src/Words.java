@@ -32,4 +32,8 @@ public class Words {
         }
         return dp[len1][len2];
     }
+
+    public static void main(String[] args) {
+        System.out.println(minDistance("Nathaniel", "Kelsey"));
+    }
 }

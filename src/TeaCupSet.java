@@ -130,6 +130,7 @@ public class TeaCupSet {
         return getCupSizes(size, size);
     }
     private String getCupSizes(int largestSetSize, int numCupsInSet) {
+        int originalNumCupsInSet = numCupsInSet;
         int totalPrice = priceMatrix[largestSetSize-1][numCupsInSet-1];
         StringBuilder setSizes = new StringBuilder();
         while (numCupsInSet > 0) {
@@ -137,7 +138,7 @@ public class TeaCupSet {
             setSizes.append(largestSetSize).append(" ");
             numCupsInSet -= largestSetSize;
         }
-        if (getSetPrice(setSizes.toString()) == totalPrice) {
+        if (getSetPrice(setSizes.toString()) == totalPrice && originalNumCupsInSet == getSetSizesTotal(setSizes)) {
             return setSizes.toString();
         }
         throw new RuntimeException("Found sum of set sizes prices do not match best price");
@@ -155,6 +156,14 @@ public class TeaCupSet {
             }
         }
         return largestSetSize;
+    }
+
+    private int getSetSizesTotal(StringBuilder setSizes) {
+        int total = 0;
+        for (String part : setSizes.toString().split(" ")) {
+            total += Integer.parseInt(part);
+        }
+        return total;
     }
 
     private int getSetPrice(String set) {

@@ -90,17 +90,10 @@ public class TeaCupSet {
         int price1 = priceMatrix[i-1][j];
         int price2 = 0;
         if (largestSetSize <= numCupsInSet) {
-            while(numCupsInSet > 0) {
-                if (numCupsInSet - largestSetSize > 0) {
-                    price2 += prices.get(largestSetSize);
-                    numCupsInSet -= largestSetSize;
-                } else if (numCupsInSet - largestSetSize < 0) {
-                    price2 += priceMatrix[i][numCupsInSet-1];
-                    numCupsInSet = 0;
-                } else {
-                    price2 += prices.get(largestSetSize);
-                    numCupsInSet = 0;
-                }
+            price2 += prices.get(largestSetSize);
+            numCupsInSet -= largestSetSize;
+            if (numCupsInSet != 0) {
+                price2 += priceMatrix[largestSetSize-1][numCupsInSet-1];
             }
         }
         priceMatrix[i][j] = Math.max(price1, price2);
@@ -131,36 +124,37 @@ public class TeaCupSet {
         if (size < 1 || size > numCupsInSet) {
             throw new IllegalArgumentException("Invalid num of cups");
         }
-        if (size == 1) {
-            return 1+" ";
-        }
         if (size > largestSetSize) {
             return getCupSizes(largestSetSize, size);
         }
         return getCupSizes(size, size);
     }
     private String getCupSizes(int largestSetSize, int numCupsInSet) {
-        StringBuilder cups = new StringBuilder();
-        int thisPrice = priceMatrix[largestSetSize-1][numCupsInSet-1];
-        int prevPrice = priceMatrix[largestSetSize-2][numCupsInSet-1];
-        while (thisPrice == prevPrice) {
-            largestSetSize = largestSetSize - 1;
-            thisPrice = priceMatrix[largestSetSize-1][numCupsInSet-1];
-            prevPrice = priceMatrix[largestSetSize-2][numCupsInSet-1];
+        int totalPrice = priceMatrix[largestSetSize-1][numCupsInSet-1];
+        StringBuilder setSizes = new StringBuilder();
+        while (numCupsInSet > 0) {
+            largestSetSize = getLargestSetSize(largestSetSize, numCupsInSet);
+            setSizes.append(largestSetSize).append(" ");
+            numCupsInSet -= largestSetSize;
         }
-        int totalPrice = thisPrice;
-        int setPrice;
-        while (totalPrice > 0 && numCupsInSet > 0 && largestSetSize > 0) {
-            setPrice = prices.get(largestSetSize);
-            if (totalPrice >= setPrice && numCupsInSet >= largestSetSize) {
-                totalPrice -= setPrice;
-                cups.append(largestSetSize).append(" ");
-                numCupsInSet -= largestSetSize;
-            } else {
-                largestSetSize -= 1;
+        if (getSetPrice(setSizes.toString()) == totalPrice) {
+            return setSizes.toString();
+        }
+        throw new RuntimeException("Found sum of set sizes prices do not match best price");
+    }
+    private int getLargestSetSize(int largestSetSize, int numCupsInSet) {
+        if (largestSetSize-2 >= 0 && numCupsInSet-1 >= 0) {
+            int prevPrice = priceMatrix[largestSetSize-2][numCupsInSet-1];
+            int thisPrice = priceMatrix[largestSetSize-1][numCupsInSet-1];
+            while (prevPrice == thisPrice && largestSetSize-2 >= 0 && numCupsInSet-1 >= 0) {
+                prevPrice = priceMatrix[largestSetSize-2][numCupsInSet-1];
+                thisPrice = priceMatrix[largestSetSize-1][numCupsInSet-1];
+                if (prevPrice == thisPrice) {
+                    largestSetSize--;
+                }
             }
         }
-        return cups.toString().trim();
+        return largestSetSize;
     }
 
     private int getSetPrice(String set) {

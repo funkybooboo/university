@@ -1,3 +1,40 @@
-/filter {
+%!PS
 
-} def
+/filter 
+{
+
+    count 2 gt 
+	{
+		/func
+        exch
+        def
+		
+		count
+		{
+			dup
+            /func load exec
+            {
+                pop
+            }
+            {
+                count 1 roll
+            }
+            ifelse
+			
+		}
+		repeat
+		
+	}
+	{
+		count 1 eq
+		{
+			pop
+		}
+		if
+	}
+	ifelse
+    
+    
+
+} 
+def

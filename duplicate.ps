@@ -1,3 +1,47 @@
-/duplicate {
+%!PS
 
-} def
+/duplicate 
+{
+	
+	count 2 gt 
+	{
+		/value
+		exch
+		def
+		
+		/goal
+		value value add
+		def
+		
+		count
+		{
+			dup
+			value add 
+			goal eq
+			{
+				dup
+				count 2 roll	
+			}
+			{
+				count 1 roll
+			}
+			ifelse
+			
+		}
+		repeat
+		
+		
+	}
+	{
+		count 1 eq
+		{
+			pop
+		}
+		if
+	}
+	ifelse
+	
+	
+	
+} 
+def

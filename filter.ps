@@ -4,37 +4,35 @@
 {
 	1 dict begin
 
-    count 2 gt 
-	{
-		/func
-        exch
-        def
-		
-		count
+		count 2 gt 
 		{
-			dup
-            /func load exec
-            {
-                pop
-            }
-            {
-                count 1 roll
-            }
-            ifelse
+			/func exch def
+			
+			count
+			{
+				dup
+				/func load exec
+				{
+					pop
+				}
+				{
+					count 1 roll
+				}
+				ifelse
+				
+			}
+			repeat
 			
 		}
-		repeat
-		
-	}
-	{
-		count 1 ge
 		{
-			pop
-		}
-		if
+			count 1 ge
+			{
+				pop
+			}
+			if
 
-	}
-	ifelse
+		}
+		ifelse
     
 	end
 } 

@@ -4,43 +4,36 @@
 {
 	1 dict begin
 
-	count 2 gt 
-	{
-		/value
-		exch
-		def
-		
-		/goal
-		value value add
-		def
-		
-		count
+		count 2 gt 
 		{
-			dup
-			value add 
-			goal eq
+			/value exch def
+			
+			count
 			{
 				dup
-				count 2 roll	
+				value eq
+				{
+					dup
+					count 2 roll	
+				}
+				{
+					count 1 roll
+				}
+				ifelse
+				
 			}
-			{
-				count 1 roll
-			}
-			ifelse
+			repeat
+			
 			
 		}
-		repeat
-		
-		
-	}
-	{
-		count 1 eq
 		{
-			pop
+			count 1 eq
+			{
+				pop
+			}
+			if
 		}
-		if
-	}
-	ifelse
+		ifelse
 	
 	end
 	

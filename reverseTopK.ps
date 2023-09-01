@@ -1,3 +1,30 @@
-/reverseTopK {
+%!PS
 
-} def
+/reverseTopK 
+{
+    1 dict begin
+
+        count 2 gt
+        {
+            /num exch def
+
+            num 1 sub
+            {
+                num 1 roll
+                /num num 1 sub def
+            }
+            repeat
+
+        }
+        {
+            count 1 ge
+            {
+                pop
+            }
+            if
+        }
+        ifelse
+
+    end
+} 
+def

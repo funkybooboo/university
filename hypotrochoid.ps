@@ -1,3 +1,46 @@
-/hypotrochoid {
+%!PS
 
-} def
+/hypotrochoid 
+{
+    1 dict begin
+
+        306 396 moveto
+
+        count 4 eq
+        {
+            /r exch def     % numberOfTimesAround
+            /d exch def     % lengthOfArm
+            /b exch def     % radiusOfSmallCircle
+            /a exch def     % radiusOfBigCircle
+
+            /draw
+            {
+                x y lineto
+            }
+            def
+
+            /i 0 def
+            360
+            {
+                /t i r mul def
+
+                /x a b sub t cos mul d a b sub t mul b div cos mul add def
+                /y a b sub t sin mul d a b sub t mul b div sin mul sub def
+                
+                draw
+
+                /i i 1 add def
+            }
+            repeat
+
+            stroke
+
+        }
+        {
+            clear
+        }
+        ifelse
+
+    end
+} 
+def

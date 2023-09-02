@@ -1,41 +1,45 @@
+%!PS
+
 /fractal 
 { 
     1 dict begin
         count 1 eq
         {
+            /num exch def
+
+            /middleX 8.5 2 div 72 mul def       % 72 is about an inch
+            /middleY 11 2 div 72 mul def
+
+            /tLength 72 2 mul def
+            /tHight 72 2 mul def
+            
+            /draw
+            {   
+                newpath
+
+                    0 0 moveto
+                    tLength 0 lineto
+                    
+                    tLength 2 div tHight lineto
+
+                    0 0 lineto
+
+                    closepath
+
+                fill
+            }
+            def
+
             gsave
-                /num exch def
-
-                /middleX 8.5 2 div 72 mul def       % 72 is about an inch
-                /middleY 11 2 div 72 mul def
-                
-                /bLength 72 2 mul def
-                /bHight 72 2 mul def
-                
-                /draw
-                {   
-                    newpath
-
-                        0 0 moveto
-                        bLength 0 rlineto
-                        0 bHight rlineto
-                        bLength neg 0 rlineto
-                        closepath
-
-                    fill
-                }
-                def
-
-                middleX middleY moveto
-
                 1 0 0 setrgbcolor
-                0 0 translate
+                middleX middleY moveto
+                middleX middleY translate
                 draw
-                bLength bHight translate
-                draw
+
+                /num num 1 sub def
                 
 
-            showpage
+                showpage
             grestore
         }
         {
@@ -45,3 +49,5 @@
     end
 } 
 def
+
+1 fractal

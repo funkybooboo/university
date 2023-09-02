@@ -5,24 +5,26 @@
     1 dict begin
         count 4 eq
         {
-            gsave
-                
-                /middleX 8.5 2 div 72 mul def       % 72 is about an inch
-                /middleY 11 2 div 72 mul def
-                middleX middleY moveto
 
-                /r exch def     % numberOfTimesAround
-                /d exch def     % lengthOfArm
-                /b exch def     % radiusOfSmallCircle
-                /a exch def     % radiusOfBigCircle
+            /r exch def     % numberOfTimesAround
+            /d exch def     % lengthOfArm
+            /b exch def     % radiusOfSmallCircle
+            /a exch def     % radiusOfBigCircle
 
-                /draw
-                {
-                    newpath
+            /middleX 8.5 2 div 72 mul def       % 72 is about an inch
+            /middleY 11 2 div 72 mul def
+
+            /draw
+            {
+                newpath
                     x y lineto
-                    stroke
-                }
-                def
+            }
+            def
+
+            gsave
+
+                middleX middleY moveto
+                middleX middleY translate
 
                 /i 0 def
                 360
@@ -32,13 +34,15 @@
                     /x a b sub t cos mul d a b sub t mul b div cos mul add def
                     /y a b sub t sin mul d a b sub t mul b div sin mul sub def
                     
+                    
                     draw
 
                     /i i 1 add def
                 }
                 repeat
-            
+                stroke
                 showpage
+                
             grestore
         }
         {
@@ -48,3 +52,5 @@
     end
 } 
 def
+
+100 25 40 1 hypotrochoid

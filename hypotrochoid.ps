@@ -21,12 +21,13 @@
             }
             def
 
+            /i 0 def
+
             gsave
 
                 middleX middleY moveto
                 middleX middleY translate
 
-                /i 0 def
                 360
                 {
                     /t i r mul def
@@ -40,6 +41,7 @@
                     /i i 1 add def
                 }
                 repeat
+
                 stroke
                 showpage
                 

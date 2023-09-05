@@ -2,9 +2,10 @@
 
 /fractal 
 { 
-    1 dict begin
-        count 1 eq
-        {
+    
+    count 1 eq
+    {
+        1 dict begin
             /num exch def
 
             /middleX 8.5 2 div 72 mul def       % 72 is about an inch
@@ -12,8 +13,14 @@
 
             /tLength 72 2 mul def
             /tHight 72 2 mul def
+
+            /decNum
+            {
+                /num num 1 sub def
+            }
+            def
             
-            /draw
+            /tDraw
             {   
                 newpath
 
@@ -32,21 +39,27 @@
 
             gsave
                 1 0 0 setrgbcolor
-                middleX middleY moveto
                 middleX middleY translate
-                draw
+                0 0 moveto
 
-                /num num 1 sub def
+                tDraw
+                decNum
+
+                .5 .5 scale
+
+                45 rotate
                 
+
 
                 showpage
             grestore
-        }
-        {
-            clear
-        }
-        ifelse
-    end
+        end
+    }
+    {
+        clear
+    }
+    ifelse
+    
 } 
 def
 

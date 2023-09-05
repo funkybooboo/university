@@ -14,16 +14,11 @@
             /middleX 8.5 2 div 72 mul def       % 72 is about an inch
             /middleY 11 2 div 72 mul def
 
-            /draw
-            {
-                newpath
-                    x y lineto
-            }
-            def
-
             /i 0 def
 
             gsave
+
+                newpath
 
                 middleX middleY moveto
                 middleX middleY translate
@@ -34,9 +29,17 @@
 
                     /x a b sub t cos mul d a b sub t mul b div cos mul add def
                     /y a b sub t sin mul d a b sub t mul b div sin mul sub def
+
+                    i 0 eq 
+                    {
+                        x y moveto
+                        x y lineto
+                    }
+                    {
+                        x y lineto
+                    }
+                    ifelse
                     
-                    
-                    draw
 
                     /i i 1 add def
                 }
@@ -54,5 +57,3 @@
     end
 } 
 def
-
-100 25 40 1 hypotrochoid

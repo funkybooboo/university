@@ -2,65 +2,67 @@
 
 /fractal 
 { 
-    
     count 1 eq
     {
         1 dict begin
             /num exch def
-
-            /middleX 8.5 2 div 72 mul def       % 72 is about an inch
-            /middleY 11 2 div 72 mul def
-
-            /tLength 72 2 mul def
-            /tHight 72 2 mul def
-
-            /decNum
+            num 1 ge
             {
-                /num num 1 sub def
-            }
-            def
-            
-            /tDraw
-            {   
-                newpath
+                /middleX 8.5 2 div 72 mul def       % 72 is about an inch
+                /middleY 11 2 div 72 mul def
 
-                    0 0 moveto
-                    tLength 0 lineto
-                    
-                    tLength 2 div tHight lineto
+                /tLength 72 2 mul def
+                /tHight 72 2 mul def
 
-                    0 0 lineto
-
-                    closepath
-
-                fill
-            }
-            def
-
-            gsave
-                1 0 0 setrgbcolor
-                middleX middleY translate
-                0 0 moveto
-
-                tDraw
-                decNum
-
-                .5 .5 scale
-                 
-                45 rotate
+                /decNum
+                {
+                    /num num 1 sub def
+                }
+                def
                 
+                /tDraw
+                {   
+                    newpath
+                        0 0 moveto
+                        tLength 0 lineto
+                        tLength 2 div tHight lineto
+                        0 0 lineto
+                        closepath
+                    fill
+                }
+                def
 
+                gsave
+                    1 0 0 setrgbcolor
+                    middleX middleY translate
+                    0 0 moveto
 
-                showpage
-            grestore
+                    tDraw
+                    decNum
+
+                    % transformations for both
+                    .5 .5 scale
+                    
+                    % transformations for right
+                    gsave
+                    -45 rotate
+                    tLength 2 div 0 translate
+                    num fractal
+                    grestore
+
+                    % transformations for left
+                    gsave
+                    45 rotate
+                    middleX middleY translate
+                    num fractal
+                    grestore
+
+                    showpage
+                grestore
+            }
+            if
         end
     }
-    {
-        clear
-    }
-    ifelse
-    
+    if
 } 
 def
-
-1 fractal

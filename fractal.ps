@@ -8,53 +8,69 @@
             /num exch def
             num 1 ge
             {
-                /middleX 8.5 2 div 72 mul def       % 72 is about an inch
-                /middleY 11 2 div 72 mul def
+                /startX 8.5 2 div 72 mul def       % 72 is about an inch
+                /startY 11 2 div 72 mul def
 
                 /tLength 72 2 mul def
                 /tHight 72 2 mul def
 
-                /decNum
-                {
-                    /num num 1 sub def
-                }
-                def
-                
                 /tDraw
                 {   
                     newpath
                         0 0 moveto
-                        tLength 0 lineto
-                        tLength 2 div tHight lineto
+                        tLength 2 div neg tHight neg lineto
+                        tLength 2 div tHight neg lineto
                         0 0 lineto
                         closepath
                     fill
                 }
                 def
 
+                /decNum { /num num 1 sub def } def
+
+                /rFractal
+                {
+                    count 1 eq
+                    {
+                        num 1 ge
+                        {
+                            1 dict begin
+                                /num exch def
+                                decNum
+
+                                % transformations for right
+                                gsave
+                                    tLength 2 div tHight neg translate
+                                    .5 .5 scale
+                                    45 rotate
+                                    tDraw
+                                    num rFractal
+                                grestore
+
+                                % transformations for left
+                                gsave
+                                    tLength 2 div neg tHight neg translate
+                                    .5 .5 scale
+                                    -45 rotate
+                                    tDraw
+                                    num rFractal
+                                grestore
+                                
+                            end
+                        }
+                        if
+                    }
+                    if
+                }
+                def
+
                 gsave
                     1 0 0 setrgbcolor
-                    middleX middleY translate
+                    startX startY translate
 
                     tDraw
-                    decNum
 
-                    % transformations for both
-                    .5 .5 scale
-                    
-                    % transformations for right
-                    gsave
-                        -45 rotate
-                        tLength 2 div 0 translate
-                        num fractal
-                    grestore
-
-                    % transformations for left
-                    gsave
-                        45 rotate
-                        middleX middleY translate
-                        num fractal
-                    grestore
+                    num rFractal
 
                     showpage
                 grestore

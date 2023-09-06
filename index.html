@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Weather</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <h1 class="box whiteblue">Vue.js Weather App</h1>
+            <div class="box blue" v-if="gotAllData < 3">
+                <p>{{ loadingMessage }}</p>
+            </div>
+            <div class="box blue" v-if="gotAllData === 3">
+                <h2>Your Location</h2>
+                <p>{{ locationMessage }}</p>
+            </div>
+            <div class="box b_red" v-if="latAndLogError">{{ latAndLogErrorMessage }}</div>
+            <div class="box tan" v-if="gotAllData === 3">
+                <h2>Current Conditions</h2>
+                <h4>{{ currentWeatherConditions.message }}</h4>
+                <p>{{ currentWeatherConditions.currentTemp }}</p>
+                <p>{{ currentWeatherConditions.high }}</p>
+                <p>{{ currentWeatherConditions.low }}</p>
+                <p>{{ currentWeatherConditions.sky }}</p>
+                <p>{{ currentWeatherConditions.humidity }}</p>
+                <p>{{ currentWeatherConditions.pressure }}</p>
+            </div>
+            <div class="box b_red" v-if="currentWeatherError">{{ currentWeatherErrorMessage }}</div>
+            <div class="box cyan" v-if="gotAllData === 3">
+                <h2>5 Day 3-hour forecast</h2>
+                <div id="vote">
+                    <span id="red">{{ unlikely }} unlikely</span>
+                    <span id="grey">{{ neutral }} neutral</span>
+                    <span id="green"> {{ likely }} likely</span>
+                </div>
+                <div id="forecastContainer">
+                    <div v-for="(forecast, index) in forecastData" class="box" :class="{b_grey: forecast.color === 'grey', b_green: forecast.color === 'green', b_red: forecast.color === 'red'}" @click="changeColor(index, forecast.color)">
+                        <h4>{{ forecast.message }}</h4>
+                        <p>{{ forecast.temp }}</p>
+                        <p>{{ forecast.sky }}</p>
+                        <p>{{ forecast.humidity }}</p>
+                        <p>{{ forecast.pressure }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="box b_red" v-if="forecastError">{{ forecastErrorMessage }}</div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>

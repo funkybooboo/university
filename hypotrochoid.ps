@@ -1,59 +1,49 @@
 %!PS
 
+% Author: Nate Stott
+% Date: Sep 6 2023
+% Assignment 1 part 4/5 for Curtis Dyreson CS4700 USU 
+
 /hypotrochoid 
 {
     1 dict begin
         count 4 eq
         {
-
             /r exch def     % numberOfTimesAround
             /d exch def     % lengthOfArm
             /b exch def     % radiusOfSmallCircle
             /a exch def     % radiusOfBigCircle
-
+            
             /startX 8.5 2 div 72 mul def       % 72 is about an inch
             /startY 11 2 div 72 mul def
 
             /i 0 def
-
             gsave
-
                 newpath
-
-                startX startY translate
-                0 0 moveto
-
-                360
-                {
-                    /t i r mul def
-
-                    /x a b sub t cos mul d a b sub t mul b div cos mul add def
-                    /y a b sub t sin mul d a b sub t mul b div sin mul sub def
-
-                    i 0 eq 
+                    startX startY translate
+                    0 0 moveto
+                    360
                     {
-                        x y moveto
-                        x y lineto
+                        /t i r mul def
+                        /x a b sub t cos mul d a b sub t mul b div cos mul add def
+                        /y a b sub t sin mul d a b sub t mul b div sin mul sub def
+                        i 0 eq 
+                        {
+                            x y moveto
+                            x y lineto
+                        }
+                        {
+                            x y lineto
+                        }
+                        ifelse
+                        /i i 1 add def
                     }
-                    {
-                        x y lineto
-                    }
-                    ifelse
-                    
-
-                    /i i 1 add def
-                }
-                repeat
-
+                    repeat
                 stroke
                 showpage
-                
             grestore
         }
-        {
-            clear
-        }
-        ifelse
+        if
     end
 } 
 def

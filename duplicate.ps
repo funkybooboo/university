@@ -1,13 +1,15 @@
 %!PS
 
+% Author: Nate Stott
+% Date: Sep 6 2023
+% Assignment 1 part 1/5 for Curtis Dyreson CS4700 USU 
+
 /duplicate 
 {
 	1 dict begin
-
 		count 2 gt 
 		{
 			/value exch def
-			
 			count
 			{
 				dup
@@ -20,11 +22,8 @@
 					count 1 roll
 				}
 				ifelse
-				
 			}
 			repeat
-			
-			
 		}
 		{
 			count 1 eq
@@ -34,8 +33,6 @@
 			if
 		}
 		ifelse
-	
 	end
-	
 } 
 def

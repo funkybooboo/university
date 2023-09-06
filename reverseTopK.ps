@@ -1,20 +1,21 @@
 %!PS
 
+% Author: Nate Stott
+% Date: Sep 6 2023
+% Assignment 1 part 3/5 for Curtis Dyreson CS4700 USU 
+
 /reverseTopK 
 {
     1 dict begin
-
         count 2 gt
         {
             /num exch def
-
             num 1 sub
             {
                 num 1 roll
                 /num num 1 sub def
             }
             repeat
-
         }
         {
             count 1 ge
@@ -24,7 +25,6 @@
             if
         }
         ifelse
-
     end
 } 
 def

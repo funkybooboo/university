@@ -1,13 +1,15 @@
 %!PS
 
+% Author: Nate Stott
+% Date: Sep 6 2023
+% Assignment 1 part 2/5 for Curtis Dyreson CS4700 USU 
+
 /filter 
 {
 	1 dict begin
-
 		count 2 gt 
 		{
 			/func exch def
-			
 			count
 			{
 				dup
@@ -19,10 +21,8 @@
 					count 1 roll
 				}
 				ifelse
-				
 			}
 			repeat
-			
 		}
 		{
 			count 1 ge
@@ -30,10 +30,8 @@
 				pop
 			}
 			if
-
 		}
 		ifelse
-    
 	end
 } 
 def

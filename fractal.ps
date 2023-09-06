@@ -28,6 +28,30 @@
 
                 /decNum { /num num 1 sub def } def
 
+                /tRight
+                {
+                    gsave
+                        tLength 2 div tHight neg translate
+                        .5 .5 scale
+                        45 rotate
+                        tDraw
+                        num rFractal
+                    grestore
+                }
+                def
+
+                /tLeft
+                {
+                    gsave
+                        tLength 2 div neg tHight neg translate
+                        .5 .5 scale
+                        -45 rotate
+                        tDraw
+                        num rFractal
+                    grestore
+                }
+                def
+
                 /rFractal
                 {
                     count 1 eq
@@ -37,25 +61,9 @@
                             decNum
                             num 1 ge
                             {
-
-                                % transformations for right
-                                gsave
-                                    tLength 2 div tHight neg translate
-                                    .5 .5 scale
-                                    45 rotate
-                                    tDraw
-                                    num rFractal
-                                grestore
-
-                                % transformations for left
-                                gsave
-                                    tLength 2 div neg tHight neg translate
-                                    .5 .5 scale
-                                    -45 rotate
-                                    tDraw
-                                    num rFractal
-                                grestore
+                                tRight
                                 
+                                tLeft
                             }
                             if
                         end

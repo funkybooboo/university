@@ -11,8 +11,8 @@
             /b exch def     % radiusOfSmallCircle
             /a exch def     % radiusOfBigCircle
 
-            /middleX 8.5 2 div 72 mul def       % 72 is about an inch
-            /middleY 11 2 div 72 mul def
+            /startX 8.5 2 div 72 mul def       % 72 is about an inch
+            /startY 11 2 div 72 mul def
 
             /i 0 def
 
@@ -20,7 +20,7 @@
 
                 newpath
 
-                middleX middleY translate
+                startX startY translate
                 0 0 moveto
 
                 360

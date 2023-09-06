@@ -35,7 +35,6 @@
                 gsave
                     1 0 0 setrgbcolor
                     middleX middleY translate
-                    0 0 moveto
 
                     tDraw
                     decNum
@@ -45,16 +44,16 @@
                     
                     % transformations for right
                     gsave
-                    -45 rotate
-                    tLength 2 div 0 translate
-                    num fractal
+                        -45 rotate
+                        tLength 2 div 0 translate
+                        num fractal
                     grestore
 
                     % transformations for left
                     gsave
-                    45 rotate
-                    middleX middleY translate
-                    num fractal
+                        45 rotate
+                        middleX middleY translate
+                        num fractal
                     grestore
 
                     showpage

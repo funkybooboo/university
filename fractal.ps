@@ -32,11 +32,11 @@
                 {
                     count 1 eq
                     {
-                        num 1 ge
-                        {
-                            1 dict begin
-                                /num exch def
-                                decNum
+                        1 dict begin
+                            /num exch def
+                            decNum
+                            num 1 ge
+                            {
 
                                 % transformations for right
                                 gsave
@@ -56,9 +56,9 @@
                                     num rFractal
                                 grestore
                                 
-                            end
-                        }
-                        if
+                            }
+                            if
+                        end
                     }
                     if
                 }

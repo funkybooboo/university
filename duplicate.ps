@@ -4,35 +4,40 @@
 % Date: Sep 6 2023
 % Assignment 1 part 1/5 for Curtis Dyreson CS4700 USU 
 
+% Use examples:
+% 1 2 3 4 5 2 duplicate -> 1 2 2 3 4 5
+% 1 1 duplicate -> 1 1
+% 1 duplicate -> -
+% duplicate -> -
+
 /duplicate 
 {
-	1 dict begin
-		count 2 gt 
+	1 dict begin	% create a local dictionary name space
+		count 2 gt 	% check that there is at least two items on the stack
 		{
-			/value exch def
-			count
+			/num exch def	% assign the top item on the stack to be mapped with /num 
+			count			% loop through all the items on the stack
 			{
-				dup
-				value eq
+				dup	num eq	% compare the top item on the stack with /num's value 
 				{
-					dup
-					count 2 roll	
+					dup		% duplicate the top item on the stack
+					count 2 roll	% take the top two items on the stack and move them to the bottom
 				}
 				{
-					count 1 roll
+					count 1 roll	% take the top item on the stack and move it to the bottom
 				}
 				ifelse
 			}
 			repeat
 		}
 		{
-			count 1 eq
+			count 1 eq		% if there is only one item on the stack then remove it
 			{
 				pop
 			}
 			if
 		}
 		ifelse
-	end
+	end		% end local dictionary name space
 } 
 def

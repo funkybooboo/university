@@ -14,18 +14,18 @@
 /reverseTopK 
 {
     1 dict begin
-        count 2 gt
+        count 2 ge      % check that there is at least 2 item on the stack
         {
-            /num exch def
-            num 1 sub
+            /num exch def       % map /num to the top item on the stack
+            num 1 sub           % loop over the list /num - 1 times
             {
-                num 1 roll
-                /num num 1 sub def
+                num 1 roll      % move the top item on the stack to the /num spot on the stack
+                /num num 1 sub def  % substract 1 from /num and remap
             }
             repeat
         }
         {
-            count 1 ge
+            count 1 ge  % if there is one item on the stack then get rid of it
             {
                 pop
             }

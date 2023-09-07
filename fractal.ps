@@ -5,46 +5,56 @@
 % Assignment 1 part 5/5 for Curtis Dyreson CS4700 USU 
 
 % Use examples:
+% 1 fractal -> -
+% 10 fractal -> -
+% 2 2 fractal -> 2 2
+% fractal -> -
+
+% NOTE
+% The graphics environment is restored to what it was before the prosedure is called.
+% Please give a traslation before calling prosedure. (200 200 tranlate -> -)
+% If a large number (above 100) is given then the program will crash.
+% Prosedure will draw a trianlge fractal. How many friangles is determaned by the number given.
 
 /fractal 
 { 
-    count 1 eq
+    count 1 ge
     {
         1 dict begin
             /num exch def
             num 1 ge
             {
 
-                /tLength 72 def
-                /tHight 72 def
+                /tLength 72 def     % triangle x length
+                /tHight 72 def      % triangle y length
 
-                /tDraw
+                /tDraw  % prosedure to draw a triagle
                 {   
                     newpath
-                        0 0 moveto
-                        tLength 2 div neg tHight neg lineto
-                        tLength 2 div tHight neg lineto
-                        0 0 lineto
+                        0 0 moveto  % starting from the top corner
+                        tLength 2 div neg tHight neg lineto     % draw a line to the left corner (45 degrees from the top)
+                        tLength 2 div tHight neg lineto         % then draw a line to the right cornet (-45 degrees from the top)
+                        0 0 lineto      % draw a line back to the top
                         closepath
-                    fill
+                    fill    % fill the triangle with color
                 }
                 def
 
-                /decNum { /num num 1 sub def } def
+                /decNum { /num num 1 sub def } def      % prosedure to decrement /num
 
-                /tRight
+                /tRight     % prosedure to draw the right triangle of the parent triangle
                 {
                     gsave
-                        tLength 2 div tHight neg translate
-                        .5 .5 scale
-                        45 rotate
-                        tDraw
-                        num rFractal
+                        tLength 2 div tHight neg translate  % translate the coordinate system to be on the right corner of the parent triangle
+                        .5 .5 scale         % shrink the coordinate system to be half the scale as the parent triangle
+                        45 rotate           % rotate the coordinate system by 45 degrees clock wise
+                        tDraw               % draw the triangle
+                        num rFractal        % recursivly call rFractal
                     grestore
                 }
                 def
 
-                /tLeft
+                /tLeft  % prosedure to draw the left triangle of the parent triangle
                 {
                     gsave
                         tLength 2 div neg tHight neg translate
@@ -56,18 +66,18 @@
                 }
                 def
 
-                /rFractal
+                /rFractal       % prosedure to recursivly draw all the levels of triangles
                 {
                     count 1 eq
                     {
-                        1 dict begin
-                            /num exch def
-                            decNum
-                            num 1 ge
+                        1 dict begin    % create a local name dictionary
+                            /num exch def   % map the item on the top of stack to /num
+                            decNum      % decriment the number of triangles to be drawn
+                            num 1 ge    % as long as /num is >= 1
                             {
-                                tRight
+                                tRight  % draw the right child trianlge
                                 
-                                tLeft
+                                tLeft   % draw the left child triangle
                             }
                             if
                         end
@@ -76,10 +86,11 @@
                 }
                 def
 
+                % main code for the program
                 gsave
-                    tDraw
-                    num rFractal
-                    showpage
+                    tDraw   % draw the first triangle
+                    num rFractal    % recursivly draw the childern triangles
+                    showpage    
                 grestore
             }
             if

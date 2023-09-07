@@ -12,11 +12,9 @@
             /num exch def
             num 1 ge
             {
-                /startX 8.5 2 div 72 mul def       % 72 is about an inch
-                /startY 11 2 div 72 mul def
 
-                /tLength 72 2 mul def
-                /tHight 72 2 mul def
+                /tLength 72 def
+                /tHight 72 def
 
                 /tDraw
                 {   
@@ -77,13 +75,8 @@
                 def
 
                 gsave
-                    1 0 0 setrgbcolor
-                    startX startY translate
-
                     tDraw
-
                     num rFractal
-
                     showpage
                 grestore
             }

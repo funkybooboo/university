@@ -6,7 +6,7 @@
 
 % Use examples:
 % 100 25 40 1 hypotrochoid -> -
-% 99 100 25 40 1 hypotrochoid -> 99
+% 99 100 25 40 1 hypotrochoid -> 99 100 25 40 1
 % 4 5 6 hypotrochoid -> 4 5 6
 
 % NOTE
@@ -17,7 +17,7 @@
 /hypotrochoid 
 {
     1 dict begin
-        count 4 ge
+        count 4 eq
         {
             /r exch def     % numberOfTimesAround
             /d exch def     % lengthOfArm

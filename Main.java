@@ -35,7 +35,10 @@ public class Main {
                 solution.add(item2);
                 total += item2;
 
-                if (total > K) total -= item2;
+                if (total > K) {
+                    total -= item2;
+                    solution.remove(item2);
+                }
                 if (total >= K / 2) return solution.stream().mapToDouble(Double::doubleValue).toArray();
             }
         }

@@ -1,5 +1,12 @@
 order :: (a -> a -> Bool) -> [a] -> [a] -> [a]
-order f xs ys = [if (x `f` y) then x else y | (x, y) <- zip xs ys]
+order f [] ys = ys
+order f xs [] = xs
+order f (x:xs) (y:ys)
+  | f x y = x : order f xs (y:ys)
+  | otherwise = y : order f (x:xs) ys
+
+countingNumbers :: [Int]
+countingNumbers = [1..]
 
 woodallNumbers :: [Int]
 woodallNumbers = [((n * (2 ^ n)) - 1) | n <- countingNumbers]

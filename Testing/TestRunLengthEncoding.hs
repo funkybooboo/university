@@ -1,11 +1,11 @@
-runLengthEncoding :: a -> b
+runLengthEncoding :: (Eq a) => [a] -> [(a, Int)]
 runLengthEncoding [] = []
-runLengthEncoding xs = aux (head xs) 1 (tail xs)
+runLengthEncoding xs = aux 1 (head xs) (tail xs)
   where
-    aux i count [] = [(i, count)]
-    aux i count (j:js)
-      | i == j = aux i (count + 1) js
-      | otherwise = (i, count) : aux j 1 js
+    aux count i  [] = [(i, count)]
+    aux count i  (j:js)
+      | i == j = aux (count + 1) i js
+      | otherwise = (i, count) : aux 1 j js
 
 padovanNumbers :: [Integer]
 padovanNumbers = [aux n | n <- [0..]]
@@ -19,7 +19,7 @@ main :: IO ()
 main = do
 
   putStrLn "Testing runLengthEncoding with: runLengthEncoding [] -> []"
-  print (runLengthEncoding [])
+  print (runLengthEncoding ([] :: [Int]))
 
   putStrLn "\nTesting runLengthEncoding with: runLengthEncoding [7] -> [(7,1)]"
   print (runLengthEncoding [7])

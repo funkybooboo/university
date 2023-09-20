@@ -24,18 +24,18 @@ module Lists where
   -- Write a function to merge (in sorted order) two lists of numbers (assuming both lists are already sorted).
   -- Using the passed binary comparator function which chooses the element from the first list if true and from the second list if false.
   order :: (a -> a -> Bool) -> [a] -> [a] -> [a]
-  order f xs ys = [if (x `f` y) then x else y | (x, y) <- zip xs ys]
+  order f [] ys = ys
+  order f xs [] = xs
+  order f (x:xs) (y:ys)
+    | f x y = x : order f xs (y:ys)
+    | otherwise = y : order f (x:xs) ys
 
   -- Write a function to build a list of lists where each sub-list is a pair of elements (in sequence) in the original list.
   -- For example the nth sub-list is the elements from 2*i - 1 and 2*i in the list or just 2*i - 1 if there is an odd number of elements in the list.
   pairUp :: [a] -> [[a]]
   pairUp [] = []
   pairUp [x] = [[x]]
-  pairUp xs
-    | even (length xs) = [[x, y] | (x, y) <- zip h1 h2]
-    | otherwise = [[last xs]] ++ pairUp (init xs)
-      where
-        (h1, h2) = splitAt (length xs `div` 2) xs
+  pairUp (x:y:ys) = [x, y] : pairUp ys
 
   -- Write a function to build the run-length encoding of a list.
   -- The run-length encoding is a list of tuples where each tuple is a pair consisting of the number of elements found consecutively in the list.

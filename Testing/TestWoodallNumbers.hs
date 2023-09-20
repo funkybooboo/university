@@ -1,6 +1,9 @@
 woodallNumbers :: [Int]
 woodallNumbers = [((n * (2 ^ n)) - 1) | n <- countingNumbers]
 
+countingNumbers :: [Int]
+countingNumbers = [1..]
+
 main :: IO ()
 main = do
 

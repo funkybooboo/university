@@ -9,8 +9,8 @@ padovanNumbers = [aux n | n <- [0..]]
 main :: IO ()
 main = do
 
-    putStrLn "Testing padovanNumbers with taking 2:"
-    print (take 2 padovanNumbers)
+  putStrLn "Testing padovanNumbers with: take 2 padovanNumbers -> [1, 1]"
+  print (take 2 padovanNumbers)
 
-    putStrLn "\nTesting padovanNumbers with taking 10:"
-    print (take 10 padovanNumbers)
+  putStrLn "\nTesting padovanNumbers with: take 10 padovanNumbers -> [1, 1, 1, 2, 2, 3, 4, 5, 7, 9]"
+  print (take 10 padovanNumbers)

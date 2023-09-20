@@ -6,13 +6,20 @@ pairUp xs | even (length xs) = [[x, y] | (x, y) <- zip h1 h2]
   where
     (h1, h2) = splitAt (length xs `div` 2) xs
 
+countingNumbers :: [Int]
+countingNumbers = [1..]
+
 main :: IO ()
 main = do
-    let testList1 = [1, 2, 3, 4, 5, 6]
-    let testList2 = [1, 2, 3, 4, 5]
 
-    putStrLn "Testing pairUp with even-length list:"
-    print (pairUp testList1)
+  putStrLn "Testing pairUp with: pairUp [] -> []"
+  print (pairUp [])
 
-    putStrLn "\nTesting pairUp with odd-length list:"
-    print (pairUp testList2)
+  putStrLn "Testing pairUp with: pairUp (take 3 countingNumbers) -> [[1, 2], [3]]"
+  print (pairUp (take 3 countingNumbers))
+
+  putStrLn "\nTesting pairUp with: pairUp (take 5 countingNumbers) -> [[1, 2], [3, 4], [5]]"
+  print (pairUp (take 5 countingNumbers))
+
+  putStrLn "\nTesting pairUp with: pairUp (take 6 countingNumbers) -> [[1, 2], [3, 4], [5, 6]]"
+  print (pairUp (take 6 countingNumbers))

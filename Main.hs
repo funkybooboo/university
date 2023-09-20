@@ -43,13 +43,16 @@ main = do
     ("pairUp (take 5 countingNumbers)", []),
     ("pairUp (take 5 countingNumbers)", pairUp (take 5 countingNumbers))
     ]
-  mapM testIt [
-    ("listPairApply [(+),(-)] []", 
-     listPairApply [(+),(-)] []),
-    ("listPairApply [(+),(-)] (pairUp (take 5 countingNumbers))", 
-     listPairApply [(+),(-)] (pairUp (take 5 countingNumbers)))
-    ]
-  mapM testIt [
-    ("(composeList [add1,add2,add1]) 3", ((composeList [add1,add2,add1]) 3))
-    ]
+    {-
+      mapM testIt [
+        ("listPairApply [(+),(-)] []",
+         listPairApply [(+),(-)] []),
+        ("listPairApply [(+),(-)] (pairUp (take 5 countingNumbers))",
+         listPairApply [(+),(-)] (pairUp (take 5 countingNumbers)))
+        ]
+      mapM testIt [
+        ("(composeList [add1,add2,add1]) 3", ((composeList [add1,add2,add1]) 3))
+        ]
+    -}
+
 

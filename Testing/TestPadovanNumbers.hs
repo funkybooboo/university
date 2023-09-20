@@ -1,10 +1,10 @@
-aux :: Integer -> Integer
-aux 0 = 1
-aux 1 = 1
-aux 2 = 1
-aux n = aux (n - 2) + aux (n - 3)
 padovanNumbers :: [Integer]
 padovanNumbers = [aux n | n <- [0..]]
+  where
+    aux 0 = 1
+    aux 1 = 1
+    aux 2 = 1
+    aux n = aux (n - 2) + aux (n - 3)
 
 main :: IO ()
 main = do

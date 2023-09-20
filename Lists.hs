@@ -1,25 +1,25 @@
 module Lists where
 
   -- Write a function to build an (unbounded) list of counting numbers (counting numbers start at 1). The counting numbers are the set {1, 2, 3, ...}. You may assume n is a positive integer.
-  countingNumbers :: [Integer]
+  countingNumbers :: [Int]
   countingNumbers = [1..]
 
   -- Write a function to build a list of the multiples of the passed argument.
-  multiplesOfNumbers :: Integer -> [Integer]
+  multiplesOfNumbers :: Int -> [Int]
   multiplesOfNumbers n = [n * x | x <- countingNumbers]
 
   -- Write a function to build a list of the "Woodall numbers"
-  woodallNumbers :: [Integer]
+  woodallNumbers :: [Int]
   woodallNumbers = [((n * (2 ^ n)) - 1) | n <- countingNumbers]
 
   -- Write a function to build a list of the "Padovan sequence of numbers"
-  aux :: Integer -> Integer
-  aux 0 = 1
-  aux 1 = 1
-  aux 2 = 1
-  aux n = aux (n - 2) + aux (n - 3)
-  padovanNumbers :: [Integer]
+  padovanNumbers :: [Int]
   padovanNumbers = [aux n | n <- [0..]]
+    where
+      aux 0 = 1
+      aux 1 = 1
+      aux 2 = 1
+      aux n = aux (n - 2) + aux (n - 3)
 
   -- Write a function to merge (in sorted order) two lists of numbers (assuming both lists are already sorted).
   -- Using the passed binary comparator function which chooses the element from the first list if true and from the second list if false.
@@ -31,15 +31,45 @@ module Lists where
   pairUp :: [a] -> [[a]]
   pairUp [] = []
   pairUp [x] = [[x]]
-  pairUp xs | even (length xs) = [[x, y] | (x, y) <- zip h1 h2]
-            | otherwise = [[last xs]] ++ pairUp (init xs)
-    where
-      (h1, h2) = splitAt (length xs `div` 2) xs
+  pairUp xs
+    | even (length xs) = [[x, y] | (x, y) <- zip h1 h2]
+    | otherwise = [[last xs]] ++ pairUp (init xs)
+      where
+        (h1, h2) = splitAt (length xs `div` 2) xs
 
   -- Write a function to build the run-length encoding of a list.
   -- The run-length encoding is a list of tuples where each tuple is a pair consisting of the number of elements found consecutively in the list.
   -- The examples below demonstrate how it should work.
-  runLengthEncoding :: [a] -> [(a)]
+  runLengthEncoding :: (Eq a) => [a] -> [(a, Int)]
   runLengthEncoding [] = []
-  runLengthEncoding [x] = [(x, 1)]
-  runLengthEncoding xs =
+  runLengthEncoding xs = aux (head xs) 1 (tail xs)
+    where
+      aux i count [] = [(i, count)]
+      aux i count (j:js)
+        | i == j = aux i (count + 1) js
+        | otherwise = (i, count) : aux j 1 js
+
+  -- Write a function to apply a binary function f chosen in order from a list of functions fs to the pair of elements (or possibly a singleton element) in the list xs produced by pairUp.
+  -- If there are fewer functions in the list of functions, then the list of functions should wrap, starting over as needed. You should assume that every sublist has at least one element.
+  -- The result of applying a function to a one element sublist is the value of that element.
+  listPairApply :: (Num a) => [a -> a -> a] -> [a] -> [[a]]
+  listPairApply [] [] = []
+  listPairApply fs [] = []
+  listPairApply [] xs = []
+  listPairApply fs xs = aux fs (head fs) (tail fs) (head xs) (tail xs)
+    where
+      aux ofs f fs x []
+        | even (length x) = [(x !! 0) `f` (x !! 1)]
+        | otherwise = x
+      aux ofs f [] x xs
+        | even (length x) = [(x !! 0) `f` (x !! 1)] : aux ofs (head ofs) (tail ofs) (head xs) (tail xs)
+        | otherwise = x : aux ofs (head ofs) (tail ofs) (head xs) (tail xs)
+      aux ofs f fs x xs
+        | even (length x) = [(x !! 0) `f` (x !! 1)] : aux ofs (head fs) (tail fs) (head xs) (tail xs)
+        | otherwise = x : aux ofs (head fs) (tail fs) (head xs) (tail xs)
+
+  -- Write a function to build a function that is the composition of the functions in the list xs.
+  -- You may assume each function in the list is a unary function (takes one argument).
+  composeList ::
+  composeList [] = []
+  composeList xs =

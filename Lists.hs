@@ -42,34 +42,25 @@ module Lists where
   -- The examples below demonstrate how it should work.
   runLengthEncoding :: (Eq a) => [a] -> [(a, Int)]
   runLengthEncoding [] = []
-  runLengthEncoding xs = aux 1 (head xs) (tail xs)
+  runLengthEncoding (x:xs) = aux 1 x xs
     where
-      aux count i  [] = [(i, count)]
-      aux count i  (j:js)
-        | i == j = aux (count + 1) i js
-        | otherwise = (i, count) : aux 1 j js
+      aux n x  [] = [(x, n)]
+      aux n x  (y:ys)
+        | x == y = aux (n + 1) x ys
+        | otherwise = (x, n) : aux 1 y ys
 
   -- Write a function to apply a binary function f chosen in order from a list of functions fs to the pair of elements (or possibly a singleton element) in the list xs produced by pairUp.
   -- If there are fewer functions in the list of functions, then the list of functions should wrap, starting over as needed. You should assume that every sublist has at least one element.
   -- The result of applying a function to a one element sublist is the value of that element.
-  listPairApply :: (Num a) => [[a -> a -> a]] -> [[a]] -> [[a]]
+  listPairApply :: (Num a) => [(a -> a -> a)] -> [[a]] -> [a]
   listPairApply [] [] = []
   listPairApply fs [] = []
-  listPairApply [] xs = []
-  listPairApply fs xs = aux fs (head fs) (tail fs) (head xs) (tail xs)
-    where
-      aux ofs f fs x []
-        | even (length x) = [[f (x !! 0) (x !! 1)]]
-        | otherwise = x
-      aux ofs f [] x xs
-        | even (length x) = [f (x !! 0) (x !! 1)] : aux ofs (head ofs) (tail ofs) (head xs) (tail xs)
-        | otherwise = x : aux ofs (head ofs) (tail ofs) (head xs) (tail xs)
-      aux ofs f fs x xs
-        | even (length x) = [f (x !! 0) (x !! 1)] : aux ofs (head fs) (tail fs) (head xs) (tail xs)
-        | otherwise = x : aux ofs (head fs) (tail fs) (head xs) (tail xs)
+  listPairApply (f:fs) (x:xs)
+   | even (length x) = f (x !! 0) (x !! 1) : listPairApply (fs ++ [f]) xs
+   | otherwise = x !! 0 : listPairApply fs xs
 
   -- Write a function to build a function that is the composition of the functions in the list xs.
   -- You may assume each function in the list is a unary function (takes one argument).
-  composeList :: (Num a) => [(a -> a)] -> (a -> a)
+  composeList :: [(a -> a)] -> (a -> a)
   composeList [] = \x -> x
   composeList (f:fs) = foldr (.) f fs

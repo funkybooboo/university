@@ -1,18 +1,9 @@
 listPairApply :: (Num a) => [(a -> a -> a)] -> [[a]] -> [a]
 listPairApply [] [] = []
 listPairApply fs [] = []
-listPairApply [] xs = []
-listPairApply fs xs = aux fs (head fs) (tail fs) (head xs) (tail xs)
-  where
-    aux ofs f fs x []
-      | even (length x) = (x !! 0) `f` (x !! 1)
-      | otherwise = x !! 0
-    aux ofs f [] x xs
-      | even (length x) = (x !! 0) `f` (x !! 1) : aux ofs (head ofs) (tail ofs) (head xs) (tail xs)
-      | otherwise = x !! 0 : aux ofs (head ofs) (tail ofs) (head xs) (tail xs)
-    aux ofs f fs x xs
-      | even (length x) = (x !! 0) `f` (x !! 1) : aux ofs (head fs) (tail fs) (head xs) (tail xs)
-      | otherwise = x !! 0 : aux ofs (head fs) (tail fs) (head xs) (tail xs)
+listPairApply (f:fs) (x:xs)
+  | even (length x) = f (x !! 0) (x !! 1) : listPairApply (fs ++ [f]) xs
+  | otherwise = x !! 0 : listPairApply fs xs
 
 countingNumbers :: [Int]
 countingNumbers = [1..]

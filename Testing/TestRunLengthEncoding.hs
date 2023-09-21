@@ -1,11 +1,11 @@
 runLengthEncoding :: (Eq a) => [a] -> [(a, Int)]
 runLengthEncoding [] = []
-runLengthEncoding xs = aux 1 (head xs) (tail xs)
+runLengthEncoding (x:xs) = aux 1 x xs
   where
-    aux count i  [] = [(i, count)]
-    aux count i  (j:js)
-      | i == j = aux (count + 1) i js
-      | otherwise = (i, count) : aux 1 j js
+    aux n x  [] = [(x, n)]
+    aux n x  (y:ys)
+      | x == y = aux (n + 1) x ys
+      | otherwise = (x, n) : aux 1 y ys
 
 padovanNumbers :: [Integer]
 padovanNumbers = [aux n | n <- [0..]]

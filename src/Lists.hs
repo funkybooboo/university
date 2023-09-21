@@ -27,8 +27,8 @@ module Lists where
   order f [] ys = ys
   order f xs [] = xs
   order f (x:xs) (y:ys)
-    | f x y = x : order f xs (y:ys)
-    | otherwise = y : order f (x:xs) ys
+    | f x y = x : order f xs (y : ys)
+    | otherwise = y : order f (x : xs) ys
 
   -- Write a function to build a list of lists where each sub-list is a pair of elements (in sequence) in the original list.
   -- For example the nth sub-list is the elements from 2*i - 1 and 2*i in the list or just 2*i - 1 if there is an odd number of elements in the list.

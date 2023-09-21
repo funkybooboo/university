@@ -2,8 +2,8 @@ order :: (a -> a -> Bool) -> [a] -> [a] -> [a]
 order f [] ys = ys
 order f xs [] = xs
 order f (x:xs) (y:ys)
-  | f x y = x : order f xs (y:ys)
-  | otherwise = y : order f (x:xs) ys
+  | f x y = x : order f xs (y : ys)
+  | otherwise = y : order f (x : xs) ys
 
 countingNumbers :: [Int]
 countingNumbers = [1..]

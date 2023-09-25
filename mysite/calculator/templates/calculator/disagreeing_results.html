@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Disagreeing Results</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
+    </head>
+    <body>
+        {% include 'calculator/nav.html'%}
+        <h1>Disagreeing Results {{disagreeing_results_list|length}}</h1>
+        {% if disagreeing_results_list %}
+        <div id="saved" class="saved">
+            {% for expression in disagreeing_results_list %}
+            <form class="valid" method="post" action="{% url 'calculator:removeRecord' expression.id %}">
+                {% csrf_token %}
+                <span>Expression #{{expression.id}}</span>
+                <span class="math">{{expression.num1}} {{expression.operator.symbol}} {{expression.num2}} = Python: {{expression.PYAnswer}} and JavaScript: {{expression.JSAnswer}}</span>
+                <span><input type="submit" value="X"></span>
+                <input type="hidden" value="recent_expressions" name="cameFrom">
+            </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </body>
+</html>

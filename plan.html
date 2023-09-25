@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" class="html">
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <link rel="icon" href="pictures/favicon.ico">
+        <meta charset="UTF-8">
+        <title>Software Development Plan</title>
+    </head>
+    <body>
+        <div class="link">
+            <span><a href="index.html">Main page</a></span>
+            <span><a href="about.html">About Me</a></span>
+            <span><a href="techtips+css.html">Tech Tips with CSS</a></span>
+            <span><a href="techtips-css.html">Tech Tips without CSS</a></span>
+            <span><a href="debugging.html">Server Debugging Page</a></span>
+            <span><a href="plan.html">Software Development Plan</a></span>
+        </div>
+        <h1>Software Development Plan</h1>
+        <div class="group1">
+            <h2>Phase 0: Requirements Specification (20%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Re-write the instructions in your own words.</li>
+                <li>If you don't do this, you won't know what you're supposed to do!</li>
+                <li>Don't leave out details!</li>
+                <li>Explain the problem this program aims to solve.</li>
+                <li>Describe what a *good* solution looks like.</li>
+                <li>List what you already know how to do.</li>
+                <li>Point out any challenges that you can foresee.</li>
+                <li>List all of the data that is used by the program, making note of where it comes from.</li>
+                <li>Explain what form the output will take.</li>
+                <li>Describe what algorithms and formulae will be used (but don't write them yet).</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I need to make my own http server. To do this I need to make a subclass of the BaseHTTPRequestHandler class.</li>
+                <li>I need to override the do_GET function. I need to do this so that I can make custom responses for my server. I can look at the self.path attribute to find out what the user wants to see.</li>
+                <li>For any given request there will be a code sent back to the client. 404 means that the page they are looking for cant be found. 200 means that the page is found. 301 means that the page is found but in a difference location than the client specified. 418 means that the client thinks you're a teapot. 403 means the client doesn't have access to the page requested.</li>
+                <li>The client has access to a debugging page. If they navigate to this page than the content for the page is generated on the fly. Meaning there is no HTML file saved for this page. The content is created when the debugging page is created.</li>
+                <li>The website being served is the page created on the last assignment.</li>
+                <li>I know how to read documentation. I don't know how to use the http.server class but I will learn.</li>
+                <li>The output for this program will be a website.</li>
+            </ol>
+        </div>
+        <div class="group2">
+            <h2>Phase 1: Design (30%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Function signatures that include:</li>
+                <li>Descriptive names.</li>
+                <li>Parameter lists.</li>
+                <li>Documentation strings that explain the purpose, inputs and outputs.</li>
+                <li>Pseudocode that captures how each function works.</li>
+                <li>Pseudocode != source code.  Do not paste your finished source code into this part of the plan.</li>
+                <li>Explain what happens in the face of good and bad input.</li>
+                <li>Write a few specific examples that occurred to you.</li>
+            </ul>
+            <h4>Example:</h4>
+            <code>def foo(a, b, c):</code>
+            <p># line by line detail in psuedocode</p>
+            <code>def bar(x, y, z):</code>
+            <p># line by line detail in psuedocode</p>
+            <h4>Answers:</h4>
+            <ol>
+                <li>def do_GET(self): this method will override the do_GET method inherited by the super class. Its purpose is to serve out pages to the client via request. Essentially this method will coordinate all the other methods in my program. I will have to check the self.path attribute to find out where the client wants to go. Then make a proper responce to that request.</li>
+                <li>def redirect(self, path): "path" is the real path to the required file. This method will be called if the page that has been requested has a different path than what the user gave. It will send all the required headers</li>
+                <li>def sendNormal(self, path, fileType): "path" is the real path to the required file, "fileType" is the type of file. This method is called when the required file request has the corrent file. Or it is called if the given path is unknown. A 404 code and message will be shown to the user if the unknown file cant be found. but if it can be found than the page will be shown.</li>
+                <li>def sendData(self, b, response, path, fileType): "b" is the requested file in a bytes object, "response" is the code to be sent, "path" is the real path to the required file, "fileType" is the type of file. This method will send all the required headers and then send the data of the file requested in bytes.</li>
+                <li>def sendForbidden(self, path): "path" is the real path to the required file. This method will be called if the user requests to go to a page and they don't have access to it. a message will be shown saying that they don't have access to the file.</li>
+                <li>def makeHTMLConect(self, content, title): "content" is the HTML in a string format that will go in the body part of the page. "title" is the name of the page. This function is used to add all the basic HTML headers and format that a proper HTML file has. it returns the completed page.</li>
+                <li>def sendNotTeaPot(self, path): "path" is the real path to the required file. This method is called when the cliant requests to go to a page called /teapot and a message is displayed.</li>
+                <li>def sendDebuggingContent(self, path): "path" is the real path to the required file. This method will be called when the user wants to see the debugging page from the server.</li>
+                <li>In the face of bad input my program will display a 404 page.</li>
+            </ol>
+        </div>
+        <div class="group3">
+            <h2>Phase 2: Implementation (15%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>(More or less) working code.</li>
+                <li>Note any relevant and interesting events that happened while you wrote the code.</li>
+                <li>e.g. things you learned, things that didn't go according to plan</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>It was kind of hard to get the CSS and picture files to start working. But I just had to make sure I was sending the right header. For some reason the mimetypes.guess_type(path)[0] function wasn't able to get the right file type for those files. So I had to do it manually</li>
+                <li>Other than that everything went to plan. It really helped to read the docs a few times and go over the tips given in the assignment description.</li>
+            </ol>
+        </div>
+        <div class="group4">
+            <h2>Phase 3: Testing & Debugging (30%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>A set of test cases that you have personally run on your computer.</li>
+                <li>Include a description of what happened for each test case.</li>
+                <li>For any bugs discovered, describe their cause and remedy.</li>
+                <li>Write your test cases in plain language such that a non-coder could run them and replicate your experience.</li>
+            </ul>
+            <h4>Example:</h4>
+            <p># Command: [Command you ran in the shell]</p>
+            <p># Bug Found: [If the test failed, what was the output?  Keep it brief]</p>
+            <p># Bug Fixed: [Your solution]</p>
+            <h4>Answers:</h4>
+            <ol>
+                <li>Everything works. I had to debug why the CSS wasn't showing up</li>
+            </ol>
+        </div>
+        <div class="group5">
+            <h2>Phase 4: Deployment (5%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Your repository pushed to GitLab.</li>
+                <li>Verify that your final commit was received by browsing to its project page on GitLab.</li>
+                <li>Ensure the project's URL is correct.</li>
+                <li>Review the project to ensure that all required files are present and in correct locations.</li>
+                <li>Check that unwanted files have not been included.</li>
+                <li>Make any final touches to documentation, including the Sprint Signature and this Plan.</li>
+                <li>Validate that your submission is complete and correct by cloning it to a new location on your computer and re-running it.</li>
+                <li>Run your program from the command line so you can see how it will behave when your grader runs it. Running it in PyCharm is not good enough!</li>
+                <li>Run through your test cases to avoid nasty surprises.</li>
+                <li>Check that your documentation files are all present.</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>Ok I got it all done</li>
+            </ol>
+        </div>
+        <div class="group6">
+            <h2>Phase 5: Maintenance (N/A)</h2>
+            <p>In the real world, the duration of this phase completely dominates the others.  For this assignment, spend a few minutes writing thoughtful answers to the following questions</p>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Write brief and honest answers to these questions: (Note: do this before you complete Phase 4: Deployment)</li>
+                <li>What parts of your program are sloppily written and hard to understand?</li>
+                <li>Are there parts of your program which you aren't quite sure how/why they work?</li>
+                <li>If a bug is reported in a few months, how long would it take you to find the cause?</li>
+                <li>Will your documentation make sense to...</li>
+                <li>...anybody besides yourself?</li>
+                <li>...yourself in six month's time?</li>
+                <li>How easy will it be to add a new feature to this program in a year?</li>
+                <li>Will your program continue to work after upgrading...</li>
+                <li>...your computer's hardware?</li>
+                <li>...the operating system?</li>
+                <li>...to the next version of Python?</li>
+                <li>Respond to the Assignment Reflection Survey on Canvas.</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I think my program is small and easy to read. There really isn't a lot of code to having to go through it wouldn't take long.</li>
+                <li>I understand how everything works in my program</li>
+                <li>A bug would be easy to fix because the file is so small</li>
+                <li>My documentation would make sense to anyone I think yes.</li>
+                <li>Adding a new feature would require me to go back to the docs and see what is possible.</li>
+                <li>My program will work in the foreseeable feature. Python and HTTP aren't going anywhere.</li>
+                <li>Ok did the Survey on canvas.</li>
+            </ol>
+        </div>
+    </body>
+</html>

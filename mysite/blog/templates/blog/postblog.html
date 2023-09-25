@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Post Blog</title>
+      {% load static %}
+      <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+  </head>
+  <body>
+      <div class="link">
+            <span><a href="{% url 'blog:home' %}">Home</a></span>
+            <span><a href="{% url 'blog:archive' %}">Archive</a></span>
+            <span><a href="{% url 'blog:blogPost' %}">Post</a></span>
+            <span><a href="{% url 'blog:about' %}">About Me</a></span>
+            <span><a href="{% url 'blog:techtips+css' %}">Tech Tips with CSS</a></span>
+            <span><a href="{% url 'blog:techtips-css' %}">Tech Tips without CSS</a></span>
+            <span><a href="{% url 'blog:plan' %}">Software Development Plan</a></span>
+            <span>{{todays_date}}</span>
+            <span>{{users_ip}}</span>
+        </div>
+    <h1>Blog Post</h1>
+    <div id="form">
+        <form action="{% url 'blog:makeBlogPost' %}" method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend><h5>Blog</h5></legend>
+                <div>
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title_text">
+                </div>
+                <div>
+                    <label for="author">Author</label>
+                    <input type="text" id="author" name="author_text">
+                </div>
+                <div>
+                    <label for="content">Content</label>
+                    <textarea id="content" name="content_text" rows="20" cols="100"></textarea>
+                </div>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+  </body>
+</html>

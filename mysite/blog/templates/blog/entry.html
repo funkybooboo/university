@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Entry</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+</head>
+    <body>
+        <div class="link">
+            <span><a href="{% url 'blog:home' %}">Home</a></span>
+            <span><a href="{% url 'blog:archive' %}">Archive</a></span>
+            <span><a href="{% url 'blog:blogPost' %}">Post</a></span>
+            <span><a href="{% url 'blog:about' %}">About Me</a></span>
+            <span><a href="{% url 'blog:techtips+css' %}">Tech Tips with CSS</a></span>
+            <span><a href="{% url 'blog:techtips-css' %}">Tech Tips without CSS</a></span>
+            <span><a href="{% url 'blog:plan' %}">Software Development Plan</a></span>
+            <span>{{todays_date}}</span>
+            <span>{{users_ip}}</span>
+        </div>
+        <h1>Entry</h1>
+        <div id="entry">
+            {% if not blog == '' %}
+            <h3>{{ blog.title_text }}</h3>
+            <p>{{ blog.author_text }}</p>
+            <p>{{ blog.content_text }}</p>
+            <p>{{ blog.posted_date }}</p>
+            <div id="comments">
+                <h4>Comments: {{ count }}</h4>
+                <div id="form">
+                    <form action="{% url 'blog:makeComment' blog.id %}" method="post">
+                        {% csrf_token %}
+                        <fieldset>
+                            <legend><h5>Add Comment</h5></legend>
+                            <div>
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="commenter_text">
+                            </div>
+                            <div>
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email_text">
+                            </div>
+                            <div>
+                                <label for="content">Content</label>
+                                <textarea id="content" name="content_text" rows="20" cols="100"></textarea>
+                            </div>
+                        </fieldset>
+                        <input type="submit" value="Submit">
+                    </form>
+                </div>
+                {% if comment_list %}
+                {% for comment in comment_list %}
+                {% if comment.blog_id_id == blog.id %}
+                <div id="comment">
+                    {% if comment.email_text == '' %}
+                    <p>{{ comment.commenter_text }}</p>
+                    {% else %}
+                    <p>{{ comment.commenter_text }} : {{ comment.email_text }}</p>
+                    {% endif %}
+                    <p>{{ comment.content_text }}</p>
+                    <p>{{ comment.posted_date }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                <p>No comments.</p>
+                {% endif %}
+            </div>
+            {% else %}
+            <p>That blog doesn't exist</p>
+            {% endif %}
+        </div>
+    </body>
+</html>

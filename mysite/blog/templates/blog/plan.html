@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" class="html">
+    <head>
+        <meta charset="UTF-8">
+        <title>Software Development Plan</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+    </head>
+    <body>
+        <div class="link">
+            <span><a href="{% url 'blog:home' %}">Home</a></span>
+            <span><a href="{% url 'blog:archive' %}">Archive</a></span>
+            <span><a href="{% url 'blog:blogPost' %}">Post</a></span>
+            <span><a href="{% url 'blog:about' %}">About Me</a></span>
+            <span><a href="{% url 'blog:techtips+css' %}">Tech Tips with CSS</a></span>
+            <span><a href="{% url 'blog:techtips-css' %}">Tech Tips without CSS</a></span>
+            <span><a href="{% url 'blog:plan' %}">Software Development Plan</a></span>
+            <span>{{todays_date}}</span>
+            <span>{{users_ip}}</span>
+        </div>
+        <h1>Software Development Plan</h1>
+        <div class="group1">
+            <h2>Phase 0: Requirements Specification (20%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Re-write the instructions in your own words.</li>
+                <li>If you don't do this, you won't know what you're supposed to do!</li>
+                <li>Don't leave out details!</li>
+                <li>Explain the problem this program aims to solve.</li>
+                <li>Describe what a *good* solution looks like.</li>
+                <li>List what you already know how to do.</li>
+                <li>Point out any challenges that you can foresee.</li>
+                <li>List all of the data that is used by the program, making note of where it comes from.</li>
+                <li>Explain what form the output will take.</li>
+                <li>Describe what algorithms and formulae will be used (but don't write them yet).</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I am to make a blog posting website that allows users to make comments on blogs.</li>
+                <li>To do this I need to learn how to use the django interface. I will need to follow the django docs that lead me through how to build a polls taking site.</li>
+                <li>Once I am done with the polls taking app I will need to also make the blog app in the same project. I should have all the information I need to successed once I get to this point.</li>
+                <li>In my blog website I need to have a few new pages as well as some pages from the older assignments.</li>
+                <li>Home: will be a page where the three newest blog posts are shown. the first 100 words of the blog post are shown and then number of comments on that blog post.</li>
+                <li>Archive: will be very similar the only differance is it will show all the blog posts that have ever been posted. the blog posts need to be in order by date posted.</li>
+                <li>Entry: you can get to this page by clicking on the provided clicks on the home and archive page but on this page you can add comments to the blog you clicked on.</li>
+                <li>Once you have submitted your comment then you will be brought back to the entry page, and you comment will be added to the comments on the blog post</li>
+                <li>Once that is done I will need to write a migrated script that will write some dummy blog posts and comments so that the graders dont have to create them</li>
+                <li>Once that is done then all that is left to do is make sure that I have fulfilled all the requirements.</li>
+                <li>I don't foresee any challenges since the django docs are really clear about how to do everything.</li>
+            </ol>
+        </div>
+        <div class="group2">
+            <h2>Phase 1: Design (30%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Function signatures that include:</li>
+                <li>Descriptive names.</li>
+                <li>Parameter lists.</li>
+                <li>Documentation strings that explain the purpose, inputs and outputs.</li>
+                <li>Pseudocode that captures how each function works.</li>
+                <li>Pseudocode != source code.  Do not paste your finished source code into this part of the plan.</li>
+                <li>Explain what happens in the face of good and bad input.</li>
+                <li>Write a few specific examples that occurred to you.</li>
+            </ul>
+            <h4>Example:</h4>
+            <code>def foo(a, b, c):</code>
+            <p># line by line detail in psuedocode</p>
+            <code>def bar(x, y, z):</code>
+            <p># line by line detail in psuedocode</p>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I will need to have several files created in the appropriate subdirectories. these will all be in my blog app</li>
+                <li>url.py will forward connections onto the appropriate view</li>
+                <li>views.py will have all the views for getting to all the pages on the site. these will run the necessary code to build the dynamic webpages.</li>
+                <li>I will need to make several html files that will all go under the static directory so that django can find my files</li>
+                <li>models.py will create the data types that will be shown in the webstie. such as blog and comment. a comment will belong to a blog. this data will be stored in the sql database</li>
+                <li>I will need to make suret that settings.py is configured currently to that django can best display by content.</li>
+            </ol>
+        </div>
+        <div class="group3">
+            <h2>Phase 2: Implementation (15%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>(More or less) working code.</li>
+                <li>Note any relevant and interesting events that happened while you wrote the code.</li>
+                <li>e.g. things you learned, things that didn't go according to plan</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>Everything went well for the most part. it was kind of hard to tell how to do the post method but I got it working after playing around and reading the django docs</li>
+                <li>I wanted to make a way to post blog posts. it wasnt hard and it makes the site somewhat useful.</li>
+            </ol>
+        </div>
+        <div class="group4">
+            <h2>Phase 3: Testing & Debugging (30%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>A set of test cases that you have personally run on your computer.</li>
+                <li>Include a description of what happened for each test case.</li>
+                <li>For any bugs discovered, describe their cause and remedy.</li>
+                <li>Write your test cases in plain language such that a non-coder could run them and replicate your experience.</li>
+            </ul>
+            <h4>Example:</h4>
+            <p># Command: [Command you ran in the shell]</p>
+            <p># Bug Found: [If the test failed, what was the output?  Keep it brief]</p>
+            <p># Bug Fixed: [Your solution]</p>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I found it helpful to look at the database. Pycharm allows you to do this via the database tab. I saw what was being saved and what everything was called</li>
+                <li>I didnt have much to debug but when the user submits a comment with a blank field than the user gets brought to a page that has a error message and a link to go back home. I was trying to get that link to go back to where they were but I couldn't get it to work.f</li>
+                <li>I still need to write the migration fies so that the blog gets auto-populated. I don't know how to do that, but I hope to learn in class soon.</li>
+            </ol>
+        </div>
+        <div class="group5">
+            <h2>Phase 4: Deployment (5%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Your repository pushed to GitLab.</li>
+                <li>Verify that your final commit was received by browsing to its project page on GitLab.</li>
+                <li>Ensure the project's URL is correct.</li>
+                <li>Review the project to ensure that all required files are present and in correct locations.</li>
+                <li>Check that unwanted files have not been included.</li>
+                <li>Make any final touches to documentation, including the Sprint Signature and this Plan.</li>
+                <li>Validate that your submission is complete and correct by cloning it to a new location on your computer and re-running it.</li>
+                <li>Run your program from the command line so you can see how it will behave when your grader runs it. Running it in PyCharm is not good enough!</li>
+                <li>Run through your test cases to avoid nasty surprises.</li>
+                <li>Check that your documentation files are all present.</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I have completed all those steps!</li>
+            </ol>
+        </div>
+        <div class="group6">
+            <h2>Phase 5: Maintenance (N/A)</h2>
+            <p>In the real world, the duration of this phase completely dominates the others.  For this assignment, spend a few minutes writing thoughtful answers to the following questions</p>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Write brief and honest answers to these questions: (Note: do this before you complete Phase 4: Deployment)</li>
+                <li>What parts of your program are sloppily written and hard to understand?</li>
+                <li>Are there parts of your program which you aren't quite sure how/why they work?</li>
+                <li>If a bug is reported in a few months, how long would it take you to find the cause?</li>
+                <li>Will your documentation make sense to...</li>
+                <li>...anybody besides yourself?</li>
+                <li>...yourself in six month's time?</li>
+                <li>How easy will it be to add a new feature to this program in a year?</li>
+                <li>Will your program continue to work after upgrading...</li>
+                <li>...your computer's hardware?</li>
+                <li>...the operating system?</li>
+                <li>...to the next version of Python?</li>
+                <li>Respond to the Assignment Reflection Survey on Canvas.</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I dont think that any parts of my program are written poorly. I wrote my program to the best of my knowlge and I had fun doing it so I think that it is all readable and understandable.</li>
+                <li>I understand everything that is happening in my program.</li>
+                <li>It would be easy to fix reported bugs just because the site isn't big nor is it complex.</li>
+                <li>I think my docs will make sense to everyone since the project isnt that big and if after reading my docs the reader could go over to the django website and read there docs on anything they are confused about.</li>
+                <li>Adding a new feature would take time to go back over the django docs to get freshed up. But it wouldnt be hard since django makes implementing easy.</li>
+                <li>The server should work as long as the right django and python packages are installed.</li>
+            </ol>
+        </div>
+    </body>
+</html>

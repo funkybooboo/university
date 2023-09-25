@@ -1,0 +1,31 @@
+body{
+    color: white;
+}
+
+.entry{
+    background-color: black;
+    border-radius: 20px;
+    border: yellow 10px solid;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+.good{
+    background-color: green;
+    border-radius: 20px;
+    border: lime 4px solid;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+}
+
+.bad{
+    background-color: orangered;
+    border-radius: 20px;
+    border: red 4px solid;
+    text-align: center;
+    padding: 10px;
+    margin: 5px;
+}
+

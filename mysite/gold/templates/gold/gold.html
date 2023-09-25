@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Gold</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'gold/goldStyle.css' %}">
+    </head>
+    <body>
+        {% if pair_list %}
+        <div class="entry">
+            <h2>What's your weight's worth in gold?</h2>
+            <p>Input your weight and press the = button to see what you're worth</p>
+            <p>For your privacy, results are removed when clicked</p>
+            <div>
+                <span>
+                    <label for="value"></label>
+                    <input id="value" type="number">
+                </span>
+                <span>
+                    <label for="units"></label>
+                    <select name="units" id="units">
+                        {% for pair in pair_list %}
+                            <option value="{{pair.data2}}">{{pair.data1}}</option>
+                        {% endfor %}
+                </select>
+                    <input type="hidden" id="measure_list" value="{{measure_list}}">
+                </span>
+                <span>
+                    <button id="submit" type="submit" value="=">=</button>
+                </span>
+            </div>
+            <p id="price">Fetching the latest price of gold from the market...</p>
+        </div>
+        <div id="container"></div>
+        <script src="{% static 'gold/script.js' %}" type="text/javascript"></script>
+        {% else %}
+        <div class="entry">There are no conversion factors in the database</div>
+        {% endif %}
+    </body>
+</html>

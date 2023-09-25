@@ -1,0 +1,4 @@
+Welcome to DuckieCorp! We sure are glad to have you working with us. In your
+tenure here, we hope you will learn many new techniques to enhance your computer
+science and problem solving skills. We're excited to get started!
+- DuckieCorp Management

@@ -1,0 +1,17 @@
+Not every file needs a file extension!
+
+There is nothing stopping me from making this text file appear as if it's a
+markdown file by adding `.md`, or making it appear as a simple text file by
+adding `.txt`, or making it *appear* as if it's a picture by adding `.png`.
+
+File extensions are a convention used to easily identify the contents of a file.
+
+There is nothing on your computer directly enforcing that file extensions should
+match their contents.
+
+However, file extensions *do* matter, especially when the file is being used by
+another program on your computer that is not a simple text editor.
+
+Dependent on the software and your operating system, renaming a picture from
+`.png` to `.txt` may make it so your computer can not properly view the images
+contents.

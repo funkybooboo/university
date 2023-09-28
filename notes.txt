@@ -1,0 +1,38 @@
+-enter REPL
+gprolog
+-exit REPL
+halt.
+-working directory needs to have a file called db.pl
+-load db two ways
+[db].
+consult('db.pl')
+
+-see contents of db
+listing.
+
+-to print
+write('Hello World'), nl, write('Let\'s Program').
+
+- in db
+loves(romeo, juliet).
+
+loves(juliet, romeo) :- loves(romeo, juliet).
+
+- predicate(atom1, atom2, ...)
+- :- is an if
+
+loves(romeo, juliet).
+
+loves(romeo, X).
+
+- lowcase is an atom
+- uppercase is a verible
+- X is a verible that is asking who loves romeo
+
+- facts
+- with a fact write the relationship first followed by objects placed between () followed by a .
+
+listing(male).
+-gives a listing of all male predicates
+
+

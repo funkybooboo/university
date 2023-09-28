@@ -35,4 +35,117 @@ loves(romeo, X).
 listing(male).
 -gives a listing of all male predicates
 
+- will show all the combinations of what X and Y could be, use ; to cycle through.
+male(X), female(Y).
 
+
+-- Rules
+happy(albert).
+happy(alice).
+happy(bob).
+happy(bill).
+with_albert(alice).
+
+runs(albert) :-
+    happy(albert).
+
+dances(alice) :-
+    happy(alice),
+    with_albert(alice).
+
+does_alice_dance :- dances(alice),
+    write('When Alice is happy and with Albert she dances').
+
+parent(albert, bob).
+parent(albert, betsy).
+parent(albert, bill).
+
+parent(alice, bob).
+parent(alice, betsy).
+parent(alice, bill).
+
+parent(bob, carl).
+parent(bob, charlie).
+
+-command
+parent(Y, carl),
+parent(X, Y).
+
+get_grandchild :-
+    parent(albert, X),
+    parent(X, Y),
+    write('Alberts grandchild is '),
+    write(Y), nl.
+
+-commands
+get_grandchild.
+- output
+Alberts grandchild is carl
+
+get_grandparent :-
+    parent(Z, X),
+    parent(Y, Z),
+    format('~w ~s grandparent ~n', [X, "is the"]).
+
+blushes(X) :- human(X).
+human(derek).
+
+stabs(tybalt, mercutio, sword).
+hates(romeo, X) :- stabs(X, mercutio, sword).
+
+- Anonymous variables
+males(_).
+
+what_grade(6) :-
+    write('Go to 1st grade').
+
+what_grade(Other) :-
+    Grade is Other - 5,
+    format('Go to grade ~w', [Grade]).
+
+-- Structures
+
+has(albert, olive).
+
+- functure and arity
+female(alice).
+
+owns(albert, pet(cat, olive)).
+
+customer(tom, smith, 20.55).
+customer(sally, smith, 120.55).
+
+- the customer sally with whatever last name get her Balance
+customer(sally, _, Bal)
+
+get_cust_bal(FName, LName) :-
+    customer(FName, LName, Bal),
+    write(FName), tab(1),
+    format('~w owes us $~2f ~n', [LName, Bal]).
+
+vertical(line(point(X, Y), point(X, Y2))).
+
+horizontal(line(point(X, Y), point(X2, Y))).
+
+- the same
+alice = alice.
+'alice' = alice.
+
+- not the same
+\+ (alice = albert).
+
+3 > 15.
+
+3 >= 15.
+
+3 =< 15.
+
+W = alice.
+
+Rand1 = Rand2.
+
+rich(money, X) = rich(Y, no_debt).
+
+
+-- Debugging
+trace.

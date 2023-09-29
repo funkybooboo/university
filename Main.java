@@ -2,11 +2,15 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        double x = 11;
-        int n = 10;
-        List<Double> list1 = List.of();
-        List<Double> list2 = List.of();
-        findSum(x, n, list1, list2);
+
+        List<Integer> list1 = List.of(3, 12, 19, 25, 36);
+        List<Integer> list2 = List.of(34, 89);
+        List<Integer> list3 = List.of(17, 26, 87);
+        List<Integer> list4 = List.of(28);
+        List<Integer> list5 = List.of(2, 10, 21, 29, 55, 59, 61);
+        List<List<Integer>> lists = List.of(list1, list2, list3, list4, list5);
+        mergeLists(lists);
+
     }
 
     public static void findSum(double x, int n, List<Double> list1, List<Double> list2) {
@@ -33,4 +37,14 @@ public class Main {
         }
         System.out.println("None");
     }
+
+    public static void mergeLists(List<List<Integer>> lists) {
+        // n log k
+        // n for the width = we go over every element
+        // log k for the height = we do log k recursive calls
+
+    }
+
+
+
 }

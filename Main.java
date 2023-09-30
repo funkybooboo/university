@@ -3,13 +3,15 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        List<Integer> list1 = List.of(3, 12, 19, 25, 36);
-        List<Integer> list2 = List.of(34, 89);
-        List<Integer> list3 = List.of(17, 26, 87);
-        List<Integer> list4 = List.of(28);
-        List<Integer> list5 = List.of(2, 10, 21, 29, 55, 59, 61);
-        List<List<Integer>> lists = List.of(list1, list2, list3, list4, list5);
-        mergeLists(lists);
+        List<Integer> list1 = new ArrayList<>(List.of(3, 12, 19, 25, 36));
+        List<Integer> list2 = new ArrayList<>(List.of(34, 89));
+        List<Integer> list3 = new ArrayList<>(List.of(17, 26, 87));
+        List<Integer> list4 = new ArrayList<>(List.of(28));
+        List<Integer> list5 = new ArrayList<>(List.of(2, 10, 21, 29, 55, 59, 61));
+
+        List<List<Integer>> lists = new ArrayList<>(List.of(list1, list2, list3, list4, list5));
+        List<Integer> list = mergeLists(lists);
+        System.out.println(list);
 
     }
 
@@ -38,13 +40,22 @@ public class Main {
         System.out.println("None");
     }
 
-    public static void mergeLists(List<List<Integer>> lists) {
-        // n log k
-        // n for the width = we go over every element
-        // log k for the height = we do log k recursive calls
-
+    public static List<Integer> mergeLists(List<List<Integer>> lists) {
+        if (lists.isEmpty()) return new ArrayList<>();
+        if (lists.size() == 1) return lists.remove(0);
+        List<Integer> combined = merge(lists.remove(0), lists.remove(1));
+        while (!lists.isEmpty()) combined = merge(lists.remove(0), combined);
+        return combined;
     }
-
-
+    public static List<Integer> merge(List<Integer> A, List<Integer> B) {
+        List<Integer> C = new ArrayList<>();
+        while (!A.isEmpty() && !B.isEmpty()) {
+            if (A.get(0) > B.get(0)) C.add(B.remove(0));
+            else C.add(A.remove(0));
+        }
+        while (!A.isEmpty()) C.add(A.remove(0));
+        while (!B.isEmpty()) C.add(B.remove(0));
+        return C;
+    }
 
 }

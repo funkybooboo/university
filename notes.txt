@@ -275,12 +275,61 @@ friend(romeo, benvolio).
 stabs(tybalt, mercutio, sword).
 stabs(romeo, tybalt, sword).
 
-- before
+- after
 assert(friend(benvolio, mercutio)).
 
-- after
+- before
 asserta(friend(mercutio, benvolio)).
 
 retract(likes(mercutio, dancing)).
 
 retractall(father(_,_)).
+
+retranctall(likes(_,dancing)).
+
+-- lists
+
+write([albert|[alice, bob]]), nl.
+
+length([1,2,3], X).
+
+[H|T] = [a, b, c].
+
+[X1, X2, X3, X4|T] = [1, b, c, d].
+
+[_, X2, _, _|T] = [a,b,c,d].
+
+[_, _, [X|Y], _, Z|T] = [a, b, [c, d, e], f, g, h]
+
+List1 = [a,b,c].
+
+member(a, List1).
+
+member(X, [a,b,c,d]).
+
+reverse([1,2,3,4,5]).
+
+append([1,2,3], [4,5,6], X).
+
+write_list([]).
+write_list(Head | Tail) :-
+    write(Head), nl,
+    write_list(Tail).
+
+name('A random string', X).
+
+name(X, [1,2,3,4,5].
+- output X = 'A random string'
+
+join_str(S1, S2, S3) :-
+    name(S1, SL1),
+    name(S2, SL2),
+    append(SL1, SL2, SL3),
+    name(S3, SL3).
+
+name('Derek', List),
+    nth0(0, List, FChar),
+    put(FChar).
+
+atom_length('Derek', X).
+

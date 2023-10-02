@@ -3,7 +3,7 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
-        getNumberOfInversions(new ArrayList<>(List.of(4, 2, 9, 1, 7)));
+        stockMarket(new ArrayList<>(List.of(9, 1, 5, 4, 7)));
 
     }
 
@@ -84,6 +84,12 @@ public class Main {
             this.list = list;
             this.count = count;
         }
+    }
+
+    public static void stockMarket(List<Integer> prices) {
+
+
+
     }
 
 }

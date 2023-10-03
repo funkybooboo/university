@@ -86,10 +86,66 @@ public class Main {
         }
     }
 
-    public static void stockMarket(List<Integer> prices) {
+    public static class DayInfo {
+        static int bestDayToBuy = 0;
+        static int bestDayToBuyPrice = 1000000;
+        static int bestDayToSell = 0;
+        static int bestDayToSellPrice = 0;
 
-
-
+        final int day;
+        final int price;
+        boolean isValid;
+        public DayInfo(int day, int price) {
+            this.day = day;
+            this.price = price;
+            this.isValid = true;
+        }
     }
-
+    public static void stockMarket(List<Integer> prices) {
+        if (prices.size() < 2) {
+            System.out.println("Not enough Stock Data");
+        }
+        List<DayInfo> days = new ArrayList<>();
+        for (int i = 0; i < prices.size(); i++) {
+            days.add(new DayInfo(i+1, prices.get(i)));
+        }
+        List<DayInfo> bestDays = getBestDays(days);
+        System.out.println(bestDays);
+        System.out.println("Best day to buy " + DayInfo.bestDayToBuy + ", Best day to sell " + DayInfo.bestDayToSell);
+        System.out.println("You would have made $" + (DayInfo.bestDayToSellPrice - DayInfo.bestDayToBuyPrice) + " per share");
+    }
+    public static List<DayInfo> getBestDays(List<DayInfo> days) {
+        if (days.isEmpty() || days.size() == 1) return days;
+        int mid = (days.size()-1)/2+1;
+        List<DayInfo> half1 = new ArrayList<>(days.subList(0, mid));
+        List<DayInfo> half2 = new ArrayList<>(days.subList(mid, days.size()));
+        half1 = getBestDays(half1);
+        half2 = getBestDays(half2);
+        return merge3(half1, half2);
+    }
+    public static List<DayInfo> merge3(List<DayInfo> A, List<DayInfo> B) {
+        List<DayInfo> C = new ArrayList<>();
+        while (!A.isEmpty() && !B.isEmpty()) {
+            if (A.get(0).price > B.get(0).price) {
+                A.get(0).isValid = false;
+                C.add(B.remove(0));
+            }
+            else C.add(A.remove(0));
+        }
+        while (!A.isEmpty()) C.add(A.remove(0));
+        while (!B.isEmpty()) C.add(B.remove(0));
+        for (DayInfo day : C) {
+            if (day.isValid) {
+                if (day.price < DayInfo.bestDayToBuyPrice) {
+                    DayInfo.bestDayToBuy = day.day;
+                    DayInfo.bestDayToBuyPrice = day.price;
+                }
+                else if (day.price > DayInfo.bestDayToSellPrice) {
+                    DayInfo.bestDayToSell = day.day;
+                    DayInfo.bestDayToSellPrice = day.price;
+                }
+            }
+        }
+        return C;
+    }
 }

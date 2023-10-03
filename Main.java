@@ -90,8 +90,7 @@ public class Main {
         static int bestDayToBuy = 0;
         static int bestDayToBuyPrice = 1000000;
         static int bestDayToSell = 0;
-        static int bestDayToSellPrice = 0;
-
+        static int bestDayToSellPrice = -1;
         final int day;
         final int price;
         boolean isValid;
@@ -111,8 +110,12 @@ public class Main {
         }
         List<DayInfo> bestDays = getBestDays(days);
         System.out.println(bestDays);
-        System.out.println("Best day to buy " + DayInfo.bestDayToBuy + ", Best day to sell " + DayInfo.bestDayToSell);
-        System.out.println("You would have made $" + (DayInfo.bestDayToSellPrice - DayInfo.bestDayToBuyPrice) + " per share");
+        if (DayInfo.bestDayToSell == 0 || DayInfo.bestDayToBuyPrice == 0) {
+            System.out.println("There is no solution");
+        } else {
+            System.out.println("Best day to buy " + DayInfo.bestDayToBuy + ", Best day to sell " + DayInfo.bestDayToSell);
+            System.out.println("You would have made $" + (DayInfo.bestDayToSellPrice - DayInfo.bestDayToBuyPrice) + " per share");
+        }
     }
     public static List<DayInfo> getBestDays(List<DayInfo> days) {
         if (days.isEmpty() || days.size() == 1) return days;

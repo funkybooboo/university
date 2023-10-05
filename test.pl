@@ -30,21 +30,21 @@ room(alnwick, foyer, passage, 1).
 room(alnwick, passage, foundry, 1).
 room(alnwick, foundry, exit, 4).
 
-test1() :- writeln('solveRoomsWithinCost(dunstanburgh, 8)'),
+test1 :- write('solveRoomsWithinCost(dunstanburgh, 8)'), nl,
            solveRoomsWithinCost(dunstanburgh, 8).
-test2() :- writeln('solveRoomsWithinCost(windsor, 13)'),
+test2 :- write('solveRoomsWithinCost(windsor, 13)'), nl,
            solveRoomsWithinCost(windsor, 13).
-test3() :- writeln('solveRoomsWithinCost(alnwick, 15)'),
+test3 :- write('solveRoomsWithinCost(alnwick, 15)'), nl,
            solveRoomsWithinCost(alnwick, 15).
-test4() :- writeln('solveRooms(dunstanburgh, [foyer, kitchen])'),
+test4 :- write('solveRooms(dunstanburgh, [foyer, kitchen])'), nl,
            solveRooms(dunstanburgh, [foyer, kitchen]).
-test5() :- writeln('solveRooms(windsor, [stairs])'),
+test5 :- write('solveRooms(windsor, [stairs])'), nl,
            solveRooms(windsor, [stairs]).
-test6() :- writeln('solveRooms(alnwick, [foyer, hall])'),
+test6 :- write('solveRooms(alnwick, [foyer, hall])'), nl,
            solveRooms(alnwick, [foyer, hall]).
-test7() :- writeln('solveRooms(alnwick, [foyer, passage])'),
+test7 :- write('solveRooms(alnwick, [foyer, passage])'), nl,
            solveRooms(alnwick, [foyer, passage]).
-test8() :- writeln('fails: solveRooms(alnwick, [foyer, throne, escape])'),
+test8 :- write('fails: solveRooms(alnwick, [foyer, throne, escape])'), nl,
            solveRooms(alnwick, [foyer, throne, passage]).
-test9() :- writeln('fails: solveRoomsWithinCost(alnwick, 4)'),
+test9 :- write('fails: solveRoomsWithinCost(alnwick, 4)'), nl,
            solveRoomsWithinCost(alnwick, 4).

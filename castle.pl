@@ -6,24 +6,26 @@ printList([H | T]) :-
 
 % Add your comments here
 solveRooms(Castle, []).
-solveRooms(Castle, [H | T]) :-
-    findRoom(Castle, enter, H),
-    solveRooms(Castle, T),
-    getToExit(Castle, enter).
+solveRooms(Castle, L) :-
+    move(Castle, enter, L, [enter]).
 
-findRoom(Castle, Room, Room) :- write(Room), nl.
-findRoom(Castle, FromRoom, Room) :-
-    write(FromRoom), nl,
+move(Castle, exit, [], B) :- true.
+move(Castle, exit, L, B) :- false.
+move(Castle, FromRoom, L, B) :-
     room(Castle, FromRoom, ToRoom, Cost),
-    findRoom(Castle, ToRoom, Room).
+    checkList(ToRoom, L, NL),
+    move(Castle, ToRoom, NL).
 
-getToExit(Castle, exit) :- write(exit), nl.
-getToExit(Castle, FromRoom) :-
-    write(FromRoom), nl,
-    room(Castle, FromRoom, ToRoom, Cost),
-    getToExit(Castle, ToRoom).
+checkList(Room, [], L).
+checkList(Room, L, NL) :-
+    member(Room, L),
+    removeItem(Room, L, NL);
+    NL = L.
 
-
+removeItem(Room, [L], []).
+removeItem(Room, [Room | L], L).
+removeItem(Room, [H|L], [H|NL]) :- removeItem(Room, L, NL).
 
 % Add your comments here
-
+%solveRoomsWithinCost(Castle, CostLimit) :-
+%    room(Castle, enter, ToRoom, Cost),

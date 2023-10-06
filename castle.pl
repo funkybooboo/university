@@ -7,14 +7,16 @@ printList([H | T]) :-
 % Add your comments here
 solveRooms(Castle, []).
 solveRooms(Castle, L) :-
-    move(Castle, enter, L, [enter]).
-
-move(Castle, exit, [], B) :- true.
-move(Castle, exit, L, B) :- false.
-move(Castle, FromRoom, L, B) :-
+    solveRooms(Castle, enter, L, E),
+    append([enter], E, X),
+    printList(X).
+solveRooms(Castle, exit, [], E) :- true.
+solveRooms(Castle, exit, L, E) :- false.
+solveRooms(Castle, FromRoom, L, E) :-
     room(Castle, FromRoom, ToRoom, Cost),
     checkList(ToRoom, L, NL),
-    move(Castle, ToRoom, NL).
+    solveRooms(Castle, ToRoom, NL, TempE),
+    append([ToRoom], TempE, E).
 
 checkList(Room, [], L).
 checkList(Room, L, NL) :-

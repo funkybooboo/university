@@ -31,16 +31,16 @@ removeItem(Room, [H|L], [H|NL]) :- removeItem(Room, L, NL).
 
 % Add your comments here
 solveRoomsWithinCost(Castle, CostLimit) :-
-    solveRoomsWithinCost(Castle, CostLimit, EndCost, enter, E),
+    solveRoomsWithinCost(Castle, CostLimit, enter, EndCost, E),
     format("Cost is ~w within limit of ~w", [EndCost, CostLimit]), nl,
     append([enter], E, X),
     printList(X).
 
-solveRoomsWithinCost(Castle, CostLimit, EndCost, exit, E) :- CostLimit >= 0.
-solveRoomsWithinCost(Castle, CostLimit, EndCost, FromRoom, E) :-
+solveRoomsWithinCost(Castle, CostLimit, exit, 0, []):- CostLimit >= 0.
+solveRoomsWithinCost(Castle, CostLimit, FromRoom, EndCost, E) :-
     room(Castle, FromRoom, ToRoom, Cost),
-    NewCostLimit is CostLimit - Cost,
-    NewCostLimit >= 0,
-    solveRoomsWithinCost(Castle, NewCostLimit, EndCost, ToRoom, TempE),
-    % add something here to get access to EndCost in the parent predicate.
-    append([ToRoom], TempE, E).
+    AccCostLimit is CostLimit - Cost,
+    AccCostLimit >= 0,
+    solveRoomsWithinCost(Castle, AccCostLimit, ToRoom, AccEndCost, AccE),
+    EndCost is AccEndCost + Cost,
+    append([ToRoom], AccE, E).

@@ -28,27 +28,45 @@ def main(args):
 
 def process(widget, widget_key, s3_client, storage_choice):
     try:
+        if not is_valid(widget):
+            raise
         if storage_choice == 's3':
-            widget_owner = widget['owner'].lower().replace(' ', '-')
-            widget_id = widget['widgetId']
-            object_key = f'widgets/{widget_owner}/{widget_id}'
-            item_content = str(widget)
-            s3_client.put_object(Bucket=STORAGE_S3_BUCKET_NAME, Key=object_key, Body=item_content)
+            put_s3_object(s3_client, widget)
         else:
-            dynamodb = boto3.resource('dynamodb')
-            table = dynamodb.Table(STORAGE_DYNAMODB_NAME)
-            item = {}
-            for key in widget:
-                if key == 'otherAttributes':
-                    for i in widget[key]:
-                        item.update({i['name']: i['value']})
-                else:
-                    value = widget[key]
-                    item.update({key: value})
-            table.put_item(Item=item)
+            put_dynamodb_object(widget)
     except Exception:
-        with open('log.txt', 'w') as log:
-            log.write(f'Bad file: {widget_key}\n')
+        log_error(widget_key)
+
+
+def put_dynamodb_object(widget):
+    dynamodb = boto3.resource('dynamodb')
+    table = dynamodb.Table(STORAGE_DYNAMODB_NAME)
+    item = {
+        'widgetId': widget['widgetId'],
+        'owner': widget['owner'],
+        'label': widget['label'],
+        'description': widget['description']
+    }
+    for i in widget['otherAttributes']:
+        item.update({i['name']: i['value']})
+    table.put_item(Item=item)
+
+
+def put_s3_object(s3_client, widget):
+    widget_owner = widget['owner'].lower().replace(' ', '-')
+    widget_id = widget['widgetId']
+    object_key = f'widgets/{widget_owner}/{widget_id}'
+    item_content = str(widget)
+    s3_client.put_object(Bucket=STORAGE_S3_BUCKET_NAME, Key=object_key, Body=item_content)
+
+
+def is_valid(widget):
+    return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(widget['description']) == str
+
+
+def log_error(widget_key):
+    with open('log.txt', 'a') as log:
+        log.write(f'Bad file: {widget_key}\n')
 
 
 def checkForRequest(s3_client):
@@ -66,8 +84,7 @@ def checkForRequest(s3_client):
                 return json.loads(object_data.decode('utf-8')), widget_key
             raise
     except Exception:
-        with open('log.txt', 'w') as log:
-            log.write(f'Bad file: {widget_key}\n')
+        log_error(widget_key)
     return None, None
 
 

@@ -9,12 +9,13 @@ REQUEST_S3_BUCKET_NAME = 'usu-cs5260-nate-requests'
 STORAGE_S3_BUCKET_NAME = 'usu-cs5260-nate-web'
 STORAGE_DYNAMODB_NAME = 'widgets'
 
-
 logging.basicConfig(
-    level=logging.DEBUG,
+    level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    filename='log.log',
-    filemode='a'
+    handlers=[
+        logging.FileHandler('consumer.log'),
+        logging.StreamHandler()
+    ]
 )
 logging.info('Start program')
 s3_client = boto3.client('s3')
@@ -26,7 +27,7 @@ def main(args):
     missed_count = 0
     wait_time_ms = 100 / 1000
     try:
-        while missed_count < 1000:
+        while missed_count < 500:
             widget, widget_key = get_widget()
             if widget is None:
                 logging.info('Did not find a widget')
@@ -37,7 +38,7 @@ def main(args):
             missed_count = 0
             process_widget(widget, widget_key, storage_choice)
     except Exception as e:
-        logging.info('End Program bad')
+        logging.error('End Program bad')
         logging.error('An error occurred:', exc_info=True)
     finally:
         logging.info('End Program good')

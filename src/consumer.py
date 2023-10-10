@@ -9,55 +9,64 @@ REQUEST_S3_BUCKET_NAME = 'usu-cs5260-nate-requests'
 STORAGE_S3_BUCKET_NAME = 'usu-cs5260-nate-web'
 STORAGE_DYNAMODB_NAME = 'widgets'
 
-logger = logging.getLogger('consumer')
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    filename='log.log',
+    filemode='a'
+)
+logging.info('Start program')
+s3_client = boto3.client('s3')
+logging.info('Got s3 client')
 
 
 def main(args):
-    logger.info('Start program')
+    storage_choice = get_storage_choice(args)
+    missed_count = 0
+    wait_time_ms = 100 / 1000
     try:
-        if len(args) == 1:
-            usage()
-        storage_choice = args[1].lower()
-        if not storage_choice == 'dynamodb' and not storage_choice == 's3':
-            usage()
-        s3_client = boto3.client('s3')
-        logger.info('Got s3 client')
-        missed_count = 0
-        wait_time_ms = 100 / 1000
         while missed_count < 1000:
-            widget, widget_key = get_widget(s3_client)
+            widget, widget_key = get_widget()
             if widget is None:
-                logger.info('Did not find a widget')
+                logging.info('Did not find a widget')
                 missed_count += 1
                 time.sleep(wait_time_ms)
                 continue
-            logger.info(f'Got widget: {widget_key}')
+            logging.info(f'Got widget: {widget_key}')
             missed_count = 0
-            process_widget(widget, widget_key, s3_client, storage_choice)
-        logger.info('End Program clean')
+            process_widget(widget, widget_key, storage_choice)
     except Exception as e:
-        logger.info('End Program bad')
-        logger.error('An error occurred:', exc_info=True)
+        logging.info('End Program bad')
+        logging.error('An error occurred:', exc_info=True)
     finally:
+        logging.info('End Program good')
         logging.shutdown()
 
 
-def process_widget(widget, widget_key, s3_client, storage_choice):
+def get_storage_choice(args):
+    if len(args) == 1:
+        usage()
+    storage_choice = args[1].lower()
+    if not storage_choice == 'dynamodb' and not storage_choice == 's3':
+        usage()
+    return storage_choice
+
+
+def process_widget(widget, widget_key, storage_choice):
     try:
-        if widget['type'] == 'create':
-            create_widget(s3_client, storage_choice, widget)
+        if widget['type'] == 'create' and is_valid(widget):
+            create_widget(storage_choice, widget)
         else:
             raise
     except Exception as e:
-        logger.error(f'Bad Processing: {widget_key}')
+        logging.error(f'Bad Processing: {widget_key}')
 
 
-def create_widget(s3_client, storage_choice, widget):
-    if not is_valid(widget):
-        raise
-    logger.info('processing valid widget')
+def create_widget(storage_choice, widget):
+    logging.info('processing valid widget')
     if storage_choice == 's3':
-        put_s3_object(s3_client, widget)
+        put_s3_object(widget)
     else:
         put_dynamodb_object(widget)
 
@@ -74,25 +83,24 @@ def put_dynamodb_object(widget):
     for i in widget['otherAttributes']:
         item.update({i['name']: i['value']})
     table.put_item(Item=item)
-    logger.info('successful put to dynamodb')
+    logging.info('successful put to dynamodb')
 
 
-def put_s3_object(s3_client, widget):
+def put_s3_object(widget):
     widget_owner = widget['owner'].lower().replace(' ', '-')
     widget_id = widget['widgetId']
     object_key = f'widgets/{widget_owner}/{widget_id}'
     item_content = str(widget)
     s3_client.put_object(Bucket=STORAGE_S3_BUCKET_NAME, Key=object_key, Body=item_content)
-    logger.info('successful put to s3')
+    logging.info('successful put to s3')
 
 
 def is_valid(widget):
-    return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(
-        widget['description']) == str
+    return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(widget['description']) == str
 
 
-def get_widget(s3_client):
-    logger.info('Trying to get widget')
+def get_widget():
+    logging.info('Trying to get widget')
     widget_key = 'unknown'
     try:
         response = s3_client.list_objects_v2(Bucket=REQUEST_S3_BUCKET_NAME)
@@ -106,7 +114,7 @@ def get_widget(s3_client):
                 return json.loads(object_data.decode('utf-8')), widget_key
             raise
     except Exception as e:
-        logger.error(f'Bad Reading: {widget_key}')
+        logging.error(f'Bad Reading: {widget_key}')
     return None, None
 
 

@@ -34,9 +34,12 @@ def main(args):
             logger.info(f'Got widget: {widget_key}')
             missed_count = 0
             process_widget(widget, widget_key, s3_client, storage_choice)
-        logger.info('End Program')
+        logger.info('End Program clean')
     except Exception as e:
+        logger.info('End Program bad')
         logger.error('An error occurred:', exc_info=True)
+    finally:
+        logging.shutdown()
 
 
 def process_widget(widget, widget_key, s3_client, storage_choice):

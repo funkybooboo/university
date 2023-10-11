@@ -1,0 +1,2 @@
+2023-10-11 15:44:49,049 [main] INFO edu.usu.cs5260.common.ProducerSettings - max-widget-requests: 1000
+2023-10-11 15:44:49,051 [main] INFO edu.usu.cs5260.common.ProducerSettings - inter-request-delay: 100

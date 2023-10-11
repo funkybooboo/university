@@ -1,11 +1,10 @@
 import unittest
-from src.consumer import main, get_storage_choice, create_widget, put_dynamodb_object, put_s3_object, is_valid, get_widget, usage
+from src.consumer import (main, process_args, create_widget, put_dynamodb_object, put_s3_object, is_valid, get_widget, usage)
 
 
 class MyTestCase(unittest.TestCase):
     def test_main(self):
         self.assertEqual(True, False)
-
 
     def test_get_storage_choice(self):
         pass

@@ -9,26 +9,27 @@ REQUEST_S3_BUCKET_NAME = 'usu-cs5260-nate-requests'
 STORAGE_S3_BUCKET_NAME = 'usu-cs5260-nate-web'
 STORAGE_DYNAMODB_NAME = 'widgets'
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler('consumer.log'),
-        logging.StreamHandler()
-    ]
-)
-logging.info('Start program')
-s3_client = boto3.client('s3')
-logging.info('Got s3 client')
-
 
 def main(args):
-    storage_choice = get_storage_choice(args)
+    storage_choice = process_args(args)
+    if storage_choice is None:
+        return
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        handlers=[
+            logging.FileHandler('consumer.log'),
+            logging.StreamHandler()
+        ]
+    )
+    logging.info('Start program')
+    s3_client = boto3.client('s3')
+    logging.info('Got s3 client')
     missed_count = 0
     wait_time_ms = 100 / 1000
     try:
         while missed_count < 500:
-            widget, widget_key = get_widget()
+            widget, widget_key = get_widget(s3_client)
             if widget is None:
                 logging.info('Did not find a widget')
                 missed_count += 1
@@ -36,38 +37,28 @@ def main(args):
                 continue
             logging.info(f'Got widget: {widget_key}')
             missed_count = 0
-            process_widget(widget, widget_key, storage_choice)
+            process_widget(widget, widget_key, storage_choice, s3_client)
     except Exception as e:
-        logging.error('End Program bad')
         logging.error('An error occurred:', exc_info=True)
     finally:
-        logging.info('End Program good')
+        logging.info('End Program')
         logging.shutdown()
 
 
-def get_storage_choice(args):
-    if len(args) == 1:
-        usage()
-    storage_choice = args[1].lower()
-    if not storage_choice == 'dynamodb' and not storage_choice == 's3':
-        usage()
-    return storage_choice
-
-
-def process_widget(widget, widget_key, storage_choice):
+def process_widget(widget, widget_key, storage_choice, s3_client):
     try:
         if widget['type'] == 'create' and is_valid(widget):
-            create_widget(storage_choice, widget)
+            create_widget(storage_choice, widget, s3_client)
         else:
             raise
     except Exception as e:
         logging.error(f'Bad Processing: {widget_key}')
 
 
-def create_widget(storage_choice, widget):
+def create_widget(storage_choice, widget, s3_client):
     logging.info('processing valid widget')
     if storage_choice == 's3':
-        put_s3_object(widget)
+        put_s3_object(widget, s3_client)
     else:
         put_dynamodb_object(widget)
 
@@ -87,7 +78,7 @@ def put_dynamodb_object(widget):
     logging.info('successful put to dynamodb')
 
 
-def put_s3_object(widget):
+def put_s3_object(widget, s3_client):
     widget_owner = widget['owner'].lower().replace(' ', '-')
     widget_id = widget['widgetId']
     object_key = f'widgets/{widget_owner}/{widget_id}'
@@ -100,7 +91,7 @@ def is_valid(widget):
     return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(widget['description']) == str
 
 
-def get_widget():
+def get_widget(s3_client):
     logging.info('Trying to get widget')
     widget_key = 'unknown'
     try:
@@ -119,14 +110,37 @@ def get_widget():
     return None, None
 
 
-def usage():
-    print('Please provide a storage option: dynamodb or s3')
-    print()
-    print('Usage examples:')
-    print('\t$ python consumer.py s3')
-    print('\t$ python consumer.py dynamodb')
-    sys.exit(1)
+def process_args(args):
+    if len(args) == 1:
+        return 's3'
+    if args[1] == '-h' or args[1] == '--help':
+        usage()
+    elif args[1] == 's3':
+        return 's3'
+    elif args[1] == 'dynamodb':
+        return 'dynamodb'
+    else:
+        print('Invalid option(s)')
+        print('For help: python consumer.py --help')
+        return None
 
+
+def usage():
+    print('Author: Nate Stott Utah State University Computer Science Student')
+    print('Date: Oct 10, 2023')
+    print('Project made for CS5260 Cloud Computing with Steve Petruzza')
+    print('''
+Command-line arguments (both short and long styles):
+    -h, --help                     Display help message
+
+Examples:
+    python consumer.py                     Default is s3
+    python consumer.py --help
+    python consumer.py s3
+    python consumer.py dynamodb
+
+Note: You must have full access to the request bucket, and storage dynamodb table and s3 bucket.
+    ''')
 
 if __name__ == '__main__':
     main(sys.argv)

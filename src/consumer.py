@@ -1,4 +1,3 @@
-import sys
 import boto3
 import time
 import json
@@ -98,7 +97,7 @@ def get_widget(s3_client, args):
     try:
         response = s3_client.list_objects_v2(Bucket=args['pull_bucket'])
         if 'Contents' in response:
-            object_data, widget_key = get_smallest_object_data(args, response, s3_client, widget_key)
+            object_data, widget_key = get_smallest_object_data(args, response, s3_client)
             if object_data:
                 return json.loads(object_data.decode('utf-8')), widget_key
         raise
@@ -107,7 +106,7 @@ def get_widget(s3_client, args):
     return None, None
 
 
-def get_smallest_object_data(args, response, s3_client, widget_key):
+def get_smallest_object_data(args, response, s3_client):
     object_keys = [obj['Key'] for obj in response['Contents']]
     widget_key = min(object_keys)
     response = s3_client.get_object(Bucket=args['pull_bucket'], Key=widget_key)

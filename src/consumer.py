@@ -26,16 +26,16 @@ def main():
 
 
 def consume(s3_client, args):
-    end = (time.time() * 1000) + args['max_runtime']
+    end = (time.time() * 1000) + (args['max_runtime'] * 1000)
     count = 0
     try:
         while (time.time() * 1000) < end and count < args['max_widget_pulls']:
             widget, widget_key = get_widget(s3_client, args)
+            count += 1
             if widget is None:
                 logging.info('Did not find a widget')
                 time.sleep((args['inter_pull_delay'] / 1000))
                 continue
-            count += 1
             logging.info(f'Got widget: {widget_key}')
             process_widget(widget, widget_key, s3_client, args)
     except Exception as e:
@@ -122,8 +122,8 @@ def get_args():
     parser.add_argument('--pull-bucket', type=str, default='usu-cs5260-nate-requests', help='Name of bucket that will contain requests (default=usu-cs5260-nate-requests)')
     parser.add_argument('--push-bucket', type=str, default='usu-cs5260-nate-web', help='Name of bucket where widget info will be pushed (default=usu-cs5260-nate-web)')
     parser.add_argument('--push-table', type=str, default='widgets', help='Name of table where widget info will be pushed (default=widgets)')
-    parser.add_argument('-mrt', '--max-runtime', type=int, default=30000, help='Maximum runtime in milliseconds (default=30000)')
-    parser.add_argument('-mwr', '--max-widget-pulls', type=int, default=1000, help='Maximum number of widget requests to pull (default=1000)')
+    parser.add_argument('-mrt', '--max-runtime', type=int, default=1000, help='Maximum runtime in seconds (default=1000)')
+    parser.add_argument('-mwr', '--max-widget-pulls', type=int, default=500, help='Maximum number of widget requests to pull (default=500)')
     parser.add_argument('-ipd', '--inter-pull-delay', type=int, default=100, help='Number of milliseconds to wait between request pulls (default=100)')
     parser.add_argument('-ll', '--log-level', type=bool, default=False, help='Level of logging (default=low)')
     args = parser.parse_args()

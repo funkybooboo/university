@@ -1,22 +1,20 @@
 import random
 
-
 def main():
-    A = []
-    for i in range(10):
-        A.append(random.randint(1, 30))
+    A = set()
+    while len(A) < 10:
+        A.add(random.randint(1, 30))
     k = random.randint(1, 10)
-    print(selection(A, k))
+    A = list(A)
+    random.shuffle(A)
+    print(A)
+    print(k)
+    print(get_Kth(A, k))
 
-def selection(A, k):
-    # get pivot
-    # move items bigger to the right of pivot
-    # check if k is == to pivot by using the len(A)
-    # if k has to be on the right side of pivot then throw away the left
-    # if k has to be on the left side of pivot then throw away the right
-    # keep searching until the kth element is found
-    pivot_index = get_pivot_index(A)
-    pivot = A[pivot_index]
+def get_Kth(A, k):
+    if k > len(A):
+        return None
+    pivot = get_pivot(A)
     B = []
     C = []
     for a in A:
@@ -24,16 +22,15 @@ def selection(A, k):
             C.append(a)
         elif a < pivot:
             B.append(a)
-    B.append(pivot)
-
-    if k == len(B):
+    if k == len(B)+1:
         return pivot
-    elif k > len(B):
-        return selection(C, k-len(B))
+    elif k > len(B)+1:
+        return get_Kth(C, k - (len(B) + 1))
     else:
-        return selection(B, k)
+        return get_Kth(B, k)
 
-def get_pivot_index(A):
+def get_pivot(A):
+
     return len(A) // 2
 
 if __name__ == '__main__':

@@ -2,27 +2,21 @@ import random
 
 
 def main():
-    A = set()
-    l = random.randint(10, 50)
+    A = []
+    l = random.randint(5, 10)
     while len(A) < l:
-        A.add(random.randint(1, l*2))
-    k = random.randint(1, 10)
-    A = list(A)
+        A.append(random.randint(1, l*2))
+    k = random.randint(1, l)
     random.shuffle(A)
-    print('list')
+    print('list and size')
+    print(len(A))
     print(A)
+    print()
     print('k')
     print(k)
     print()
     kth = get_Kth(A, k)
-    A.sort()
-    left = []
-    right = []
-    for a in A:
-        if a < kth:
-            left.append(a)
-        elif a > kth:
-            right.append(a)
+    left, right = split_A(A, kth)
     print('kth')
     print(kth)
     print()
@@ -34,7 +28,8 @@ def main():
     print(len(right))
     print(right)
     print()
-    if len(left) + 1 == k:
+    A.sort()
+    if kth == A[k-1]:
         print('Correct')
     else:
         print('Incorrect')
@@ -75,26 +70,21 @@ def get_Kth(A, k):
         return None
 
     if len(A) % 2 == 0:
-        pivot = get_pivot(A, len(A) // 2)
+        median = get_median(A, len(A) // 2)
     else:
-        pivot = get_pivot(A, (len(A) // 2) + 1)
-    left = []
-    right = []
-    for a in A:
-        if a > pivot:
-            right.append(a)
-        elif a < pivot:
-            left.append(a)
+        median = get_median(A, (len(A) // 2) + 1)
+
+    left, right = split_A(A, median)
 
     if k == len(left) + 1:
-        return pivot
+        return median
     elif k > len(left) + 1:
         return get_Kth(right, k - (len(left) + 1))
     else:
         return get_Kth(left, k)
 
 
-def get_pivot(A, k):
+def get_median(A, k):
 
     groups = get_groups(A)
 
@@ -105,9 +95,9 @@ def get_pivot(A, k):
     if k == len(left) + 1:
         return median
     elif k > len(left) + 1:
-        return get_pivot(right, k - (len(left) + 1))
+        return get_median(right, k - (len(left) + 1))
     else:
-        return get_pivot(left, k)
+        return get_median(left, k)
 
 
 def split_A(A, median):
@@ -116,8 +106,9 @@ def split_A(A, median):
     for a in A:
         if a > median:
             right.append(a)
-        elif a < median:
+        else:
             left.append(a)
+    left.remove(median)
     return left, right
 
 
@@ -127,8 +118,7 @@ def get_median_of_medians(groups):
         group.sort()
         medians.append(group[len(group) // 2])
     medians.sort()
-    median = medians[len(medians) // 2]
-    return median
+    return medians[len(medians) // 2]
 
 
 def get_groups(A):

@@ -2,37 +2,11 @@ import random
 
 
 def main():
-    A = []
-    l = random.randint(5, 10)
-    while len(A) < l:
-        A.append(random.randint(1, l*2))
-    k = random.randint(1, l)
-    random.shuffle(A)
-    print('list and size')
-    print(len(A))
-    print(A)
-    print()
-    print('k')
-    print(k)
-    print()
-    kth = get_Kth(A, k)
-    left, right = split_A(A, kth)
-    print('kth')
-    print(kth)
-    print()
-    print('left and size')
-    print(len(left))
-    print(left)
-    print()
-    print('right and size')
-    print(len(right))
-    print(right)
-    print()
-    A.sort()
-    if kth == A[k-1]:
-        print('Correct')
-    else:
-        print('Incorrect')
+    A = [1, 5, 9, 3, 7, 12, 15, 8, 21]
+    m = [2, 5, 7]
+
+    print(multi_selection_fast(A, m))
+
 
 def find_peak(array):
     left = 0
@@ -61,8 +35,30 @@ def fit_line(array):
         temp2 += (p[0] - x_mean) ** 2
     m = temp1 / temp2
     b = y_mean - (m * x_mean)
-
     return m, b
+
+
+def multi_selection_slow(A, m):
+    s = []
+    A.sort()
+    for k in m:
+        s.append(A[k-1])
+    return s
+
+
+def multi_selection_medium(A, m):
+    s = []
+    for k in m:
+        s.append(get_Kth(A, k))
+    return s
+
+
+def multi_selection_fast(A, m):
+    return multi_selection_fast_helper(A, m, [])
+
+
+def multi_selection_fast_helper(A, m, s):
+    pass
 
 
 def get_Kth(A, k):

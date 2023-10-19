@@ -42,7 +42,7 @@ def multi_selection_slow(A, m):
     s = []
     A.sort()
     for k in m:
-        s.append(A[k-1])
+        s.append(A[k - 1])
     return s
 
 
@@ -54,11 +54,26 @@ def multi_selection_medium(A, m):
 
 
 def multi_selection_fast(A, m):
-    return multi_selection_fast_helper(A, m, [])
+    s = []
+    if len(A) % 2 == 0:
+        median = get_median(A, len(A) // 2)
+    else:
+        median = get_median(A, (len(A) // 2) + 1)
 
+    left, right = split_A(A, median)
 
-def multi_selection_fast_helper(A, m, s):
-    pass
+    for k in m:
+        if k == len(left) + 1:
+            s.append(median)
+            continue
+        elif k > len(left) + 1:
+            nums = right
+            k = k - (len(left) + 1)
+        else:
+            nums = left
+        s.append(get_Kth(nums, k))
+
+    return s
 
 
 def get_Kth(A, k):
@@ -81,7 +96,6 @@ def get_Kth(A, k):
 
 
 def get_median(A, k):
-
     groups = get_groups(A)
 
     median = get_median_of_medians(groups)

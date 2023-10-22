@@ -25,7 +25,7 @@ class TestConsumerFunctions(unittest.TestCase):
         mock_response_stream.read.return_value = b'{}'
         mock_s3_client.get_object.return_value = {'Body': mock_response_stream}
         args = {'pull_bucket': 'test'}
-        data, key = consumer.get_widget_s3(mock_s3_client, args)
+        data, key = consumer.pull_widget_s3(mock_s3_client, args)
         self.assertEquals(data, {})
         self.assertEquals(key, '1')
 

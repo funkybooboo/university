@@ -7,144 +7,196 @@ import argparse
 
 def main():
     args = get_args()
-    if args['log_level']:
-        level = logging.DEBUG
+    setup_logging(args)
+    logging.info('start program execution')
+    if args['pull_choice'] == 's3' and args['push_choice'] == 's3':
+        consume(args, pull_widget_s3, push_widget_s3)
+    elif args['pull_choice'] == 's3' and args['push_choice'] == 'dynamodb':
+        consume(args, pull_widget_s3, push_widget_dynamodb)
+    elif args['pull_choice'] == 'sqs' and args['push_choice'] == 's3':
+        consume(args, pull_widget_sqs, push_widget_s3)
+    elif args['pull_choice'] == 'sqs' and args['push_choice'] == 'dynamodb':
+        consume(args, pull_widget_sqs, push_widget_dynamodb)
     else:
-        level = logging.INFO
+        logging.error('invalid push or pull options')
+    logging.info('end program execution')
+    logging.shutdown()
+
+
+def setup_logging(args):
+    log_level = logging.DEBUG if args['log_level'] else logging.INFO
     logging.basicConfig(
-        level=level,
+        level=log_level,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
             logging.FileHandler('consumer.log'),
             logging.StreamHandler()
         ]
     )
-    logging.info('Start program')
-    if args['pull_choice'] == 's3':
-        consume(args, get_widget_s3)
-    else:
-        consume(args, get_widget_sqs)
-    logging.info('End Program')
-    logging.shutdown()
 
 
-def consume(args, pull_widget):
+def consume(args, pull, push):
     end = (time.time() * 1000) + (args['max_runtime'] * 1000)
     count = 0
+    while (time.time() * 1000) < end and count < args['max_widget_pulls']:
+        widget, widget_key = pull(args)
+        count += 1
+        if widget is None:
+            logging.info('Did not find a widget')
+            time.sleep((args['inter_pull_delay'] / 1000))
+            continue
+        logging.info(f'got widget: {widget_key}')
+        push(widget, widget_key, args)
+
+
+def push_widget_s3(widget, widget_key, args):
+    push_widget(widget, widget_key, args, create_s3_object, update_s3_object, delete_s3_object)
+
+
+def push_widget_dynamodb(widget, widget_key, args):
+    push_widget(widget, widget_key, args, create_dynamodb_object, update_dynamodb_object, delete_dynamodb_object)
+
+
+def push_widget(widget, widget_key, args, create_object, update_object, delete_object):
+    if widget['type'] == 'create' and is_valid_create(widget):
+        logging.info('processing valid create widget')
+        create_object(widget, widget_key, args)
+    elif widget['type'] == 'update' and is_valid_update(widget):
+        logging.info('processing valid update widget')
+        update_object(widget, widget_key, args)
+    elif widget['type'] == 'delete' and is_valid_delete(widget):
+        logging.info('processing valid delete widget')
+        delete_object(widget, widget_key, args)
+    else:
+        logging.error(f'Invalid widget type: {widget_key}')
+
+
+def create_s3_object(widget, widget_key, args):
     try:
-        while (time.time() * 1000) < end and count < args['max_widget_pulls']:
-            widget, widget_key = pull_widget(args)
-            count += 1
-            if widget is None:
-                logging.info('Did not find a widget')
-                time.sleep((args['inter_pull_delay'] / 1000))
-                continue
-            logging.info(f'Got widget: {widget_key}')
-            push_widget(widget, widget_key, args)
+        s3_client = boto3.client('s3')
+        object_key = get_s3_key(widget)
+        item = {
+            'id': widget['widgetId'],
+            'owner': widget['owner'],
+            'label': widget['label'],
+            'description': widget['description']
+        }
+        for i in widget['otherAttributes']:
+            item.update({i['name']: i['value']})
+        s3_client.put_object(Bucket=args['push_bucket'], Key=object_key, Body=str(item))
+        logging.info('successful push to s3')
     except Exception as e:
-        logging.error('An error occurred:', exc_info=True)
+        logging.error('failed push to s3')
 
 
-def push_widget(widget, widget_key, args):
+def create_dynamodb_object(widget, widget_key, args):
     try:
-        if widget['type'] == 'create' and is_valid(widget):
-            logging.info('processing valid create widget')
-            create_widget(widget, args)
-        elif widget['type'] == 'update':
-            logging.info('processing valid update widget')
-            update_widget(widget, args)
-        elif widget['type'] == 'delete':
-            logging.info('processing valid delete widget')
-            delete_widget(widget, args)
+        dynamodb = boto3.resource('dynamodb', region_name=args['region'])
+        table = dynamodb.Table(args['push_table'])
+        item = {
+            'id': widget['widgetId'],
+            'owner': widget['owner'],
+            'label': widget['label'],
+            'description': widget['description']
+        }
+        for i in widget['otherAttributes']:
+            item.update({i['name']: i['value']})
+        table.put_item(Item=item)
+        logging.info('successful put to dynamodb')
+    except Exception as e:
+        logging.error('failed push to dynamodb')
+
+
+def update_s3_object(widget, widget_key, args):
+    try:
+        object_key = get_s3_key(widget)
+        s3_client = boto3.client('s3')
+        response = s3_client.get_object(Bucket=args['push_bucket'], Key=object_key)
+        object_data = response['Body'].read()
+        s3_client.delete_object(Bucket=args['push_bucket'], Key=object_key)
+        if object_data:
+            old_widget = json.loads(object_data.decode('utf-8'))
         else:
-            raise
+            logging.error('empty object')
+            return
+        item = update_item(old_widget, widget)
+        s3_client.put_object(Bucket=args['push_bucket'], Key=object_key, Body=str(item))
     except Exception as e:
-        logging.error(f'Bad Processing: {widget_key}')
+        logging.error(f'Failed to update widget {widget_key}')
 
 
-def create_widget(widget, args):
-    if args['push_choice'] == 's3':
-        create_s3_object(widget, args)
-    else:
-        create_dynamodb_object(widget, args)
+def update_dynamodb_object(widget, widget_key, args):
+    try:
+        dynamodb = boto3.resource('dynamodb', region_name=args['region'])
+        table = dynamodb.Table(args['push_table'])
+        key = {'id': {'S': widget['id']}}
+        response = table.get_item(Key=key)
+        if 'Item' in response:
+            old_widget = response['Item']
+        else:
+            logging.error('Failed to find item in table')
+            return
+        table.delete_item(Key=key)
+        item = update_item(old_widget, widget)
+        table.put_item(Item=item)
+    except Exception as e:
+        logging.error(f'Failed to update widget {widget_key}')
 
 
-def update_widget(widget, args):
-    if args['push_choice'] == 's3':
-        update_s3_object(widget, args)
-    else:
-        update_dynamodb_object(widget, args)
-
-
-def delete_widget(widget, args):
-    if args['push_choice'] == 's3':
-        delete_s3_object(widget, args)
-    else:
-        delete_dynamodb_object(widget, args)
-
-
-def create_dynamodb_object(widget, args):
-    dynamodb = boto3.resource('dynamodb', region_name=args['region'])
-    table = dynamodb.Table(args['push_table'])
-    item = {
-        'id': widget['widgetId'],
-        'owner': widget['owner'],
-        'label': widget['label'],
-        'description': widget['description']
-    }
+def update_item(old_widget, widget):
+    item = old_widget.dict_copy()
+    if widget['description']:
+        item['description'] = widget['description']
+    if widget['label']:
+        item['label'] = widget['label']
     for i in widget['otherAttributes']:
         item.update({i['name']: i['value']})
-    table.put_item(Item=item)
-    logging.info('successful put to dynamodb')
+    return item
 
 
-def create_s3_object(widget, args):
-    s3_client = boto3.client('s3')
+def delete_s3_object(widget, widget_key, args):
+    try:
+        object_key = get_s3_key(widget)
+        s3_client = boto3.client('s3')
+        s3_client.delete_object(Bucket=args['push_bucket'], Key=object_key)
+        logging.info('Delete widget success')
+    except Exception as e:
+        logging.error('Delete widget failed')
+
+
+def delete_dynamodb_object(widget, widget_key, args):
+    try:
+        dynamodb = boto3.resource('dynamodb', region_name=args['region'])
+        table = dynamodb.Table(args['push_table'])
+        table.delete_item(Key=widget['widgetId'])
+        logging.info('Delete widget success')
+    except Exception as e:
+        logging.error('Delete widget failed')
+
+
+def get_s3_key(widget):
     widget_owner = widget['owner'].lower().replace(' ', '-')
     widget_id = widget['widgetId']
     object_key = f'widgets/{widget_owner}/{widget_id}'
-    item_content = str(widget)
-    s3_client.put_object(Bucket=args['push_bucket'], Key=object_key, Body=item_content)
-    logging.info('successful put to s3')
+    return object_key
 
 
-def update_s3_object(widget, args):
-    s3_client = boto3.client('s3')
+def is_valid_create(widget):
+    return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(widget['description']) == str and type(widget['otherAttributes']) == list
 
 
-def update_dynamodb_object(widget, args):
-    dynamodb = boto3.resource('dynamodb', region_name=args['region'])
-    table = dynamodb.Table(args['push_table'])
+def is_valid_update(widget):
+    return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['description']) == str and type(widget['otherAttributes']) == list
 
 
-def delete_s3_object(widget, args):
-    s3_client = boto3.client('s3')
+def is_valid_delete(widget):
+    return type(widget['widgetId']) == str and type(widget['owner']) == str
 
 
-def delete_dynamodb_object(widget, args):
-    dynamodb = boto3.resource('dynamodb', region_name=args['region'])
-    table = dynamodb.Table(args['push_table'])
-
-
-def is_valid(widget):
-    return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(
-        widget['description']) == str
-
-
-def get_widget_sqs(args):
+def pull_widget_sqs(args):
+    widget_key = 'unknown'
     try:
-        region = args['region']
-        iam = boto3.client('iam')
-        response = iam.list_account_aliases()
-        if 'AccountAliases' in response:
-            account = response['AccountAliases'][0]
-        else:
-            response = iam.get_user()
-            account_arn = response['User']['Arn']
-            account = account_arn.split(':')[4]
-        queue = args['pull_queue']
-        sqs = boto3.client('sqs', region_name=region)
-        queue_url = f'https://sqs.{region}.amazonaws.com/{account}/{queue}'
+        queue_url, sqs = get_queue_url(args)
         response = sqs.receive_message(
             QueueUrl=queue_url,
             MaxNumberOfMessages=1,
@@ -153,7 +205,6 @@ def get_widget_sqs(args):
         if 'Messages' in response:
             message = response['Messages'][0]
             receipt_handle = message['ReceiptHandle']
-            widget_key = 'unknown'
             try:
                 widget_key = json.loads(message['Key'])
             except KeyError:
@@ -163,11 +214,27 @@ def get_widget_sqs(args):
         else:
             logging.warning("No messages available in the queue.")
     except Exception as e:
-        logging.error(f'Error reading message: {str(e)}')
+        logging.error(f'Bad Reading: {widget_key}')
     return None, None
 
 
-def get_widget_s3(args):
+def get_queue_url(args):
+    region = args['region']
+    iam = boto3.client('iam')
+    response = iam.list_account_aliases()
+    if 'AccountAliases' in response:
+        account = response['AccountAliases'][0]
+    else:
+        response = iam.get_user()
+        account_arn = response['User']['Arn']
+        account = account_arn.split(':')[4]
+    queue = args['pull_queue']
+    sqs = boto3.client('sqs', region_name=region)
+    queue_url = f'https://sqs.{region}.amazonaws.com/{account}/{queue}'
+    return queue_url, sqs
+
+
+def pull_widget_s3(args):
     s3_client = boto3.client('s3')
     logging.info('Trying to get widget')
     widget_key = 'unknown'
@@ -181,9 +248,9 @@ def get_widget_s3(args):
             s3_client.delete_object(Bucket=args['pull_bucket'], Key=widget_key)
             if object_data:
                 return json.loads(object_data.decode('utf-8')), widget_key
-        raise
     except Exception as e:
         logging.error(f'Bad Reading: {widget_key}')
+    logging.info('No widgets')
     return None, None
 
 

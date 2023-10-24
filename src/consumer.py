@@ -120,7 +120,7 @@ def update_s3_object(widget, widget_key, args):
         object_data = response['Body'].read()
         s3_client.delete_object(Bucket=args['push_bucket'], Key=object_key)
         if object_data:
-            old_widget = json.loads(object_data.decode('utf-8'))
+            old_widget = json.loads(object_data.decode('utf-8').replace("'", '"'))
             item = update_item(old_widget, widget)
             s3_client.put_object(Bucket=args['push_bucket'], Key=object_key, Body=str(item))
             logging.info(f'success update widget s3: {widget_key}')
@@ -150,7 +150,7 @@ def update_dynamodb_object(widget, widget_key, args):
 
 
 def update_item(old_widget, widget):
-    item = old_widget.dict_copy()
+    item = old_widget.copy()
     if widget['description']:
         item['description'] = widget['description']
     if widget['label']:
@@ -192,19 +192,31 @@ def get_s3_object_key(widget):
 
 
 def is_valid_create(widget):
-    return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(widget['description']) == str and type(widget['otherAttributes']) == list
+    try:
+        return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(widget['description']) == str
+    except Exception as e:
+        logging.error(e)
+        return False
 
 
 def is_valid_update(widget):
-    return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['description']) == str and type(widget['otherAttributes']) == list
+    try:
+        return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['description']) == str
+    except Exception as e:
+        logging.error(e)
+        return False
 
 
 def is_valid_delete(widget):
-    return type(widget['widgetId']) == str and type(widget['owner']) == str
+    try:
+        return type(widget['widgetId']) == str and type(widget['owner']) == str
+    except Exception as e:
+        logging.error(e)
+        return False
 
 
 def pull_widget_sqs(args):
-    logging.info('attempt widget sqs pull')
+    logging.info('attempt widget pull sqs')
     widget_key = 'unknown'
     try:
         queue_url, sqs = get_queue_url(args)
@@ -247,7 +259,7 @@ def get_queue_url(args):
 
 
 def pull_widget_s3(args):
-    logging.info('attempt widget s3 pull')
+    logging.info('attempt widget pull s3')
     s3_client = boto3.client('s3')
     widget_key = 'unknown'
     try:

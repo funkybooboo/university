@@ -63,15 +63,37 @@ fun countingNumbers(limit : Int?) : List<Int>? {
     return a
 }
 
+// Using a lambda expression, i.e., list.filter{}, write a function to build a list of the even counting numbers up to n.
+// You may assume n is an Int or a null, that is, the function must ensure null safety.
 fun evenNumbers(n : Int?) : List<Int>? {
-
+    if (n == null) return null
+    if (n == 0) return listOf()
+    val a = mutableListOf<Int>()
+    for (i in 1..n) {
+        if (i % 2 == 0) {
+            a.add(i)
+        }
+    }
+    return a
 }
 
+// Using a lambda expression, i.e., list.filter{}, write a function to build a list of the prime counting numbers up to n.
+// A prime number is evenly divisible only by 1 and itself, though 1 is not a prime number.
+// You may assume n is an Int or a null, that is, the function must ensure null safety.
 fun primeNumbers(n : Int?)  : List<Int>? {
-
+    if (n == null) return null
+    if (n == 0) return listOf()
+    val a = mutableListOf<Int>()
+    for (i in 1..n) {
+        if (isPrime(i)) {
+            a.add(i)
+        }
+    }
+    return a
 }
 
 fun<T : Comparable<T>> merge(a : List<T>?, b : List<T>?) : List<T>? {
+    if (a == null || b == null) return null
 
 }
 

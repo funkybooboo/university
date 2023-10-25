@@ -33,8 +33,8 @@ val <T> List<T>.head: T
 *      false if x is not a prime
 */
 fun isPrime(x : Int) : Boolean {
-    if (i < 2) { return false }
-    for (i in 2..(x-1)) {
+    if (x < 2) { return false }
+    for (i in 2..<x) {
         if (x % i == 0) {
             return false
         }
@@ -55,5 +55,33 @@ fun<T> compose(f: (T)->T,  g:(T) -> T) : (T) -> T = { f(g(it)) }
    describing inputs and outputs and what the function does
 */
 fun countingNumbers(limit : Int?) : List<Int>? {
+
 }
 
+fun evenNumbers(n : Int?) : List<Int>? {
+
+}
+
+fun primeNumbers(n : Int?)  : List<Int>? {
+
+}
+
+fun<T : Comparable<T>> merge(a : List<T>?, b : List<T>?) : List<T>? {
+
+}
+
+fun subLists(a : List<Int>?) : List<Int>? {
+
+}
+
+fun countElements(a : List<Int>?) : Int {
+
+}
+
+fun listApply(f : (List<Int>) -> Int, a : List<List<Int>>) : List<Int> {
+
+}
+
+fun composeList(a : List<(Int, Int) -> Int>) : Int {
+
+}

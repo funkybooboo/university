@@ -4,6 +4,7 @@ import json
 import logging
 import argparse
 
+message_cache = []
 
 def main():
     args = get_args()
@@ -135,7 +136,7 @@ def update_dynamodb_object(widget, widget_key, args):
     try:
         dynamodb = boto3.resource('dynamodb', region_name=args['region'])
         table = dynamodb.Table(args['push_table'])
-        key = {'id': {'S': widget['id']}}
+        key = {"id": widget["widgetId"]}
         response = table.get_item(Key=key)
         if 'Item' in response:
             old_widget = response['Item']
@@ -151,12 +152,13 @@ def update_dynamodb_object(widget, widget_key, args):
 
 def update_item(old_widget, widget):
     item = old_widget.copy()
-    if widget['description']:
+    if 'description' in widget:
         item['description'] = widget['description']
-    if widget['label']:
+    if 'label' in widget:
         item['label'] = widget['label']
-    for i in widget['otherAttributes']:
-        item.update({i['name']: i['value']})
+    if 'otherAttributes' in widget:
+        for i in widget['otherAttributes']:
+            item.update({i['name']: i['value']})
     return item
 
 
@@ -177,7 +179,8 @@ def delete_dynamodb_object(widget, widget_key, args):
     try:
         dynamodb = boto3.resource('dynamodb', region_name=args['region'])
         table = dynamodb.Table(args['push_table'])
-        table.delete_item(Key=widget['widgetId'])
+        key = {'id': widget['widgetId']}
+        table.delete_item(Key=key)
         logging.info(f'success delete widget dynamodb: {widget_key}')
     except Exception as e:
         logging.error(f'fail delete widget dynamodb: {widget_key}')
@@ -196,7 +199,7 @@ def is_valid_create(widget):
         return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(widget['description']) == str
     except Exception as e:
         logging.error(e)
-        return False
+    return False
 
 
 def is_valid_update(widget):
@@ -204,7 +207,7 @@ def is_valid_update(widget):
         return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['description']) == str
     except Exception as e:
         logging.error(e)
-        return False
+    return False
 
 
 def is_valid_delete(widget):
@@ -212,7 +215,7 @@ def is_valid_delete(widget):
         return type(widget['widgetId']) == str and type(widget['owner']) == str
     except Exception as e:
         logging.error(e)
-        return False
+    return False
 
 
 def pull_widget_sqs(args):
@@ -220,41 +223,50 @@ def pull_widget_sqs(args):
     widget_key = 'unknown'
     try:
         queue_url, sqs = get_queue_url(args)
-        response = sqs.receive_message(
-            QueueUrl=queue_url,
-            MaxNumberOfMessages=1,
-            WaitTimeSeconds=10
-        )
-        if 'Messages' in response:
-            message = response['Messages'][0]
-            receipt_handle = message['ReceiptHandle']
-            try:
-                widget_key = json.loads(message['Key'])
-            except KeyError:
-                logging.error("No 'widget_key' found in the message body.")
-            sqs.delete_message(QueueUrl=queue_url, ReceiptHandle=receipt_handle)
+        if len(message_cache) == 0:
+            response = sqs.receive_message(
+                QueueUrl=queue_url,
+                AttributeNames=[
+                    'All'
+                ],
+                MessageAttributeNames=[
+                    'All'
+                ],
+                MaxNumberOfMessages=10,
+                VisibilityTimeout=0,
+                WaitTimeSeconds=0
+            )
+            if 'Messages' in response:
+                for message in response['Messages']:
+                    message_cache.append(message)
+                    receipt_handle = message['ReceiptHandle']
+                    sqs.delete_message(QueueUrl=queue_url, ReceiptHandle=receipt_handle)
+        if len(message_cache) > 0:
             logging.info('success read got widget')
-            return json.loads(message['Body']), widget_key
+            return process_message(message_cache.pop(0), widget_key)
+        logging.info('success read no widget')
     except Exception as e:
         logging.error(f'fail read: {widget_key}')
         logging.error(e)
-    logging.info('success read no widget')
     return None, None
 
 
+def process_message(message, widget_key):
+    try:
+        widget_key = json.loads(message['Key'])
+    except KeyError:
+        logging.error("No 'widget_key' found in the message body.")
+    logging.info('success read got widget')
+    return json.loads(message['Body']), widget_key
+
 def get_queue_url(args):
     region = args['region']
-    iam = boto3.client('iam')
-    response = iam.list_account_aliases()
-    if 'AccountAliases' in response:
-        account = response['AccountAliases'][0]
-    else:
-        response = iam.get_user()
-        account_arn = response['User']['Arn']
-        account = account_arn.split(':')[4]
+    sts = boto3.client('sts')
+    response = sts.get_caller_identity()
+    account_number = response['Account']
     queue = args['pull_queue']
     sqs = boto3.client('sqs', region_name=region)
-    queue_url = f'https://sqs.{region}.amazonaws.com/{account}/{queue}'
+    queue_url = f'https://sqs.{region}.amazonaws.com/{account_number}/{queue}'
     return queue_url, sqs
 
 
@@ -273,10 +285,11 @@ def pull_widget_s3(args):
             if object_data:
                 logging.info('success read got widget')
                 return json.loads(object_data.decode('utf-8')), widget_key
+        else:
+            logging.info('success read no widget')
     except Exception as e:
         logging.error(f'fail read: {widget_key}')
         logging.error(e)
-    logging.info('success read no widget')
     return None, None
 
 

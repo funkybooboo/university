@@ -50,12 +50,17 @@ fun isPrime(x : Int) : Boolean {
 */
 fun<T> compose(f: (T)->T,  g:(T) -> T) : (T) -> T = { f(g(it)) }
 
-/* Be sure to document
-   your functions
-   describing inputs and outputs and what the function does
-*/
+// Write a function to build a bounded list of counting numbers (counting numbers start at 1) up to (and including) n.
+// The counting numbers up to n are the list [1, 2, 3, ..., n].
+// You may assume n is an Int or a null, that is, the function must ensure null safety.
 fun countingNumbers(limit : Int?) : List<Int>? {
-
+    if (limit == null) return null
+    if (limit == 0) return listOf()
+    val a = mutableListOf<Int>()
+    for (i in 1..limit) {
+        a.add(i)
+    }
+    return a
 }
 
 fun evenNumbers(n : Int?) : List<Int>? {

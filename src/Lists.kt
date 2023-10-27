@@ -132,7 +132,7 @@ fun subLists(a : List<Int>?) : List<List<Int>>? {
     for (i in 1..a.size){
         val list = mutableListOf<Int>()
         for (j in a.size-i downTo 0) {
-            list.add(a.get(j))
+            list.add(a[j])
         }
         r.add(list.reversed())
     }
@@ -169,7 +169,7 @@ fun listApply(f: (Int, Int) -> Int, a: List<List<Int>>?) : List<Int>? {
 }
 fun processList(f: (Int, Int) -> Int, l: List<Int>) : Int {
     if (l.isEmpty()) return 0
-    if (l.size == 1) return l.get(0)
+    if (l.size == 1) return l[0]
     return process(f, l.head, l.tail, 0)
 }
 fun process(f: (Int, Int) -> Int, h : Int, l: List<Int>, result : Int) : Int {
@@ -182,13 +182,13 @@ fun process(f: (Int, Int) -> Int, h : Int, l: List<Int>, result : Int) : Int {
 // You may assume each function in the list is a unary function (takes one argument).
 // This function need not be null safe, that is you may assume that the list of functions always contains at least one function.
 fun composeList(a: List<(Int) -> Int>) : (Int) -> Int {
-
-    if (a.size == 1) return a.get(0)
+    if (a.size == 1) return a[0]
     val f = compose(a.head, a.tail.head)
     if (a.size == 2) return f
     val l = a.tail.tail
     return compose(l.head, l.tail, f)
 }
 fun compose(h : (Int) -> Int, l: List<(Int) -> Int>, f : (Int) -> Int) : (Int) -> Int {
-
+    if (l.isEmpty()) return compose(h, f)
+    return compose(l.head, l.tail, compose(h, f))
 }

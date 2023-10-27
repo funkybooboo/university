@@ -67,7 +67,7 @@ fun<T> compose(f: (T)->T,  g:(T) -> T) : (T) -> T = { f(g(it)) }
 fun countingNumbers(limit : Int?) : List<Int>? {
     if (limit == null) return null
     if (limit == 0) return listOf()
-    return (1..limit).toList()
+    return (1..limit).toList() // make a range object then convert it into a list object then return that list object
 }
 
 
@@ -82,7 +82,7 @@ fun countingNumbers(limit : Int?) : List<Int>? {
 fun evenNumbers(n: Int?): List<Int>? {
     if (n == null) return null
     if (n == 0) return listOf()
-    return countingNumbers(n)?.filter { it % 2 == 0 }
+    return countingNumbers(n)?.filter { it % 2 == 0 } // get a list of the counting numbers. if null is given return null else create a new list and filter each element by if its even. Return the resulting list.
 }
 
 
@@ -98,7 +98,7 @@ fun evenNumbers(n: Int?): List<Int>? {
 fun primeNumbers(n : Int?)  : List<Int>? {
     if (n == null) return null
     if (n == 0) return listOf()
-    return countingNumbers(n)?.filter { isPrime(it) }
+    return countingNumbers(n)?.filter { isPrime(it) } // get a list of the counting numbers. if null is given return null else create a new list and filter each element by if its prime. Return the resulting list.
 }
 
 
@@ -113,11 +113,11 @@ fun primeNumbers(n : Int?)  : List<Int>? {
 fun<T : Comparable<T>> merge(a : List<T>?, b : List<T>?) : List<T>? {
     if (a == null || b == null) return null
     val r = mutableListOf<T>()
-    merge(a, b, r)
+    merge(a, b, r) // call recursive function to populate r
     return r.toList()
 }
 fun<T : Comparable<T>> merge(a : List<T>, b : List<T>, r : MutableList<T>) {
-    if (a.isEmpty()) {
+    if (a.isEmpty()) { // recurse until a or b is empty
         r.addAll(b)
         return
     }
@@ -125,13 +125,13 @@ fun<T : Comparable<T>> merge(a : List<T>, b : List<T>, r : MutableList<T>) {
         r.addAll(a)
         return
     }
-    if (a.head < b.head) {
-        r.add(a.head)
-        merge(a.tail, b, r)
+    if (a.head < b.head) { // if a[0] is smaller than b[0]
+        r.add(a.head) // add a[0] to r
+        merge(a.tail, b, r) // recurse without a[0]
     }
     else {
-        r.add(b.head)
-        merge(a, b.tail, r)
+        r.add(b.head) // add b[0] to r
+        merge(a, b.tail, r) // recurse without b[0]
     }
 }
 
@@ -148,10 +148,10 @@ fun subLists(a : List<Int>?) : List<List<Int>>? {
     if (a == null) return null
     if (a.isEmpty()) return listOf()
     val r = mutableListOf<List<Int>>()
-    for (i in a.size downTo 1) {
-        r.add(a.subList(0, i))
+    for (i in a.size downTo 1) { // keep getting smaller
+        r.add(a.subList(0, i)) // get the sublist from the start to the end
     }
-    return r.reversed().toList()
+    return r.reversed().toList() // reverse the list and return it
 }
 
 
@@ -165,7 +165,7 @@ fun subLists(a : List<Int>?) : List<List<Int>>? {
 fun countElements(a : List<List<Int>?>?) : Int? {
     if (a == null) return null
     if (a.isEmpty()) return 0
-    return a.sumOf { it?.size ?: 0 }
+    return a.sumOf { it?.size ?: 0 } // Sum up the size of each list. If a null is in the list, then add 0 to the total.
 }
 
 
@@ -184,20 +184,16 @@ fun listApply(f: (Int, Int) -> Int, a: List<List<Int>>?) : List<Int>? {
     if (a == null) return null
     if (a.isEmpty()) return listOf()
     val result = mutableListOf<Int>()
-    for (l in a) {
-        result.add(processList(f, l))
-    }
+    a.forEach{l -> result.add(processList(f, l))} // for each list in a apply f to each element in the list
     return result.toList()
 }
 fun processList(f: (Int, Int) -> Int, l: List<Int>) : Int {
     if (l.isEmpty()) return 0
-    if (l.size == 1) return l[0]
-    return process(f, l.head, l.tail, 0)
+    return process(f, l.head, l.tail, 0) // Apply f to the whole list. Peel the head off the list
 }
 fun process(f: (Int, Int) -> Int, h : Int, l: List<Int>, result : Int) : Int {
-    if (l.isEmpty()) return f(h, result)
-    if (l.size == 1) return f(f(h, l.head), result)
-    return process(f, l.tail.head, l.tail.tail, result + f(h, l.head))
+    if (l.isEmpty()) return f(h, result) // if the list is empty, then apply the head with the result
+    return process(f, l.head, l.tail, f(h, result)) // apply f to head and result and keep recursing
 }
 
 
@@ -211,13 +207,13 @@ fun process(f: (Int, Int) -> Int, h : Int, l: List<Int>, result : Int) : Int {
 //  val f = composeList(listOf(::add1,::add2))
 //  f(4) -> returns 7
 fun composeList(a: List<(Int) -> Int>) : (Int) -> Int {
-    if (a.size == 1) return a[0]
-    val f = compose(a.head, a.tail.head)
-    if (a.size == 2) return f
-    val l = a.tail.tail
-    return compose(l.head, l.tail, f)
+    if (a.size == 1) return a[0] // if there is only one function in a then return that function
+    val f = compose(a.head, a.tail.head) // compose the first two items in a
+    if (a.size == 2) return f // if there are no more items
+    val l = a.tail.tail // get the list of function without the first two
+    return compose(l.head, l.tail, f) // recursively compose the remaining functions with f
 }
 fun compose(h : (Int) -> Int, l: List<(Int) -> Int>, f : (Int) -> Int) : (Int) -> Int {
-    if (l.isEmpty()) return compose(h, f)
-    return compose(l.head, l.tail, compose(h, f))
+    if (l.isEmpty()) return compose(h, f) // if no more functions in l then compose h and f and return
+    return compose(l.head, l.tail, compose(h, f)) // compose h and f and then keep recursing through the remaining functions
 }

@@ -1,6 +1,9 @@
 // Do not remove or rename the package
 package lists
 
+import kotlin.reflect.KFunction1
+import kotlin.reflect.KFunction2
+
 /*
 * The following functions are helper functions that I am providing
 */
@@ -60,7 +63,7 @@ fun countingNumbers(limit : Int?) : List<Int>? {
     for (i in 1..limit) {
         a.add(i)
     }
-    return a
+    return a.toList()
 }
 
 // Using a lambda expression, i.e., list.filter{}, write a function to build a list of the even counting numbers up to n.
@@ -74,7 +77,7 @@ fun evenNumbers(n : Int?) : List<Int>? {
             a.add(i)
         }
     }
-    return a
+    return a.toList()
 }
 
 // Using a lambda expression, i.e., list.filter{}, write a function to build a list of the prime counting numbers up to n.
@@ -89,26 +92,80 @@ fun primeNumbers(n : Int?)  : List<Int>? {
             a.add(i)
         }
     }
-    return a
+    return a.toList()
 }
 
+// Write a function to merge (in sorted order) two lists of comparable types and assuming both lists are already sorted.
+// Either list may be empty or null, that is, the function must ensure null safety.
+// If a parameter is null return null
 fun<T : Comparable<T>> merge(a : List<T>?, b : List<T>?) : List<T>? {
     if (a == null || b == null) return null
-
+    val r = mutableListOf<T>()
+    merge(a, b, r)
+    return r.toList()
+}
+fun<T : Comparable<T>> merge(a : List<T>, b : List<T>, r : MutableList<T>) {
+    if (a.isEmpty()) {
+        r.addAll(b)
+        return
+    }
+    if (b.isEmpty()) {
+        r.addAll(a)
+        return
+    }
+    if (a.head < b.head) {
+        r.add(a.head)
+        merge(a.tail, b, r)
+    }
+    else {
+        r.add(b.head)
+        merge(a, b.tail, r)
+    }
 }
 
-fun subLists(a : List<Int>?) : List<Int>? {
-
+// Write a function to build a list of sub-lists, where the nth sub-list is the elements from 1 to n in the list.
+// The input list may be empty or null, that is, the function must ensure null safety. If the parameter is null return null
+fun subLists(a : List<Int>?) : List<List<Int>>? {
+    if (a == null) return null
+    if (a.isEmpty()) return listOf()
+    val r = mutableListOf<List<Int>>()
+    for (i in 1..a.size){
+        val list = mutableListOf<Int>()
+        for (j in a.size-i downTo 0) {
+            list.add(a.get(j))
+        }
+        r.add(list.reversed())
+    }
+    return r.reversed().toList()
 }
 
-fun countElements(a : List<Int>?) : Int {
-
+// Write a function to count the total number of elements in a list of lists, that is all the elements in total of each sublist.
+// An element in the list or the list itself may be null, count a null as 0.
+fun countElements(a : List<List<Int>?>?) : Int? {
+    if (a == null) return null
+    if (a.isEmpty()) return 0
+    var count = 0
+    for (l in a){
+        if (l == null) continue
+        count += l.size
+    }
+    return count
 }
 
-fun listApply(f : (List<Int>) -> Int, a : List<List<Int>>) : List<Int> {
-
+// Write a function to apply a binary function f to the elements in a list of lists.
+// Below is a template of an example call.
+// listApply(f,[[x1, x2, x3] [y1, y2], [w1]]) = [f(x1, f(x2, x3)), f(y1, y2), w1]
+// The second parameter, the list of lists, may be null, in which case the function should return null.
+// You may assume that every sublist has at least one element.
+// The result of applying a function to a one element sublist is the value of that element.
+fun listApply(f: KFunction2<Int, Int, Int>, a: List<List<Int>>?) : List<Int>? {
+    if (a == null) return null
+    return listOf()
 }
 
-fun composeList(a : List<(Int, Int) -> Int>) : Int {
-
-}
+// Write a function to build a function that is the composition of the functions in the list a.
+// You may assume each function in the list is a unary function (takes one argument).
+// This function need not be null safe, that is you may assume that the list of functions always contains at least one function.
+//fun composeList(a: List<KFunction1<Int, Int>>) : (List<Int>) -> Int? {
+//
+//}

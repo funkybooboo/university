@@ -75,10 +75,10 @@ fun main(args: Array<String>) {
     println("listApply of ::add to $countingNumbersNull is ${listApply(::add, subLists(countingNumbersNull))}")
     println()
 
-    // composeList test
-    val functionList = listOf(::add1,::add2,::add1)
-    val composedFunction = composeList(functionList)
-    var result = composedFunction(n)
-    println("composedFunction of [::add1,::add2,::add1] applied to $n is $result")
+//    // composeList test
+//    val functionList = listOf(::add1,::add2,::add1)
+//    val composedFunction = composeList(functionList)
+//    var result = composedFunction(n)
+//    println("composedFunction of [::add1,::add2,::add1] applied to $n is $result")
 
 }

@@ -158,14 +158,37 @@ fun countElements(a : List<List<Int>?>?) : Int? {
 // The second parameter, the list of lists, may be null, in which case the function should return null.
 // You may assume that every sublist has at least one element.
 // The result of applying a function to a one element sublist is the value of that element.
-fun listApply(f: KFunction2<Int, Int, Int>, a: List<List<Int>>?) : List<Int>? {
+fun listApply(f: (Int, Int) -> Int, a: List<List<Int>>?) : List<Int>? {
     if (a == null) return null
-    return listOf()
+    if (a.isEmpty()) return listOf()
+    val result = mutableListOf<Int>()
+    for (l in a) {
+        result.add(processList(f, l))
+    }
+    return result.toList()
+}
+fun processList(f: (Int, Int) -> Int, l: List<Int>) : Int {
+    if (l.isEmpty()) return 0
+    if (l.size == 1) return l.get(0)
+    return process(f, l.head, l.tail, 0)
+}
+fun process(f: (Int, Int) -> Int, h : Int, l: List<Int>, result : Int) : Int {
+    if (l.isEmpty()) return f(h, result)
+    if (l.size == 1) return f(f(h, l.head), result)
+    return process(f, l.tail.head, l.tail.tail, result + f(h, l.head))
 }
 
 // Write a function to build a function that is the composition of the functions in the list a.
 // You may assume each function in the list is a unary function (takes one argument).
 // This function need not be null safe, that is you may assume that the list of functions always contains at least one function.
-//fun composeList(a: List<KFunction1<Int, Int>>) : (List<Int>) -> Int? {
-//
-//}
+fun composeList(a: List<(Int) -> Int>) : (Int) -> Int {
+
+    if (a.size == 1) return a.get(0)
+    val f = compose(a.head, a.tail.head)
+    if (a.size == 2) return f
+    val l = a.tail.tail
+    return compose(l.head, l.tail, f)
+}
+fun compose(h : (Int) -> Int, l: List<(Int) -> Int>, f : (Int) -> Int) : (Int) -> Int {
+
+}

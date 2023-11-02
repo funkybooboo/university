@@ -242,15 +242,10 @@ def pull_widget_sqs():
         if len(message_cache) == 0:
             response = sqs.receive_message(
                 QueueUrl=queue_url,
-                AttributeNames=[
-                    'All'
-                ],
-                MessageAttributeNames=[
-                    'All'
-                ],
+                AttributeNames=['All'],
+                MessageAttributeNames=['All'],
                 MaxNumberOfMessages=10,
-                VisibilityTimeout=0,
-                WaitTimeSeconds=0
+                WaitTimeSeconds=10
             )
             if 'Messages' in response:
                 for message in response['Messages']:

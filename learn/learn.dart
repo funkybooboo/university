@@ -77,6 +77,9 @@ void main(){
 
   print("input: $input");
 
+  // late means lazy evaluation
+  late final n = 5;
+
 
 
 }

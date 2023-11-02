@@ -1,3 +1,21 @@
+List<int?>? flatten(List<List<int?>?>? list) {
+  if (list == null) return null;
+  if (list.isEmpty) return [];
+  List<int?> result = [];
+  for (var l in list) {
+    for (var x in l!) {
+      result.add(x);
+    }
+  }
+ return result;
+}
+
+List<List<int?>?>? deepen(List<int?>? list) {
+  if (list == null) return null;
+  if (list.isEmpty) return [];
+  List<int?> result = [];
+}
+
 Stream<int> Function() fibonnaciNumbers(int n) {
 
 }
@@ -32,7 +50,7 @@ void main(List<String> arguments) async {
   print( 'deepening [] yields ${deepen([])}');
   print( 'deepening null yields ${deepen(null)}');
   await for (final number in fibonnaciNumbers(7)()) {
-    print ('fibonnaci number is ${number}')
+    print ('fibonnaci number is ${number}');
   }
   await for (final number in streamFilter(generateNumbers(10)(), ((a) {return a % 2 == 0;}))()) {
     print ('filtered number is $number');

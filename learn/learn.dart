@@ -80,6 +80,30 @@ void main(){
   // late means lazy evaluation
   late final n = 5;
 
+  int divide1 = 3 ~/ 4;
+  double divide2 = 3 / 4;
+
+  // only assgin if the varible is null
+  String? xx;
+  xx ??= 'foo';
+
+  // get get the length if its not null
+  String? x2;
+  x2?.length;
+  // if x2 is null take Foo is x2 is not null take x2
+  print(x2 ?? "Foo");
+
+  var multiline = """
+  
+  """;
 
 
+
+}
+
+extension Describe on Object? {
+  String describe() {
+    if (this == null) return "is null";
+    else return "is not null";
+  }
 }

@@ -3,6 +3,7 @@ import time
 import json
 import logging
 import argparse
+from botocore.exceptions import ClientError
 
 
 parser = argparse.ArgumentParser(description='Pulls data from a AWS S3 bucket and pushes it to another bucket or DynamoDB table')
@@ -85,7 +86,7 @@ def empty_widget_cache(push):
     for widget_info in widgets_left:
         widget_cache.remove(widget_info)
         push(widget_info[1], widget_info[0])
-    logging.info(f'couldn\'t handle {len(widget_cache)} widgets')
+    logging.info(f'couldn\'t handle {len(widget_cache)} widget(s)')
     for widget_info in widget_cache:
         logging.info(f'{widget_info[0]}')
 
@@ -149,15 +150,22 @@ def create_dynamodb_object(widget, widget_key):
         logging.error(e)
 
 
+def check_client_error(e, widget, widget_key, name, type):
+    if e.response['Error']['Code'] == 'NoSuchKey':
+        logging.info(f'delay {type} widget {name}: {widget_key}')
+        widget_cache.append([widget_key, widget])
+    else:
+        logging.error(e)
+
+
 def update_s3_object(widget, widget_key):
     logging.info('attempt update widget s3')
     try:
         object_key = get_s3_object_key(widget)
         try:
             response = s3_client.get_object(Bucket=args['push_bucket'], Key=object_key)
-        except Exception as e:
-            logging.info(f'delay update widget s3: {widget_key}')
-            widget_cache.append([widget_key, widget])
+        except ClientError as e:
+            check_client_error(e, widget, widget_key, 's3', 'update')
             return
         object_data = response['Body'].read()
         s3_client.delete_object(Bucket=args['push_bucket'], Key=object_key)
@@ -183,9 +191,8 @@ def update_dynamodb_object(widget, widget_key):
             item = update_item(old_widget, widget)
             try:
                 table.put_item(Item=item)
-            except Exception as e:
-                logging.info(f'delay update widget dynamodb: {widget_key}')
-                widget_cache.append([widget_key, widget])
+            except ClientError as e:
+                check_client_error(e, widget, widget_key, 'dynamodb', 'update')
                 return
             logging.info(f'success update widget dynamodb: {widget_key}')
             return
@@ -212,9 +219,8 @@ def delete_s3_object(widget, widget_key):
         object_key = get_s3_object_key(widget)
         try:
             s3_client.delete_object(Bucket=args['push_bucket'], Key=object_key)
-        except Exception as e:
-            logging.info(f'delay delete widget s3: {widget_key}')
-            widget_cache.append([widget_key, widget])
+        except ClientError as e:
+            check_client_error(e, widget, widget_key, 's3', 'delete')
             return
         logging.info(f'success delete widget s3: {widget_key}')
     except Exception as e:
@@ -228,9 +234,8 @@ def delete_dynamodb_object(widget, widget_key):
         key = {'id': widget['widgetId']}
         try:
             table.delete_item(Key=key)
-        except Exception as e:
-            logging.info(f'delay delete widget dynamodb: {widget_key}')
-            widget_cache.append([widget_key, widget])
+        except ClientError as e:
+            check_client_error(e, widget, widget_key, 'dynamodb', 'delete')
             return
         logging.info(f'success delete widget dynamodb: {widget_key}')
     except Exception as e:
@@ -314,7 +319,7 @@ def pull_widget_s3():
     try:
         response = s3_client.list_objects_v2(Bucket=args['pull_bucket'])
         if 'Contents' in response:
-            widget_key = response['Contents'][0]
+            widget_key = response['Contents'][0]['Key']
             response = s3_client.get_object(Bucket=args['pull_bucket'], Key=widget_key)
             object_data = response['Body'].read()
             s3_client.delete_object(Bucket=args['pull_bucket'], Key=widget_key)

@@ -5,23 +5,19 @@ import logging
 import argparse
 
 
-def get_args():
-    parser = argparse.ArgumentParser(description='Pulls data from a AWS S3 bucket and pushes it to another bucket or DynamoDB table')
-    parser.add_argument('--pull-choice', type=str, default='s3', help='Select pull choice (default=s3)')
-    parser.add_argument('--push-choice', type=str, default='s3', help='Select push choice (default=s3)')
-    parser.add_argument('-r', '--region', type=str, default='us-east-1', help='Name of AWS region used (default=us-east-1)')
-    parser.add_argument('--pull-bucket', type=str, default='usu-cs5260-nate-requests', help='Name of bucket that will contain requests (default=usu-cs5260-nate-requests)')
-    parser.add_argument('--pull-queue', type=str, default='cs5260-requests', help='Name of queue that will contain requests (default=cs5260-requests)')
-    parser.add_argument('--push-bucket', type=str, default='usu-cs5260-nate-web', help='Name of bucket where widget info will be pushed (default=usu-cs5260-nate-web)')
-    parser.add_argument('--push-table', type=str, default='widgets', help='Name of table where widget info will be pushed (default=widgets)')
-    parser.add_argument('-mrt', '--max-runtime', type=int, default=1000, help='Maximum runtime in seconds (default=1000)')
-    parser.add_argument('-mwr', '--max-widget-pulls', type=int, default=500, help='Maximum number of widget requests to pull (default=500)')
-    parser.add_argument('-ipd', '--inter-pull-delay', type=int, default=100, help='Number of milliseconds to wait between request pulls (default=100)')
-    parser.add_argument('-ll', '--log-level', type=bool, default=False, help='Level of logging (default=low)')
-    return vars(parser.parse_args())
-
-
-args = get_args()
+parser = argparse.ArgumentParser(description='Pulls data from a AWS S3 bucket and pushes it to another bucket or DynamoDB table')
+parser.add_argument('--pull-choice', type=str, default='s3', help='Select pull choice (default=s3)')
+parser.add_argument('--push-choice', type=str, default='s3', help='Select push choice (default=s3)')
+parser.add_argument('-r', '--region', type=str, default='us-east-1', help='Name of AWS region used (default=us-east-1)')
+parser.add_argument('--pull-bucket', type=str, default='usu-cs5260-nate-requests', help='Name of bucket that will contain requests (default=usu-cs5260-nate-requests)')
+parser.add_argument('--pull-queue', type=str, default='cs5260-requests', help='Name of queue that will contain requests (default=cs5260-requests)')
+parser.add_argument('--push-bucket', type=str, default='usu-cs5260-nate-web', help='Name of bucket where widget info will be pushed (default=usu-cs5260-nate-web)')
+parser.add_argument('--push-table', type=str, default='widgets', help='Name of table where widget info will be pushed (default=widgets)')
+parser.add_argument('-mrt', '--max-runtime', type=int, default=1000, help='Maximum runtime in seconds (default=1000)')
+parser.add_argument('-mwr', '--max-widget-pulls', type=int, default=500, help='Maximum number of widget requests to pull (default=500)')
+parser.add_argument('-ipd', '--inter-pull-delay', type=int, default=100, help='Number of milliseconds to wait between request pulls (default=100)')
+parser.add_argument('-ll', '--log-level', type=bool, default=False, help='Level of logging (default=low)')
+args = vars(parser.parse_args())
 message_cache = []
 widget_cache = []
 s3_client = boto3.client('s3')

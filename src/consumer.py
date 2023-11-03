@@ -7,7 +7,7 @@ from botocore.exceptions import ClientError
 
 
 parser = argparse.ArgumentParser(description='Pulls data from a AWS S3 bucket and pushes it to another bucket or DynamoDB table')
-parser.add_argument('--pull-choice', type=str, default='s3', help='Select pull choice (default=s3)')
+parser.add_argument('--pull-choice', type=str, default='sqs', help='Select pull choice (default=s3)')
 parser.add_argument('--push-choice', type=str, default='s3', help='Select push choice (default=s3)')
 parser.add_argument('-r', '--region', type=str, default='us-east-1', help='Name of AWS region used (default=us-east-1)')
 parser.add_argument('--pull-bucket', type=str, default='usu-cs5260-nate-requests', help='Name of bucket that will contain requests (default=usu-cs5260-nate-requests)')
@@ -74,7 +74,11 @@ def consume(pull, push):
                 time.sleep((args['inter_pull_delay'] / 1000))
                 continue
         if widget_key == 'unknown':
-            widget_key = widget['requestId']
+            try:
+                widget_key = widget['requestId']
+            except Exception:
+                logging.error(f'invalid widget missing required fields: {widget_key}')
+                continue
         logging.info(f'widget: {widget_key}')
         push(widget, widget_key)
     empty_widget_cache(push)
@@ -110,7 +114,7 @@ def push_widget(widget, widget_key, create_object, update_object, delete_object)
         logging.info('processing valid delete widget')
         delete_object(widget, widget_key)
     else:
-        logging.error(f'invalid widget type: {widget_key}')
+        logging.error(f'invalid widget missing required fields: {widget_key}')
 
 
 def create_s3_object(widget, widget_key):
@@ -253,25 +257,22 @@ def get_s3_object_key(widget):
 def is_valid_create(widget):
     try:
         return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['label']) == str and type(widget['description']) == str
-    except Exception as e:
-        logging.error(e)
-    return False
+    except Exception:
+        return False
 
 
 def is_valid_update(widget):
     try:
         return type(widget['widgetId']) == str and type(widget['owner']) == str and type(widget['description']) == str
-    except Exception as e:
-        logging.error(e)
-    return False
+    except Exception:
+        return False
 
 
 def is_valid_delete(widget):
     try:
         return type(widget['widgetId']) == str and type(widget['owner']) == str
-    except Exception as e:
-        logging.error(e)
-    return False
+    except Exception:
+        return False
 
 
 def pull_widget_sqs():

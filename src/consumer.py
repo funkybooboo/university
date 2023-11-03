@@ -7,7 +7,7 @@ import argparse
 
 def get_args():
     parser = argparse.ArgumentParser(description='Pulls data from a AWS S3 bucket and pushes it to another bucket or DynamoDB table')
-    parser.add_argument('--pull-choice', type=str, default='sqs', help='Select pull choice (default=s3)')
+    parser.add_argument('--pull-choice', type=str, default='s3', help='Select pull choice (default=s3)')
     parser.add_argument('--push-choice', type=str, default='s3', help='Select push choice (default=s3)')
     parser.add_argument('-r', '--region', type=str, default='us-east-1', help='Name of AWS region used (default=us-east-1)')
     parser.add_argument('--pull-bucket', type=str, default='usu-cs5260-nate-requests', help='Name of bucket that will contain requests (default=usu-cs5260-nate-requests)')
@@ -23,6 +23,7 @@ def get_args():
 
 args = get_args()
 message_cache = []
+widget_cache = []
 s3_client = boto3.client('s3')
 sts = boto3.client('sts')
 sqs = boto3.client('sqs', region_name=args['region'])
@@ -66,13 +67,31 @@ def consume(pull, push):
         widget, widget_key = pull()
         count += 1
         if widget is None:
-            logging.info('no widget')
-            time.sleep((args['inter_pull_delay'] / 1000))
-            continue
+            if len(widget_cache) > 0:
+                logging.info('widget in cache')
+                widget_info = widget_cache.pop(0)
+                widget_key = widget_info[0]
+                widget = widget_info[1]
+            else:
+                logging.info('no widget in cache')
+                time.sleep((args['inter_pull_delay'] / 1000))
+                continue
         if widget_key == 'unknown':
             widget_key = widget['requestId']
         logging.info(f'widget: {widget_key}')
         push(widget, widget_key)
+    empty_widget_cache(push)
+
+
+def empty_widget_cache(push):
+    logging.info('main execution is done. emptying widget cache')
+    widgets_left = widget_cache.copy()
+    for widget_info in widgets_left:
+        widget_cache.remove(widget_info)
+        push(widget_info[1], widget_info[0])
+    logging.info(f'couldn\'t handle {len(widget_cache)} widgets')
+    for widget_info in widget_cache:
+        logging.info(f'{widget_info[0]}')
 
 
 def push_widget_s3(widget, widget_key):
@@ -138,7 +157,12 @@ def update_s3_object(widget, widget_key):
     logging.info('attempt update widget s3')
     try:
         object_key = get_s3_object_key(widget)
-        response = s3_client.get_object(Bucket=args['push_bucket'], Key=object_key)
+        try:
+            response = s3_client.get_object(Bucket=args['push_bucket'], Key=object_key)
+        except Exception as e:
+            logging.info(f'delay update widget s3: {widget_key}')
+            widget_cache.append([widget_key, widget])
+            return
         object_data = response['Body'].read()
         s3_client.delete_object(Bucket=args['push_bucket'], Key=object_key)
         if object_data:
@@ -161,7 +185,12 @@ def update_dynamodb_object(widget, widget_key):
             old_widget = response['Item']
             table.delete_item(Key=key)
             item = update_item(old_widget, widget)
-            table.put_item(Item=item)
+            try:
+                table.put_item(Item=item)
+            except Exception as e:
+                logging.info(f'delay update widget dynamodb: {widget_key}')
+                widget_cache.append([widget_key, widget])
+                return
             logging.info(f'success update widget dynamodb: {widget_key}')
             return
         logging.error(f'fail to update widget dynamodb: {widget_key}')
@@ -185,7 +214,12 @@ def delete_s3_object(widget, widget_key):
     logging.info('attempt delete widget s3')
     try:
         object_key = get_s3_object_key(widget)
-        s3_client.delete_object(Bucket=args['push_bucket'], Key=object_key)
+        try:
+            s3_client.delete_object(Bucket=args['push_bucket'], Key=object_key)
+        except Exception as e:
+            logging.info(f'delay delete widget s3: {widget_key}')
+            widget_cache.append([widget_key, widget])
+            return
         logging.info(f'success delete widget s3: {widget_key}')
     except Exception as e:
         logging.error(f'fail delete widget s3: {widget_key}')
@@ -196,7 +230,12 @@ def delete_dynamodb_object(widget, widget_key):
     logging.info('attempt delete widget dynamodb')
     try:
         key = {'id': widget['widgetId']}
-        table.delete_item(Key=key)
+        try:
+            table.delete_item(Key=key)
+        except Exception as e:
+            logging.info(f'delay delete widget dynamodb: {widget_key}')
+            widget_cache.append([widget_key, widget])
+            return
         logging.info(f'success delete widget dynamodb: {widget_key}')
     except Exception as e:
         logging.error(f'fail delete widget dynamodb: {widget_key}')
@@ -249,9 +288,9 @@ def pull_widget_sqs():
             )
             if 'Messages' in response:
                 for message in response['Messages']:
-                    message_cache.append(message)
                     receipt_handle = message['ReceiptHandle']
                     sqs.delete_message(QueueUrl=queue_url, ReceiptHandle=receipt_handle)
+                    message_cache.append(message)
         if len(message_cache) > 0:
             logging.info('success read got widget')
             message = message_cache.pop(0)
@@ -279,8 +318,7 @@ def pull_widget_s3():
     try:
         response = s3_client.list_objects_v2(Bucket=args['pull_bucket'])
         if 'Contents' in response:
-            object_keys = [obj['Key'] for obj in response['Contents']]
-            widget_key = min(object_keys)
+            widget_key = response['Contents'][0]
             response = s3_client.get_object(Bucket=args['pull_bucket'], Key=widget_key)
             object_data = response['Body'].read()
             s3_client.delete_object(Bucket=args['pull_bucket'], Key=widget_key)

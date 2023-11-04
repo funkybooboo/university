@@ -1,13 +1,13 @@
 import boto3
+from botocore.exceptions import ClientError
 import time
 import json
 import logging
 import argparse
-from botocore.exceptions import ClientError
 
 
 parser = argparse.ArgumentParser(description='Pulls data from a AWS S3 bucket and pushes it to another bucket or DynamoDB table')
-parser.add_argument('--pull-choice', type=str, default='sqs', help='Select pull choice (default=s3)')
+parser.add_argument('--pull-choice', type=str, default='s3', help='Select pull choice (default=s3)')
 parser.add_argument('--push-choice', type=str, default='s3', help='Select push choice (default=s3)')
 parser.add_argument('-r', '--region', type=str, default='us-east-1', help='Name of AWS region used (default=us-east-1)')
 parser.add_argument('--pull-bucket', type=str, default='usu-cs5260-nate-requests', help='Name of bucket that will contain requests (default=usu-cs5260-nate-requests)')

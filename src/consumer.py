@@ -4,7 +4,7 @@ import time
 import json
 import logging
 import argparse
-
+import os
 
 parser = argparse.ArgumentParser(description='Pulls data from a AWS S3 bucket and pushes it to another bucket or DynamoDB table')
 parser.add_argument('--pull-choice', type=str, default='s3', help='Select pull choice (default=s3)')
@@ -19,12 +19,19 @@ parser.add_argument('-mwr', '--max-widget-pulls', type=int, default=500, help='M
 parser.add_argument('-ipd', '--inter-pull-delay', type=int, default=100, help='Number of milliseconds to wait between request pulls (default=100)')
 parser.add_argument('-ll', '--log-level', type=bool, default=False, help='Level of logging (default=low)')
 args = vars(parser.parse_args())
+
+session = boto3.Session(
+    aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+    aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'),
+    aws_session_token=os.environ.get('AWS_SESSION_TOKEN'),
+)
+
 message_cache = []
 widget_cache = []
-s3_client = boto3.client('s3')
-sts = boto3.client('sts')
-sqs = boto3.client('sqs', region_name=args['region'])
-dynamodb = boto3.resource('dynamodb', region_name=args['region'])
+s3_client = session.client('s3')
+sts = session.client('sts')
+sqs = session.client('sqs', region_name=args['region'])
+dynamodb = session.resource('dynamodb', region_name=args['region'])
 table = dynamodb.Table(args['push_table'])
 
 

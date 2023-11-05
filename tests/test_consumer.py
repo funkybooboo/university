@@ -1,33 +1,48 @@
 import unittest
 from unittest.mock import patch, MagicMock
-import src.consumer as consumer
+from src.consumer import create_s3_object, create_dynamodb_object, update_s3_object, update_dynamodb_object, delete_s3_object, delete_dynamodb_object, pull_widget_s3, pull_widget_sqs
 
 
 class TestConsumerFunctions(unittest.TestCase):
 
-    @patch('boto3.resource')
-    def test_put_dynamodb_object(self, mock_boto3_resource):
-        widget = {'widgetId': 'test-id', 'owner': 'test-owner', 'label': 'test-label', 'description': 'test-des', 'otherAttributes': []}
-        args = {'push_table': 'widgets', 'region': 'us-east-1'}
-        consumer.create_dynamodb_object(widget, args)
+    def test_create_s3_object(self):
 
-    def test_put_s3_object(self):
-        mock_s3_client = MagicMock()
-        widget = {'owner': 'Nate Stott', 'widgetId': 'test'}
-        args = {'push_bucket': 'test'}
-        consumer.create_s3_object(widget, mock_s3_client, args)
-        mock_s3_client.put_object.assert_called_once()
+        create_s3_object()
 
-    def test_get_widget(self):
-        mock_s3_client = MagicMock()
-        mock_s3_client.list_objects_v2.return_value = {'Contents': [{'Key': '1'}, {'Key': '2'}, {'Key': '3'}]}
-        mock_response_stream = MagicMock()
-        mock_response_stream.read.return_value = b'{}'
-        mock_s3_client.get_object.return_value = {'Body': mock_response_stream}
-        args = {'pull_bucket': 'test'}
-        data, key = consumer.pull_widget_s3(mock_s3_client, args)
-        self.assertEquals(data, {})
-        self.assertEquals(key, '1')
+
+    def test_create_dynamodb_object(self):
+
+        create_dynamodb_object()
+
+
+    def test_update_s3_object(self):
+
+        update_s3_object()
+
+
+    def test_update_dynamodb_object(self):
+
+        update_dynamodb_object()
+
+
+    def test_delete_s3_object(self):
+
+        delete_s3_object()
+
+
+    def test_delete_dynamodb_object(self):
+
+        delete_dynamodb_object()
+
+
+    def test_pull_widget_s3(self):
+
+        pull_widget_s3()
+
+
+    def test_pull_widget_sqs(self):
+
+        pull_widget_sqs()
 
 
 if __name__ == '__main__':

@@ -198,20 +198,21 @@ def update_dynamodb_object(widget, widget_key, session):
     logging.info('attempt update widget dynamodb')
     try:
         key = {"id": widget["widgetId"]}
-        response = session.table.get_item(Key=key)
-        if 'Item' in response:
-            old_widget = response['Item']
-            session.table.delete_item(Key=key)
-            item = update_item(old_widget, widget)
-            try:
+        try:
+            response = session.table.get_item(Key=key)
+            if 'Item' in response:
+                old_widget = response['Item']
+                session.table.delete_item(Key=key)
+                item = update_item(old_widget, widget)
                 session.table.put_item(Item=item)
-            except ClientError as e:
-                check_client_error(e, widget, widget_key, 'dynamodb', 'update', session)
-                return
-            logging.info(f'success update widget dynamodb: {widget_key}')
-            return
-        logging.error(f'fail to update widget dynamodb: {widget_key}')
+                logging.info(f'success update widget dynamodb: {widget_key}')
+            else:
+                logging.info(f'delay update widget dynamodb: {widget_key}')
+                session.widget_cache.append([widget_key, widget])
+        except ClientError as e:
+            check_client_error(e, widget, widget_key, 'dynamodb', 'update', session)
     except Exception as e:
+        logging.error(f'fail to update widget dynamodb: {widget_key}')
         logging.error(e)
 
 

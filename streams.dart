@@ -7,26 +7,26 @@ List<int?>? flatten(List<List<int?>?>? list) =>
 List<dynamic>? deepen(List<int?>? list) {
   if (list == null) return null;
   if (list.isEmpty) return [];
-  if (list.length == 1) return list;
-  return deepenHelper(list.firstOrNull, list.sublist(1));
+  if (list.length == 1) return [list.firstOrNull];
+  return [list.firstOrNull, deepen(list.sublist(1))];
 }
-List<dynamic>? deepenHelper(int? h, List<int?> t) {
-  if (t.length == 1) return [h, [t.firstOrNull]];
-  return [h, deepenHelper(t.firstOrNull, t.sublist(1))];
-}
+
 
 // Stream<int> Function() fibonnaciNumbers(int n) {
 //
 // }
-//
+
+
 // Stream<int> Function() streamFilter(Stream<int> stream, bool Function(int) f) {
 //
 // }
-//
+
+
 // Stream<int> Function() streamAccumulation(Stream<int> stream, int Function(int, int) f, initial) {
 //
 // }
-//
+
+
 // Stream<int> Function() generateNumbers(int n) {
 //   final Stream<int> Function() func = (() async* {
 //     for (int i = 1; i <= n; i++) {
@@ -36,6 +36,7 @@ List<dynamic>? deepenHelper(int? h, List<int?> t) {
 //   });
 //   return func;
 // }
+
 
 void main(List<String> arguments) async {
   print( 'flattening [[0,1], [2]] yields ${flatten([[0,1], [2]])}');

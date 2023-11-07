@@ -12,29 +12,37 @@ List<dynamic>? deepen(List<int?>? list) {
 }
 
 
-// Stream<int> Function() fibonnaciNumbers(int n) {
-//
-// }
+Stream<int> Function() fibonnaciNumbers(int n) {
+  return () async* {
+    int a = 0, b = 1;
+    for (int i = 0; i <= n; i++) {
+      await Future.delayed(Duration(seconds: 1));
+      yield a;
+      final next = a + b;
+      a = b;
+      b = next;
+    }
+  };
+}
+
+
+Stream<int> Function() generateNumbers(int n) {
+  return () async* {
+    for (int i = 1; i <= n; i++) {
+      await Future.delayed(Duration(seconds: 1));
+      yield i;
+    }
+  };
+}
 
 
 // Stream<int> Function() streamFilter(Stream<int> stream, bool Function(int) f) {
 //
 // }
-
-
+//
+//
 // Stream<int> Function() streamAccumulation(Stream<int> stream, int Function(int, int) f, initial) {
 //
-// }
-
-
-// Stream<int> Function() generateNumbers(int n) {
-//   final Stream<int> Function() func = (() async* {
-//     for (int i = 1; i <= n; i++) {
-//       await Future<void>.delayed(const Duration(seconds: 1));
-//       yield i;
-//     }
-//   });
-//   return func;
 // }
 
 
@@ -49,9 +57,9 @@ void main(List<String> arguments) async {
   print( 'deepening [0] yields ${deepen([0])}');
   print( 'deepening [] yields ${deepen([])}');
   print( 'deepening null yields ${deepen(null)}');
-  // await for (final number in fibonnaciNumbers(7)()) {
-  //   print ('fibonnaci number is ${number}');
-  // }
+  await for (final number in fibonnaciNumbers(7)()) {
+    print ('fibonnaci number is ${number}');
+  }
   // await for (final number in streamFilter(generateNumbers(10)(), ((a) {return a % 2 == 0;}))()) {
   //   print ('filtered number is $number');
   // }

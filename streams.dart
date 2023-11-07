@@ -12,6 +12,16 @@ List<dynamic>? deepen(List<int?>? list) {
 }
 
 
+Stream<int> Function() generateNumbers(int n) {
+  return () async* {
+    for (int i = 1; i <= n; i++) {
+      await Future.delayed(Duration(seconds: 1));
+      yield i;
+    }
+  };
+}
+
+
 Stream<int> Function() fibonnaciNumbers(int n) {
   return () async* {
     int a = 0, b = 1;
@@ -26,24 +36,23 @@ Stream<int> Function() fibonnaciNumbers(int n) {
 }
 
 
-Stream<int> Function() generateNumbers(int n) {
+Stream<int> Function() streamFilter(Stream<int> stream, bool Function(int) f) {
   return () async* {
-    for (int i = 1; i <= n; i++) {
-      await Future.delayed(Duration(seconds: 1));
-      yield i;
+    await for (final n in stream) {
+      if (f(n)) yield n;
     }
   };
 }
 
 
-// Stream<int> Function() streamFilter(Stream<int> stream, bool Function(int) f) {
-//
-// }
-//
-//
-// Stream<int> Function() streamAccumulation(Stream<int> stream, int Function(int, int) f, initial) {
-//
-// }
+Stream<int> Function() streamAccumulation(Stream<int> stream, int Function(int, int) f, int initial) {
+  return () async* {
+    await for (final n in stream) {
+      initial = f(n, initial);
+      yield initial;
+    }
+  };
+}
 
 
 void main(List<String> arguments) async {
@@ -60,13 +69,12 @@ void main(List<String> arguments) async {
   await for (final number in fibonnaciNumbers(7)()) {
     print ('fibonnaci number is ${number}');
   }
-  // await for (final number in streamFilter(generateNumbers(10)(), ((a) {return a % 2 == 0;}))()) {
-  //   print ('filtered number is $number');
-  // }
-  //
-  // await for (final number in streamAccumulation(generateNumbers(10)(),((a,b) {return a+b;}),0)()) {
-  //   print ('cumulative number is $number.');
-  // }
+  await for (final number in streamFilter(generateNumbers(10)(), ((a) =>  a % 2 == 0))()) {
+    print ('filtered number is $number');
+  }
+  await for (final number in streamAccumulation(generateNumbers(10)(),((a,b) {return a+b;}),0)()) {
+    print ('cumulative number is $number.');
+  }
 }
 
 

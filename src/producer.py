@@ -1,10 +1,10 @@
+import boto3
 import json
-
-print('Loading function')
+import logging
 
 
 def lambda_handler(event, context):
-    print("value1 = " + event['key1'])
-    print("value2 = " + event['key2'])
-    print("value3 = " + event['key3'])
-    return event['key1']
+    pass
+    # find out what type of request it is: update, create, delete
+    # validate if the type is a valid request, has the right attributes
+    # send message to SQS with the found validated information

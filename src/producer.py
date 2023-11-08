@@ -111,16 +111,16 @@ def push_widget_sqs(widget, session):
 
 def success_response(message):
     print(message)
-    return {
+    return json.dumps({
         'statusCode': 200,
         'body': {'message': message}
-    }
+    })
 
 
 def error_response(error):
     error = str(error).strip("'")
     print(error)
-    return {
+    return json.dumps({
         'statusCode': 400,
         'body': {'error': error}
-    }
+    })

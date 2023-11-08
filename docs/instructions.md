@@ -20,9 +20,9 @@ Design the details of the RESTful API and Lambda function.
 
 ## Step 2 - Implement and Test your Widget Request Handler
 Implement the widget-request-handler logic and unit-tests. 
-Use Git and commit frequently. At the end I will turn in a screenshot of my git log.
+Use Git and commit frequently. At the end, I will turn in a screenshot of my git log.
 Tips:
-- Keep it your logic simple.
+- Keep your logic simple.
 - Build good test cases.
 - Output log messages that will help debug the code.
 
@@ -30,15 +30,15 @@ Tips:
 Deploy your widget-request-handler logic to AWS lambda by any means, including the AWS Lambda Console.
 
 Test your new lambda function with test API Gateway Events that simulate create, update, and delete widget request coming in from the API.
-The bodies of these test events need to consistent with my design. Save these test events with your lambda fucntion in the AWS lambda console. 
+The bodies of these test events need to be consistent with my design. Save these test events with your lambda function in the AWS lambda console. 
 Also, copy them into your project directory.
 Take three or more screenshots that illustrate the working lambda function using the test events.
 
 ## Step 4 - Create and Test a RESTful API
-Using any mechanism create a RESTful API that will be the front end for your widget-request-handler Lambda function.
+Using any mechanism, create a RESTful API that will be the front end for your widget-request-handler Lambda function.
 
 Test the API in the AWS API Gateway Console using the appropriate HTTP methods and event bodies. 
-The testing should try method requests that submit create, update, and delete requests.
+The testing should try method requests that submit, create, update, and delete requests.
 
 Take three or more screenshots that show the API processing create, update, and delete requests.
 

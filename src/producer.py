@@ -1,40 +1,49 @@
 import boto3
 import json
-import logging
 
 
 class Session:
-    def __init__(self):
-        self.region = 'us-east-1'
+    def __init__(self, region):
+        self.region = region
         self.sqs = boto3.client('sqs', region_name=self.region)
         self.queue = 'cs5260-requests'
-        self.queue_url = self.get_queue_url()
-
-    def get_queue_url(self):
-        account_number = boto3.client('sts').get_caller_identity()['Account']
-        return f'https://sqs.{self.region}.amazonaws.com/{account_number}/{self.queue}'
+        self.account_number = boto3.client('sts').get_caller_identity()['Account']
+        self.queue_url = f'https://sqs.{self.region}.amazonaws.com/{self.account_number}/{self.queue}'
 
 
 def lambda_handler(event, context):
-    setup_logging()
-    logging.info(event)
-    logging.info(context)
     try:
-        widget = json.loads(event.get('body'))
-        logging.info('got widget from event')
+        print(f'event: {event}')
+        print(f'context: {context}')
+        request_id = context.aws_request_id
+        print(f'request_id: {request_id}')
+        region = context.invoked_function_arn.split(":")[3]
+        print(f'region: {region}')
+
+        if not event:
+            return error_response('Event is None')
+
+        widget = event.get('body')
+        if not widget:
+            return error_response('Widget is None')
+
+        if isinstance(widget, str):
+            widget = json.loads(widget)
+
+        if not isinstance(widget, dict):
+            return error_response(f'Widget is not a dictionary: {type(widget)}')
+
+        widget['requestId'] = request_id
+        print(f'widget: {widget}')
+
         validate_widget(widget)
-        logging.info('valid widget')
-        return push_widget_sqs(widget, Session())
-    except (ValueError, KeyError) as e:
-        return error_response(e)
+        print('valid widget')
 
+        session = Session(region)
+        return push_widget_sqs(widget, session)
 
-def setup_logging():
-    logging.basicConfig(
-        level=logging.INFO,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[logging.FileHandler('widget-request.log'), logging.StreamHandler()]
-    )
+    except Exception as e:
+        return error_response(str(e))
 
 
 def validate_widget(widget):
@@ -50,26 +59,43 @@ def validate_widget(widget):
 
 
 def validate_create(widget):
-    required_str_fields = ['widgetId', 'owner', 'label', 'description']
-    for field in required_str_fields:
-        if not widget.get(field) or not type(widget[field]) == str:
-            raise KeyError(f'missing required field: {field}')
-    if not widget.get('otherAttributes') or not type(widget['otherAttributes']) == list:
-        raise KeyError(f'missing required field: otherAttributes')
+    fields = {
+        'widgetId': str,
+        'owner': str,
+        'label': str,
+        'description': str,
+        'otherAttributes': list
+    }
+    check_fields(fields, widget)
 
 
 def validate_update(widget):
-    required_fields = ['widgetId', 'owner', 'description']
-    for field in required_fields:
-        if not widget.get(field) or not type(widget[field]) == str:
-            raise KeyError(f'missing required field: {field}')
+    fields = {
+        'widgetId': str,
+        'owner': str,
+        'description': str,
+    }
+    check_fields(fields, widget)
 
 
 def validate_delete(widget):
-    required_fields = ['widgetId', 'owner']
-    for field in required_fields:
-        if not widget.get(field) or not type(widget[field]) == str:
-            raise KeyError(f'missing required field: {field}')
+    fields = {
+        'widgetId': str,
+        'owner': str,
+    }
+    check_fields(fields, widget)
+
+
+def check_fields(fields, widget):
+    for k, v in fields.items():
+        check_field(widget, k, v)
+
+
+def check_field(widget, field, field_type):
+    if not widget.get(field):
+        raise KeyError(f'missing required field: {field}')
+    if not isinstance(widget[field], field_type):
+        raise KeyError(f'required field: {field}. required type: {field_type}. got type: {type(widget[field])}')
 
 
 def push_widget_sqs(widget, session):
@@ -84,16 +110,17 @@ def push_widget_sqs(widget, session):
 
 
 def success_response(message):
-    logging.info(message)
+    print(message)
     return {
         'statusCode': 200,
         'body': {'message': message}
     }
 
 
-def error_response(e):
-    logging.error(e)
+def error_response(error):
+    error = str(error).strip("'")
+    print(error)
     return {
         'statusCode': 400,
-        'body': {'error': str(e)}
+        'body': {'error': error}
     }

@@ -118,7 +118,7 @@ def success_response(message):
 
 
 def error_response(error):
-    error = str(error).strip("'")
+    error = str(error).strip("'").strip('"')
     print(error)
     return json.dumps({
         'statusCode': 400,

@@ -76,7 +76,7 @@ class TestProducer(unittest.TestCase):
         mock_context.aws_request_id = '5678'
         session_mock.sqs.send_message.return_value = {'MessageId': '1234'}
         response = lambda_handler(event, mock_context)
-        self.assertEquals(response, '{"statusCode": 400, "body": {"error": "\\"required field: owner. required type: <class \'str\'>. got type: <class \'int\'>\\""}}')
+        self.assertEquals(response, '{"statusCode": 400, "body": {"error": "required field: owner. required type: <class \'str\'>. got type: <class \'int\'>"}}')
 
 
 if __name__ == '__main__':

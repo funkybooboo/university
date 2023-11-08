@@ -21,10 +21,12 @@ def lambda_handler(event, context):
     logging.info(context)
     try:
         widget = json.loads(event.get('body'))
+        logging.info('got widget from event')
         validate_widget(widget)
+        logging.info('valid widget')
         return push_widget_sqs(widget, Session())
     except (ValueError, KeyError) as e:
-        return error_response(e, 'Invalid widget data')
+        return error_response(e)
 
 
 def setup_logging():
@@ -44,28 +46,28 @@ def validate_widget(widget):
     elif widget_type == 'delete':
         validate_delete(widget)
     else:
-        raise KeyError('Invalid widget type')
+        raise KeyError('invalid widget')
 
 
 def validate_create(widget):
     required_fields = ['widgetId', 'owner', 'label', 'description']
     for field in required_fields:
         if not widget.get(field):
-            raise KeyError(f'Missing required field: {field}')
+            raise KeyError(f'missing required field: {field}')
 
 
 def validate_update(widget):
     required_fields = ['widgetId', 'owner', 'description']
     for field in required_fields:
         if not widget.get(field):
-            raise KeyError(f'Missing required field: {field}')
+            raise KeyError(f'missing required field: {field}')
 
 
 def validate_delete(widget):
     required_fields = ['widgetId', 'owner']
     for field in required_fields:
         if not widget.get(field):
-            raise KeyError(f'Missing required field: {field}')
+            raise KeyError(f'missing required field: {field}')
 
 
 def push_widget_sqs(widget, session):
@@ -74,9 +76,9 @@ def push_widget_sqs(widget, session):
         response = session.sqs.send_message(QueueUrl=session.queue_url, MessageBody=message_body)
         if response.get('MessageId'):
             return success_response('success widget push sqs')
-        return error_response('Failed to push widget to SQS', 'Failed to send message to SQS')
+        return error_response('fail widget push sqs')
     except Exception as e:
-        return error_response(e, 'Failed to send message to SQS')
+        return error_response(e)
 
 
 def success_response(message):
@@ -87,10 +89,9 @@ def success_response(message):
     }
 
 
-def error_response(e, message):
-    logging.error(message)
+def error_response(e):
     logging.error(e)
     return {
-        'statusCode': 400,  # You may adjust the status code as needed
-        'body': {'message': message, 'error': str(e)}
+        'statusCode': 400,
+        'body': {'error': str(e)}
     }

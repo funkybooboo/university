@@ -46,27 +46,29 @@ def validate_widget(widget):
     elif widget_type == 'delete':
         validate_delete(widget)
     else:
-        raise KeyError('invalid widget')
+        raise KeyError('invalid widget type')
 
 
 def validate_create(widget):
-    required_fields = ['widgetId', 'owner', 'label', 'description']
-    for field in required_fields:
-        if not widget.get(field):
+    required_str_fields = ['widgetId', 'owner', 'label', 'description']
+    for field in required_str_fields:
+        if not widget.get(field) or not type(widget[field]) == str:
             raise KeyError(f'missing required field: {field}')
+    if not widget.get('otherAttributes') or not type(widget['otherAttributes']) == list:
+        raise KeyError(f'missing required field: otherAttributes')
 
 
 def validate_update(widget):
     required_fields = ['widgetId', 'owner', 'description']
     for field in required_fields:
-        if not widget.get(field):
+        if not widget.get(field) or not type(widget[field]) == str:
             raise KeyError(f'missing required field: {field}')
 
 
 def validate_delete(widget):
     required_fields = ['widgetId', 'owner']
     for field in required_fields:
-        if not widget.get(field):
+        if not widget.get(field) or not type(widget[field]) == str:
             raise KeyError(f'missing required field: {field}')
 
 

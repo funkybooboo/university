@@ -13,10 +13,9 @@ class Session:
 
 def lambda_handler(event, context):
     try:
-        widget, region = get_event_data(event, context)
+        widget, session = get_event_data(event, context)
         validate_widget(widget)
         print('valid widget')
-        session = Session(region)
         return push_widget_sqs(widget, session)
     except Exception as e:
         return error_response(str(e))
@@ -29,18 +28,25 @@ def get_event_data(event, context):
     print(f'request_id: {request_id}')
     region = context.invoked_function_arn.split(":")[3]
     print(f'region: {region}')
+    widget = get_widget(event)
+    widget['requestId'] = request_id
+    print(f'widget: {widget}')
+    session = Session(region)
+    print('Got session info')
+    return widget, session
+
+
+def get_widget(event):
     if not event:
-        return error_response('Event is None')
+        raise KeyError('Event is None')
     widget = event.get('body')
     if not widget:
-        return error_response('Widget is None')
+        raise KeyError('Widget is None')
     if isinstance(widget, str):
         widget = json.loads(widget)
     if not isinstance(widget, dict):
-        return error_response(f'Widget is not a dictionary: {type(widget)}')
-    widget['requestId'] = request_id
-    print(f'widget: {widget}')
-    return widget, region
+        raise KeyError(f'Widget is not a dictionary: {type(widget)}')
+    return widget
 
 
 def validate_widget(widget):
@@ -84,8 +90,8 @@ def validate_delete(widget):
 
 
 def check_fields(fields, widget):
-    for k, v in fields.items():
-        check_field(widget, k, v)
+    for field, field_type in fields.items():
+        check_field(widget, field, field_type)
 
 
 def check_field(widget, field, field_type):

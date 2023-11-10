@@ -3,10 +3,10 @@ import json
 
 
 class Session:
-    def __init__(self, region):
+    def __init__(self, region, queue):
         self.region = region
+        self.queue = queue
         self.sqs = boto3.client('sqs', region_name=self.region)
-        self.queue = 'cs5260-requests'
         self.account_number = boto3.client('sts').get_caller_identity()['Account']
         self.queue_url = f'https://sqs.{self.region}.amazonaws.com/{self.account_number}/{self.queue}'
 
@@ -26,26 +26,42 @@ def get_event_data(event, context):
     print(f'context: {context}')
     request_id = context.aws_request_id
     print(f'request_id: {request_id}')
-    region = context.invoked_function_arn.split(":")[3]
-    print(f'region: {region}')
-    widget = get_widget(event)
+    if not event:
+        raise KeyError('Event is None')
+    body = event.get('body')
+    if not body:
+        raise KeyError('Body is None')
+    if isinstance(body, str):
+        body = json.loads(body)
+    if not isinstance(body, dict):
+        raise KeyError(f'Body is not a dictionary: {type(body)}')
+    widget = get_widget(body)
+    session = get_session(body)
     widget['requestId'] = request_id
     print(f'widget: {widget}')
-    session = Session(region)
-    print('Got session info')
     return widget, session
 
 
-def get_widget(event):
-    if not event:
-        raise KeyError('Event is None')
-    widget = event.get('body')
+def get_session(body):
+    region = body.get('region')
+    if not region:
+        region = 'us-east-1'
+    queue = body.get('queue')
+    if not queue:
+        queue = 'cs5260-requests'
+    session = Session(region, queue)
+    print('Got session info')
+    return session
+
+def get_widget(body):
+    widget = body.get('widget')
     if not widget:
         raise KeyError('Widget is None')
     if isinstance(widget, str):
         widget = json.loads(widget)
     if not isinstance(widget, dict):
         raise KeyError(f'Widget is not a dictionary: {type(widget)}')
+    print('Got widget')
     return widget
 
 

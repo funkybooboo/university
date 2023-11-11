@@ -1,0 +1,48 @@
+{
+    "region": "us-east-1",
+    "queue": "cs5260-requests",
+    "widget": {
+        "type": "update",
+        "widgetId": "0510d371-0191-43d9-81d5-5a163659ae6f",
+        "owner": "Mary Matthews",
+        "description": "LJEQMYCCJRZDQFJETHKWYRMWTOPRQYEBWFWQHQUPVTGRXURPPKEYAPEEYAAV",
+        "otherAttributes": [
+            {
+                "name": "color",
+                "value": "blue"
+            },
+            {
+                "name": "size",
+                "value": "360"
+            },
+            {
+                "name": "size-unit",
+                "value": "cm"
+            },
+            {
+                "name": "height",
+                "value": "920"
+            },
+            {
+                "name": "width",
+                "value": "103"
+            },
+            {
+                "name": "width-unit",
+                "value": "cm"
+            },
+            {
+                "name": "rating",
+                "value": "3.6255655"
+            },
+            {
+                "name": "price",
+                "value": "98.76"
+            },
+            {
+                "name": "note",
+                "value": "YZAVYFSDXEPIARJWLVFLBMSADGGIVUVSTFHUCKOSWFVKWODINGKECEZFKHVLGWFKYHYVQZVHTMROSVTXMSWQGUMHFORJIZYOXPNOZLFPMCFQPKNRWMWUBTTPOVYPZWODIGBDCKZTBBNICWTPRONOMCCBZUJAYCRHFOJLPKHHELORIRLPLZGUQQHPBTRYZCJKZHMDUSFTXXGFTQHALLTPFIESBIUTKNNBYNDYROAEYQUNUFMZDYDKMVTMRPJMSBPLQVYZNEYAEUXIAQOJEXTLISTXIEESSTZYQDSQKLNGSJYMVGDZSSNHLFAIJWEVTRNQAYQPEITGNZSLERCGJIEVCVMB"
+            }
+        ]
+    }
+}

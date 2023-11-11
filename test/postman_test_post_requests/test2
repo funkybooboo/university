@@ -1,0 +1,9 @@
+{
+    "region": "us-east-1",
+    "queue": "cs5260-requests",
+    "widget": {
+        "type": "delete",
+        "widgetId": "6984abeb-5b24-42eb-93cc-3a5bef6b4b8a",
+        "owner": "Mary Matthews"
+    }
+}

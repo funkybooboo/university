@@ -15,15 +15,15 @@ class DrawFractal extends CustomPainter {
   // Recursively draw the fractal
   void fractal(Canvas canvas, int level, Paint paint) {
 
-    if (level == this.level) return;
+    if (level == this.level) return; // if at the last level stop
 
     canvas.save();
-    canvas.translate(0, -50);
-    canvas.scale(0.5, 0.5);
+    canvas.translate(0, -50); // move the coordinate system
+    canvas.scale(0.5, 0.5); // scale down
 
-    drawL(canvas, paint, level);
-    drawM(canvas, paint, level);
-    drawR(canvas, paint, level);
+    drawL(canvas, paint, level); // draw the left line
+    drawM(canvas, paint, level); // draw the middle line
+    drawR(canvas, paint, level); // draw the right line
 
     canvas.restore();
 
@@ -31,23 +31,23 @@ class DrawFractal extends CustomPainter {
 
   void drawL(Canvas canvas, Paint paint, int level) {
     canvas.save();
-    canvas.rotate(0.5236);
-    canvas.drawLine(Offset(0, 0), Offset(0,-50), paint);
+    canvas.rotate(0.5236); // rotate clockwise by 30 degrees
+    canvas.drawLine(Offset(0, 0), Offset(0,-50), paint); // draw a line
     fractal(canvas, ++level, paint);
     canvas.restore();
   }
 
   void drawM(Canvas canvas, Paint paint, int level) {
     canvas.save();
-    canvas.drawLine(Offset(0, 0), Offset(0,-50), paint);
+    canvas.drawLine(Offset(0, 0), Offset(0,-50), paint); // draw a line
     fractal(canvas, ++level, paint);
     canvas.restore();
   }
 
   void drawR(Canvas canvas, Paint paint, int level) {
     canvas.save();
-    canvas.rotate(-0.5236);
-    canvas.drawLine(Offset(0, 0), Offset(0,-50), paint);
+    canvas.rotate(-0.5236); // rotate counterclockwise by 30 deggrees
+    canvas.drawLine(Offset(0, 0), Offset(0,-50), paint); // draw a line
     fractal(canvas, ++level, paint);
     canvas.restore();
   }

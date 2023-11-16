@@ -55,6 +55,28 @@ Stream<int> Function() streamAccumulation(Stream<int> stream, int Function(int, 
 }
 
 
+extension on Stream {
+
+  Stream<int> Function() streamFilter(bool Function(int) f) {
+    return () async* {
+      await for (final int n in this) {
+        if (f(n)) yield n;
+      }
+    };
+  }
+
+  Stream<int> Function() streamAccumulation(int Function(int, int) f, int initial) {
+    return () async* {
+      await for (final n in this) {
+        initial = f(n, initial);
+        yield initial;
+      }
+    };
+  }
+
+}
+
+
 void main(List<String> arguments) async {
   print( 'flattening [[0,1], [2]] yields ${flatten([[0,1], [2]])}');
   print( 'flattening [[0,1], [2], null] yields ${flatten([[0,1], [2], null])}');
@@ -75,7 +97,11 @@ void main(List<String> arguments) async {
   await for (final number in streamAccumulation(generateNumbers(10)(),((a,b) {return a+b;}),0)()) {
     print ('cumulative number is $number.');
   }
+  print("Extinctions");
+  await for (final number in generateNumbers(10)().streamFilter(((a) =>  a % 2 == 0))()) {
+    print ('filtered number is $number');
+  }
+  await for (final number in generateNumbers(10)().streamAccumulation(((a,b) {return a+b;}),0)()) {
+    print ('cumulative number is $number.');
+  }
 }
-
-
-

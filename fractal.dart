@@ -8,20 +8,65 @@ class DrawFractal extends CustomPainter {
   var level = 0;
 
   // Constructor that initializes the level of the fractal
-  DrawFractal(value) {
-    level = value;
+  DrawFractal(level) {
+    this.level = level;
   }
 
   // Recursively draw the fractal
-  void fractal(Canvas canvas, int level) {
+  void fractal(Canvas canvas, int level, Paint paint) {
 
+    if (level == this.level) return;
+
+    canvas.save();
+    canvas.translate(0, -50);
+    canvas.scale(0.5, 0.5);
+
+    drawL(canvas, paint, level);
+    drawM(canvas, paint, level);
+    drawR(canvas, paint, level);
+
+    canvas.restore();
+
+  }
+
+  void drawL(Canvas canvas, Paint paint, int level) {
+    canvas.save();
+    canvas.rotate(0.5236);
+    canvas.drawLine(Offset(0, 0), Offset(0,-50), paint);
+    fractal(canvas, ++level, paint);
+    canvas.restore();
+  }
+
+  void drawM(Canvas canvas, Paint paint, int level) {
+    canvas.save();
+    canvas.drawLine(Offset(0, 0), Offset(0,-50), paint);
+    fractal(canvas, ++level, paint);
+    canvas.restore();
+  }
+
+  void drawR(Canvas canvas, Paint paint, int level) {
+    canvas.save();
+    canvas.rotate(-0.5236);
+    canvas.drawLine(Offset(0, 0), Offset(0,-50), paint);
+    fractal(canvas, ++level, paint);
+    canvas.restore();
   }
 
   /// Called when the canvas is (re)painted, perform the initial moving of the
   /// fractal to the center and other actions here such as the initial call to fractal.
   @override
   void paint(Canvas canvas, Size size) {
+    canvas.save();
 
+    canvas.drawLine(Offset(0, 0), Offset(0,-50), Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.fill);
+
+    fractal(canvas, 1, Paint()
+      ..color = Colors.blue
+      ..style = PaintingStyle.fill);
+
+    canvas.restore();
   }
 
   /// Always repaint
@@ -53,7 +98,6 @@ class MyApp extends StatelessWidget {
 /// Stream to generate numbers from 1 to 10
 Stream<int> generateNumbers = (() async* {
   await Future<void>.delayed(const Duration(seconds: 2));
-
   for (int i = 1; i <= 10; i++) {
     await Future<void>.delayed(const Duration(seconds: 1));
     yield i;

@@ -1,5 +1,6 @@
 from person import Person
 
+
 class Employer(Person):
     def __init__(self, name, priorities):
         """

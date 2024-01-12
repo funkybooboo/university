@@ -2,7 +2,6 @@ class Person:
     """
     Represent a generic person
     """
-
     def __init__(self, name, priorities):
         """
         name is a string which uniquely identifies this person

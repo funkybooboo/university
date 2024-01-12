@@ -16,8 +16,8 @@ If a match is unacceptable, it is not listed in the preferences.
 """
 
 
-from src.employer import Employer
-from src.applicant import Applicant
+from employer import Employer
+from applicant import Applicant
 
 
 def main():

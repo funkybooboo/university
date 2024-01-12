@@ -10,11 +10,11 @@ class Applicant(Person):
           potential partners, from best to worst
         """
         Person.__init__(self, name, priorities)
-
         # now compute a reverse lookup for efficient candidate rating
         self.ranking = {}
         for rank in range(len(priorities)):
             self.ranking[priorities[rank]] = rank
+
 
     def evaluate_proposal(self, suitor):
         """

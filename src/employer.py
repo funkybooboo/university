@@ -12,6 +12,7 @@ class Employer(Person):
         Person.__init__(self, name, priorities)
         self.proposal_index = 0  # next person in our list to whom we might propose
 
+
     def next_proposal(self):
         if self.proposal_index >= len(self.priorities):
             print('returned None')
@@ -19,6 +20,7 @@ class Employer(Person):
         goal = self.priorities[self.proposal_index]
         self.proposal_index += 1
         return goal
+
 
     def __repr__(self):
         return Person.__repr__(self) + '\n' + \

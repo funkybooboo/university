@@ -14,6 +14,7 @@ class Person:
         self.partner = None
         self.rank = None
 
+
     def __repr__(self):
         return 'Name is ' + self.name + '\n' + \
             'Partner is currently ' + str(self.partner) + str(self.rank) + '\n' + \

@@ -11,11 +11,7 @@ from graph import Graph
 
 
 def main():
-    """
-    files = [("men0.txt", "women0.txt", True), ("men.txt", "women.txt", True), ("men2.txt", "women2.txt", True),
-     ("men3.txt", "women3.txt", False), ("men4.txt", "women4.txt", False)]
-    """
-    graph = Graph()
+    graph = Graph("../data/scenario1/Employers.txt", "../data/scenario1/Applicants.txt")
     graph.do_flow()
 
 

@@ -1,4 +1,4 @@
-W:      b,c,a
-X:      b,a,c
-V:      b,a
+W:b,c,a
+X:b,a,c
+V:b,a
 

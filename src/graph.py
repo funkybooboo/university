@@ -4,8 +4,8 @@ class Graph:
         self.adjacency_matrix = []
         self.vertex_count = 0
         self.edges = []
-        self.residual = []
-        self.cost_array = []
+        self.residual_matrix = []
+        self.cost_matrix = []
         self.proposer_file_path = proposer_file_path
         self.receiver_file_path = receiver_file_path
         self.create_graph()
@@ -13,9 +13,9 @@ class Graph:
 
     def create_graph(self):
         self.vertices.append("Source")  # create a list of all vertices
-        self.read_preferences(self.proposer_file_path)
+        self.read_preferences(self.proposer_file_path, "proposer")
         proposer_count = len(self.vertices) - 1
-        self.read_preferences(self.receiver_file_path)
+        self.read_preferences(self.receiver_file_path, "receiver")
         self.vertices.append("Sink")
         # Sort edges to get those with same to/from nodes together
         self.edges.sort()
@@ -29,7 +29,13 @@ class Graph:
         self.make_adjacency()
 
 
-    def read_preferences(self, file_path):
+    def add_proposer_edge(self, name, priorities, i):
+        self.edges.append((name, priorities[i], i + 1, 1))
+
+    def add_receiver_edge(self, name, priorities, i):
+        self.edges.append((priorities[i], name, i + 1, 1))
+
+    def read_preferences(self, file_path, type_):
         with open(file_path) as file:
             for line in file:
                 info = line.split(':')
@@ -40,7 +46,10 @@ class Graph:
                     for i in range(len(priorities)):
                         priorities[i] = priorities[i].strip()
                         # create an edge a->b with cost and flow
-                        self.edges.append((name, priorities[i], i + 1, 1))
+                        if type_ == "proposer":
+                            self.add_proposer_edge(name, priorities, i)
+                        else:
+                            self.add_receiver_edge(name, priorities, i)
 
 
     # We should have two edges: one from a->b indicate preference for men and women.
@@ -56,10 +65,10 @@ class Graph:
     def combine_edges(self, edges):
         new_edges = []
         i = 0
-        while i < len(edges):
-            e = self.combine(edges[i], edges[i + 1])
-            if e is not None:
-                new_edges.append(e)
+        while i < len(edges) - 1:
+            edge = self.combine(edges[i], edges[i + 1])
+            if edge is not None:
+                new_edges.append(edge)
                 i += 2
             else:
                 i += 1  # skip the edge without a match
@@ -71,31 +80,46 @@ class Graph:
         self.vertex_count = len(self.vertices)
         self.adjacency_matrix = []
         while len(self.adjacency_matrix) < self.vertex_count:
-            temp = [0 for _ in range(self.vertex_count)]
-            self.adjacency_matrix.append(temp)
-        self.cost_array = [list(row) for row in self.adjacency_matrix]  # careful to get a deep copy
+            self.adjacency_matrix.append([0 for _ in range(self.vertex_count)])
+
+        self.cost_matrix = [list(row) for row in self.adjacency_matrix]  # careful to get a deep copy
 
         for edge in self.edges:
-            i = int(edge[0])
-            j = int(edge[1])
+            u = int(edge[0])
+            v = int(edge[1])
 
-            if i >= self.vertex_count or j >= self.vertex_count or i < 0 or j < 0:
-                print(f"Not a Proper Input in Edge {i},{j}")
+            if u >= self.vertex_count or v >= self.vertex_count or u < 0 or v < 0:
+                print(f"Not a Proper Input in Edge {u},{v}")
             else:
-                self.adjacency_matrix[i][j] = edge[3]
-                self.cost_array[i][j] = edge[2]
-                self.cost_array[j][i] = -edge[2]
-            self.residual = [list(row) for row in self.adjacency_matrix]  # careful to get a deep copy
+                self.adjacency_matrix[u][v] = edge[3]
+                self.cost_matrix[u][v] = edge[2]
+                self.cost_matrix[v][u] = -edge[2]
+            self.residual_matrix = [list(row) for row in self.adjacency_matrix]  # careful to get a deep copy
 
 
-    # print 2 d array a with label
-    @staticmethod
-    def print2d_array(label, a):
+    def print_array(self, label, array):
         print(label)
-        for i in range(len(a)):
-            print("%3d:" % i, end=' ')
-            for j in range(len(a[i])):
-                print("%3d" % (a[i][j]), end=' ')
+        for i in range(self.vertex_count):
+            print("{0}\t\t{1}".format(i, array[i]))
+
+
+    @staticmethod
+    def print_matrix(label, matrix):
+        print()
+        max_len = max(len(str(item)) for row in matrix for item in row) + 2
+        delimiter = f"%{max_len}d"
+        print(label)
+        print("        ", end='')
+        number_of_spaces = 0
+        for i in range(len(matrix)):
+            print(delimiter % i, end=' ')
+            number_of_spaces += 1
+        print("\n", "        ", end='')
+        print("- " * number_of_spaces * max_len)
+        for i in range(len(matrix)):
+            print(f"{delimiter} |  " % i, end=' ')
+            for j in range(len(matrix[i])):
+                print(delimiter % (matrix[i][j]), end=' ')
             print()
 
 
@@ -104,17 +128,62 @@ class Graph:
         print(self.vertices)
         print("Edges are: ")
         print(self.edges)
-        self.print2d_array("adjacency", self.adjacency_matrix)
-        self.print2d_array("residual", self.residual)
-        self.print2d_array("cost", self.cost_array)
-        self.BellmanFord(0, len(self.vertices) - 1)
+        self.print_matrix("adjacency", self.adjacency_matrix)
+        self.print_matrix("residual", self.residual_matrix)
+        self.print_matrix("cost", self.cost_matrix)
+        self.ford_fulkerson(0, len(self.vertices) - 1)
 
 
-    # utility function used to print the matrix dist with label
-    def print_array(self, label, dist):
-        print(label)
-        for i in range(self.vertex_count):
-            print("{0}\t\t{1}".format(i, dist[i]))
+    def ford_fulkerson(self, source, sink):
+        # 1 find an augmenting paths using bellman_ford
+        # 2 go though the residual array and augment the flow (updating the flow of the edges along the augmenting path
+        # amd decrease back edge flow) until no more augmenting paths can be found
+        # the flow graph = the residual edges
+        # e.capacity - e.flow = flow left
+        flow_count = 0
+        while True:
+            is_valid, predecessors, costs = self.bellman_ford(source, sink)
+            if not is_valid:
+                break
+            augmenting_path = self.get_augmenting_path(source, sink, predecessors)
+            print()
+            print("path: ", augmenting_path)
+            self.augment_flow(augmenting_path)
+            self.print_matrix("residual", self.residual_matrix)
+            flow_count += 1
+        print("flow count: ", flow_count)
+
+
+    def augment_flow(self, augmenting_path):
+        i = 0
+        j = i + 1
+        while j < len(augmenting_path):
+            u = augmenting_path[i]
+            v = augmenting_path[j]
+            self.residual_matrix[v][u] = -self.residual_matrix[u][v]
+            self.residual_matrix[u][v] = 0
+            i += 1
+            j = i + 1
+
+
+    @staticmethod
+    def get_augmenting_path(source, sink, predecessors):
+        augmenting_path = [sink]
+        v = sink
+        while v > source:
+            augmenting_path.append(predecessors[v])
+            v = predecessors[v]
+        augmenting_path.reverse()
+        return augmenting_path
+
+
+    @staticmethod
+    def get_smallest_cost_for_path(costs, augmenting_path):
+        smallest_cost = costs[augmenting_path[0]]
+        for i in range(1, len(augmenting_path)):
+            if smallest_cost > costs[augmenting_path[i]]:
+                smallest_cost = costs[augmenting_path[i]]
+        return smallest_cost
 
 
     # The main function that finds shortest distances from src to
@@ -123,23 +192,24 @@ class Graph:
     # We are interested in the path from the src to the sink.
     # If we never make it to the sink, there is no flow
     # return true if there is flow from src to sink.
-    def BellmanFord(self, source, sink):
-        # Step 1: Initialize distances from src to all other vertices
+    def bellman_ford(self, source, sink):
+        # Step 1: Initialize costs from src to all other vertices
         # as INFINITE
         INFINITE = float("inf")
-        distances = [INFINITE for _ in range(self.vertex_count)]  # distances/cost to each node
+        costs = [INFINITE for _ in range(self.vertex_count)]  # costs/cost to each node
         predecessors = [-1 for _ in range(self.vertex_count)]  # predecessor of each node
-        distances[source] = 0
+        costs[source] = 0
         # Step 2: Relax all edges |V| - 1 times. A simple shortest
         # path from src to any other vertex can have at-most |V| - 1
         # edges
         for _ in range(self.vertex_count - 1):
             for u in range(self.vertex_count):
                 for v in range(self.vertex_count):
-                    if self.residual[u][v] > 0 and distances[u] != INFINITE and distances[u] + self.cost_array[u][v] < distances[v]:
-                        distances[v] = distances[u] + self.cost_array[u][v]
+                    if self.residual_matrix[u][v] > 0 and costs[u] != INFINITE and costs[u] + self.cost_matrix[u][v] < costs[v]:
+                        costs[v] = costs[u] + self.cost_matrix[u][v]
                         predecessors[v] = u
         self.print_array("Predecessor", predecessors)
-        self.print_array("Cost", distances)
-        return predecessors[sink] >= 0
+        self.print_array("Cost", costs)
+        return predecessors[sink] >= 0, predecessors, costs
+
 

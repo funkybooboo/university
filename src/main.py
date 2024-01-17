@@ -11,7 +11,29 @@ from graph import Graph
 
 
 def main():
+    print()
+
+    print("Scenario 1")
+    print("Employers -> Applicants")
     graph = Graph("../data/scenario1/Employers.txt", "../data/scenario1/Applicants.txt")
+    graph.do_flow()
+    print()
+
+    print("Scenario 1")
+    print("Applicants - > Employers")
+    graph = Graph("../data/scenario1/Applicants.txt", "../data/scenario1/Employers.txt")
+    graph.do_flow()
+    print()
+
+    print("Scenario 2")
+    print("Employers -> Applicants")
+    graph = Graph("../data/scenario2/Employers.txt", "../data/scenario2/Applicants.txt")
+    graph.do_flow()
+    print()
+
+    print("Scenario 2")
+    print("Applicants -> Employers")
+    graph = Graph("../data/scenario2/Applicants.txt", "../data/scenario2/Employers.txt")
     graph.do_flow()
 
 

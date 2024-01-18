@@ -1,0 +1,13 @@
+A:c,k,f,m,g,i,e
+B:i,n,l,e,m,g,j,c
+C:f,o,e,m,k,g,i,n
+D:g,k,l,b
+E:h,c,b,n,g,o,k,i
+F:j,n,e,k,l
+G:g,b,c,d,h,k,l,f,a
+H:b,f,o,j,c,i,d
+I:n,b,c,e,d,g,i,o
+J:n,c,e,o,f,i,d,k,a
+K:h,d,o,a,g,c,m,k
+L:i,k,g,m,e,d
+M:o,i,d,n

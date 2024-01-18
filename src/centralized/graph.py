@@ -32,6 +32,7 @@ class Graph:
         for receiver in range(proposer_count + 1, sink):
             self.edges.append((receiver, sink, 0, 1))
         self.__make_adjacency()
+        self.__populate_numbers_to_letters()
 
 
     def __add_proposer_edge(self, name, priorities, i):
@@ -111,22 +112,6 @@ class Graph:
             print(self.vertices)
             print("Edges are:")
             print(self.edges)
-
-        for i in range(1, len(self.vertices)-1):
-            if self.vertices[i].isupper():
-                if self.proposer_is_upper_case:
-                    self.proposer_numbers_to_letters.update({i: self.vertices[i]})
-                else:
-                    self.receiver_numbers_to_letters.update({i: self.vertices[i]})
-            else:
-                if not self.proposer_is_upper_case:
-                    self.proposer_numbers_to_letters.update({i: self.vertices[i]})
-                else:
-                    self.receiver_numbers_to_letters.update({i: self.vertices[i]})
-
-        self.both_numbers_to_letters = self.receiver_numbers_to_letters | self.proposer_numbers_to_letters
-
-        if self.verbose:
             print("Mappings")
             print(self.receiver_numbers_to_letters)
             print(self.proposer_numbers_to_letters)
@@ -142,10 +127,23 @@ class Graph:
             print()
 
         count, connections = self.__get_connections(list(self.proposer_numbers_to_letters.keys()), list(self.receiver_numbers_to_letters.keys()))
-        print("Number of connections:", count)
         self.__print_connections_with_letters("Connections", connections)
-        print("Happiness (lower better):", self.__get_happiness(connections))
+        return self.__get_happiness(connections), count
 
+
+    def __populate_numbers_to_letters(self):
+        for i in range(1, len(self.vertices) - 1):
+            if self.vertices[i].isupper():
+                if self.proposer_is_upper_case:
+                    self.proposer_numbers_to_letters.update({i: self.vertices[i]})
+                else:
+                    self.receiver_numbers_to_letters.update({i: self.vertices[i]})
+            else:
+                if not self.proposer_is_upper_case:
+                    self.proposer_numbers_to_letters.update({i: self.vertices[i]})
+                else:
+                    self.receiver_numbers_to_letters.update({i: self.vertices[i]})
+        self.both_numbers_to_letters = self.receiver_numbers_to_letters | self.proposer_numbers_to_letters
 
     def __ford_fulkerson(self, source, sink):
         if self.verbose:
@@ -202,14 +200,14 @@ class Graph:
     # If we never make it to the sink, there is no flow
     # return true if there is flow from src to sink.
     def __bellman_ford(self, source, sink):
-        # Step 1: Initialize costs from src to all other vertices
+        # Step centralized: Initialize costs from src to all other vertices
         # as INFINITE
         INFINITE = float("inf")
         costs = [INFINITE for _ in range(self.vertex_count)]  # costs/cost to each node
         predecessors = [-1 for _ in range(self.vertex_count)]  # predecessor of each node
         costs[source] = 0
-        # Step 2: Relax all edges |V| - 1 times. A simple shortest
-        # path from src to any other vertex can have at-most |V| - 1
+        # Step multiagent: Relax all edges |V| - centralized times. A simple shortest
+        # path from src to any other vertex can have at-most |V| - centralized
         # edges
         for _ in range(self.vertex_count - 1):
             for u in range(self.vertex_count):
@@ -240,7 +238,7 @@ class Graph:
             from_ = connection[0]
             to_ = connection[1]
             cost = connection[2]
-            print(self.both_numbers_to_letters[from_], self.both_numbers_to_letters[to_], cost)
+            print("\t", self.both_numbers_to_letters[from_], self.both_numbers_to_letters[to_], cost)
         print()
 
 

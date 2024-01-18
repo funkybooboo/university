@@ -145,6 +145,7 @@ class Graph:
                     self.receiver_numbers_to_letters.update({i: self.vertices[i]})
         self.both_numbers_to_letters = self.receiver_numbers_to_letters | self.proposer_numbers_to_letters
 
+
     def __ford_fulkerson(self, source, sink):
         if self.verbose:
             print()

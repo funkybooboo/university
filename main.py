@@ -1,6 +1,6 @@
 
 def main():
-    function = lambda n : (n ** 3) * (n + 1) * (n + 2) * (n + 3)
+    function = lambda n : n ** 2
     left = -10
     right = 10
     down = 10
@@ -8,6 +8,13 @@ def main():
 
 
 def get_differance_table(function, left=0, right=10, down=10):
+    """
+    :param function: lambda function that takes an integer and returns an integer. ex. lambda n : n ** 2
+    :param left: how far to the left should be calculated relative to 0.
+    :param right: how far to the right should be calculated relative to 0.
+    :param down: how far down should be calculated relative to n.
+    :return: a matrix that has the values of the forward differance of the function given. First row is n, the second f(n), after that you get derivatives of f(n)
+    """
     right += 1
     down += 2
     differance_table = [[], []]

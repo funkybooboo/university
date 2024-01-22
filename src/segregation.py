@@ -1,11 +1,11 @@
 import matplotlib.pyplot as plt
-import itertools
-import random
-import copy
+from itertools import product
+from random import shuffle, choice
+from copy import deepcopy
 
 
 class Segregation:
-    def __init__(self, width, height, empty_ratio, similarity_threshold, n_iterations, colors=2):
+    def __init__(self, width, height, empty_ratio, similarity_threshold, n_iterations, run=1, colors=2, verbose=False):
         self.agents = {}
         self.old_agents = {}
         self.width = width
@@ -18,41 +18,38 @@ class Segregation:
         self.n_empty = 0
         self.empty_houses = []
         self.remaining_houses = []
+        self.verbose = verbose
+        self.run = run
 
 
     def populate(self):
         self.empty_houses = []
         self.agents = {}
-        print("Populate ",  self.width ,  self.height)
-        self.all_houses = list(itertools.product(range(self.width), range(self.height)))
-        print(self.all_houses)
-        random.shuffle(self.all_houses)
-
+        self.all_houses = list(product(range(self.width), range(self.height)))
+        shuffle(self.all_houses)
         self.n_empty = int(self.empty_ratio * len(self.all_houses))
         self.empty_houses = self.all_houses[:self.n_empty]
-
         self.remaining_houses = self.all_houses[self.n_empty:]
         houses_by_color = [self.remaining_houses[i::self.colors] for i in range(self.colors)]
-        print("Houses by color ", houses_by_color[0])
         for i in range(self.colors):
             # create agents for each color
-            dict2 = dict(zip(houses_by_color[i], [i + 1] * len(houses_by_color[i])))
-            self.agents = {**self.agents, **dict2}
-        print("dictionary",self.agents)
+            self.agents = {**self.agents, **dict(zip(houses_by_color[i], [i + 1] * len(houses_by_color[i])))}
+        if self.verbose:
+            print("Populate ", self.width, self.height)
+            print(self.all_houses)
+            print("Houses by color ", houses_by_color[0])
+            print("dictionary",self.agents)
 
 
     def is_unsatisfied(self, x, y):
-
         myColor = self.agents[(x, y)]
         count_similar = 0
         count_different = 0
-
         count_different, count_similar = self.update_count(count_different, count_similar, myColor, x, y)
-
-        if (count_similar + count_different) == 0:
-            return False
-        else:
+        try:
             return float(count_similar) / (count_similar + count_different) < self.similarity_threshold
+        except ZeroDivisionError:
+            return False
 
 
     def update_count(self, count_different, count_similar, my_color, x, y):
@@ -102,20 +99,20 @@ class Segregation:
     def move_locations(self):
         total_distance=0
         for i in range(self.n_iterations):
-            self.old_agents = copy.deepcopy(self.agents)
+            self.old_agents = deepcopy(self.agents)
             n_changes = 0
             for agent in self.old_agents:
                 if self.is_unsatisfied(agent[0], agent[1]):
                     agent_color = self.agents[agent]
-                    empty_house = random.choice(self.empty_houses)
+                    empty_house = choice(self.empty_houses)
                     self.agents[empty_house] = agent_color
                     del self.agents[agent]
                     self.empty_houses.remove(empty_house)
                     self.empty_houses.append(agent)
-                    total_distance += abs(empty_house[0] - agent[0])+ abs(empty_house[1] - agent[1])
+                    total_distance += abs(empty_house[0] - agent[0]) + abs(empty_house[1] - agent[1])
                     n_changes += 1
-            if i%30==0:
-                print('Iteration: %d , Similarity Ratio: %3.2f. Number of changes: %d total distance: %d' %(i+1,self.similarity_threshold,n_changes,total_distance))
+            if i % 30 == 0 and self.verbose:
+                print('Iteration: %d , Similarity Ratio: %3.2f. Number of changes: %d total distance: %d' %(i + 1, self.similarity_threshold,n_changes,total_distance))
             if n_changes == 0:
                 break
 
@@ -124,16 +121,15 @@ class Segregation:
         fig, ax = plt.subplots()
         # If you want to run the simulation with more than 7 colors, you should set agent_colors accordingly
         agent_colors = {1: 'b', 2: 'r', 3: 'g', 4: 'c', 5: 'm', 6: 'y', 7: 'k'}
-        marker_size = 150/self.width  # no logic here, I just played around with it
+        marker_size = 150 / self.width  # no logic here, I just played around with it
         for agent in self.agents:
-            ax.scatter(agent[0] + 0.5, agent[1] + 0.5,s=marker_size, color=agent_colors[self.agents[agent]])
-
+            ax.scatter(agent[0] + 0.5, agent[1] + 0.5, s=marker_size, color=agent_colors[self.agents[agent]])
         ax.set_title(title, fontsize=10, fontweight='bold')
         ax.set_xlim([0, self.width])
         ax.set_ylim([0, self.height])
         ax.set_xticks([])
         ax.set_yticks([])
-        plt.savefig(file_name)
+        plt.savefig(f"../data/run{self.run}/{file_name}")
 
 
     def calculate_similarity(self):

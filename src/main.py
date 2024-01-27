@@ -6,16 +6,16 @@ def main():
     # This is where data will be stored in the /data folder.
     # Change if you want to save new data.
     # Don't change if you want a run to be overwritten.
-    run = set_up_simulation(6)
+    run = set_up_simulation(7)
     
-    segregation_1 = Schelling(50, 50, 0.3, 0.3, 200, 2, run, True)
-    segregation_1.simulate()
+    segregation_1 = Schelling(50, 50, 0.3, 0.3, 2, True)
+    segregation_1.simulate(run, 200)
 
-    segregation_2 = Schelling(50, 50, 0.3, 0.5, 200, 2, run, True)
-    segregation_2.simulate()
+    segregation_2 = Schelling(50, 50, 0.3, 0.5, 2, True)
+    segregation_2.simulate(run, 200)
 
-    segregation_3 = Schelling(50, 50, 0.3, 0.8, 200, 2, run, True)
-    segregation_3.simulate()
+    segregation_3 = Schelling(50, 50, 0.3, 0.8, 2, True)
+    segregation_3.simulate(run, 200)
 
     #Second Simulation Measuring Segregation
     # similarity_threshold_ratio = {}

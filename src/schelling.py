@@ -4,8 +4,21 @@ from random import shuffle, choice
 from copy import deepcopy
 
 
-class Segregation:
-    def __init__(self, width, height, empty_ratio, similarity_threshold, n_iterations, run=1, colors=2, verbose=False):
+# todo a. Add output to indicate the percentage of each agent type that meets the desired similarity_threshold.
+
+# todo b. Add a feature where the similarity_threshold can be different for each of the colors.
+
+# todo c. Add a feature to stop when little progress is being made. Print out a message to indicate how many iterations you did.
+
+# todo d. Add a feature where agents can improve on their current location by performing a location swap with another agent who is willing to swap (in addition to just swapping with an open position).
+
+# todo e. Add a feature where you prefer to move to locations in the neighborhood. The idea is that a move may be cheaper if the agent didn't move as far. Define neighborhood however you like.
+
+# todo f. Explore something else you consider interesting.
+
+
+class Schelling:
+    def __init__(self, width, height, empty_ratio, similarity_threshold, n_iterations, colors=2, run=1, verbose=False):
         self.agents = {}
         self.old_agents = {}
         self.width = width
@@ -20,9 +33,10 @@ class Segregation:
         self.remaining_houses = []
         self.verbose = verbose
         self.run = run
+        self.__populate()
 
 
-    def populate(self):
+    def __populate(self):
         self.empty_houses = []
         self.agents = {}
         self.all_houses = list(product(range(self.width), range(self.height)))
@@ -41,18 +55,18 @@ class Segregation:
             print("dictionary",self.agents)
 
 
-    def is_unsatisfied(self, x, y):
+    def __is_unsatisfied(self, x, y):
         myColor = self.agents[(x, y)]
         count_similar = 0
         count_different = 0
-        count_different, count_similar = self.update_count(count_different, count_similar, myColor, x, y)
+        count_different, count_similar = self.__update_count(count_different, count_similar, myColor, x, y)
         try:
             return float(count_similar) / (count_similar + count_different) < self.similarity_threshold
         except ZeroDivisionError:
             return False
 
 
-    def update_count(self, count_different, count_similar, my_color, x, y):
+    def __update_count(self, count_different, count_similar, my_color, x, y):
         if x > 0 and y > 0 and (x - 1, y - 1) not in self.empty_houses:
             if self.agents[(x - 1, y - 1)] == my_color:
                 count_similar += 1
@@ -96,13 +110,29 @@ class Segregation:
         return count_different, count_similar
 
 
-    def move_locations(self):
+    def __calculate_similarity(self):
+        similarity = []
+        for agent in self.agents:
+            count_similar = 0
+            count_different = 0
+            x = agent[0]
+            y = agent[1]
+            color = self.agents[(x, y)]
+            count_different, count_similar = self.__update_count(count_different, count_similar, color, x, y)
+            try:
+                similarity.append(float(count_similar) / (count_similar + count_different))
+            except ZeroDivisionError:
+                similarity.append(1)
+        return sum(similarity) / len(similarity)
+
+
+    def __move_locations(self):
         total_distance=0
         for i in range(self.n_iterations):
             self.old_agents = deepcopy(self.agents)
             n_changes = 0
             for agent in self.old_agents:
-                if self.is_unsatisfied(agent[0], agent[1]):
+                if self.__is_unsatisfied(agent[0], agent[1]):
                     agent_color = self.agents[agent]
                     empty_house = choice(self.empty_houses)
                     self.agents[empty_house] = agent_color
@@ -112,12 +142,12 @@ class Segregation:
                     total_distance += abs(empty_house[0] - agent[0]) + abs(empty_house[1] - agent[1])
                     n_changes += 1
             if i % 30 == 0 and self.verbose:
-                print('Iteration: %d , Similarity Ratio: %3.2f. Number of changes: %d total distance: %d' %(i + 1, self.similarity_threshold,n_changes,total_distance))
+                print('Iteration: %d , Similarity Ratio: %3.2f. Number of changes: %d total distance: %d' %(i + 1, self.similarity_threshold, n_changes,total_distance))
             if n_changes == 0:
                 break
 
 
-    def plot(self, title, file_name):
+    def __plot(self, title, file_name):
         fig, ax = plt.subplots()
         # If you want to run the simulation with more than 7 colors, you should set agent_colors accordingly
         agent_colors = {1: 'b', 2: 'r', 3: 'g', 4: 'c', 5: 'm', 6: 'y', 7: 'k'}
@@ -132,18 +162,10 @@ class Segregation:
         plt.savefig(f"../data/run{self.run}/{file_name}")
 
 
-    def calculate_similarity(self):
-        similarity = []
-        for agent in self.agents:
-            count_similar = 0
-            count_different = 0
-            x = agent[0]
-            y = agent[1]
-            color = self.agents[(x, y)]
-            count_different, count_similar = self.update_count(count_different, count_similar, color, x, y)
-            try:
-                similarity.append(float(count_similar) / (count_similar + count_different))
-            except ZeroDivisionError:
-                similarity.append(1)
-        return sum(similarity) / len(similarity)
+    def simulate(self):
+        num_colors = self.colors
+        happiness_threshold = int(self.similarity_threshold * 100)
+        self.__plot(f'Schelling Model with {num_colors} colors: Initial State', f'schelling_{happiness_threshold}_initial.png')
+        self.__move_locations()
+        self.__plot(f'Schelling Model with {num_colors} colors: Final State with Happiness Threshold {happiness_threshold}%', f'schelling_{happiness_threshold}_final.png')
 

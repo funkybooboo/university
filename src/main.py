@@ -1,4 +1,4 @@
-from segregation import Segregation
+from schelling import Schelling
 from os import mkdir, path
 
 
@@ -6,41 +6,16 @@ def main():
     # This is where data will be stored in the /data folder.
     # Change if you want to save new data.
     # Don't change if you want a run to be overwritten.
-    run = 5
-    run_path = path.join("../data/", f"run{run}")
-    try:
-        mkdir(run_path)
-    except FileExistsError:
-        pass
+    run = set_up_simulation(6)
+    
+    segregation_1 = Schelling(50, 50, 0.3, 0.3, 200, 2, run, True)
+    segregation_1.simulate()
 
-    ##Starter Simulation
-    schelling_0 = Segregation(5, 5, 0.3, 0.3, 200, run, 2, True)
-    schelling_0.populate()
+    segregation_2 = Schelling(50, 50, 0.3, 0.5, 200, 2, run, True)
+    segregation_2.simulate()
 
-    ##First Simulation
-    schelling_1 = Segregation(50, 50, 0.3, 0.3, 200, run, 2, True)
-    schelling_1.populate()
-
-    schelling_2 = Segregation(50, 50, 0.3, 0.5, 200, run, 2, True)
-    schelling_2.populate()
-
-    schelling_3 = Segregation(50, 50, 0.3, 0.8, 200, run, 2, True)
-    schelling_3.populate()
-
-    schelling_1.plot('Schelling Model with 2 colors: Initial State', 'schelling_2_initial.png')
-
-    schelling_0.move_locations()
-    schelling_1.move_locations()
-    schelling_2.move_locations()
-    schelling_3.move_locations()
-    schelling_0.plot('Schelling Model with 2 colors: Final State with Happiness Threshold 30%',
-                     'schelling_0_30_final.png')
-    schelling_1.plot('Schelling Model with 2 colors: Final State with Happiness Threshold 30%',
-                     'schelling_30_final.png')
-    schelling_2.plot('Schelling Model with 2 colors: Final State with Happiness Threshold 50%',
-                     'schelling_50_final.png')
-    schelling_3.plot('Schelling Model with 2 colors: Final State with Happiness Threshold 80%',
-                     'schelling_80_final.png')
+    segregation_3 = Schelling(50, 50, 0.3, 0.8, 200, 2, run, True)
+    segregation_3.simulate()
 
     #Second Simulation Measuring Segregation
     # similarity_threshold_ratio = {}
@@ -58,6 +33,15 @@ def main():
     # ax.set_xlabel("Similarity Threshold")
     # ax.set_ylabel("Mean Similarity Ratio")
     # plt.savefig('schelling_segregation.png')
+
+
+def set_up_simulation(run):
+    run_path = path.join("../data/", f"run{run}")
+    try:
+        mkdir(run_path)
+    except FileExistsError:
+        pass
+    return run
 
 
 if __name__ == "__main__":

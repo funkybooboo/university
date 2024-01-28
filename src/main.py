@@ -6,33 +6,19 @@ def main():
     # This is where data will be stored in the /data folder.
     # Change if you want to save new data.
     # Don't change if you want a run to be overwritten.
-    run = set_up_simulation(7)
-    
-    segregation_1 = Schelling(50, 50, 0.3, 0.3, 2, True)
-    segregation_1.simulate(run, 200)
-
-    segregation_2 = Schelling(50, 50, 0.3, 0.5, 2, True)
-    segregation_2.simulate(run, 200)
-
-    segregation_3 = Schelling(50, 50, 0.3, 0.8, 2, True)
-    segregation_3.simulate(run, 200)
-
-    #Second Simulation Measuring Segregation
-    # similarity_threshold_ratio = {}
-    # for i in [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7]:
-    #     schelling = Segregation(50, 50, 0.3, i, 500, 2)
-    #     schelling.populate()
-    #     schelling.update()
-    #     similarity_threshold_ratio[i] = schelling.calculate_similarity()
-    #
-    # fig, ax = plt.subplots()
-    # plt.plot(similarity_threshold_ratio.keys(), similarity_threshold_ratio.values(), 'ro')
-    # ax.set_title('Similarity Threshold vs. Mean Similarity Ratio', fontsize=15, fontweight='bold')
-    # ax.set_xlim([0, 1])
-    # ax.set_ylim([0, 1.1])
-    # ax.set_xlabel("Similarity Threshold")
-    # ax.set_ylabel("Mean Similarity Ratio")
-    # plt.savefig('schelling_segregation.png')
+    run = set_up_simulation(4)
+    print("Running simulation 1...")
+    segregation_1 = Schelling(50, 50, 0.3, [0.3, 0.3], 2, True)
+    segregation_1.simulate(run, 1, 200)
+    print()
+    print("Running simulation 2...")
+    segregation_2 = Schelling(50, 50, 0.3, [0.5, 0.5], 2, True)
+    segregation_2.simulate(run, 2, 200)
+    print()
+    print("Running simulation 3...")
+    segregation_3 = Schelling(50, 50, 0.3, [0.8, 0.8], 2, True)
+    segregation_3.simulate(run, 3, 200)
+    print()
 
 
 def set_up_simulation(run):

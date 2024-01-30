@@ -6,7 +6,7 @@ def main():
     # This is where data will be stored in the /data folder.
     # Change if you want to save new data.
     # Don't change if you want a run to be overwritten.
-    run = set_up_simulation(4)
+    run = set_up_simulation(6)
     print("Running simulation 1...")
     segregation_1 = Schelling(50, 50, 0.3, [0.3, 0.3], 2, True)
     segregation_1.simulate(run, 1, 200)

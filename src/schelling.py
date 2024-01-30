@@ -10,9 +10,9 @@ from copy import deepcopy
 
 # c. Add a feature to stop when little progress is being made. Print out a message to indicate how many iterations you did.
 
-# todo d. Add a feature where agents can improve on their current location by performing a location swap with another agent who is willing to swap (in addition to just swapping with an open position).
+# d. Add a feature where agents can improve on their current location by performing a location swap with another agent who is willing to swap (in addition to just swapping with an open position).
 
-# todo e. Add a feature where you prefer to move to locations in the neighborhood. The idea is that a move may be cheaper if the agent didn't move as far. Define neighborhood however you like.
+# e. Add a feature where you prefer to move to locations in the neighborhood. The idea is that a move may be cheaper if the agent didn't move as far. Define a neighborhood however you like.
 
 # todo f. Explore something else you consider interesting.
 
@@ -108,18 +108,104 @@ class Schelling:
         return self.__get_color_to_happiness_percentage()
 
     def __move_agents(self, total_distance):
-        old_agents = deepcopy(self.agent_location_to_color)
+        old_agent_location_to_color = deepcopy(self.agent_location_to_color)
         num_changes = 0
-        for agent in old_agents:
-            if self.__is_unsatisfied(agent):
-                agent_color = self.agent_location_to_color[agent]
-                empty_house = choice(self.empty_spaces)
-                self.agent_location_to_color[empty_house] = agent_color
-                del self.agent_location_to_color[agent]
-                self.empty_spaces.remove(empty_house)
-                self.empty_spaces.append(agent)
-                total_distance += abs(empty_house[0] - agent[0]) + abs(empty_house[1] - agent[1])
-                num_changes += 1
+        unhappy_agents = []
+        for agent in old_agent_location_to_color:
+            unhappy_agents.append(agent) if self.__is_unsatisfied(agent) else None
+        for agent in unhappy_agents:
+            has_near_agent, near_agent = self.unhappy_agent_in_area(agent, unhappy_agents, 4)
+            if has_near_agent == "swap near agents":
+                num_changes, total_distance = self.swap_agents(agent, near_agent, num_changes, total_distance)
+                del unhappy_agents[unhappy_agents.index(near_agent)]
+                del unhappy_agents[unhappy_agents.index(agent)]
+            elif has_near_agent == "swap with near empty space":
+                num_changes, total_distance = self.move_agent_to_empty_space(agent, near_agent, num_changes, total_distance)
+                del unhappy_agents[unhappy_agents.index(agent)]
+            else:
+                num_changes, total_distance = self.check_map_for_swap(agent, unhappy_agents, num_changes, total_distance)
+        return num_changes, total_distance
+
+    def check_map_for_swap(self, agent, unhappy_agents, num_changes, total_distance):
+        good = False
+        if not good:
+            for other_agent in unhappy_agents:
+                is_other_agent_space_better_for_agent = self.get_number_of_color_by_agent(self.agent_location_to_color[agent], other_agent) > self.get_number_of_color_by_agent(
+                    self.agent_location_to_color[agent], agent)
+                is_agent_space_better_for_other_agent = self.get_number_of_color_by_agent(self.agent_location_to_color[other_agent], agent) > self.get_number_of_color_by_agent(
+                    self.agent_location_to_color[other_agent], other_agent)
+                if (other_agent != agent and self.agent_location_to_color[other_agent] != self.agent_location_to_color[agent]
+                        and is_other_agent_space_better_for_agent and is_agent_space_better_for_other_agent):
+                    num_changes, total_distance = self.swap_agents(agent, other_agent, num_changes, total_distance)
+                    del unhappy_agents[unhappy_agents.index(other_agent)]
+                    del unhappy_agents[unhappy_agents.index(agent)]
+                    good = True
+                    break
+        if not good:
+            for other_agent in self.empty_spaces:
+                is_other_agent_space_better_for_agent = self.get_number_of_color_by_agent(self.agent_location_to_color[agent], other_agent) > self.get_number_of_color_by_agent(
+                    self.agent_location_to_color[agent], agent)
+                if other_agent != agent and is_other_agent_space_better_for_agent:
+                    num_changes, total_distance = self.move_agent_to_empty_space(agent, other_agent, num_changes, total_distance)
+                    del unhappy_agents[unhappy_agents.index(agent)]
+                    good = True
+                    break
+        if not good:
+            num_changes, total_distance = self.move_agent_to_empty_space(agent, choice(self.empty_spaces), num_changes, total_distance)
+            del unhappy_agents[unhappy_agents.index(agent)]
+        return num_changes, total_distance
+
+    def unhappy_agent_in_area(self, agent, unhappy_agents, area_size):
+        x = agent[0]
+        y = agent[1]
+        # todo make sure the near_agent is better than the current happy score and make sure they are of different colors
+        for i in range(-area_size, area_size):
+            for j in range(-area_size, area_size):
+                other_agent = (x + i, y + j)
+                if 0 <= other_agent[0] < self.width and 0 <= other_agent[1] < self.height and other_agent != agent:
+                    is_other_agent_space_better_for_agent = self.get_number_of_color_by_agent(self.agent_location_to_color[agent], other_agent) > self.get_number_of_color_by_agent(
+                        self.agent_location_to_color[agent], agent)
+                    if other_agent in unhappy_agents:
+                        is_agent_space_better_for_other_agent = self.get_number_of_color_by_agent(self.agent_location_to_color[other_agent], agent) > self.get_number_of_color_by_agent(
+                            self.agent_location_to_color[other_agent], other_agent)
+                        if self.agent_location_to_color[other_agent] != self.agent_location_to_color[agent] and is_other_agent_space_better_for_agent and is_agent_space_better_for_other_agent:
+                            return "swap near agents", other_agent
+                    if other_agent in self.empty_spaces and is_other_agent_space_better_for_agent:
+                        return "swap with near empty space", other_agent
+        return None, None
+
+    def get_number_of_color_by_agent(self, color_to_look_for, agent):
+        if agent in self.agent_location_to_color and self.agent_location_to_color[agent] == color_to_look_for:
+            return 0
+        x = agent[0]
+        y = agent[1]
+        neighborhood_size = 1
+        count = 0
+        for i in range(-neighborhood_size, neighborhood_size):
+            for j in range(-neighborhood_size, neighborhood_size):
+                other_agent = (x + i, y + j)
+                if (0 <= other_agent[0] < self.width and 0 <= other_agent[1] < self.height and other_agent != agent
+                        and other_agent in self.agent_location_to_color and color_to_look_for == self.agent_location_to_color[other_agent]):
+                    count += 1
+        return count
+
+    def swap_agents(self, agent1, agent2, num_changes, total_distance):
+        agent1_color = self.agent_location_to_color[agent1]
+        agent2_color = self.agent_location_to_color[agent2]
+        self.agent_location_to_color[agent1] = agent2_color
+        self.agent_location_to_color[agent2] = agent1_color
+        total_distance += abs(agent1[0] - agent2[0]) + abs(agent1[1] - agent2[1])
+        num_changes += 1
+        return num_changes, total_distance
+
+    def move_agent_to_empty_space(self, agent, empty_space, num_changes, total_distance):
+        agent_color = self.agent_location_to_color[agent]
+        self.agent_location_to_color[empty_space] = agent_color
+        del self.agent_location_to_color[agent]
+        self.empty_spaces.remove(empty_space)
+        self.empty_spaces.append(agent)
+        total_distance += abs(empty_space[0] - agent[0]) + abs(empty_space[1] - agent[1])
+        num_changes += 1
         return num_changes, total_distance
 
     def __is_unsatisfied(self, agent):
@@ -147,7 +233,9 @@ class Schelling:
     def __check_progress(i, color_to_happiness_percentage, last_color_to_happiness_percentage):
         is_simular = False
         for color in color_to_happiness_percentage:
-            if color in last_color_to_happiness_percentage and abs(color_to_happiness_percentage[color] - last_color_to_happiness_percentage[color]) <= 0.02 * max(color_to_happiness_percentage[color], last_color_to_happiness_percentage[color]):
+            if (color in last_color_to_happiness_percentage and
+                    abs(color_to_happiness_percentage[color] - last_color_to_happiness_percentage[color]) <=
+                    0.02 * max(color_to_happiness_percentage[color], last_color_to_happiness_percentage[color])):
                 print(f'Little progress in color {color} happiness. Iteration: {i + 1}')
                 is_simular = True
                 break

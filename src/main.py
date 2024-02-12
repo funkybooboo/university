@@ -3,7 +3,7 @@
 # 10/10/2021
 
 
-from random import randint
+from random import randint, shuffle
 
 
 def main():
@@ -16,34 +16,63 @@ def main():
             continue
         print_table(game_table, "Game Table")
 
-        strongly_dominated_table = get_strongly_dominated_table(game_table)
-        weakly_dominated_table = get_weakly_dominated_table(game_table)
-        nash_equilibria_table = get_nash_equilibria_table(game_table)
+        row_player_strongly_dominated_strategy = get_row_player_strongly_dominated_strategy(game_table)
+        column_player_strongly_dominated_strategy = get_column_player_strongly_dominated_strategy(game_table)
+        row_player_weakly_dominated_strategies = get_row_player_weakly_dominated_strategies(game_table)
+        column_player_weakly_dominated_strategies = get_column_player_weakly_dominated_strategies(game_table)
 
-        row_player = {"strategy": None, "title": "row player", "index": 0, "size": row_player_size}
-        column_player = {"strategy": None, "title": "column player", "index": 1, "size": column_player_size}
-        print("Both players chose randomly:")
-        row_player["strategy"] = random_strategy
-        column_player["strategy"] = random_strategy
-        play_game(game_table, row_player, column_player)
-
-
-def get_strongly_dominated_table(game_table):
-    strongly_dominated_strategies_table = []
-
-    return strongly_dominated_strategies_table
+        row_player = {"strategy": None, "title": "row player", "index": 0, "size": row_player_size, "strongly_dominated_strategy": row_player_strongly_dominated_strategy,
+                      "weakly_dominated_strategy": row_player_weakly_dominated_strategies, "nash_equilibrium": None}
+        column_player = {"strategy": None, "title": "column player", "index": 1, "size": column_player_size, "strongly_dominated_strategy": column_player_strongly_dominated_strategy,
+                         "weakly_dominated_strategy": column_player_weakly_dominated_strategies, "nash_equilibrium": None}
+        run_games(game_table, row_player, column_player)
 
 
-def get_weakly_dominated_table(game_table):
-    weakly_dominated_strategies_table = []
+def run_games(game_table, row_player, column_player):
+    strategies = {"random": random_strategy, "minimax": minimax_strategy, "maximin": maximin_strategy, "mixed": mixed_strategy, "pure": pure_strategy, "strongly_dominated": strongly_dominated_strategy, "weakly_dominated": weakly_dominated_strategy}
+    for row_player_strategy_title, row_player_strategy in strategies.items():
+        for column_player_strategy_title, column_player_strategy in strategies.items():
+            run_game(row_player, column_player, game_table, f"{row_player_strategy_title} vs {column_player_strategy_title}", row_player_strategy, column_player_strategy)
 
-    return weakly_dominated_strategies_table
+
+def run_game(row_player, column_player, game_table, title, row_player_strategy, column_player_strategy):
+    print()
+    print(f"Running game for {title}")
+    row_player["strategy"] = row_player_strategy
+    column_player["strategy"] = column_player_strategy
+    play_game(game_table, row_player, column_player)
 
 
-def get_nash_equilibria_table(game_table):
-    pure_strategy_equilibria_table = []
+def get_row_player_strongly_dominated_strategy(game_table):
+    strategy = None
 
-    return pure_strategy_equilibria_table
+    return strategy
+
+def get_column_player_strongly_dominated_strategy(game_table):
+    strategy = None
+
+    return strategy
+
+def get_row_player_weakly_dominated_strategies(game_table):
+    row_player_weakly_dominated_strategies = []
+
+    return tuple(row_player_weakly_dominated_strategies)
+
+def get_column_player_weakly_dominated_strategies(game_table):
+    column_player_weakly_dominated_strategies = []
+
+    return tuple(column_player_weakly_dominated_strategies)
+
+def get_nash_equilibria_locations(game_table):
+    nash_equilibria_locations = []
+
+    return tuple(nash_equilibria_locations)
+
+
+def get_pareto_optimal_locations(game_table):
+    pareto_optimal_locations = []
+
+    return tuple(pareto_optimal_locations)
 
 
 def play_game(game_table, player_a, player_b):
@@ -64,6 +93,30 @@ def random_strategy(game_table, player, last_choice):
     return randint(0, player["size"] - 1)
 
 
+def minimax_strategy(game_table, player, last_choice):
+    return 0
+
+
+def maximin_strategy(game_table, player, last_choice):
+    return 0
+
+
+def mixed_strategy(game_table, player, last_choice):
+    return 0
+
+
+def pure_strategy(game_table, player, last_choice):
+    return 0
+
+
+def strongly_dominated_strategy(game_table, player, last_choice):
+    return player["strongly_dominated_strategy"] if player["strongly_dominated_strategy"] else 0
+
+
+def weakly_dominated_strategy(game_table, player, last_choice):
+    return shuffle(player["weakly_dominated_strategy"])[0] if player["weakly_dominated_strategy"] else 0
+
+
 def print_table(table, table_title):
     print(f"{table_title}:")
     max_cell_length = 0
@@ -73,7 +126,7 @@ def print_table(table, table_title):
             if cell_length > max_cell_length:
                 max_cell_length = cell_length
     max_cell_length += 2
-    row_length = (max_cell_length + 3) * len(table[0])
+    row_length = (max_cell_length + 3) * len(table[0]) + 1
     print("-" * row_length)
     spaces = " " * max_cell_length
     print(f"  |", end="")
@@ -133,3 +186,4 @@ def get_info_from_game_file(file_path):
 
 if __name__ == "__main__":
     main()
+

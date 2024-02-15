@@ -29,7 +29,7 @@ def main():
 
 
 def run_games(game_table, row_player, column_player):
-    strategies = {"random": random_strategy, "minimax": minimax_strategy, "maximin": maximin_strategy, "mixed": mixed_strategy, "pure": pure_strategy}
+    strategies = {"minimax": minimax_strategy, "maximin": maximin_strategy, "mixed": mixed_strategy, "pure": pure_strategy}
     if strongly_dominated_strategy:
         strategies["strongly dominated"] = strongly_dominated_strategy
     if weakly_dominated_strategy:
@@ -252,10 +252,6 @@ def play_game(game_table, player_a, player_b):
     print(f"{player_b_title} reward:", player_b_reward)
 
 
-def random_strategy(game_table, player, last_choice):
-    return randint(0, player["size"] - 1)
-
-
 def minimax_strategy(game_table, player, last_choice):
     return 0
 
@@ -269,7 +265,7 @@ def mixed_strategy(game_table, player, last_choice):
 
 
 def pure_strategy(game_table, player, last_choice):
-    return 0
+    return randint(0, player["size"] - 1)
 
 
 def strongly_dominated_strategy(game_table, player, last_choice):

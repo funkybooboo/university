@@ -1,6 +1,6 @@
 # Nate Stott A02386053
 # CS 5110 - Vicki Allan - Program3 Normal Form Games
-# 10/10/2021
+# 02/19/2024
 
 
 from random import randint, shuffle
@@ -8,60 +8,96 @@ from random import randint, shuffle
 
 class Player:
 
-    def __init__(self, title, index, number_of_options, rewards, nash_equilibria_locations):
-        self.title = title
-        self.index = index
-        self.number_of_options = number_of_options
-        self.rewards = rewards
-        self.options = self.__get_options()
-        self.nash_equilibria = self.__get_nash_equilibria(nash_equilibria_locations)
-        self.strongly_dominated_strategy = self.__get_strongly_dominated_strategy()
-        self.weakly_dominated_strategies = self.__get_weakly_dominated_strategies()
+    def __init__(self, title: str, index: int, number_of_options: int, rewards: list[int], nash_equilibria_locations: list[tuple[int, int]], pareto_optimal_locations: list[tuple[int, int]]):
+        self.title: str = title
+        self.index: int = index
+        self.number_of_options: int = number_of_options
+        self.rewards: list[int] = rewards
+        self.row_options: list[list[int]] = self.__get_row_options()
+        self.column_options: list[list[int]] = self.__get_column_options()
+        self.nash_equilibria_options: list[int] = self.__get_options(nash_equilibria_locations)
+        self.pareto_optimal_options: list[int] = self.__get_options(pareto_optimal_locations)
+        self.strongly_dominated_strategy: int = self.__get_strongly_dominated_strategy()
+        self.weakly_dominated_strategies: list[int] = self.__get_weakly_dominated_strategies()
 
         self.strategies = [
-            "minimax",
-            "maximin",
-            "mixed",
-            "pure",
-            "nash equilibrium",
-            "strongly dominated",
-            "weakly dominated"
+            "minimax_strategy",
+            "maximin_strategy",
+            "mixed_strategy",
+            "pure_strategy",
+            "nash_equilibrium_strategy",
+            "strongly_dominated_strategy",
+            "weakly_dominated_strategy",
+            "pareto_optimal_strategy"
         ]
 
     def __get_strongly_dominated_strategy(self):
-        pass
+        return 0
 
     def __get_weakly_dominated_strategies(self):
-        pass
+        return []
 
-    def __get_options(self):
-        pass
+    def __get_row_options(self):
+        return []
 
-    def __get_nash_equilibria(self, nash_equilibria_locations):
-        pass
+    def __get_column_options(self):
+        return []
 
-    def minimax_strategy(self, last_choice):
-        return 0
+    def __get_options(self, locations: list[tuple[int, int]]):
+        return [location[self.index] for location in locations]
 
-    def maximin_strategy(self, last_choice):
-        return 0
+    def __best_move(self, last_choice: int):
+        return self.__best_strategy(self.row_options[last_choice] if self.index == 0 else self.column_options[last_choice])
 
-    def mixed_strategy(self, last_choice):
-        return 0
+    @staticmethod
+    def __best_strategy(options: list[int]):
+        m = 0
+        i = 0
+        for j in range(len(options)):
+            if options[j] > m:
+                m = options[j]
+                i = j
+        return i
 
-    def pure_strategy(self, last_choice):
-        if last_choice is not None:
+    def minimax_strategy(self, last_choice: int):
+        if last_choice is None:
+            return 0
+        return self.__best_move(last_choice)
+
+    def maximin_strategy(self, last_choice: int):
+        if last_choice is None:
+            return 0
+        return self.__best_move(last_choice)
+
+    def mixed_strategy(self, last_choice: int):
+        if last_choice is None:
+            return 0
+        return self.__best_move(last_choice)
+
+    def pure_strategy(self, last_choice: int):
+        if last_choice is None:
             return randint(0, self.number_of_options - 1)
-        return 0
+        return self.__best_move(last_choice)
 
-    def nash_equilibrium_strategy(self, last_choice):
-        return self.nash_equilibria[self.index]
+    def nash_equilibrium_strategy(self, last_choice: int):
+        if last_choice is None:
+            return shuffle(self.nash_equilibria_options)[0]
+        return self.__best_move(last_choice)
 
-    def strongly_dominated_strategy(self, last_choice):
-        return self.strongly_dominated_strategy
+    def pareto_optimal_strategy(self, last_choice: int):
+        if last_choice is None:
+            return shuffle(self.pareto_optimal_options)[0]
+        return self.__best_move(last_choice)
 
-    def weakly_dominated_strategy(self, last_choice):
-        return shuffle(self.weakly_dominated_strategies)[0]
+    def strongly_dominated_strategy(self, last_choice: int):
+        if last_choice is None:
+            return self.strongly_dominated_strategy
+        return self.__best_move(last_choice)
+
+    def weakly_dominated_strategy(self, last_choice: int):
+        if last_choice is None:
+            return shuffle(self.weakly_dominated_strategies)[0]
+        return self.__best_move(last_choice)
 
 
 class Game:
@@ -75,7 +111,7 @@ class Game:
             game = Game(game_number)
             game.play()
 
-    def __init__(self, game):
+    def __init__(self, game: int):
 
         game_table, row_player_rewards, col_player_rewards, row_player_size, col_player_size = self.get_game_table(f"../data/game_{game}.txt")
 
@@ -103,7 +139,7 @@ class Game:
                     pareto_optimal_locations.append(cell)
         return tuple(pareto_optimal_locations)
 
-    def is_pareto_optimal(self, cell):
+    def is_pareto_optimal(self, cell: tuple[int, int]):
         for row in self.game_table:
             for other_cell in row:
                 if cell[0] < other_cell[0] and cell[1] < other_cell[1]:
@@ -127,18 +163,37 @@ class Game:
                 print(f"{row_strategy_title} vs {col_strategy_title}")
                 self.run_game(row_strategy_title, col_strategy_title)
 
-    def run_game(self, row_strategy_title, column_strategy_title):
-        row_strategy = getattr(self.row_player, f"{row_strategy_title}_strategy")
-        column_strategy = getattr(self.column_player, f"{column_strategy_title}_strategy")
-        row_player_choice = row_strategy(None)
-        column_player_choice = column_strategy(row_player_choice)
-        player_rewards = self.game_table[row_player_choice][column_player_choice]
-        row_player_reward = player_rewards[self.row_player.index]
-        column_player_reward = player_rewards[self.column_player.index]
-        print(f"{self.row_player.title} chose:", row_player_choice)
-        print(f"{self.row_player.title} chose:", column_player_choice)
-        print(f"{self.row_player.title} reward:", row_player_reward)
-        print(f"{self.column_player.title} reward:", column_player_reward)
+    def run_game(self, row_strategy_title: str, column_strategy_title: str):
+        row_strategy = getattr(self.row_player, row_strategy_title)
+        column_strategy = getattr(self.column_player, column_strategy_title)
+        row = {
+            "strategy": row_strategy,
+            "index": self.row_player.index,
+            "title": self.row_player.title
+        }
+        column = {
+            "strategy": column_strategy,
+            "index": self.column_player.index,
+            "title": self.column_player.title
+        }
+        print("Row Player goes first")
+        self.round(row, column)
+        print()
+        print("Column Player goes first")
+        self.round(column, row)
+
+    def round(self, first_player, second_player):
+        first_player_choice = first_player["strategy"](None)
+        second_player_choice = second_player["strategy"](first_player_choice)
+        player_rewards = self.game_table[first_player_choice][second_player_choice]
+        first_player_reward = player_rewards[first_player["index"]]
+        second_player_reward = player_rewards[second_player["index"]]
+        first_player_title = first_player["title"]
+        second_player_title = second_player["title"]
+        print(f"{first_player_title} chose:", first_player_choice)
+        print(f"{second_player_title} chose:", second_player_choice)
+        print(f"{first_player_title} reward:", first_player_reward)
+        print(f"{second_player_title} reward:", second_player_reward)
 
     def print_game_table(self):
         print(f"{self.game_title}:")
@@ -169,7 +224,7 @@ class Game:
             print("-" * row_length)
         print()
 
-    def get_game_table(self, file_path):
+    def get_game_table(self, file_path: str):
         data = self.get_info_from_game_file(file_path)
         if not data:
             return None
@@ -183,7 +238,7 @@ class Game:
         return tuple(game_table), row_player_rewards, col_player_rewards, row_player_size, col_player_size
 
     @staticmethod
-    def get_info_from_game_file(file_path):
+    def get_info_from_game_file(file_path: str):
         try:
             with open(file_path, "r") as file:
                 sizes = file.readline().split(" ")

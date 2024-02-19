@@ -6,9 +6,19 @@
 from random import randint, shuffle
 
 
+def main():
+    for game_number in range(1, 4):
+        print()
+        print("*" * 50)
+        print(f"Game {game_number}:")
+        game = Game(game_number)
+        game.play()
+
+
 class Player:
 
-    def __init__(self, title: str, index: int, number_of_options: int, rewards: list[int], nash_equilibria_locations: list[tuple[int, int]], pareto_optimal_locations: list[tuple[int, int]]):
+    def __init__(self, title: str, index: int, number_of_options: int, rewards: list[int],
+                 nash_equilibria_locations: list[tuple[int, int]], pareto_optimal_locations: list[tuple[int, int]]):
         self.title: str = title
         self.index: int = index
         self.number_of_options: int = number_of_options
@@ -32,16 +42,93 @@ class Player:
         ]
 
     def __get_strongly_dominated_strategy(self):
-        return 0
+
+        i: int = 0
+        j: int = i + 1
+
+        is_strongly_dominated: bool = False
+
+        while j < len(self.first_options):
+            option1: list[int] = self.first_options[i]
+            option2: list[int] = self.first_options[j]
+            option1_count: int = 0
+            option2_count: int = 0
+            for k in range(len(option1)):
+                if option1[k] > option2[k]:
+                    option1_count += 1
+                elif option2[k] > option1[k]:
+                    option2_count += 1
+            if option1_count > option2_count and option1_count == len(option1):
+                j += 1
+                is_strongly_dominated = True
+            elif option2_count > option1_count and option2_count == len(option2):
+                i = j
+                j += 1
+                is_strongly_dominated = True
+            else:
+                i += 1
+                j = i + 1
+                is_strongly_dominated = False
+        if is_strongly_dominated:
+            return i
+        return None
 
     def __get_weakly_dominated_strategies(self):
-        return []
+        weakly_dominated_strategies = []
+        i: int = 0
+        j: int = i + 1
+        while j < len(self.first_options):
+            temps = []
+            option1, option1_count, option2, option2_count = self.__get_weakly_counts(i, j)
+            if option1_count > option2_count and option1_count == len(option1):
+                temps.append(i)
+                j += 1
+            elif option2_count > option1_count and option2_count == len(option2):
+                temps.append(j)
+                i = j
+                j += 1
+            elif option1_count == option2_count and option1_count == len(option1) and option2_count == len(option2):
+                temps.append(i)
+                temps.append(j)
+                i += 1
+                j = i + 1
+            else:
+                i += 1
+                j = i + 1
+            if len(weakly_dominated_strategies) == 0:
+                weakly_dominated_strategies = temps
+            else:
+                other_temps = weakly_dominated_strategies.copy()
+                for temp in temps:
+                    for other in other_temps:
+                        option1, option1_count, option2, option2_count = self.__get_weakly_counts(temp, other)
+                        if option1_count > option2_count and option1_count == len(option1):
+                            weakly_dominated_strategies.append(temp)
+                            weakly_dominated_strategies.remove(other)
+                        elif option1_count == option2_count and option1_count == len(option1) and option2_count == len(option2):
+                            weakly_dominated_strategies.append(temp)
+        return weakly_dominated_strategies
+
+    def __get_weakly_counts(self, i, j):
+        option1: list[int] = self.first_options[i]
+        option2: list[int] = self.first_options[j]
+        option1_count: int = 0
+        option2_count: int = 0
+        for k in range(len(option1)):
+            if option1[k] > option2[k]:
+                option1_count += 1
+            elif option2[k] > option1[k]:
+                option2_count += 1
+            elif option1[k] == option2[k]:
+                option1_count += 1
+                option2_count += 1
+        return option1, option1_count, option2, option2_count
 
     def __get_first_options(self):
         first_options = []
         cut = (len(self.rewards) // 2) - 1
         for i in range(0, len(self.rewards), cut):
-            first_options.append(self.rewards[i:i+cut])
+            first_options.append(self.rewards[i:i + cut])
         return first_options
 
     def __get_second_options(self):
@@ -55,32 +142,62 @@ class Player:
         return [location[self.index] for location in locations]
 
     def __best_move(self, last_choice: int):
-        return self.__best_strategy(self.first_options[last_choice] if self.index == 0 else self.second_options[last_choice])
+        return self.__best_strategy(
+            self.second_options[last_choice] if self.index == 0 else self.second_options[last_choice])
 
     @staticmethod
     def __best_strategy(options: list[int]):
-        m = 0
-        i = 0
+        best_reward = 0
+        best_index = 0
         for j in range(len(options)):
-            if options[j] > m:
-                m = options[j]
-                i = j
-        return i
+            if options[j] > best_reward:
+                best_reward = options[j]
+                best_index = j
+        return best_index
 
     def minimax_strategy(self, last_choice: int):
         if last_choice is None:
-            return 0
+            return self.__minimax()
         return self.__best_move(last_choice)
+
+    def __minimax(self):
+        regrets = [[] * len(self.second_options[0])]
+        for options in self.second_options:
+            largest = max(options)
+            for i in range(len(options)):
+                option = options[i]
+                regrets[i].append(largest - option)
+        lowest_regret = sum(regrets[0])
+        lowest_regret_index = 0
+        for i in range(1, len(regrets)):
+            regret = sum(regrets[i])
+            if regret < lowest_regret:
+                lowest_regret = regret
+                lowest_regret_index = i
+        return lowest_regret_index
 
     def maximin_strategy(self, last_choice: int):
         if last_choice is None:
-            return 0
+            return self.__maximin()
         return self.__best_move(last_choice)
+
+    def __maximin(self):
+        largest_minimum = min(self.first_options[0])
+        largest_minimum_index = 0
+        for i in range(1, len(self.first_options)):
+            minimum = min(self.first_options[i])
+            if minimum > largest_minimum:
+                largest_minimum = minimum
+                largest_minimum_index = i
+        return largest_minimum_index
 
     def mixed_strategy(self, last_choice: int):
         if last_choice is None:
-            return 0
+            return self.__mixed()
         return self.__best_move(last_choice)
+
+    def __mixed(self):
+        pass
 
     def pure_strategy(self, last_choice: int):
         if last_choice is None:
@@ -89,39 +206,39 @@ class Player:
 
     def nash_equilibrium_strategy(self, last_choice: int):
         if last_choice is None:
+            if not self.nash_equilibria_options:
+                return randint(0, self.number_of_options - 1)
             return shuffle(self.nash_equilibria_options)[0]
         return self.__best_move(last_choice)
 
     def pareto_optimal_strategy(self, last_choice: int):
         if last_choice is None:
+            if not self.pareto_optimal_options:
+                return randint(0, self.number_of_options - 1)
             return shuffle(self.pareto_optimal_options)[0]
         return self.__best_move(last_choice)
 
     def strongly_dominated_strategy(self, last_choice: int):
         if last_choice is None:
+            if self.strongly_dominated_strategy is None:
+                return randint(0, self.number_of_options - 1)
             return self.strongly_dominated_strategy
         return self.__best_move(last_choice)
 
     def weakly_dominated_strategy(self, last_choice: int):
         if last_choice is None:
+            if not self.weakly_dominated_strategies:
+                return randint(0, self.number_of_options - 1)
             return shuffle(self.weakly_dominated_strategies)[0]
         return self.__best_move(last_choice)
 
 
 class Game:
 
-    @staticmethod
-    def main():
-        for game_number in range(1, 4):
-            print()
-            print("*" * 50)
-            print(f"Game {game_number}:")
-            game = Game(game_number)
-            game.play()
-
     def __init__(self, game: int):
 
-        game_table, row_player_rewards, col_player_rewards, row_player_size, col_player_size = self.get_game_table(f"../data/game_{game}.txt")
+        game_table, row_player_rewards, col_player_rewards, row_player_size, col_player_size = self.get_game_table(
+            f"../data/game_{game}.txt")
 
         nash_equilibria_locations = self.get_nash_equilibria_locations()
         pareto_optimal_locations = self.get_pareto_optimal_locations()
@@ -202,7 +319,7 @@ class Game:
         print("Column Player goes first")
         self.round(column, row)
 
-    def round(self, first_player, second_player):
+    def round(self, first_player: dict[str, classmethod], second_player: dict[str, classmethod]):
         first_player_choice = first_player["strategy"](None)
         second_player_choice = second_player["strategy"](first_player_choice)
         player_rewards = self.game_table[first_player_choice][second_player_choice]

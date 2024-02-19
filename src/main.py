@@ -13,8 +13,8 @@ class Player:
         self.index: int = index
         self.number_of_options: int = number_of_options
         self.rewards: list[int] = rewards
-        self.row_options: list[list[int]] = self.__get_row_options()
-        self.column_options: list[list[int]] = self.__get_column_options()
+        self.first_options: list[list[int]] = self.__get_first_options()
+        self.second_options: list[list[int]] = self.__get_second_options()
         self.nash_equilibria_options: list[int] = self.__get_options(nash_equilibria_locations)
         self.pareto_optimal_options: list[int] = self.__get_options(pareto_optimal_locations)
         self.strongly_dominated_strategy: int = self.__get_strongly_dominated_strategy()
@@ -37,17 +37,25 @@ class Player:
     def __get_weakly_dominated_strategies(self):
         return []
 
-    def __get_row_options(self):
-        return []
+    def __get_first_options(self):
+        first_options = []
+        cut = (len(self.rewards) // 2) - 1
+        for i in range(0, len(self.rewards), cut):
+            first_options.append(self.rewards[i:i+cut])
+        return first_options
 
-    def __get_column_options(self):
-        return []
+    def __get_second_options(self):
+        second_options = [[] for _ in range(len(self.first_options[0]))]
+        for i in range(len(self.first_options)):
+            for j in range(len(self.first_options[i])):
+                second_options[j].append(self.first_options[i][j])
+        return second_options
 
     def __get_options(self, locations: list[tuple[int, int]]):
         return [location[self.index] for location in locations]
 
     def __best_move(self, last_choice: int):
-        return self.__best_strategy(self.row_options[last_choice] if self.index == 0 else self.column_options[last_choice])
+        return self.__best_strategy(self.first_options[last_choice] if self.index == 0 else self.second_options[last_choice])
 
     @staticmethod
     def __best_strategy(options: list[int]):
@@ -128,8 +136,20 @@ class Game:
 
     def get_nash_equilibria_locations(self):
         nash_equilibria_locations = []
-
+        for i in range(len(self.game_table)):
+            for j in range(len(self.game_table[i])):
+                if self.is_nash_equilibrium(self.game_table[i][j]):
+                    nash_equilibria_locations.append((i, j))
         return tuple(nash_equilibria_locations)
+
+    def is_nash_equilibrium(self, cell: tuple[int, int]):
+        for i in range(len(self.game_table)):
+            if self.game_table[i][cell[1]][0] > self.game_table[cell[0]][cell[1]][0]:
+                return False
+        for j in range(len(self.game_table[cell[0]])):
+            if self.game_table[cell[0]][j][1] > self.game_table[cell[0]][cell[1]][1]:
+                return False
+        return True
 
     def get_pareto_optimal_locations(self):
         pareto_optimal_locations = []

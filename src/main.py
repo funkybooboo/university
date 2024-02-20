@@ -40,7 +40,7 @@ class Player:
             "nash_equilibrium_strategy",
             "pareto_optimal_strategy",
             "weakly_dominated_strategy",
-            "strongly_dominated_strategy"
+            "strongly_dominated_strategy",
         ]
 
         self.strategy = None
@@ -49,6 +49,7 @@ class Player:
         if strategy_title not in self.strategy_titles:
             raise ValueError(f"Invalid strategy: {strategy_title}")
         self.strategy = getattr(self, strategy_title)
+
     def set_nash_equilibria_options(self, nash_equilibria_locations):
         self.nash_equilibria_options = list(set(self.__get_options(nash_equilibria_locations)))
 
@@ -139,7 +140,8 @@ class Player:
                         if option1_count > option2_count and option1_count == len(option1):
                             weakly_dominated_strategies.append(temp)
                             weakly_dominated_strategies.remove(other)
-                        elif option1_count == option2_count and option1_count == len(option1) and option2_count == len(option2):
+                        elif option1_count == option2_count and option1_count == len(option1) and option2_count == len(
+                                option2):
                             weakly_dominated_strategies.append(temp)
         return weakly_dominated_strategies
 
@@ -194,12 +196,12 @@ class Player:
                 best_index = j
         return best_index
 
-    def minimax_strategy(self, last_choice: int):
+    def minimax_strategy(self, last_choice: int = None):
         if last_choice is None:
-            return self.__minimax()
+            return self.__minimax_strategy()
         return self.__best_strategy(self.second_options[last_choice])
 
-    def __minimax(self):
+    def __minimax_strategy(self):
         regrets = [[] for _ in range(self.number_of_options)]
         for options in self.second_options:
             largest = max(options)
@@ -215,12 +217,12 @@ class Player:
                 lowest_regret_index = i
         return lowest_regret_index
 
-    def maximin_strategy(self, last_choice: int):
+    def maximin_strategy(self, last_choice: int = None):
         if last_choice is None:
-            return self.__maximin()
+            return self.__maximin_strategy()
         return self.__best_strategy(self.second_options[last_choice])
 
-    def __maximin(self):
+    def __maximin_strategy(self):
         largest_minimum = min(self.first_options[0])
         largest_minimum_index = 0
         for i in range(1, len(self.first_options)):
@@ -285,6 +287,18 @@ class Game:
         self.column_player.set_nash_equilibria_options(self.nash_equilibria_locations)
         self.column_player.set_pareto_optimal_options(self.pareto_optimal_locations)
 
+        self.print_game_table()
+        print(f"Nash Equilibria Locations: {self.nash_equilibria_locations}")
+        print(f"Pareto Optimal Locations: {self.pareto_optimal_locations}")
+        print(f"Row Player Strongly Dominated Strategy: {self.row_player.strongly_dominated_strategies}")
+        print(f"Row Player Weakly Dominated Strategies: {self.row_player.weakly_dominated_strategies}")
+        print(f"Row Player Minimax Strategy: {self.row_player.minimax_strategy()}")
+        print(f"Row Player Maximin Strategy: {self.row_player.maximin_strategy()}")
+        print(f"Column Player Strongly Dominated Strategy: {self.column_player.strongly_dominated_strategies}")
+        print(f"Column Player Weakly Dominated Strategies: {self.column_player.weakly_dominated_strategies}")
+        print(f"Column Player Minimax Strategy: {self.column_player.minimax_strategy()}")
+        print(f"Column Player Maximin Strategy: {self.column_player.maximin_strategy()}")
+
     def get_nash_equilibria_locations(self) -> tuple[tuple[int, int]]:
         nash_equilibria_locations = []
         for row_choices in self.row_player.second_option_choice_locations:
@@ -312,16 +326,6 @@ class Game:
         return True
 
     def play(self):
-        self.print_game_table()
-        print(f"Nash Equilibria Locations: {self.nash_equilibria_locations}")
-        print(f"Pareto Optimal Locations: {self.pareto_optimal_locations}")
-        print(f"Row Player Strongly Dominated Strategy: {self.row_player.strongly_dominated_strategies}")
-        print(f"Column Player Strongly Dominated Strategy: {self.column_player.strongly_dominated_strategies}")
-        print(f"Row Player Weakly Dominated Strategies: {self.row_player.weakly_dominated_strategies}")
-        print(f"Column Player Weakly Dominated Strategies: {self.column_player.weakly_dominated_strategies}")
-        self.run_games()
-
-    def run_games(self):
         print()
         for row_strategy_title in self.row_player.strategy_titles:
             for col_strategy_title in self.column_player.strategy_titles:

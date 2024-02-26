@@ -1,63 +1,82 @@
-import numpy
-
-CANDIDATE = 0  # index of list which represents the candidate
-SCORE = 1  # index of list which represents the score of the candidate
-PLACE = 2  # index of list which represents the ranking, lowest is best
-
-def print_connections(names, c, voters):
-    print("CONNECTIONS")
-    for i in range(voters):
-        print("%10s" % (names[i]), end=" ")
-        for j in range(voters):
-            print(c[i][j], end=' ')
-        print()
+from numpy import random
 
 
-def print_rankings(names, r, voters, candidates, ordered):
-    print("CANDIDATE Rankings")
-    for i in range(voters):
-        print(f"First choice for {names[i]} is {ordered[i][CANDIDATE]}", end=" ")
-        print(names[i], end=" ")
-        for j in range(candidates):
-            print(r[i][j], end='')
-        print(" ORDER ", ordered[i])
+def main():
+    election = Election(20, 5, 1052)
+    election.statistics()
 
 
-def create_voting(voter_count: int, candidate_count: int):
-    voter_names = []
-    for i in range(voter_count):
-        voter_names.append(f"Voter{i}")
+class Election:
 
+    class Voter:
+        def __init__(self, name: str, pk: int, election):
+            self.name = name
+            self.pk = pk  # primary key
+            self.election = election
+            self.connections = [0 for _ in range(self.election.voter_count)]
+            self.candidates = []
+            self.__create_connections()
+            self.__rank_candidates()
 
+        def __create_connections(self):
+            connection_count = round(random.uniform(0, self.election.voter_count / 2))
+            for _ in range(connection_count):
+                connect_to = random.randint(0, self.election.voter_count)
+                if connect_to != self.pk:
+                    self.connections[connect_to] = 1
 
-    numpy.random.seed(1052)
+        def __rank_candidates(self):
+            candidates = self.__create_candidates()
+            self.candidates = sorted(candidates, key=lambda candidate: candidate["score"], reverse=True)
+            self.__set_candidate_place()
 
-    connections = [[0 for _ in range(voter_count)] for _ in range(voter_count)]
-    ordered = [[] for _ in range(voter_count)]
-    candidate_ranking = [[list() for _ in range(candidate_count)] for _ in range(voter_count)]
+        def __set_candidate_place(self):
+            for candidate in self.candidates:
+                candidate["place"] = self.candidates.index(candidate)
 
-    for voter in range(voter_count):
+        def __create_candidates(self):
+            candidates = []
+            for i in range(self.election.candidate_count):
+                candidate = {
+                    "name": f"Candidate{i}",
+                    "pk": i,
+                    "score": round(random.randint(0, 100) / 10),
+                    "place": 0
+                }
+                candidates.append(candidate)
+            return candidates
 
-        connection_count = round(numpy.random.uniform(0, voter_count / 2))
-        for _ in range(connection_count):
-            connect_to = numpy.random.randint(0, voter_count)
-            if (connect_to != voter):
-                connections[voter][connect_to] = 1
+        def print_connections(self):
+            print(f"{self.name}  {self.connections}")
 
-        for candidate in range(candidate_count):
-            candidate_ranking[voter][candidate] = [candidate + 1, round(numpy.random.uniform(0, 100)) / 10, 0]
+        def print_rankings(self):
+            print(f"First choice for {self.name} is {self.candidates[0]['name']}")
+            for candidate in self.candidates:
+                print(f"\t{candidate['name']}: Score {candidate['score']}, Place {candidate['place']}")
+            print(f"\tORDER: {[candidate['name'] for candidate in self.candidates]}")
 
-        s = sorted(candidate_ranking[voter], reverse=True, key=lambda v: v[SCORE])
-        ordered[voter] = [s[i][CANDIDATE] for i in range(candidate_count)]
+    def __init__(self, voter_count: int, candidate_count: int, seed: int):
+        random.seed(seed)
+        self.voter_count = voter_count
+        self.candidate_count = candidate_count
+        self.voters = []
+        for i in range(voter_count):
+            self.voters.append(self.Voter(f"Voter{i}", i, self))
 
-        for v in range(candidate_count):
-            candidate = s[v][CANDIDATE] - 1
-            candidate_ranking[voter][candidate][PLACE] = v + 1
+    def statistics(self):
+        self.__print_connections()
+        self.__print_rankings()
 
-    print_connections(voter_names, connections, voter_count)
+    def __print_connections(self):
+        print("CONNECTIONS")
+        for voter in self.voters:
+            voter.print_connections()
 
-    print_rankings(voter_names, candidate_ranking, voter_count, candidate_count, ordered)
+    def __print_rankings(self):
+        print("RANKINGS")
+        for voter in self.voters:
+            voter.print_rankings()
 
 
 if __name__ == '__main__':
-    create_voting(20, 5)
+    main()

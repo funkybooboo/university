@@ -73,16 +73,31 @@ class Election:
             return self.ranked_candidates[0]["pk"]
 
         def social_network_vote(self):
-            connection_votes = []
-
-            # TODO check what my friends are voting for and what their preferences are for the candidate
-
-            if len(connection_votes) == 0:
+            connections_vote_information = self.__get_connections_vote_information()
+            if len(connections_vote_information) == 0:
                 return self.ranked_candidates[0]["pk"]
+            return self.__get_my_vote(connections_vote_information)
 
-            # TODO once I have that information, I can make a decision on who to vote for that is best for me and my friends
+        def __get_my_vote(self, connections_vote_information):
+            my_vote = self.ranked_candidates[0]["pk"]
+            for connection_vote_information in connections_vote_information:
+                # TODO look through connections and make a decision about who is the best candidate for me and who is likely to win based on my connections
+                pass
+            return my_vote
 
-            return self.ranked_candidates[0]["pk"]
+        def __get_connections_vote_information(self):
+            connection_votes = []
+            for pk, connection in enumerate(self.connections):
+                if connection == 1:
+                    connection_votes.append({
+                        "pk": pk,
+                        "name": self.election.voters[pk].name,
+                        "vote_name": self.election.voters[pk].ranked_candidates[0]["name"],
+                        "vote_pk": self.election.voters[pk].ranked_candidates[0]["pk"],
+                        "vote_score": self.election.voters[pk].ranked_candidates[0]["score"],
+                        "vote_place": self.election.voters[pk].ranked_candidates[0]["place"]
+                    })
+            return connection_votes
 
         def remove_candidate(self, candidate_pk: int):
             for candidate in self.ranked_candidates:

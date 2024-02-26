@@ -23,17 +23,20 @@ class Election:
             self.__rank_candidates()
             self.original_ranked_candidates = deepcopy(self.ranked_candidates)
 
+        def __rank_candidates(self):
+            if len(self.ranked_candidates) == 0:
+                candidates = self.__create_candidates()
+            else:
+                candidates = self.ranked_candidates
+            self.ranked_candidates = sorted(candidates, key=lambda candidate: candidate["score"], reverse=True)
+            self.__set_candidate_place()
+
         def __create_connections(self):
             connection_count = round(random.uniform(0, self.election.voter_count / 2))
             for _ in range(connection_count):
                 connect_to = random.randint(0, self.election.voter_count)
                 if connect_to != self.pk:
                     self.connections[connect_to] = 1
-
-        def __rank_candidates(self):
-            candidates = self.__create_candidates()
-            self.ranked_candidates = sorted(candidates, key=lambda candidate: candidate["score"], reverse=True)
-            self.__set_candidate_place()
 
         def __set_candidate_place(self):
             for candidate in self.ranked_candidates:
@@ -69,11 +72,27 @@ class Election:
         def vote(self):
             return self.ranked_candidates[0]["pk"]
 
+        def social_network_vote(self):
+            connection_votes = []
+
+            # TODO check what my friends are voting for and what their preferences are for the candidate
+
+            if len(connection_votes) == 0:
+                return self.ranked_candidates[0]["pk"]
+
+            # TODO once I have that information, I can make a decision on who to vote for that is best for me and my friends
+
+            return self.ranked_candidates[0]["pk"]
+
         def remove_candidate(self, candidate_pk: int):
             for candidate in self.ranked_candidates:
                 if candidate["pk"] == candidate_pk:
                     self.ranked_candidates.remove(candidate)
                     break
+            self.__rank_candidates()
+
+        def rest_ranked_candidates(self):
+            self.ranked_candidates = deepcopy(self.original_ranked_candidates)
 
     def __init__(self, voter_count: int, candidate_count: int, seed: int, verbose: bool = False):
         random.seed(seed)
@@ -103,6 +122,46 @@ class Election:
         for voter in self.voters:
             voter.remove_candidate(candidate_pk)
 
+    def __voter_welfare(self, winner_pk: int):
+        for voter in self.voters:
+            print(f"{voter.name}")
+            print(f"\tCardinal Utility: {voter.cardinal_utility(winner_pk)}")
+            print(f"\tOrdinal Utility: {voter.ordinal_utility(winner_pk)}")
+
+    def __reset_candidates(self):
+        for voter in self.voters:
+            voter.rest_ranked_candidates()
+
+    def first_past_the_post_voting(self, is_social_network: bool):
+        print("FIRST PAST THE POST")
+        self.__reset_candidates()
+        if is_social_network:
+            winner_pk, loser_pk = self.__social_network_vote()
+        else:
+            winner_pk, loser_pk = self.__vote()
+        print("WINNER:", winner_pk)
+        self.__voter_welfare(winner_pk)
+
+    def ranked_choice_voting(self, is_social_network: bool):
+        print("RANKED CHOICE")
+        self.__reset_candidates()
+        for _ in range(self.candidate_count - 1):
+            if is_social_network:
+                winner_pk, loser_pk = self.__social_network_vote()
+            else:
+                winner_pk, loser_pk = self.__vote()
+            if self.verbose:
+                print(f"ROUND WINNER: Candidate{winner_pk}")
+                print(f"ROUND LOSER: Candidate{loser_pk}")
+                self.__voter_welfare(winner_pk)
+            self.__remove_candidate(loser_pk)
+        if is_social_network:
+            winner_pk, loser_pk = self.__social_network_vote()
+        else:
+            winner_pk, loser_pk = self.__vote()
+        print(f"WINNER: Candidate{winner_pk}")
+        self.__voter_welfare(winner_pk)
+
     def __vote(self):
         votes = [0 for _ in range(self.candidate_count)]
         for voter in self.voters:
@@ -111,43 +170,13 @@ class Election:
         loser_pk = votes.index(min(votes))
         return winner_pk, loser_pk
 
-    def __voter_welfare(self, winner_pk: int):
+    def __social_network_vote(self):
+        votes = [0 for _ in range(self.candidate_count)]
         for voter in self.voters:
-            print(f"{voter.name}")
-            print(f"\tCardinal Utility: {voter.cardinal_utility(winner_pk)}")
-            print(f"\tOrdinal Utility: {voter.ordinal_utility(winner_pk)}")
-
-    def __reset_rankings(self):
-        for voter in self.voters:
-            voter.ranked_candidates = deepcopy(voter.original_ranked_candidates)
-
-    def first_past_the_post_voting(self, is_social_network: bool = False):
-        print("FIRST PAST THE POST")
-        self.__reset_rankings()
-        if is_social_network:
-            self.social_network()
-        winner_pk, loser_pk = self.__vote()
-        print("WINNER:", winner_pk)
-        self.__voter_welfare(winner_pk)
-
-    def ranked_choice_voting(self, is_social_network: bool = False):
-        print("RANKED CHOICE")
-        self.__reset_rankings()
-        for _ in range(self.candidate_count - 1):
-            if is_social_network:
-                self.social_network()
-            winner_pk, loser_pk = self.__vote()
-            if self.verbose:
-                print(f"ROUND WINNER: Candidate{winner_pk}")
-                print(f"ROUND LOSER: Candidate{loser_pk}")
-                self.__voter_welfare(winner_pk)
-            self.__remove_candidate(loser_pk)
-        winner_pk, loser_pk = self.__vote()
-        print(f"WINNER: Candidate{winner_pk}")
-        self.__voter_welfare(winner_pk)
-
-    def social_network(self):
-        pass
+            votes[voter.social_network_vote()] += 1
+        winner_pk = votes.index(max(votes))
+        loser_pk = votes.index(min(votes))
+        return winner_pk, loser_pk
 
     @staticmethod
     def simulation(voter_count: int, candidate_count: int, seed: int, verbose: bool = False):
@@ -161,13 +190,14 @@ class Election:
         print()
         election.statistics()
         print()
-        election.first_past_the_post_voting()
+        election.first_past_the_post_voting(False)
         print()
-        election.ranked_choice_voting()
+        election.ranked_choice_voting(False)
         print()
         election.first_past_the_post_voting(True)
         print()
         election.ranked_choice_voting(True)
+        print()
 
 
 if __name__ == '__main__':

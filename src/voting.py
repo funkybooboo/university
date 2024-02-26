@@ -5,7 +5,10 @@ from numpy import random
 def main():
     Election.simulation(20, 5, 1052, True)
     Election.simulation(100, 5, 1052)
-    Election.simulation(1000, 10, 1052)
+    Election.simulation(1_000, 5, 1052)
+    Election.simulation(10_000, 5, 1052)
+    Election.simulation(100_000, 5, 1052)
+    Election.simulation(1_000_000, 5, 1052)
 
 
 class Election:
@@ -149,6 +152,11 @@ class Election:
     @staticmethod
     def simulation(voter_count: int, candidate_count: int, seed: int, verbose: bool = False):
         print("*" * 50)
+        print(f"VOTER COUNT: {voter_count}")
+        print(f"CANDIDATE COUNT: {candidate_count}")
+        print(f"SEED: {seed}")
+        print(f"VERBOSE: {verbose}")
+        print()
         election = Election(voter_count, candidate_count, seed, verbose)
         print()
         election.statistics()

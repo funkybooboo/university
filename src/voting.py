@@ -4,9 +4,9 @@ from numpy import random
 
 
 def main():
-    Election.simulation(20, 5, 1052)
-    Election.simulation(100, 5, 1052, False)
-    Election.simulation(1000, 10, 1052, False)
+    Election.simulation(20, 5, 1052, True)
+    Election.simulation(100, 5, 1052)
+    Election.simulation(1000, 10, 1052)
 
 
 class Election:
@@ -73,7 +73,7 @@ class Election:
                     self.ranked_candidates.remove(candidate)
                     break
 
-    def __init__(self, voter_count: int, candidate_count: int, seed: int, verbose: bool = True):
+    def __init__(self, voter_count: int, candidate_count: int, seed: int, verbose: bool = False):
         random.seed(seed)
         self.voter_count = voter_count
         self.candidate_count = candidate_count
@@ -115,15 +115,19 @@ class Election:
             print(f"\tCardinal Utility: {voter.cardinal_utility(winner_pk)}")
             print(f"\tOrdinal Utility: {voter.ordinal_utility(winner_pk)}")
 
-    def first_past_the_post_voting(self):
+    def first_past_the_post_voting(self, is_social_network: bool = False):
         print("FIRST PAST THE POST")
+        if is_social_network:
+            self.social_network()
         winner_pk, loser_pk = self.__vote()
         print("WINNER:", winner_pk)
         self.__voter_welfare(winner_pk)
 
-    def ranked_choice_voting(self):
+    def ranked_choice_voting(self, is_social_network: bool = False):
         print("RANKED CHOICE")
         for _ in range(self.candidate_count - 1):
+            if is_social_network:
+                self.social_network()
             winner_pk, loser_pk = self.__vote()
             if self.verbose:
                 print(f"ROUND WINNER: Candidate{winner_pk}")
@@ -134,14 +138,11 @@ class Election:
         print(f"WINNER: Candidate{winner_pk}")
         self.__voter_welfare(winner_pk)
 
-    def social_network_first_path_the_post_voting(self):
-        pass
-
-    def social_network_ranked_choice_voting(self):
+    def social_network(self):
         pass
 
     @staticmethod
-    def simulation(voter_count: int, candidate_count: int, seed: int, verbose: bool = True):
+    def simulation(voter_count: int, candidate_count: int, seed: int, verbose: bool = False):
         print("*" * 50)
         election = Election(voter_count, candidate_count, seed, verbose)
         print()
@@ -151,10 +152,9 @@ class Election:
         print()
         election.ranked_choice_voting()
         print()
-        election.social_network_first_path_the_post_voting()
+        election.first_past_the_post_voting(True)
         print()
-        election.social_network_ranked_choice_voting()
-        print()
+        election.ranked_choice_voting(True)
 
 
 if __name__ == '__main__':

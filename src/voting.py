@@ -1,3 +1,7 @@
+# Author: Nate Stott
+# Date: 2/26/2024
+# For: CS5110 - Multi-Agent Systems - Program 4
+
 from copy import deepcopy
 from numpy import random
 
@@ -73,6 +77,12 @@ class Election:
             return self.ranked_candidates[0]["pk"]
 
         def social_network_vote(self):
+            # How should the voter use the knowledge about other voters:
+            # a. Everyone else seems to like my last choice. There is no reason to change my vote.
+            # b. The other voters are split. Several like my second choice and several like my third choice.
+            #  Changing my vote to my second choice would give them a better chance of winning. My first
+            #  choice seems to have no chance.
+            # c. Other ideas?
             connections_vote_information = self.__get_connections_vote_information()
             if len(connections_vote_information) == 0:
                 return self.ranked_candidates[0]["pk"]
@@ -80,10 +90,52 @@ class Election:
 
         def __get_my_vote(self, connections_vote_information):
             my_vote = self.ranked_candidates[0]["pk"]
-            for connection_vote_information in connections_vote_information:
-                # TODO look through connections and make a decision about who is the best candidate for me and who is likely to win based on my connections
-                pass
+            candidates_information = self.__get_candidates_information(connections_vote_information)
+            # I want to vote for the candidate that has the highest average score and the lowest average place
+            # I also want to vote for the candidate that has the most votes because that candidate is more likely to win
+            # I want to vote for someone that I am okay with winning
+
             return my_vote
+
+        def __get_candidates_information(self, connections_vote_information):
+            candidates_information = []
+            for candidate in self.ranked_candidates:
+                candidates_information.append({
+                    "pk": candidate["pk"],
+                    "name": candidate["name"],
+                    "average_score": self.__get_average_score(candidate["pk"], connections_vote_information),
+                    "average_place": self.__get_average_place(candidate["pk"], connections_vote_information),
+                    "vote_count": self.__get_candidate_vote_count(candidate["pk"], connections_vote_information)
+                })
+            return candidates_information
+
+        @staticmethod
+        def __get_average_place(candidate_pk: int, connections_vote_information):
+            place_sum = 0
+            vote_count = 0
+            for vote in connections_vote_information:
+                if vote["vote_pk"] == candidate_pk:
+                    place_sum += vote["vote_place"]
+                    vote_count += 1
+            return place_sum / vote_count
+
+        @staticmethod
+        def __get_average_score(candidate_pk: int, connections_vote_information):
+            score_sum = 0
+            vote_count = 0
+            for vote in connections_vote_information:
+                if vote["vote_pk"] == candidate_pk:
+                    score_sum += vote["vote_score"]
+                    vote_count += 1
+            return score_sum / vote_count
+
+        @staticmethod
+        def __get_candidate_vote_count(candidate_pk: int, connections_vote_information):
+            vote_count = 0
+            for vote in connections_vote_information:
+                if vote["vote_pk"] == candidate_pk:
+                    vote_count += 1
+            return vote_count
 
         def __get_connections_vote_information(self):
             connection_votes = []

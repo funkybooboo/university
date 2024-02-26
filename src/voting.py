@@ -1,5 +1,4 @@
 from copy import deepcopy
-
 from numpy import random
 
 
@@ -115,8 +114,13 @@ class Election:
             print(f"\tCardinal Utility: {voter.cardinal_utility(winner_pk)}")
             print(f"\tOrdinal Utility: {voter.ordinal_utility(winner_pk)}")
 
+    def __reset_rankings(self):
+        for voter in self.voters:
+            voter.ranked_candidates = deepcopy(voter.original_ranked_candidates)
+
     def first_past_the_post_voting(self, is_social_network: bool = False):
         print("FIRST PAST THE POST")
+        self.__reset_rankings()
         if is_social_network:
             self.social_network()
         winner_pk, loser_pk = self.__vote()
@@ -125,6 +129,7 @@ class Election:
 
     def ranked_choice_voting(self, is_social_network: bool = False):
         print("RANKED CHOICE")
+        self.__reset_rankings()
         for _ in range(self.candidate_count - 1):
             if is_social_network:
                 self.social_network()

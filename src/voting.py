@@ -77,30 +77,51 @@ class Election:
             return self.ranked_candidates[0]["pk"]
 
         def social_network_vote(self):
-            connections_vote_information = self.__get_connections_vote_information()
+            connections_vote_information, connection_count = self.__get_connections_vote_information()
             if len(connections_vote_information) == 0:
                 return self.vote()
-            candidates_information = self.__get_candidates_information(connections_vote_information)
-            sorted_candidates_information = {
-                "vote_count": sorted(candidates_information,
+            connections_candidates_information = self.__get_candidates_information(connections_vote_information)
+            sorted_connections_candidates_information = {
+                "vote_count": sorted(connections_candidates_information,
                                      key=lambda candidate: candidate["vote_count"],
                                      reverse=True),
-                "average_score": sorted(candidates_information,
+                "average_score": sorted(connections_candidates_information,
                                         key=lambda candidate: candidate[
                                             "average_score"],
                                         reverse=True),
-                "average_place": sorted(candidates_information,
+                "average_place": sorted(connections_candidates_information,
                                         key=lambda candidate: candidate[
                                             "average_place"])
             }
-            return self.__get_social_vote(sorted_candidates_information)
+            return self.__get_social_vote(sorted_connections_candidates_information, connection_count)
 
-        def __get_social_vote(self, sorted_candidates_information):
+        def __get_social_vote(self, sorted_connections_candidates_information, connection_count):
             # I want to vote for the candidate that has the highest average score and the lowest average place
             # I also want to vote for the candidate that has the most votes because that candidate is more likely to win
             # I also want to vote for someone that I am okay with winning
             vote_pk = self.vote()
+            if sorted_connections_candidates_information["vote_count"][0]["pk"] == vote_pk:
+                vote_pk = sorted_connections_candidates_information["vote_count"][0]["pk"]
+            elif sorted_connections_candidates_information["average_score"][0]["pk"] == vote_pk:
+                vote_pk = sorted_connections_candidates_information["average_place"][0]["pk"]
+            elif sorted_connections_candidates_information["average_place"][0]["pk"] == vote_pk:
+                vote_pk = sorted_connections_candidates_information["average_place"][0]["pk"]
+            else:
+                vote_pk = self.__get_candidate_im_ok_with(connection_count, sorted_connections_candidates_information, vote_pk)
+            return vote_pk
 
+        def __get_candidate_im_ok_with(self, connection_count, sorted_connections_candidates_information, vote_pk):
+            average_score = 0
+            for candidate in self.ranked_candidates:
+                average_score += candidate["score"]
+            average_score /= len(self.ranked_candidates)
+            for candidate in sorted_connections_candidates_information["vote_count"]:
+                is_likely_to_win = candidate["vote_count"] >= connection_count / 2
+                i_am_ok_with_this_candidate = candidate["average_score"] >= average_score
+                everyone_else_is_ok_with_this_candidate = candidate["average_score"] >= average_score
+                if is_likely_to_win and i_am_ok_with_this_candidate and everyone_else_is_ok_with_this_candidate:
+                    vote_pk = candidate["pk"]
+                    break
             return vote_pk
 
         def __get_candidates_information(self, connections_vote_information):
@@ -151,8 +172,10 @@ class Election:
 
         def __get_connections_vote_information(self):
             connection_votes = []
+            connection_count = 0
             for pk, connection in enumerate(self.connections):
                 if connection == 1:
+                    connection_count += 1
                     connection_votes.append({
                         "pk": pk,
                         "name": self.election.voters[pk].name,
@@ -161,7 +184,7 @@ class Election:
                         "vote_score": self.election.voters[pk].ranked_candidates[0]["score"],
                         "vote_place": self.election.voters[pk].ranked_candidates[0]["place"]
                     })
-            return connection_votes
+            return connection_votes, connection_count
 
         def remove_candidate(self, candidate_pk: int):
             for candidate in self.ranked_candidates:

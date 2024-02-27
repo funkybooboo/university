@@ -8,11 +8,11 @@ from numpy import random
 
 def main():
     Election.simulation(20, 5, 1052, True)
-    Election.simulation(100, 5, 1052)
-    Election.simulation(1_000, 5, 1052)
-    Election.simulation(10_000, 5, 1052)
-    Election.simulation(100_000, 5, 1052)
-    Election.simulation(1_000_000, 5, 1052)
+    # Election.simulation(100, 5, 1052)
+    # Election.simulation(1_000, 5, 1052)
+    # Election.simulation(10_000, 5, 1052)
+    # Election.simulation(100_000, 5, 1052)
+    # Election.simulation(1_000_000, 5, 1052)
 
 
 class Election:
@@ -77,25 +77,31 @@ class Election:
             return self.ranked_candidates[0]["pk"]
 
         def social_network_vote(self):
-            # How should the voter use the knowledge about other voters:
-            # a. Everyone else seems to like my last choice. There is no reason to change my vote.
-            # b. The other voters are split. Several like my second choice and several like my third choice.
-            #  Changing my vote to my second choice would give them a better chance of winning. My first
-            #  choice seems to have no chance.
-            # c. Other ideas?
             connections_vote_information = self.__get_connections_vote_information()
             if len(connections_vote_information) == 0:
-                return self.ranked_candidates[0]["pk"]
-            return self.__get_my_vote(connections_vote_information)
-
-        def __get_my_vote(self, connections_vote_information):
-            my_vote = self.ranked_candidates[0]["pk"]
+                return self.vote()
             candidates_information = self.__get_candidates_information(connections_vote_information)
+            sorted_candidates_information = {
+                "vote_count": sorted(candidates_information,
+                                     key=lambda candidate: candidate["vote_count"],
+                                     reverse=True),
+                "average_score": sorted(candidates_information,
+                                        key=lambda candidate: candidate[
+                                            "average_score"],
+                                        reverse=True),
+                "average_place": sorted(candidates_information,
+                                        key=lambda candidate: candidate[
+                                            "average_place"])
+            }
+            return self.__get_social_vote(sorted_candidates_information)
+
+        def __get_social_vote(self, sorted_candidates_information):
             # I want to vote for the candidate that has the highest average score and the lowest average place
             # I also want to vote for the candidate that has the most votes because that candidate is more likely to win
-            # I want to vote for someone that I am okay with winning
+            # I also want to vote for someone that I am okay with winning
+            vote_pk = self.vote()
 
-            return my_vote
+            return vote_pk
 
         def __get_candidates_information(self, connections_vote_information):
             candidates_information = []
@@ -117,6 +123,8 @@ class Election:
                 if vote["vote_pk"] == candidate_pk:
                     place_sum += vote["vote_place"]
                     vote_count += 1
+            if vote_count == 0:
+                return 0
             return place_sum / vote_count
 
         @staticmethod
@@ -127,6 +135,8 @@ class Election:
                 if vote["vote_pk"] == candidate_pk:
                     score_sum += vote["vote_score"]
                     vote_count += 1
+            if vote_count == 0:
+                return 0
             return score_sum / vote_count
 
         @staticmethod
@@ -135,6 +145,8 @@ class Election:
             for vote in connections_vote_information:
                 if vote["vote_pk"] == candidate_pk:
                     vote_count += 1
+            if vote_count == 0:
+                return 0
             return vote_count
 
         def __get_connections_vote_information(self):

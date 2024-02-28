@@ -86,12 +86,10 @@ class Election:
                                      key=lambda candidate: candidate["vote_count"],
                                      reverse=True),
                 "average_score": sorted(connections_candidates_information,
-                                        key=lambda candidate: candidate[
-                                            "average_score"],
+                                        key=lambda candidate: candidate["average_score"],
                                         reverse=True),
                 "average_place": sorted(connections_candidates_information,
-                                        key=lambda candidate: candidate[
-                                            "average_place"])
+                                        key=lambda candidate: candidate["average_place"])
             }
             return self.__get_social_vote(sorted_connections_candidates_information, connection_count)
 
@@ -101,7 +99,7 @@ class Election:
             # I also want to vote for someone that I am okay with winning
             vote_pk = self.vote()
             if sorted_connections_candidates_information["vote_count"][0]["pk"] == vote_pk:
-                vote_pk = sorted_connections_candidates_information["vote_count"][0]["pk"]
+                vote_pk = sorted_connections_candidates_information["their_vote_count"][0]["pk"]
             elif sorted_connections_candidates_information["average_score"][0]["pk"] == vote_pk:
                 vote_pk = sorted_connections_candidates_information["average_place"][0]["pk"]
             elif sorted_connections_candidates_information["average_place"][0]["pk"] == vote_pk:
@@ -111,18 +109,31 @@ class Election:
             return vote_pk
 
         def __get_candidate_im_ok_with(self, connection_count, sorted_connections_candidates_information, vote_pk):
-            average_score = 0
-            for candidate in self.ranked_candidates:
-                average_score += candidate["score"]
-            average_score /= len(self.ranked_candidates)
+            my_average_score = self.__get_my_average_score()
             for candidate in sorted_connections_candidates_information["vote_count"]:
+                my_score, my_place = self.__get_how_i_feel_about_candidate(candidate["pk"])
+                if my_score is None or my_place is None:
+                    # I don't know about this candidate
+                    continue
                 is_likely_to_win = candidate["vote_count"] >= connection_count / 2
-                i_am_ok_with_this_candidate = candidate["average_score"] >= average_score
-                everyone_else_is_ok_with_this_candidate = candidate["average_score"] >= average_score
-                if is_likely_to_win and i_am_ok_with_this_candidate and everyone_else_is_ok_with_this_candidate:
+                they_like_them_as_much_as_me = candidate["average_score"] >= my_average_score and candidate["average_place"] <= self.election.candidate_count / 2
+                i_am_ok_with_them_winning = my_score >= my_average_score and my_place <= self.election.candidate_count / 2
+                if is_likely_to_win and i_am_ok_with_them_winning and they_like_them_as_much_as_me:
                     vote_pk = candidate["pk"]
                     break
             return vote_pk
+
+        def __get_my_average_score(self):
+            my_average_score = 0
+            for candidate in self.ranked_candidates:
+                my_average_score += candidate["score"]
+            return my_average_score / len(self.ranked_candidates)
+
+        def __get_how_i_feel_about_candidate(self, candidate_pk):
+            for candidate in self.ranked_candidates:
+                if candidate["pk"] == candidate_pk:
+                    return candidate["score"], candidate["place"]
+            return None, None
 
         def __get_candidates_information(self, connections_vote_information):
             candidates_information = []

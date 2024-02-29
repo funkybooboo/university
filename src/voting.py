@@ -7,12 +7,11 @@ from numpy import random
 
 
 def main():
+    Election.simulation(10, 5, 1052, True)
     Election.simulation(20, 5, 1052, True)
-    # Election.simulation(100, 5, 1052)
-    # Election.simulation(1_000, 5, 1052)
-    # Election.simulation(10_000, 5, 1052)
-    # Election.simulation(100_000, 5, 1052)
-    # Election.simulation(1_000_000, 5, 1052)
+    Election.simulation(30, 5, 1053)
+    Election.simulation(40, 5, 1053)
+    Election.simulation(50, 5, 1053)
 
 
 class Election:
@@ -79,6 +78,7 @@ class Election:
         def social_network_vote(self):
             connections_vote_information, connection_count = self.__get_connections_vote_information()
             if len(connections_vote_information) == 0:
+                # I have no friends
                 return self.vote()
             connections_candidates_information = self.__get_candidates_information(connections_vote_information)
             sorted_connections_candidates_information = {
@@ -94,32 +94,32 @@ class Election:
             return self.__get_social_vote(sorted_connections_candidates_information, connection_count)
 
         def __get_social_vote(self, sorted_connections_candidates_information, connection_count):
-            # I want to vote for the candidate that has the highest average score and the lowest average place
-            # I also want to vote for the candidate that has the most votes because that candidate is more likely to win
-            # I also want to vote for someone that I am okay with winning
             vote_pk = self.vote()
             if sorted_connections_candidates_information["vote_count"][0]["pk"] == vote_pk:
-                vote_pk = sorted_connections_candidates_information["their_vote_count"][0]["pk"]
+                vote_pk = sorted_connections_candidates_information["vote_count"][0]["pk"]
             elif sorted_connections_candidates_information["average_score"][0]["pk"] == vote_pk:
                 vote_pk = sorted_connections_candidates_information["average_place"][0]["pk"]
             elif sorted_connections_candidates_information["average_place"][0]["pk"] == vote_pk:
                 vote_pk = sorted_connections_candidates_information["average_place"][0]["pk"]
             else:
-                vote_pk = self.__get_candidate_im_ok_with(connection_count, sorted_connections_candidates_information, vote_pk)
+                vote_pk = self.__get_candidate_im_ok_with_and_is_likely_to_win(connection_count, sorted_connections_candidates_information, vote_pk)
             return vote_pk
 
-        def __get_candidate_im_ok_with(self, connection_count, sorted_connections_candidates_information, vote_pk):
+        def __get_candidate_im_ok_with_and_is_likely_to_win(self, connection_count, sorted_connections_candidates_information, vote_pk):
             my_average_score = self.__get_my_average_score()
             for candidate in sorted_connections_candidates_information["vote_count"]:
-                my_score, my_place = self.__get_how_i_feel_about_candidate(candidate["pk"])
-                if my_score is None or my_place is None:
-                    # I don't know about this candidate
-                    continue
                 is_likely_to_win = candidate["vote_count"] >= connection_count / 2
-                they_like_them_as_much_as_me = candidate["average_score"] >= my_average_score and candidate["average_place"] <= self.election.candidate_count / 2
-                i_am_ok_with_them_winning = my_score >= my_average_score and my_place <= self.election.candidate_count / 2
-                if is_likely_to_win and i_am_ok_with_them_winning and they_like_them_as_much_as_me:
-                    vote_pk = candidate["pk"]
+                if is_likely_to_win:
+                    my_score, my_place = self.__get_how_i_feel_about_candidate(candidate["pk"])
+                    if my_score is None or my_place is None:
+                        # I don't know about this candidate
+                        continue
+                    i_am_ok_with_them_winning = my_score >= my_average_score and my_place <= (self.election.candidate_count / 2) + 1
+                    if i_am_ok_with_them_winning:
+                        vote_pk = candidate["pk"]
+                        break
+                else:
+                    # They are not likely to win
                     break
             return vote_pk
 
@@ -246,7 +246,6 @@ class Election:
             voter.rest_ranked_candidates()
 
     def first_past_the_post_voting(self, is_social_network: bool):
-        print("FIRST PAST THE POST")
         self.__reset_candidates()
         if is_social_network:
             winner_pk, loser_pk = self.__social_network_vote()
@@ -255,8 +254,18 @@ class Election:
         print("WINNER:", winner_pk)
         self.__voter_welfare(winner_pk)
 
+    def borda_voting(self):
+        self.__reset_candidates()
+        points = [i + 1 for i in range(self.candidate_count)]
+        candidate_points = [0 for _ in range(self.candidate_count)]
+        for voter in self.voters:
+            for candidate in voter.ranked_candidates:
+                candidate_points[candidate["pk"]] += points[candidate["place"]]
+        winner_pk = candidate_points.index(max(candidate_points))
+        print("WINNER:", winner_pk)
+        self.__voter_welfare(winner_pk)
+
     def ranked_choice_voting(self, is_social_network: bool):
-        print("RANKED CHOICE")
         self.__reset_candidates()
         for _ in range(self.candidate_count - 1):
             if is_social_network:
@@ -303,14 +312,22 @@ class Election:
         print()
         election.statistics()
         print()
+        print("FIRST PAST THE POST VOTING")
         election.first_past_the_post_voting(False)
         print()
+        print("RANKED CHOICE VOTING")
         election.ranked_choice_voting(False)
         print()
+        print("FIRST PAST THE POST VOTING SOCIAL NETWORK")
         election.first_past_the_post_voting(True)
         print()
+        print("RANKED CHOICE VOTING SOCIAL NETWORK")
         election.ranked_choice_voting(True)
         print()
+        print("BORDA VOTING")
+        election.borda_voting()
+        print()
+        print("*" * 50)
 
 
 if __name__ == '__main__':

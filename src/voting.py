@@ -81,31 +81,24 @@ class Election:
                 # I have no friends
                 return self.vote()
             connections_candidates_information = self.__get_candidates_information(connections_vote_information)
-            sorted_connections_candidates_information = {
-                "vote_count": sorted(connections_candidates_information,
-                                     key=lambda candidate: candidate["vote_count"],
-                                     reverse=True),
-                "average_score": sorted(connections_candidates_information,
-                                        key=lambda candidate: candidate["average_score"],
-                                        reverse=True),
-                "average_place": sorted(connections_candidates_information,
-                                        key=lambda candidate: candidate["average_place"])
-            }
+            sorted_connections_candidates_information = sorted(connections_candidates_information,
+                                                               key=lambda candidate: candidate["vote_count"],
+                                                               reverse=True)
             return self.__get_social_vote(sorted_connections_candidates_information, connection_count)
 
         def __get_social_vote(self, sorted_connections_candidates_information, connection_count):
             vote_pk = self.vote()
-            if sorted_connections_candidates_information["vote_count"][0]["pk"] == vote_pk:
-                vote_pk = sorted_connections_candidates_information["vote_count"][0]["pk"]
-            elif sorted_connections_candidates_information["average_score"][0]["pk"] == vote_pk:
-                vote_pk = sorted_connections_candidates_information["average_place"][0]["pk"]
-            elif sorted_connections_candidates_information["average_place"][0]["pk"] == vote_pk:
-                vote_pk = sorted_connections_candidates_information["average_place"][0]["pk"]
+            # if the candidate I would like to for is the most popular among my friends, I will vote for them
+            if sorted_connections_candidates_information[0]["pk"] == vote_pk:
+                vote_pk = sorted_connections_candidates_information[0]["pk"]
             else:
-                vote_pk = self.__get_candidate_im_ok_with_and_is_likely_to_win(connection_count, sorted_connections_candidates_information, vote_pk)
+                vote_pk = self.__get_candidate_im_ok_with_and_is_likely_to_win(connection_count,
+                                                                               sorted_connections_candidates_information,
+                                                                               vote_pk)
             return vote_pk
 
-        def __get_candidate_im_ok_with_and_is_likely_to_win(self, connection_count, sorted_connections_candidates_information, vote_pk):
+        def __get_candidate_im_ok_with_and_is_likely_to_win(self, connection_count,
+                                                            sorted_connections_candidates_information, vote_pk):
             my_average_score = self.__get_my_average_score()
             for candidate in sorted_connections_candidates_information["vote_count"]:
                 is_likely_to_win = candidate["vote_count"] >= connection_count / 2
@@ -114,12 +107,14 @@ class Election:
                     if my_score is None or my_place is None:
                         # I don't know about this candidate
                         continue
-                    i_am_ok_with_them_winning = my_score >= my_average_score and my_place <= (self.election.candidate_count / 2) + 1
+                    # I define "ok with them winning" as having a score greater than or equal to my average score and being in the top half of my candidate rankings
+                    i_am_ok_with_them_winning = my_score >= my_average_score and my_place <= (
+                                self.election.candidate_count / 2) + 1
                     if i_am_ok_with_them_winning:
                         vote_pk = candidate["pk"]
                         break
                 else:
-                    # They are not likely to win
+                    # They are not likely to win, and because the candidates are sorted by vote count, no one else is likely to win either
                     break
             return vote_pk
 

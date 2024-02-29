@@ -107,9 +107,25 @@ class Election:
                     if my_score is None or my_place is None:
                         # I don't know about this candidate
                         continue
-                    # I define "ok with them winning" as having a score greater than or equal to my average score and being in the top half of my candidate rankings
-                    i_am_ok_with_them_winning = my_score >= my_average_score and my_place <= (
-                                self.election.candidate_count / 2) + 1
+
+                    # Talking to a couple of people about how they would define "ok with winning" and I got a couple different answers:
+                    # - "I would be ok with them winning if they are in the top 3"
+                    # - "I would be ok with them winning if they are in the top 50%" and "I would be ok with them winning if they are in the top 25%"
+                    # it seems like the consensus is that they would be ok with them winning if they are in the top half or top quarter
+
+                    # I defined "likely to win" as my score for this candidate being greater than or equal to my average score,
+                    # I think this is a good way to define it because of some examples I thought of
+                    # - If there are 3 candidates and I gave the following scores: first got 10, second got 9.9, and the third got 9.8 then my average score is 9.9.
+                    # That means I am ok with the first or second winning.
+                    # I think this makes sense because I generally liked everyone running, so anyone winning is ok with me.
+                    # - If there are 5 candidates and I gave the following scores: first got 10, second got 1, and the rest got 0 then my average score is 2.2.
+                    # That means I am ok with only the first winning, and I am ok with a candidate winning if they have at least a score of 2.2.
+                    # I think the reason why such a low score makes sense is that because I generally hated everyone running, they all brought my standards down.
+
+                    # I don't care about the placement of the candidates, I only care about the scores because of those examples
+                    # Better than average makes sense to me because if they are better than average, then they have to be alright.
+
+                    i_am_ok_with_them_winning = my_score >= my_average_score
                     if i_am_ok_with_them_winning:
                         vote_pk = candidate["pk"]
                         break
@@ -231,10 +247,21 @@ class Election:
             voter.remove_candidate(candidate_pk)
 
     def __voter_welfare(self, winner_pk: int):
+        average_cu = 0
+        average_ou = 0
         for voter in self.voters:
             print(f"{voter.name}")
-            print(f"\tCardinal Utility: {voter.cardinal_utility(winner_pk)}")
-            print(f"\tOrdinal Utility: {voter.ordinal_utility(winner_pk)}")
+            cu = voter.cardinal_utility(winner_pk)
+            print(f"\tCardinal Utility: {cu}")
+            ou = voter.ordinal_utility(winner_pk)
+            print(f"\tOrdinal Utility: {ou}")
+            average_cu += cu
+            average_ou += ou
+        average_cu /= len(self.voters)
+        average_ou /= len(self.voters)
+        print(f"AVERAGE CARDINAL UTILITY: {average_cu}")
+        print(f"AVERAGE ORDINAL UTILITY: {average_ou}")
+        return average_cu, average_ou
 
     def __reset_candidates(self):
         for voter in self.voters:
@@ -247,7 +274,8 @@ class Election:
         else:
             winner_pk, loser_pk = self.__vote()
         print("WINNER:", winner_pk)
-        self.__voter_welfare(winner_pk)
+        average_cu, average_ou = self.__voter_welfare(winner_pk)
+        return winner_pk
 
     def borda_voting(self):
         self.__reset_candidates()
@@ -258,7 +286,8 @@ class Election:
                 candidate_points[candidate["pk"]] += points[candidate["place"]]
         winner_pk = candidate_points.index(max(candidate_points))
         print("WINNER:", winner_pk)
-        self.__voter_welfare(winner_pk)
+        average_cu, average_ou = self.__voter_welfare(winner_pk)
+        return winner_pk
 
     def ranked_choice_voting(self, is_social_network: bool):
         self.__reset_candidates()
@@ -270,14 +299,15 @@ class Election:
             if self.verbose:
                 print(f"ROUND WINNER: Candidate{winner_pk}")
                 print(f"ROUND LOSER: Candidate{loser_pk}")
-                self.__voter_welfare(winner_pk)
+                average_cu, average_ou = self.__voter_welfare(winner_pk)
             self.__remove_candidate(loser_pk)
         if is_social_network:
             winner_pk, loser_pk = self.__social_network_vote()
         else:
             winner_pk, loser_pk = self.__vote()
         print(f"WINNER: Candidate{winner_pk}")
-        self.__voter_welfare(winner_pk)
+        average_cu, average_ou = self.__voter_welfare(winner_pk)
+        return winner_pk
 
     def __vote(self):
         votes = [0 for _ in range(self.candidate_count)]
@@ -308,20 +338,71 @@ class Election:
         election.statistics()
         print()
         print("FIRST PAST THE POST VOTING")
-        election.first_past_the_post_voting(False)
+        winner_pk_fptp = election.first_past_the_post_voting(False)
         print()
         print("RANKED CHOICE VOTING")
-        election.ranked_choice_voting(False)
+        winner_pk_rc = election.ranked_choice_voting(False)
         print()
         print("FIRST PAST THE POST VOTING SOCIAL NETWORK")
-        election.first_past_the_post_voting(True)
+        winner_pk_fptpn = election.first_past_the_post_voting(True)
         print()
         print("RANKED CHOICE VOTING SOCIAL NETWORK")
-        election.ranked_choice_voting(True)
+        winner_pk_rcn = election.ranked_choice_voting(True)
         print()
         print("BORDA VOTING")
-        election.borda_voting()
+        winner_pk_b = election.borda_voting()
         print()
+        print("Comparing Voting Methods")
+        print(f"FIRST PAST THE POST VOTING: {winner_pk_fptp}")
+        print(f"RANKED CHOICE VOTING: {winner_pk_rc}")
+        print(f"FIRST PAST THE POST VOTING SOCIAL NETWORK: {winner_pk_fptpn}")
+        print(f"RANKED CHOICE VOTING SOCIAL NETWORK: {winner_pk_rcn}")
+        print(f"BORDA VOTING: {winner_pk_b}")
+        average_cu_fptp, average_ou_fptp = election.__voter_welfare(winner_pk_fptp)
+        average_cu_rc, average_ou_rc = election.__voter_welfare(winner_pk_rc)
+        average_cu_fptpn, average_ou_fptpn = election.__voter_welfare(winner_pk_fptpn)
+        average_cu_rcn, average_ou_rcn = election.__voter_welfare(winner_pk_rcn)
+        average_cu_b, average_ou_b = election.__voter_welfare(winner_pk_b)
+        print()
+        print("AVERAGE CARDINAL UTILITY")
+        print(f"FIRST PAST THE POST VOTING: {average_cu_fptp}")
+        print(f"RANKED CHOICE VOTING: {average_cu_rc}")
+        print(f"FIRST PAST THE POST VOTING SOCIAL NETWORK: {average_cu_fptpn}")
+        print(f"RANKED CHOICE VOTING SOCIAL NETWORK: {average_cu_rcn}")
+        print(f"BORDA VOTING: {average_cu_b}")
+        print()
+        print("AVERAGE ORDINAL UTILITY")
+        print(f"FIRST PAST THE POST VOTING: {average_ou_fptp}")
+        print(f"RANKED CHOICE VOTING: {average_ou_rc}")
+        print(f"FIRST PAST THE POST VOTING SOCIAL NETWORK: {average_ou_fptpn}")
+        print(f"RANKED CHOICE VOTING SOCIAL NETWORK: {average_ou_rcn}")
+        print(f"BORDA VOTING: {average_ou_b}")
+        print()
+        print("WHAT SYSTEM IS BEST?")
+        # lower is better
+        print("CARDINAL UTILITY")
+        systems = [
+            ("FIRST PAST THE POST VOTING", average_cu_fptp),
+            ("RANKED CHOICE VOTING", average_cu_rc),
+            ("FIRST PAST THE POST VOTING SOCIAL NETWORK", average_cu_fptpn),
+            ("RANKED CHOICE VOTING SOCIAL NETWORK", average_cu_rcn),
+            ("BORDA VOTING", average_cu_b)
+        ]
+        systems = sorted(systems, key=lambda system: system[1])
+        for system in systems:
+            print(f"{system[0]}: {system[1]}")
+        # lower is better
+        print("ORDINAL UTILITY")
+        systems = [
+            ("FIRST PAST THE POST VOTING", average_ou_fptp),
+            ("RANKED CHOICE VOTING", average_ou_rc),
+            ("FIRST PAST THE POST VOTING SOCIAL NETWORK", average_ou_fptpn),
+            ("RANKED CHOICE VOTING SOCIAL NETWORK", average_ou_rcn),
+            ("BORDA VOTING", average_ou_b)
+        ]
+        systems = sorted(systems, key=lambda system: system[1])
+        for system in systems:
+            print(f"{system[0]}: {system[1]}")
         print("*" * 50)
 
 

@@ -58,7 +58,11 @@ class Election:
             return candidates
 
         def print_connections(self):
-            print(f"{self.name}  {self.connections}")
+            connections = []
+            for pk, connection in enumerate(self.connections):
+                if connection == 1:
+                    connections.append(self.election.voters[pk].name)
+            print(f"{self.name}: {connections}")
 
         def print_rankings(self):
             print(f"First choice for {self.name} is {self.ranked_candidates[0]['name']}")
@@ -100,7 +104,7 @@ class Election:
         def __get_candidate_im_ok_with_and_is_likely_to_win(self, connection_count,
                                                             sorted_connections_candidates_information, vote_pk):
             my_average_score = self.__get_my_average_score()
-            for candidate in sorted_connections_candidates_information["vote_count"]:
+            for candidate in sorted_connections_candidates_information:
                 is_likely_to_win = candidate["vote_count"] >= connection_count / 2
                 if is_likely_to_win:
                     my_score, my_place = self.__get_how_i_feel_about_candidate(candidate["pk"])
@@ -229,6 +233,7 @@ class Election:
 
     def statistics(self):
         if self.verbose:
+            print("STATISTICS")
             self.__print_connections()
             self.__print_rankings()
 
@@ -246,21 +251,20 @@ class Election:
         for voter in self.voters:
             voter.remove_candidate(candidate_pk)
 
-    def __voter_welfare(self, winner_pk: int):
+    def __voter_welfare(self, winner_pk: int, is_printing: bool = True):
         average_cu = 0
         average_ou = 0
         for voter in self.voters:
-            print(f"{voter.name}")
             cu = voter.cardinal_utility(winner_pk)
-            print(f"\tCardinal Utility: {cu}")
             ou = voter.ordinal_utility(winner_pk)
-            print(f"\tOrdinal Utility: {ou}")
+            if is_printing and self.verbose:
+                print(f"{voter.name}")
+                print(f"\tCardinal Utility: {cu}")
+                print(f"\tOrdinal Utility: {ou}")
             average_cu += cu
             average_ou += ou
         average_cu /= len(self.voters)
         average_ou /= len(self.voters)
-        print(f"AVERAGE CARDINAL UTILITY: {average_cu}")
-        print(f"AVERAGE ORDINAL UTILITY: {average_ou}")
         return average_cu, average_ou
 
     def __reset_candidates(self):
@@ -275,6 +279,8 @@ class Election:
             winner_pk, loser_pk = self.__vote()
         print("WINNER:", winner_pk)
         average_cu, average_ou = self.__voter_welfare(winner_pk)
+        print("AVERAGE CARDINAL UTILITY:", average_cu)
+        print("AVERAGE ORDINAL UTILITY:", average_ou)
         return winner_pk
 
     def borda_voting(self):
@@ -287,6 +293,8 @@ class Election:
         winner_pk = candidate_points.index(max(candidate_points))
         print("WINNER:", winner_pk)
         average_cu, average_ou = self.__voter_welfare(winner_pk)
+        print("AVERAGE CARDINAL UTILITY:", average_cu)
+        print("AVERAGE ORDINAL UTILITY:", average_ou)
         return winner_pk
 
     def ranked_choice_voting(self, is_social_network: bool):
@@ -300,13 +308,15 @@ class Election:
                 print(f"ROUND WINNER: Candidate{winner_pk}")
                 print(f"ROUND LOSER: Candidate{loser_pk}")
                 average_cu, average_ou = self.__voter_welfare(winner_pk)
+                print("AVERAGE CARDINAL UTILITY:", average_cu)
+                print("AVERAGE ORDINAL UTILITY:", average_ou)
             self.__remove_candidate(loser_pk)
         if is_social_network:
             winner_pk, loser_pk = self.__social_network_vote()
         else:
             winner_pk, loser_pk = self.__vote()
         print(f"WINNER: Candidate{winner_pk}")
-        average_cu, average_ou = self.__voter_welfare(winner_pk)
+        self.__voter_welfare(winner_pk)
         return winner_pk
 
     def __vote(self):
@@ -352,17 +362,17 @@ class Election:
         print("BORDA VOTING")
         winner_pk_b = election.borda_voting()
         print()
-        print("Comparing Voting Methods")
-        print(f"FIRST PAST THE POST VOTING: {winner_pk_fptp}")
-        print(f"RANKED CHOICE VOTING: {winner_pk_rc}")
-        print(f"FIRST PAST THE POST VOTING SOCIAL NETWORK: {winner_pk_fptpn}")
-        print(f"RANKED CHOICE VOTING SOCIAL NETWORK: {winner_pk_rcn}")
-        print(f"BORDA VOTING: {winner_pk_b}")
-        average_cu_fptp, average_ou_fptp = election.__voter_welfare(winner_pk_fptp)
-        average_cu_rc, average_ou_rc = election.__voter_welfare(winner_pk_rc)
-        average_cu_fptpn, average_ou_fptpn = election.__voter_welfare(winner_pk_fptpn)
-        average_cu_rcn, average_ou_rcn = election.__voter_welfare(winner_pk_rcn)
-        average_cu_b, average_ou_b = election.__voter_welfare(winner_pk_b)
+        print("--Comparing Voting Methods--")
+        print(f"FIRST PAST THE POST VOTING WINNER: Candidate{winner_pk_fptp}")
+        print(f"RANKED CHOICE VOTING WINNER: Candidate{winner_pk_rc}")
+        print(f"FIRST PAST THE POST VOTING SOCIAL NETWORK WINNER: Candidate{winner_pk_fptpn}")
+        print(f"RANKED CHOICE VOTING SOCIAL NETWORK WINNER: Candidate{winner_pk_rcn}")
+        print(f"BORDA VOTING WINNER: Candidate{winner_pk_b}")
+        average_cu_fptp, average_ou_fptp = election.__voter_welfare(winner_pk_fptp, False)
+        average_cu_rc, average_ou_rc = election.__voter_welfare(winner_pk_rc, False,)
+        average_cu_fptpn, average_ou_fptpn = election.__voter_welfare(winner_pk_fptpn, False)
+        average_cu_rcn, average_ou_rcn = election.__voter_welfare(winner_pk_rcn, False)
+        average_cu_b, average_ou_b = election.__voter_welfare(winner_pk_b, False)
         print()
         print("AVERAGE CARDINAL UTILITY")
         print(f"FIRST PAST THE POST VOTING: {average_cu_fptp}")
@@ -378,32 +388,6 @@ class Election:
         print(f"RANKED CHOICE VOTING SOCIAL NETWORK: {average_ou_rcn}")
         print(f"BORDA VOTING: {average_ou_b}")
         print()
-        print("WHAT SYSTEM IS BEST?")
-        # lower is better
-        print("CARDINAL UTILITY")
-        systems = [
-            ("FIRST PAST THE POST VOTING", average_cu_fptp),
-            ("RANKED CHOICE VOTING", average_cu_rc),
-            ("FIRST PAST THE POST VOTING SOCIAL NETWORK", average_cu_fptpn),
-            ("RANKED CHOICE VOTING SOCIAL NETWORK", average_cu_rcn),
-            ("BORDA VOTING", average_cu_b)
-        ]
-        systems = sorted(systems, key=lambda system: system[1])
-        for system in systems:
-            print(f"{system[0]}: {system[1]}")
-        # lower is better
-        print("ORDINAL UTILITY")
-        systems = [
-            ("FIRST PAST THE POST VOTING", average_ou_fptp),
-            ("RANKED CHOICE VOTING", average_ou_rc),
-            ("FIRST PAST THE POST VOTING SOCIAL NETWORK", average_ou_fptpn),
-            ("RANKED CHOICE VOTING SOCIAL NETWORK", average_ou_rcn),
-            ("BORDA VOTING", average_ou_b)
-        ]
-        systems = sorted(systems, key=lambda system: system[1])
-        for system in systems:
-            print(f"{system[0]}: {system[1]}")
-        print("*" * 50)
 
 
 if __name__ == '__main__':

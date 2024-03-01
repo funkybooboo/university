@@ -93,7 +93,7 @@ class Election:
 
         def social_network_vote(self):
             connections_vote_information, connection_count = self.__get_connections_vote_information()
-            if len(connections_vote_information) == 0:
+            if connection_count == 0:
                 # I have no friends
                 return self.vote()
             connections_candidates_information = self.__get_candidates_information(connections_vote_information)
@@ -304,6 +304,7 @@ class Election:
     def borda_voting(self):
         self.__reset_candidates()
         points = [i + 1 for i in range(self.candidate_count)]
+        points = list(reversed(points))
         candidate_points = [0 for _ in range(self.candidate_count)]
         for voter in self.voters:
             for candidate in voter.ranked_candidates:

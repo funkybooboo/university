@@ -1,9 +1,12 @@
+import math
+
 
 def main():
-    function = lambda n : n ** 2
-    left = -10
-    right = 10
-    down = 10
+    #function = lambda n : round(math.factorial(n) / math.e) if n != 0 else 1
+    function = lambda n : math.factorial(n)
+    left = 0
+    right = 20
+    down = 20
     print_differance_table(get_differance_table(function, left, right, down))
 
 

@@ -1,0 +1,217 @@
+\documentclass[10pt, AMS Euler]{article}
+\textheight=9.25in \textwidth=7in \topmargin=-.75in
+\oddsidemargin=-0.25in
+\evensidemargin=-0.25in
+\usepackage{url}  % The bib file uses this
+\usepackage{graphicx} %to import pictures
+\usepackage{amsmath, amssymb, color, wasysym}
+\usepackage{theorem, concrete, multicol,tikz}
+\usepackage[normalem]{ulem} %for strikethrough (\sout{blah})
+\usepackage{enumitem}
+
+\setlength{\intextsep}{5mm} \setlength{\textfloatsep}{5mm}
+\setlength{\floatsep}{5mm}
+
+
+{\theorembodyfont{\rmfamily}
+	\newtheorem{definition}{Definition}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{example}{Example}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{lemma}{Lemma}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{theorem}{Theorem}[section]}
+{\theorembodyfont{\rmfamily} \newenvironment{proof}{\par{\it
+			Proof:}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+{\theorembodyfont{\rmfamily}
+	\newenvironment{solution}{\par{\bf{Solution:}}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\newcommand{\mymk}[1]{%
+	\tikz[baseline=(char.base)]\node[anchor=south west, draw,rectangle, rounded corners, inner sep=2pt, minimum size=7mm,
+	text height=2mm](char){\ensuremath{#1}} ;}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+%%%%  SHORTCUT COMMANDS  %%%%
+\newcommand{\ds}{\displaystyle}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\arc}{\rightarrow}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\stirling}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+
+%%%%  footnote style %%%%
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{empty}
+\begin{document}
+	
+	\noindent{\bf \large MATH 4410 }\\
+
+        Nate Stott A02386053 \\
+	
+	\noindent \underline{\hspace{2in}}\\
+	
+	{\bf Quiz \#4; Due 11:59 pm, 2/2/2024}\\
+
+        \newpage
+	\begin{enumerate}
+		\item Construct a (the) generating function for the sequence of odd positive integers; that is, construct a function $f(x)$ such that $f(x) = \sum_{n \geq 0}(2n+1)x^n$.
+        \end{enumerate}
+        Given 
+            $$ \sum_{n \geq 0} x^n = \frac{1}{1-x} = 1 + x + x^2 + x^3 + x^4 + x^5 + ... $$
+            $$ \sum_{n \geq 0} n x^n = \frac{x}{(1-x)^2}$$
+
+        Start
+        $$\sum_{n \geq 0}(2n+1)x^n = 1 + 3x + 5x^2 + 7x^3 + 9x^4 + 11x^5 + ... $$
+        $$ = \sum_{n \geq 0}(2nx^n+x^n) $$
+        $$ = \sum_{n \geq 0} 2nx^n + \sum_{n \geq 0} x^n $$
+        $$ = 2 \sum_{n \geq 0} nx^n + \frac{1}{1-x} $$
+        $$ = \frac{2x}{(1-x)^2} + \frac{1}{1-x} $$
+        $$ = \frac{2x}{(1-x)^2} + \frac{1-x}{(1-x)^2} $$
+        $$ = \frac{2x+1-x}{(1-x)^2} $$
+        $$ = \frac{x+1}{(1-x)^2} $$
+        End
+        $$ \sum_{n \geq 0}(2n+1)x^n = \frac{x+1}{(1-x)^2} $$
+
+        \newpage
+	\begin{enumerate}[resume]
+		\item Construct a (the) generating function $g(x)$ for the sequence $(a_n)_{n \geq 0}$, where $a_n = \ds \sum_{i = 0}^n(2i+1)$. 
+        \end{enumerate}
+
+        Given 
+        $$ \sum_{n \geq 0} x^n = \frac{1}{1-x} $$
+        $$ \sum_{n \geq 0} n x^n = \frac{x}{(1-x)^2} $$
+
+        Start
+        $$ g(x) = \sum_{n\geq0} ( \sum_{i=0}^n (2i+1) ) x^n = 1x^0 + 4x^1 + 9x^2 + 16x^3 + ... $$
+        $$ \sum_{i=0}^n (2i+1) = (n+1)^2 $$
+        $$ \sum_{n\geq0} ( \sum_{i=0}^n (2i+1) ) x^n = \sum_{n\geq0} (n+1)^2 x^n $$
+        $$ = \sum_{n\geq0} (n^2+2n+1) x^n $$
+        $$ = \sum_{n\geq0} n^2 x^n + 2 \sum_{n\geq0} n x^n + \sum_{n\geq0} x^n $$
+        $$ = \sum_{n\geq0} n^2 x^n + \frac{2x}{(1-x)^2} + \frac{1}{1-x} $$
+        $$ = \sum_{n\geq0} n^2 x^n + \frac{x+1}{(1-x)^2} $$
+        Focus 
+        $$ x^n = xx^{n-1} $$
+        $$ x \frac{d}{dx} (x^n) = x n x^{n-1} = n x^n $$ 
+        $$ x \frac{d}{dx} (x \frac{d}{dx} ( x^n ) ) = n^2 x^n $$
+        Back to it
+        $$ = \sum_{n\geq0} (x \frac{d}{dx} ( x \frac{d}{dx} (x^n))) + \frac{x+1}{(1-x)^2} $$
+        $$ = x \frac{d}{dx} ( x \frac{d}{dx} ( \sum_{n\geq0} (x^n) )) + \frac{x+1}{(1-x)^2} $$
+        $$ = x \frac{d}{dx} ( x \frac{d}{dx} ( \frac{1}{1-x} )) + \frac{x+1}{(1-x)^2} $$
+        $$ = \frac{x^2 + x}{(1-x)^3} + \frac{x+1}{(1-x)^2} $$
+        $$ = \frac{x^2 + x}{(1-x)^3} + \frac{x+1}{(1-x)^2} $$
+        $$ = \frac{x+1}{(1-x)^3} $$
+        End
+        $$ g(x) = \sum_{n\geq0} ( \sum_{i=0}^n (2i+1) ) x^n = \frac{x+1}{(1-x)^3} $$
+
+        
+        \newpage
+        \begin{enumerate}[resume]
+		\item From $g(x)$ found above, extract a formula for the coefficient on $x^n$, and verify that it is indeed $\ds\sum_{i=0}^n(2i+1)$.
+        \end{enumerate}
+
+        Start
+        $$ \frac{x+1}{(1-x)^3} = \frac{A}{(1-x)} + \frac{B}{(1-x)^2} + \frac{C}{(1-x)^3} $$
+        I could write down the math but ...  $A = 0$, $B=-1$, $C=2$
+        $$ \frac{x+1}{(1-x)^3} = \frac{-1}{(1-x)^2} + \frac{2}{(1-x)^3} $$
+        $$ = - (\frac{1}{(1-x)^2}) + 2 (\frac{1}{(1-x)^3}) $$
+        Using FGF2 to get back to the summations
+        $$ \frac{1}{(1-x)^k} = \sum_{n\geq0} \binom{n+k-1}{n} x^n $$
+        $$ = - ( \sum_{n\geq0} (1+n) x^n ) + 2 ( \sum_{n\geq0} \frac{1}{2} (1+n)(2+n) x^n ) $$
+        $$ = - ( \sum_{n\geq0} (1+n) x^n ) + ( \sum_{n\geq0} (1+n)(2+n) x^n ) $$
+        Here is the part where I turn the summations into functions that give me $a_n$
+        $$ a_n = - (1+n) + (1+n)(2+n)  $$
+        $$ a_n = n^2 + 2n + 1  $$
+        End \\
+        Checked for n = 0, 1, 2, 3
+
+        \newpage
+	\begin{enumerate}[resume]
+		\item Construct a generating function for $(b_n)_{n \geq 0}$, where $b_n = \ds \sum_{i=0}^n i^2$, and obtain a closed formula for $b_n$ from the generating function. 
+	\end{enumerate}
+
+        Start
+        $$ g(x) = \sum_{n\geq0} (\sum_{i=0}^n (i^2) x^n) $$
+        $$ f(n) = \sum_{i=0}^n (i^2) $$
+        $$ \Delta f(n) = (n+1)^2 $$
+        Back to the Discrete Taylor Theorem
+        $$f(n)=\sum_{k \geq 0}\Delta^{(k)}f(a)\ds\binom{n-a}{k}$$
+        \begin{center}
+                \begin{tabular}{l|ccccccccc}
+                    {\bf $n$ } & 0 & 1 & 2 & 3 & 4 & 5 & 6 & \\
+                    \hline
+                    {$\Delta^{(0)} f(n)$} & 0 & 1 & 5 & 14 & 30 & 55 & 91 & \\
+                    {$\Delta^{(1)} f(n)$} & 1 & 4 & 9 & 16 & 25 & 36 & \\
+                    {$\Delta^{(2)} f(n)$} & 3 & 5 & 7 & 9 & 11 & \\
+                    {$\Delta^{(3)} f(n)$} & 2 & 2 & 2 & 2 & \\
+                    {$\Delta^{(4)} f(n)$} & 0 & 0 & 0 & \\
+                \end{tabular}
+            \end{center}
+        Let $a=0$
+        $$ f(n) = 0 \binom{n}{0} + 1 \binom{n}{1} + 3 \binom{n}{2} + 2 \binom{n}{3} + 0 \binom{n}{4} + ... $$
+        $$ f(n) = 1 \binom{n}{1} + 3 \binom{n}{2} + 2 \binom{n}{3} $$
+        Let use this $\binom{n}{k} = \frac{n^{\underline{k}}}{k!}$
+        $$ f(n) = 1 \frac{n^{\underline{1}}}{1!} + 3 \frac{n^{\underline{2}}}{2!} + 2 \frac{n^{\underline{3}}}{3!} $$
+        $$ f(n) = n + 3 \frac{n(n-1)}{2} + 2 \frac{n(n-1)(n-2)}{6} $$
+        $$ f(n) = n + \frac{3n^2-3n}{2}  + \frac{(n^2-n)(n-2)}{3} $$
+        $$ f(n) = n + \frac{3n^2-3n}{2}  + \frac{n^3-3n^2+2n}{3} $$
+        $$ f(n) = \frac{6n}{6} + \frac{3(3n^2-3n)}{6}  + \frac{2(n^3-3n^2+2n)}{6} $$
+        $$ f(n) = \frac{6n + 9n^2-9n + 2n^3-6n^2+4n}{6} $$
+        $$ f(n) = \frac{2n^3 + 3n^2 + n}{6} $$
+        So
+        $$ f(n) = \sum_{i=0}^n (i^2) = \frac{2n^3 + 3n^2 + n}{6} $$
+        Checked for n = 0, 1, 2, 3 \\
+        Back to the point of all this,
+        $$ g(x) = \sum_{n\geq0} ( ( \frac{2n^3 + 3n^2 + n}{6} ) x^n ) $$
+        $$ g(x) = \frac{1}{6} \sum_{n\geq0} ( 2n^3 x^n + 3n^2 x^n + nx^n ) $$
+        $$ g(x) = \frac{1}{6} ( 2 (\sum_{n\geq0} n^3 x^n ) + 3 ( \sum_{n\geq0} n^2 x^n ) + \sum_{n\geq0} nx^n ) $$
+        I need to find
+        $$ \sum_{n\geq0} n^3 x^n $$
+        Focus
+        $$ n^3 x^n = x \frac{d}{dx} (x \frac{d}{dx} (x \frac{d}{dx} (x^n)) ) $$
+        So
+        $$ \sum_{n\geq0} n^3 x^n = \sum_{n\geq0} ( x \frac{d}{dx} (x \frac{d}{dx} (x \frac{d}{dx} (x^n)) ) ) $$
+        $$ \sum_{n\geq0} n^3 x^n = x \frac{d}{dx} (x \frac{d}{dx} (x \frac{d}{dx} ( \sum_{n\geq0} x^n)) ) $$
+	$$ \sum_{n\geq0} n^3 x^n = \frac{(x^3+4x^2+x)}{(1-x)^4} $$
+	Alright
+        $$ \sum_{n \geq 0} x^n = \frac{1}{1-x} $$
+        $$ \sum_{n \geq 0} n x^n = \frac{x}{(1-x)^2} $$
+        $$ \sum_{n \geq 0} n^2 x^n = \frac{x^2 + x}{(1-x)^3} $$ 
+        $$ \sum_{n\geq0} n^3 x^n = \frac{(x^3+4x^2+x)}{(1-x)^4} $$
+        Back to the point
+        $$ g(x) = \frac{1}{6} ( 2 (\frac{(x^3+4x^2+x)}{(1-x)^4} ) + 3 ( \frac{x^2 + x}{(1-x)^3} ) + \frac{x}{(1-x)^2} ) $$
+        $$ g(x) = \frac{1}{6} ( 2 (\frac{(x^3+4x^2+x)}{(1-x)^4} ) + 3 ( \frac{(x^2 + x)(1-x)}{(1-x)^3(1-x)} ) + \frac{x(1-x)^2}{(1-x)^2(1-x)^2} ) $$
+        $$ g(x) = \frac{1}{6} ( \frac{2x^3+8x^2+2x}{(1-x)^4} + \frac{3x-3x^3}{(1-x)^4} + \frac{x^3 - 2x^2 + x}{(1-x)^4} ) $$
+        $$ g(x) = \frac{1}{6} ( \frac{2x^3+8x^2+2x + 3x-3x^3 + x^3-2x^2+x}{(1-x)^4} ) $$
+        $$ g(x) = \frac{1}{6} ( \frac{ 6x^2 + 6x }{(1-x)^4} ) $$
+        $$ g(x) = \frac{ x^2 + x }{(1-x)^4} $$
+        Ok so the generating function is
+        $$ g(x) = \frac{ x^2 + x }{(1-x)^4} $$
+        Now it's time to get a closed formula for $b_n$ out of $g(x)$ \\
+        Partial fractions!
+        $$ g(x) = \frac{ x^2 + x }{(1-x)^4} = \frac{A}{(1-x)} + \frac{B}{(1-x)^2} + \frac{C}{(1-x)^3} + \frac{D}{(1-x)^4} $$
+        Here are the results $A=0$, $B=1$, $C=-3$, $D=2$
+        $$ g(x) = \frac{ x^2 + x }{(1-x)^4} = \frac{1}{(1-x)^2} - \frac{3}{(1-x)^3} + \frac{2}{(1-x)^4} $$
+        $$ = \frac{1}{(1-x)^2} -3 (\frac{1}{(1-x)^3}) + 2 (\frac{1}{(1-x)^4}) $$
+        Using FGF2 to get back to the summations,
+        $$ \frac{1}{(1-x)^k} = \sum_{n\geq0} \binom{n+k-1}{n} x^n $$
+        $$ = \sum_{n\geq0}((n+1)x^n) -3 (\sum_{n\geq0}(\frac{1}{2}(n+1)(n+2)x^n)) + 2 (\sum_{n\geq0}(\frac{1}{6}(n+1)(n+2)(n+3)x^n)) $$
+        Here is the part where I drop the summations and $x^n$
+        $$ b_n = (n+1) - \frac{3}{2}(n+1)(n+2) + \frac{1}{3}(n+1)(n+2)(n+3) $$
+        $$ b_n = \frac{n^3}{3} + \frac{n^2}{2} + \frac{n}{6} $$
+        And there is the closed form for $b_n$
+        $$ b_n = \frac{n^3}{3} + \frac{n^2}{2} + \frac{n}{6} $$
+        Checked for n = 0, 1, 2, 3
+        
+        
+ 
+	\noindent \underline{\hspace{3in}}\\
+	
+	
+	
+	
+\end{document}

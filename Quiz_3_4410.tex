@@ -1,0 +1,178 @@
+\documentclass[10pt, AMS Euler]{article}
+\textheight=9.25in \textwidth=7in \topmargin=-.75in
+\oddsidemargin=-0.25in
+\evensidemargin=-0.25in
+\usepackage{url}  % The bib file uses this
+\usepackage{graphicx} %to import pictures
+\usepackage{amsmath, amssymb, color, wasysym}
+\usepackage{theorem, concrete, multicol,tikz}
+\usepackage[normalem]{ulem} %for strikethrough (\sout{blah})
+\usepackage{enumitem}
+
+\setlength{\intextsep}{5mm} \setlength{\textfloatsep}{5mm}
+\setlength{\floatsep}{5mm}
+
+
+{\theorembodyfont{\rmfamily}
+	\newtheorem{definition}{Definition}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{example}{Example}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{lemma}{Lemma}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{theorem}{Theorem}[section]}
+{\theorembodyfont{\rmfamily} \newenvironment{proof}{\par{\it
+			Proof:}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+{\theorembodyfont{\rmfamily}
+	\newenvironment{solution}{\par{\bf{Solution:}}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\newcommand{\mymk}[1]{%
+	\tikz[baseline=(char.base)]\node[anchor=south west, draw,rectangle, rounded corners, inner sep=2pt, minimum size=7mm,
+	text height=2mm](char){\ensuremath{#1}} ;}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+%%%%  SHORTCUT COMMANDS  %%%%
+\newcommand{\ds}{\displaystyle}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\arc}{\rightarrow}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\stirling}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+
+%%%%  footnote style %%%%
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{empty}
+\begin{document}
+	
+	\noindent{\bf \large MATH 4410 }\\
+        Nate Stott A02386053
+	
+	\noindent \underline{\hspace{2in}}\\
+	
+	{\bf Quiz \#3; Due 11:59 pm, 1/24/2024}\\
+        
+
+        \newpage
+	\begin{enumerate}
+		
+		\item Find a closed formula for this recurrence:
+		\begin{align*} C_0 &= 0;\\ C_n &= n+1 + \frac{2}{n}\sum_{k=0}^{n-1}C_k, \;\;\;\; \mbox{for $n>0$.}\end{align*}
+        \end{enumerate}
+
+            Given
+                $$ a_n T_n = b_n T_{n-1} + c_n $$
+                $$ T_n = \frac{1}{s_n a_n} (s_0 a_0 T_0 + \sum_{k=1}^n s_k c_k)$$
+
+            (Got this idea from Katlyn in the class) Rewrite $C_n$ so that it's in the form, 
+                $$ a_n C_n = b_n C_{n-1} + c_n $$
+            \\ 
+            \\
+            Find $C_{n-1}$
+                $$ C_{n-1} = (n-1) + 1 + (\frac{2}{(n-1)}) \sum_{k=0}^{(n-1)-1} C_k $$
+                $$ = n + (\frac{2}{n-1}) \sum_{k=0}^{n-2} C_k $$
+            Ok, so I need to get $n + (\frac{2}{n-1}) \sum_{k=0}^{n-2} C_k$ in $C_n$
+            \\ 
+            \\
+            \\
+            \\
+            Start
+                $$ C_n = n + 1 + (\frac{2}{n}) \sum_{k=0}^{n-1} C_k $$
+            Pull the $n-1$ iteration off the summation
+                $$ = (\frac{2}{n}) C_{n-1} + 1 + n + (\frac{2}{n}) \sum_{k=0}^{n-2} C_k $$
+            Change $\frac{2}{n}$ to $(\frac{n-1}{n})(\frac{2}{n-1})$
+                $$ = (\frac{2}{n}) C_{n-1} + 1 + n + (\frac{n-1}{n})(\frac{2}{n-1}) \sum_{k=0}^{n-2} C_k $$
+            Add $-n+n$ to $\frac{2}{n-1}$
+                $$ = (\frac{2}{n}) C_{n-1} + 1 + n + (\frac{n-1}{n})( -n + n + \frac{2}{n-1}) \sum_{k=0}^{n-2} C_k $$
+            Distribute
+                $$ = (\frac{2}{n}) C_{n-1} + 1 + n + \frac{n-1}{n}(-n) + \frac{n-1}{n}(n) + \frac{n-1}{n}(\frac{2}{n-1}) \sum_{k=0}^{n-2} C_k $$
+            Simplify
+                $$ = (\frac{2}{n}) C_{n-1} + 1 + n - (n-1) + \frac{n-1}{n} (n + \frac{2}{n-1}) \sum_{k=0}^{n-2} C_k $$
+            Bro, I can substitute $(n + \frac{2}{n-1}) \sum_{k=0}^{n-2} C_k$ for $C_{n-1}$
+                $$ = (\frac{2}{n}) C_{n-1} + 1 + n - (n-1) + \frac{n-1}{n} C_{n-1} $$
+            Simplify
+                $$ = (\frac{2}{n}) C_{n-1} + \frac{n-1}{n} C_{n-1} + 2$$
+                $$ = \frac{(2)C_{n-1}}{n}  + \frac{(n-1)C_{n-1}}{n} + 2$$
+                $$ = \frac{(2)C_{n-1} + (n-1)C_{n-1}}{n} + 2$$
+                $$ = C_{n-1}\frac{( 2 + n - 1)}{n} + 2$$
+                $$ = C_{n-1}\frac{(n + 1)}{n} + 2$$
+            Alright so 
+                $$C_n = \frac{(n + 1)}{n} C_{n-1} + 2 $$
+            \\
+            \\
+            \\
+            So now I can get
+                $$ a_n = 1 $$
+                $$ b_n = \frac{(n + 1)}{n} $$
+                $$ c_n = 2 $$
+                $$ s_n = \frac{1}{\frac{(n+1)!}{n!}} = \frac{n!}{(n+1)!} = \frac{1}{n+1} $$
+            Multiply by $s_n$
+                $$ \frac{1}{n+1}C_n = \frac{1}{n+1} \frac{(n + 1)}{n} C_{n-1} + \frac{2}{n+1} $$
+                $$ \frac{1}{n+1}C_n = \frac{1}{n} C_{n-1} + \frac{2}{n+1} $$
+            Summation time
+                $$ C_n = \frac{1}{\frac{1}{n+1}} [(1)(1)(0) + \sum_{k=1}^n( \frac{2}{k+1})]$$
+                $$ = (n+1) (2)(\sum_{k=1}^n( \frac{1}{k+1} )$$
+            Focus in on $\sum_{k=1}^n \frac{1}{k+1} $
+                $$\sum_{k=1}^n \frac{1}{k+1} $$
+                $$ = \sum_{k=1}^n k^{\underline{-1}}$$
+                $$ = \left .H_k\right|_{k=1}^{k=n+1}$$
+                $$ = H_{n+1} - H_1 $$
+                $$ = H_{n+1} - 1 $$
+            Alright back to where we came from
+                $$ = (n+1)(2)(H_{n+1} - 1) $$
+                $$ = 2nH_{n+1} - 2n + 2H_{n+1} - 2 $$
+            \\
+            \\
+            Well there you have it
+                $$ C_n = 2nH_{n+1} - 2n + 2H_{n+1} - 2 $$
+
+            I checked with n = 1, 2, 3.
+            
+
+        \newpage
+        \begin{enumerate}[resume]
+		\item Find a closed formula for this recurrence:
+		\begin{align*} T_0 &= 5;\\ 2T_n &= nT_{n-1} +3 \cdot n!, \;\;\;\; \mbox{for $n>0$.}\end{align*}
+	\end{enumerate}
+            Given
+                $$ T_n = \frac{1}{s_n a_n} (s_0 a_0 T_0 + \sum_{k=1}^n s_k c_k)$$
+	    Find
+                $$ a_n = 2 $$
+                $$ b_n = n $$
+                $$ c_n = 3n! $$
+                $$ S_n = \frac{2^{n-1}}{n!} $$
+            Multiply
+                $$ \frac{2^{n-1}}{n!} (2T_n) = \frac{2^{n-1}}{n!} (nT_{n-1} +3 \cdot n!) $$
+                $$ \frac{2^n}{n!} T_n = \frac{2^{n-1}}{n!} nT_{n-1} + \frac{2^{n-1}}{n!} (3 \cdot n!) $$
+                $$ \frac{2^n}{n!} T_n = \frac{2^{n-1}}{(n-1)!} T_{n-1} + 2^{n-1}(3)  $$
+            Summation time
+                $$ T_n = \frac{n!}{2^n} ((\frac{1}{2})(2)(5) + \sum_{k=1}^n 3(2^{k-1})) $$
+                $$ = \frac{n!}{2^n} (5 + 3 \sum_{k=1}^n 2^{k-1} ) $$
+            Focus in on $\sum_{k=1}^n 2^{k-1} $
+                $$\sum_{k=1}^n 2^{k-1} = x = 2^0 + 2^1 + 2^2 + ... + 2^{n-1}$$
+                $$ x = 1 + 2^1 + 2^2 + ... + 2^{n-1} $$
+                $$ 2 x = 2 + 2^2 + 2^3 + ... + 2^n $$
+                $$ 2 x - x = (2 + 2^2 + 2^3 + ... + 2^n) - (1 + 2^1 + 2^2 + ... + 2^{n-1}) $$
+                $$ x = 2^n - 1 $$
+            Back to where we came from 
+                $$ = \frac{n!}{2^n} (5 + 3 (2^n - 1 )) $$
+                $$ = \frac{n!}{2^n} (5 +  (3) 2^n - 3 ) $$
+                $$ = \frac{n!}{2^n} ((3) 2^n + 2 ) $$
+                $$ = (\frac{n!}{2^n})(3)(2^n) + (\frac{n!}{2^n})(2) $$
+                $$ = (n!)(3) + \frac{(2)(n!)}{2^n} $$
+                $$ = (3)(n!) + \frac{n!}{2^{n-1}} $$
+            There you have it
+                $$ T_n = (3)(n!) + \frac{n!}{2^{n-1}} $$
+
+            Checked for n = 1, 2, 3
+	
+	\noindent \underline{\hspace{3in}}\\
+	
+	
+	
+	
+\end{document}

@@ -5,12 +5,6 @@ public abstract class Task implements Comparable<Task> {
     public int start;
     public int deadline;
     public int duration;
-    public Task() {
-        this.ID = 0;
-        this.start = 0;
-        this.deadline = 0;
-        this.duration = 0;
-    }
 
 
     public Task(int ID, int start, int deadline, int duration) {
@@ -21,18 +15,7 @@ public abstract class Task implements Comparable<Task> {
     }
 
     public String toString() {
-        return "src.task.Task " + ID;
-    }
-
-    public String toStringL() {
-        return "src.task.Task " + ID + "[" + start + "-" + deadline + "] " + duration;
-    }
-
-
-    public int compareTo(Task t2) {
-        System.out.println("NO compareTo");
-        // Supply your own comparator method
-        return 0;
+        return "Task " + ID + " [" + start + "-" + deadline + "] " + duration;
     }
 
 }

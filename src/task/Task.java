@@ -1,4 +1,6 @@
-public class Task implements Comparable<Task> {
+package task;
+
+public abstract class Task implements Comparable<Task> {
     public int ID;
     public int start;
     public int deadline;
@@ -19,11 +21,11 @@ public class Task implements Comparable<Task> {
     }
 
     public String toString() {
-        return "Task " + ID;
+        return "src.task.Task " + ID;
     }
 
     public String toStringL() {
-        return "Task " + ID + "[" + start + "-" + deadline + "] " + duration;
+        return "src.task.Task " + ID + "[" + start + "-" + deadline + "] " + duration;
     }
 
 

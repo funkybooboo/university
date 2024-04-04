@@ -42,8 +42,8 @@ public class HexGame {
         BOTTOM = cellCount + 2;
         LEFT = cellCount + 3;
         RIGHT = cellCount + 4;
-        unionBlue = new UnionFind(cellCount);
-        unionRed = new UnionFind(cellCount);
+        unionBlue = new UnionFind(totalCount);
+        unionRed = new UnionFind(totalCount);
         setBoardBlank();
     }
 
@@ -55,7 +55,6 @@ public class HexGame {
         board[getIndex(BOTTOM)] = getRedPiece();
         board[getIndex(LEFT)] = getBluePiece();
         board[getIndex(RIGHT)] = getBluePiece();
-
     }
 
     private String getBlankPiece() {
@@ -70,69 +69,56 @@ public class HexGame {
         return ANSI_RED + "R" + ANSI_RESET;
     }
 
-    private void getMoves(String filePath, List<Integer> blueMoves, List<Integer> redMoves) {
+    private List<Integer> getMoves(String filePath) {
+        List<Integer> moves = new ArrayList<>();
         try {
             Scanner scanner = new Scanner(new File(filePath));
-            for (int i = 0; scanner.hasNextLine(); i++) {
-                boolean isBlue = i % 2 == 0;
+            while (scanner.hasNextLine()) {
                 int item = scanner.nextInt();
-                if (isBlue) blueMoves.add(item);
-                else redMoves.add(item);
+                moves.add(item);
             }
         }
         catch (FileNotFoundException e) {
             System.out.println(e.toString());
         }
+        return moves;
     }
 
     public void play(String filePath) {
-        List<Integer> blueMoves = new ArrayList<>();
-        List<Integer> redMoves = new ArrayList<>();
-        getMoves(filePath, blueMoves, redMoves);
-        if (blueMoves.isEmpty() || redMoves.isEmpty()) {
+        List<Integer> moves = getMoves(filePath);
+        if (moves.isEmpty()) {
             return;
         }
-        for (int i = 0; i < blueMoves.size(); i++) {
-            int blueMove = blueMoves.get(i);
-            if (move(blueMove, unionBlue, getBluePiece())) {
-                board[getIndex(blueMove)] = getBluePiece();
-
-                if (isBlueWinner()) {
-                    printWinner("Blue", i);
+        for (int i = 0; i < moves.size(); i++) {
+            if (i % 2 == 0) {
+                int blueMove = moves.get(i);
+                if (move(blueMove, unionBlue, getBluePiece()) && isBlueWinner()) {
+                    printWinner("Blue", i+1);
                     return;
                 }
             }
             else {
-                System.out.println("Blue invalid move: " + blueMove);
-            }
-
-            int redMove = redMoves.get(i);
-            if (move(redMove, unionRed, getRedPiece())) {
-                board[getIndex(redMove)] = getRedPiece();
-
-                if (isRedWinner()) {
-                    printWinner("Red", i);
+                int redMove = moves.get(i);
+                if (move(redMove, unionRed, getRedPiece()) && isRedWinner()) {
+                    printWinner("Red", i+1);
                     return;
                 }
-            }
-            else {
-                System.out.println("Red invalid move: " + redMove);
             }
         }
         System.out.println("Ran out of moves and no winner");
     }
 
     private void printWinner(String title, int attempts) {
-        System.out.println("---------> " + title +" has won after " + attempts + " attempted moves! Here is the final board.");
+        System.out.println("--------> " + title +" has won after " + attempts + " attempted moves! Here is the final board.");
         printBoard();
     }
 
     private boolean isBlueWinner() {
-        return unionBlue.isSameGroup(LEFT, RIGHT);
+        return unionBlue.isSameGroup(getIndex(LEFT), getIndex(RIGHT));
     }
 
     private boolean isRedWinner() {
-        return unionRed.isSameGroup(TOP, BOTTOM);
+        return unionRed.isSameGroup(getIndex(TOP), getIndex(BOTTOM));
     }
 
     private boolean isTaken(int item) {
@@ -141,6 +127,7 @@ public class HexGame {
 
     private boolean move(int item, UnionFind union, String myPiece) {
         if (isTaken(item)) return false;
+        board[getIndex(item)] = myPiece;
         int[] neighbors = getNeighbors(item);
         for (int neighbor : neighbors) {
             int neighborIndex = getIndex(neighbor);
@@ -285,12 +272,12 @@ public class HexGame {
         StringBuilder spaces = new StringBuilder();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < cellCount; i++) {
+            String cell = board[i];
+            stringBuilder.append(cell).append(" ");
             if ((i+1) % xSize == 0) {
                 spaces.append(" ");
                 stringBuilder.append("\n").append(spaces);
             }
-            String cell = board[i];
-            stringBuilder.append(cell).append(" ");
         }
         System.out.println(stringBuilder);
     }

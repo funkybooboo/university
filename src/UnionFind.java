@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Random;
 
 public class UnionFind {
@@ -41,7 +42,6 @@ public class UnionFind {
     public boolean isSameGroup(int indexA, int indexB) {
         if (indexA < 0 || indexA > groups.length-1) return false;
         if (indexB < 0 || indexB > groups.length-1) return false;
-        if (groups[indexA] < 0 || groups[indexB] < 0) return false;
         int groupIndexA = find(indexA);
         int groupIndexB = find(indexB);
         return groupIndexA == groupIndexB;
@@ -64,25 +64,30 @@ public class UnionFind {
     private static void test() {
 
         System.out.println("Union Two Small Groups Test");
-        int data = 5;
+        int data = 6;
         UnionFind unionFind = new UnionFind(data);
         System.out.println(unionFind);
         unionFind.union(0, 1);
         System.out.println("Union("+0+", "+1+")");
+        System.out.println("Same group? " + unionFind.isSameGroup(0, 1));
         System.out.println(unionFind);
         unionFind.union(1, 2);
         System.out.println("Union("+1+", "+2+")");
+        System.out.println("Same group? " + unionFind.isSameGroup(1, 2));
         System.out.println(unionFind);
         unionFind.union(3, 4);
         System.out.println("Union("+3+", "+4+")");
+        System.out.println("Same group? " + unionFind.isSameGroup(3, 4));
         System.out.println(unionFind);
         unionFind.union(4, 5);
         System.out.println("Union("+4+", "+5+")");
+        System.out.println("Same group? " + unionFind.isSameGroup(4, 5));
         System.out.println(unionFind);
         System.out.println("Small groups made");
         System.out.println(unionFind);
         unionFind.union(2, 5);
         System.out.println("Union("+2+", "+5+")");
+        System.out.println("Same group? " + unionFind.isSameGroup(2, 5));
         System.out.println("Union the small groups to make one larger group");
         System.out.println(unionFind);
         System.out.println("---------------\n");
@@ -91,8 +96,12 @@ public class UnionFind {
         System.out.println(unionFind);
         unionFind.union(2, 5);
         System.out.println("Union("+2+", "+5+")");
+        System.out.println("Same group? " + unionFind.isSameGroup(2, 5));
         System.out.println(unionFind);
         System.out.println("---------------\n");
+
+        System.out.println("Is 0 in the same group as its underlings?");
+        System.out.println("Same group? " + unionFind.isSameGroup(0, 5));
 
         System.out.println("Show path compression");
         System.out.println(unionFind);
@@ -112,9 +121,11 @@ public class UnionFind {
         System.out.println(unionFind);
         unionFind.union(-1, 4);
         System.out.println("Union("+-1+", "+4+")");
+        System.out.println("Same group? " + unionFind.isSameGroup(-1, 4));
         System.out.println(unionFind);
         unionFind.union(1, 6);
         System.out.println("Union("+1+", "+6+")");
+        System.out.println("Same group? " + unionFind.isSameGroup(1, 6));
         System.out.println(unionFind);
         System.out.println("---------------\n");
 
@@ -122,18 +133,20 @@ public class UnionFind {
         System.out.println(unionFind);
         unionFind.union(4, 4);
         System.out.println("Union("+4+", "+4+")");
+        System.out.println("Same group? " + unionFind.isSameGroup(4, 4));
         System.out.println(unionFind);
         System.out.println("---------------\n");
 
         System.out.println("Random Union Test");
-        int size = 15;
-        unionFind = new UnionFind(data);
+        int size = 16;
+        unionFind = new UnionFind(size);
         System.out.println(unionFind);
         Random random = new Random();
         for (int i = 0; i < size; i++) {
             int a = random.nextInt(size);
             int b = random.nextInt(size);
             System.out.println("Union("+a+", "+b+")");
+            System.out.println("Same group? " + unionFind.isSameGroup(a, b));
             unionFind.union(a, b);
             System.out.println(unionFind);
         }

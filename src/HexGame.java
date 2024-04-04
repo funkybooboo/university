@@ -36,10 +36,10 @@ public class HexGame {
         this.ySize = ySize;
         cellCount = (xSize * ySize) + 4;
         board = new String[cellCount];
-        TOP = 0;
-        LEFT = cellCount + 1;
-        RIGHT = cellCount + 2;
-        BOTTOM = cellCount + 3;
+        TOP = cellCount + 1;
+        LEFT = cellCount + 2;
+        RIGHT = cellCount + 3;
+        BOTTOM = cellCount + 4;
         unionBlue = new UnionFind(cellCount);
         unionRed = new UnionFind(cellCount);
         setBoardBlank();
@@ -82,8 +82,7 @@ public class HexGame {
         List<Integer> blueMoves = new ArrayList<>();
         List<Integer> redMoves = new ArrayList<>();
         getMoves(filePath, blueMoves, redMoves);
-        if (blueMoves.size() != redMoves.size()) {
-            System.out.println("They need to play the same number of moves");
+        if (blueMoves.isEmpty() || redMoves.isEmpty()) {
             return;
         }
         for (int i = 0; i < blueMoves.size(); i++) {
@@ -292,7 +291,7 @@ public class HexGame {
     public static void main(String[] args) {
         HexGame hexGame = new HexGame();
         for (int i = 1; i < 3; i++) {
-            String filePath = "../data/moves"+i+".txt";
+            String filePath = "data/moves"+i+".txt";
             System.out.println("Playing: " + filePath);
             hexGame.play(filePath);
             System.out.println();

@@ -7,13 +7,8 @@ import java.util.Scanner;
 public class HexGame {
 
     private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_BLACK = "\u001B[30m";
     private static final String ANSI_RED = "\u001B[31m";
-    private static final String ANSI_GREEN = "\u001B[32m";
-    private static final String ANSI_YELLOW = "\u001B[33m";
     private static final String ANSI_BLUE = "\u001B[34m";
-    private static final String ANSI_PURPLE = "\u001B[35m";
-    private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_WHITE = "\u001B[37m";
 
     private final int xSize;
@@ -33,19 +28,7 @@ public class HexGame {
     private final int RIGHT;
 
     public HexGame() {
-        this.xSize = 11;
-        this.ySize = 11;
-        cellCount = (xSize * ySize) + 4;
-        board = new String[cellCount];
-        for (int i = 0; i < cellCount; i++) {
-            board[i] = ANSI_WHITE + "0" + ANSI_RESET;
-        }
-        TOP = 0;
-        LEFT = cellCount + 1;
-        RIGHT = cellCount + 2;
-        BOTTOM = cellCount + 3;
-        unionBlue = new UnionFind(cellCount);
-        unionRed = new UnionFind(cellCount);
+        this(11, 11);
     }
 
     public HexGame(int xSize, int ySize) {
@@ -53,15 +36,31 @@ public class HexGame {
         this.ySize = ySize;
         cellCount = (xSize * ySize) + 4;
         board = new String[cellCount];
-        for (int i = 0; i < cellCount; i++) {
-            board[i] = ANSI_WHITE + "0" + ANSI_RESET;
-        }
         TOP = 0;
         LEFT = cellCount + 1;
         RIGHT = cellCount + 2;
         BOTTOM = cellCount + 3;
         unionBlue = new UnionFind(cellCount);
         unionRed = new UnionFind(cellCount);
+        setBoardBlank();
+    }
+
+    private void setBoardBlank() {
+        for (int i = 0; i < cellCount; i++) {
+            board[i] = getBlankPiece();
+        }
+    }
+
+    private String getBlankPiece() {
+        return ANSI_WHITE + "0" + ANSI_RESET;
+    }
+
+    private String getBluePiece() {
+        return ANSI_BLUE + "B" + ANSI_RESET;
+    }
+
+    private String getRedPiece() {
+        return ANSI_RED + "R" + ANSI_RESET;
     }
 
     private void getMoves(String filePath, List<Integer> blueMoves, List<Integer> redMoves) {
@@ -90,7 +89,7 @@ public class HexGame {
         for (int i = 0; i < blueMoves.size(); i++) {
             int blueMove = blueMoves.get(i);
             if (move(blueMove, unionBlue, unionRed)) {
-                board[getIndex(blueMove)] = ANSI_BLUE + "B" + ANSI_RESET;
+                board[getIndex(blueMove)] = getBluePiece();
                 if (isBlueWinner()) {
                     printWinner("Blue", i);
                     return;
@@ -102,7 +101,7 @@ public class HexGame {
 
             int redMove = redMoves.get(i);
             if (move(redMove, unionRed, unionBlue)) {
-                board[getIndex(redMove)] = ANSI_RED + "R" + ANSI_RESET;
+                board[getIndex(redMove)] = getRedPiece();
                 if (isRedWinner()) {
                     printWinner("Red", i);
                     return;
@@ -173,88 +172,9 @@ public class HexGame {
     }
 
     private int[] getNeighbors(int item) {
-        int[] neighbors = new int[6];
+        int[] neighbors;
         if (isEdge(item)) {
-            if (isTopEdge(item)) {
-                neighbors = new int[]{
-                    item - 1,
-                    item + 1,
-                    TOP,
-                    TOP,
-                    item + 10,
-                    item + 11
-                };
-            }
-            else if (isBottomEdge(item)) {
-                neighbors = new int[]{
-                    item - 1,
-                    item + 1,
-                    item - 11,
-                    item - 10,
-                    BOTTOM,
-                    BOTTOM
-                };
-            }
-            else if (isLeftEdge(item)) {
-                neighbors = new int[]{
-                    LEFT,
-                    item + 1,
-                    item - 11,
-                    item - 10,
-                    LEFT,
-                    item + 11
-                };
-            }
-            else if (isRightEdge(item)) {
-                neighbors = new int[]{
-                    item - 1,
-                    RIGHT,
-                    item - 11,
-                    RIGHT,
-                    item + 10,
-                    item + 11
-                };
-            }
-            else if (isLeftEdge(item) && isTopEdge(item)) {
-                neighbors = new int[]{
-                    LEFT,
-                    item + 1,
-                    TOP,
-                    TOP,
-                    LEFT,
-                    item + 11
-                };
-            }
-            else if (isRightEdge(item) && isTopEdge(item)) {
-                neighbors = new int[]{
-                    item - 1,
-                    RIGHT,
-                    TOP,
-                    TOP,
-                    item + 10,
-                    item + 11
-                };
-            }
-            else if (isLeftEdge(item) && isBottomEdge(item)) {
-                neighbors = new int[]{
-                    LEFT,
-                    item + 1,
-                    item - 11,
-                    item - 10,
-                    BOTTOM,
-                    BOTTOM
-                };
-            }
-            else if (isRightEdge(item) && isBottomEdge(item)) {
-                neighbors = new int[]{
-                    item - 1,
-                    RIGHT,
-                    item - 11,
-                    RIGHT,
-                    BOTTOM,
-                    BOTTOM
-                };
-            }
+            neighbors = getEdgeNeighbors(item);
         }
         else {
             neighbors = new int[]{
@@ -264,6 +184,91 @@ public class HexGame {
                 item - 10,
                 item + 10,
                 item + 11
+            };
+        }
+        return neighbors;
+    }
+
+    private int[] getEdgeNeighbors(int item) {
+        int[] neighbors = new int[6];
+        if (isTopEdge(item)) {
+            neighbors = new int[]{
+                item - 1,
+                item + 1,
+                TOP,
+                TOP,
+                item + 10,
+                item + 11
+            };
+        }
+        else if (isBottomEdge(item)) {
+            neighbors = new int[]{
+                item - 1,
+                item + 1,
+                item - 11,
+                item - 10,
+                BOTTOM,
+                BOTTOM
+            };
+        }
+        else if (isLeftEdge(item)) {
+            neighbors = new int[]{
+                LEFT,
+                item + 1,
+                item - 11,
+                item - 10,
+                LEFT,
+                item + 11
+            };
+        }
+        else if (isRightEdge(item)) {
+            neighbors = new int[]{
+                item - 1,
+                RIGHT,
+                item - 11,
+                RIGHT,
+                item + 10,
+                item + 11
+            };
+        }
+        else if (isLeftEdge(item) && isTopEdge(item)) {
+            neighbors = new int[]{
+                LEFT,
+                item + 1,
+                TOP,
+                TOP,
+                LEFT,
+                item + 11
+            };
+        }
+        else if (isRightEdge(item) && isTopEdge(item)) {
+            neighbors = new int[]{
+                item - 1,
+                RIGHT,
+                TOP,
+                TOP,
+                item + 10,
+                item + 11
+            };
+        }
+        else if (isLeftEdge(item) && isBottomEdge(item)) {
+            neighbors = new int[]{
+                LEFT,
+                item + 1,
+                item - 11,
+                item - 10,
+                BOTTOM,
+                BOTTOM
+            };
+        }
+        else if (isRightEdge(item) && isBottomEdge(item)) {
+            neighbors = new int[]{
+                item - 1,
+                RIGHT,
+                item - 11,
+                RIGHT,
+                BOTTOM,
+                BOTTOM
             };
         }
         return neighbors;

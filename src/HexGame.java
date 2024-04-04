@@ -25,12 +25,6 @@ public class HexGame {
     private final int LEFT;
     private final int RIGHT;
 
-    private final List<Integer> topPieces;
-    private final List<Integer> bottomPieces;
-    private final List<Integer> leftPieces;
-    private final List<Integer> rightPieces;
-
-
     public HexGame() {
         this(11, 11);
     }
@@ -39,7 +33,7 @@ public class HexGame {
         this.xSize = xSize;
         this.ySize = ySize;
         cellCount = (xSize * ySize);
-        int totalCount = cellCount + 4;
+        int totalCount = cellCount + 5;
         board = new String[totalCount];
         TOP = cellCount + 1;
         BOTTOM = cellCount + 2;
@@ -47,49 +41,17 @@ public class HexGame {
         RIGHT = cellCount + 4;
         unionBlue = new UnionFind(totalCount);
         unionRed = new UnionFind(totalCount);
-        topPieces = new ArrayList<>();
-        setTopPieces(topPieces);
-        bottomPieces = new ArrayList<>();
-        setBottomPieces(bottomPieces);
-        leftPieces = new ArrayList<>();
-        setLeftPieces(leftPieces);
-        rightPieces = new ArrayList<>();
-        setRightPieces(rightPieces);
         setBoardBlank();
     }
 
-    private void setTopPieces(List<Integer> topPieces) {
-        for (int i = 1; i <= ySize; i++) {
-            topPieces.add(i);
-        }
-    }
-
-    private void setBottomPieces(List<Integer> bottomPieces) {
-        for (int i = cellCount - (ySize - 1); i <= cellCount; i++) {
-            bottomPieces.add(i);
-        }
-    }
-
-    private void setLeftPieces(List<Integer> leftPieces) {
-        for (int i = 1; i <= cellCount - (ySize - 1); i += ySize) {
-            leftPieces.add(i);
-        }
-    }
-
-    private void setRightPieces(List<Integer> rightPieces) {
-        for (int i = ySize; i <= cellCount; i += ySize) {
-            rightPieces.add(i);
-        }
-    }
-
     private void setBoardBlank() {
-        for (int i = 0; i < cellCount; i++) {
+        for (int i = 1; i <= cellCount; i++) {
             board[i] = getBlankPiece();
         }
-        board[getIndex(TOP)] = getRedPiece();
-        board[getIndex(BOTTOM)] = getRedPiece();
-        board[getIndex(LEFT)] = getBluePiece();
-        board[getIndex(RIGHT)] = getBluePiece();
+        board[TOP] = getRedPiece();
+        board[BOTTOM] = getRedPiece();
+        board[LEFT] = getBluePiece();
+        board[RIGHT] = getBluePiece();
     }
 
     private String getBlankPiece() {
@@ -153,51 +115,42 @@ public class HexGame {
     }
 
     private boolean isBlueWinner() {
-        return unionBlue.isSameGroup(getIndex(LEFT), getIndex(RIGHT));
+        return unionBlue.isSameGroup(LEFT, RIGHT);
     }
 
     private boolean isRedWinner() {
-        return unionRed.isSameGroup(getIndex(TOP), getIndex(BOTTOM));
+        return unionRed.isSameGroup(TOP, BOTTOM);
     }
 
     private boolean isTaken(int item) {
-        return !Objects.equals(board[getIndex(item)], getBlankPiece());
+        return !Objects.equals(board[item], getBlankPiece());
     }
 
     private boolean move(int item, UnionFind union, String myPiece) {
         if (isTaken(item)) return false;
-        board[getIndex(item)] = myPiece;
+        board[item] = myPiece;
         int[] neighbors = getNeighbors(item);
         for (int neighbor : neighbors) {
-            int neighborIndex = getIndex(neighbor);
-            if (board[neighborIndex].equals(getBlankPiece())) continue;
-            if (board[neighborIndex].equals(myPiece)) union.union(neighborIndex, getIndex(item));
+            if (board[neighbor].equals(getBlankPiece())) continue;
+            if (board[neighbor].equals(myPiece)) union.union(neighbor, item);
         }
         return true;
     }
 
-    private int getItem(int index) {
-        return index + 1;
-    }
-
-    private int getIndex(int item) {
-        return item - 1;
-    }
-
     private boolean isRightEdge(int item) {
-        return rightPieces.contains(item);
+        return item % ySize == 0;
     }
 
     private boolean isLeftEdge(int item) {
-        return leftPieces.contains(item);
+        return (item - 1) % ySize == 0;
     }
 
     private boolean isTopEdge(int item) {
-        return topPieces.contains(item);
+        return item <= ySize;
     }
 
     private boolean isBottomEdge(int item) {
-        return bottomPieces.contains(item);
+        return item >= cellCount - (ySize - 1);
     }
 
     private boolean isEdge(int item) {
@@ -310,10 +263,10 @@ public class HexGame {
     public void printBoard() {
         StringBuilder spaces = new StringBuilder();
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < cellCount; i++) {
+        for (int i = 1; i <= cellCount; i++) {
             String cell = board[i];
             stringBuilder.append(cell).append(" ");
-            if ((i+1) % xSize == 0) {
+            if (i % xSize == 0) {
                 spaces.append(" ");
                 stringBuilder.append("\n").append(spaces);
             }

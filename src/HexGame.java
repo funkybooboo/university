@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
+import java.util.*;
 
 public class HexGame {
 
@@ -28,6 +25,12 @@ public class HexGame {
     private final int LEFT;
     private final int RIGHT;
 
+    private final List<Integer> topPieces;
+    private final List<Integer> bottomPieces;
+    private final List<Integer> leftPieces;
+    private final List<Integer> rightPieces;
+
+
     public HexGame() {
         this(11, 11);
     }
@@ -44,7 +47,39 @@ public class HexGame {
         RIGHT = cellCount + 4;
         unionBlue = new UnionFind(totalCount);
         unionRed = new UnionFind(totalCount);
+        topPieces = new ArrayList<>();
+        setTopPieces(topPieces);
+        bottomPieces = new ArrayList<>();
+        setBottomPieces(bottomPieces);
+        leftPieces = new ArrayList<>();
+        setLeftPieces(leftPieces);
+        rightPieces = new ArrayList<>();
+        setRightPieces(rightPieces);
         setBoardBlank();
+    }
+
+    private void setTopPieces(List<Integer> topPieces) {
+        for (int i = 1; i <= ySize; i++) {
+            topPieces.add(i);
+        }
+    }
+
+    private void setBottomPieces(List<Integer> bottomPieces) {
+        for (int i = cellCount - (ySize - 1); i <= cellCount; i++) {
+            bottomPieces.add(i);
+        }
+    }
+
+    private void setLeftPieces(List<Integer> leftPieces) {
+        for (int i = 1; i <= cellCount - (ySize - 1); i += ySize) {
+            leftPieces.add(i);
+        }
+    }
+
+    private void setRightPieces(List<Integer> rightPieces) {
+        for (int i = ySize; i <= cellCount; i += ySize) {
+            rightPieces.add(i);
+        }
     }
 
     private void setBoardBlank() {
@@ -84,8 +119,7 @@ public class HexGame {
         return moves;
     }
 
-    public void play(String filePath) {
-        List<Integer> moves = getMoves(filePath);
+    public void play(List<Integer> moves) {
         if (moves.isEmpty()) {
             return;
         }
@@ -106,6 +140,11 @@ public class HexGame {
             }
         }
         System.out.println("Ran out of moves and no winner");
+    }
+
+    public void play(String filePath) {
+        List<Integer> moves = getMoves(filePath);
+        play(moves);
     }
 
     private void printWinner(String title, int attempts) {
@@ -146,19 +185,19 @@ public class HexGame {
     }
 
     private boolean isRightEdge(int item) {
-        return item % ySize == 0;
+        return rightPieces.contains(item);
     }
 
     private boolean isLeftEdge(int item) {
-        return (item - 1) % ySize == 0;
+        return leftPieces.contains(item);
     }
 
     private boolean isTopEdge(int item) {
-        return item <= xSize;
+        return topPieces.contains(item);
     }
 
     private boolean isBottomEdge(int item) {
-        return item >= cellCount - xSize;
+        return bottomPieces.contains(item);
     }
 
     private boolean isEdge(int item) {
@@ -290,5 +329,12 @@ public class HexGame {
             hexGame.play(filePath);
             System.out.println();
         }
+        Random random = new Random();
+        hexGame = new HexGame(12, 12);
+        List<Integer> moves = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            moves.add(random.nextInt(2, (12*12) - 1));
+        }
+        hexGame.play(moves);
     }
 }

@@ -2,7 +2,7 @@
 n = 899
 
 # limit l
-l = 900
+l = 1_000
 
 # array a
 a = []

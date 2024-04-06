@@ -1,7 +1,3 @@
-# f(A) = 0,  f(B) = 1, f(C) = 2, ..., f(J) = 9, f(K) = 0, f(L) = 1, ..., f(T) = 9, f(U) = 0, ..., f(Z) = 5, f(space) = 1.
-
-from itertools import product
-
 convert = {
     "set1": {
         0: 'A',

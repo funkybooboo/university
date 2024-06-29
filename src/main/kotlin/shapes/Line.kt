@@ -5,12 +5,14 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class Line(
-    var point1: Point,
-    var point2: Point
+    val point1: Point,
+    val point2: Point
 ): Moveable {
 
     init {
-        if (point1.x == point2.x && point1.y == point2.y) throw InvalidParameterException("Points can be equal.");
+        if (point1.x == point2.x && point1.y == point2.y) {
+            throw InvalidParameterException("Points can not be equal.")
+        };
     }
 
     override fun move(deltaX: Double, deltaY: Double) {

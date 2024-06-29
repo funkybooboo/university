@@ -1,5 +1,6 @@
 package shapes
 
-class Circle {
-
-}
+class Circle(
+    point: Point,
+    radius: Double
+): Ellipse(point, radius, radius)

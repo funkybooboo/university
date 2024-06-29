@@ -5,12 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c7b47e5-9044-44df-967d-de4569b2fc39" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Ellipse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/Ellipse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Line.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/Line.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Point.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/Point.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Rectangle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/Rectangle.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Triangle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/Triangle.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +95,7 @@
       <workItem from="1719578689626" duration="468000" />
       <workItem from="1719588980329" duration="5000" />
       <workItem from="1719619111052" duration="1900000" />
-      <workItem from="1719668547747" duration="3463000" />
+      <workItem from="1719668547747" duration="3770000" />
     </task>
     <servers />
   </component>

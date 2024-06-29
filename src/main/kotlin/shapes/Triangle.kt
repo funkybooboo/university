@@ -15,13 +15,9 @@ class Triangle(
     }
 
     override fun move(deltaX: Double, deltaY: Double) {
-        point1.x += deltaX;
-        point2.x += deltaX;
-        point3.x += deltaX;
-
-        point1.y += deltaY;
-        point2.y += deltaY;
-        point3.y += deltaY;
+        point1.move(deltaX, deltaY);
+        point2.move(deltaX, deltaY);
+        point3.move(deltaX, deltaY);
     }
 
     override fun area(): Double = abs(point1.x * (point2.y - point3.y) + point2.x * (point3.y - point1.y) + point3.x * (point1.y - point2.y)) / 2;

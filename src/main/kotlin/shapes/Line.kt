@@ -16,11 +16,8 @@ class Line(
     }
 
     override fun move(deltaX: Double, deltaY: Double) {
-        point1.x += deltaX;
-        point2.x += deltaX;
-
-        point1.y += deltaY;
-        point2.y += deltaY;
+        point1.move(deltaX, deltaY);
+        point2.move(deltaX, deltaY);
     }
 
     fun slope(): Double = (point2.y - point1.y) / (point2.x - point1.x);

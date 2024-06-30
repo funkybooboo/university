@@ -123,8 +123,8 @@
       <recent name="shapes_strategy_pattern" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.RectangleTest">
-    <configuration name="RectangleTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.SquareTest.testMove">
+    <configuration name="SquareTest.testArea (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -137,7 +137,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.RectangleTest&quot;" />
+            <option value="&quot;shapes.SquareTest.testArea&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -148,7 +148,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="RectangleTest.testArea" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SquareTest.testConstruction" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -161,7 +161,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.RectangleTest.testArea&quot;" />
+            <option value="&quot;shapes.SquareTest.testConstruction&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -172,7 +172,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="RectangleTest.testGetPoints" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SquareTest.testGetPoints" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -185,7 +185,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.RectangleTest.testGetPoints&quot;" />
+            <option value="&quot;shapes.SquareTest.testGetPoints&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -196,7 +196,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="RectangleTest.testInvalidConstruction (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SquareTest.testInvalidConstruction" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -209,7 +209,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.RectangleTest.testInvalidConstruction&quot;" />
+            <option value="&quot;shapes.SquareTest.testInvalidConstruction&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -220,7 +220,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="RectangleTest.testMove" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="SquareTest.testMove" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -233,7 +233,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.RectangleTest.testMove&quot;" />
+            <option value="&quot;shapes.SquareTest.testMove&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -246,11 +246,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.RectangleTest" />
-        <item itemvalue="Gradle.RectangleTest.testInvalidConstruction (1)" />
-        <item itemvalue="Gradle.RectangleTest.testMove" />
-        <item itemvalue="Gradle.RectangleTest.testArea" />
-        <item itemvalue="Gradle.RectangleTest.testGetPoints" />
+        <item itemvalue="Gradle.SquareTest.testMove" />
+        <item itemvalue="Gradle.SquareTest.testArea (1)" />
+        <item itemvalue="Gradle.SquareTest.testGetPoints" />
+        <item itemvalue="Gradle.SquareTest.testInvalidConstruction" />
+        <item itemvalue="Gradle.SquareTest.testConstruction" />
       </list>
     </recent_temporary>
   </component>

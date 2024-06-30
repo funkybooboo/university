@@ -10,7 +10,6 @@ import kotlin.test.assertNotEquals
 
 class TriangleTest {
     // 2.7.1
-    // 2.7.2
     @Test
     fun testConstruction() {
         val triangle = Polygon(listOf(Point(-1.0, 1.0), Point(7.0, 2.0), Point(0.0, 3.0)), Triangle());
@@ -19,6 +18,8 @@ class TriangleTest {
         assertNotEquals(triangle.points[0], triangle.points[2]);
         assertNotEquals(triangle.points[1], triangle.points[2]);
     }
+
+    // 2.7.2
     @Test
     fun testInvalidConstruction() {
         assertFailsWith<InvalidParameterException> {

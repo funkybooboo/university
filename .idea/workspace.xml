@@ -6,7 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="0c7b47e5-9044-44df-967d-de4569b2fc39" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/polygon/Triangle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/polygon/Triangle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/curve/Circle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/curve/Circle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/curve/Ellipse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/curve/Ellipse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/CircleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/CircleTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/EllipseTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/EllipseTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/LineTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/LineTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/RectangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/RectangleTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/ShapeTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/SquareTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/SquareTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/TriangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/TriangleTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -56,6 +63,13 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.EllipseTest.executor": "Run",
+    "Gradle.EllipseTest.testArea.executor": "Run",
+    "Gradle.EllipseTest.testConstruction.executor": "Run",
+    "Gradle.EllipseTest.testGetAttributes (1).executor": "Run",
+    "Gradle.EllipseTest.testGetAttributes.executor": "Run",
+    "Gradle.EllipseTest.testInvalidConstruction.executor": "Run",
+    "Gradle.EllipseTest.testMove.executor": "Run",
     "Gradle.LineTest.executor": "Run",
     "Gradle.PointTest (1).executor": "Run",
     "Gradle.PointTest.executor": "Run",
@@ -127,8 +141,8 @@
       <recent name="shapes_strategy_pattern" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.TriangleTest (1)">
-    <configuration name="TriangleTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.Tests in 'shapes'">
+    <configuration name="CircleTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -141,7 +155,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.TriangleTest&quot;" />
+            <option value="&quot;shapes.CircleTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -152,7 +166,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TriangleTest.testArea (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="CircleTest.testArea" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -165,7 +179,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.TriangleTest.testArea&quot;" />
+            <option value="&quot;shapes.CircleTest.testArea&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -176,7 +190,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TriangleTest.testConstruction (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="EllipseTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -189,7 +203,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.TriangleTest.testConstruction&quot;" />
+            <option value="&quot;shapes.EllipseTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -200,7 +214,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TriangleTest.testGetPoints (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="EllipseTest.testMove (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -213,7 +227,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.TriangleTest.testGetPoints&quot;" />
+            <option value="&quot;shapes.EllipseTest.testMove&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -224,7 +238,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TriangleTest.testMove (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Tests in 'shapes'" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -237,7 +251,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.TriangleTest.testMove&quot;" />
+            <option value="&quot;shapes.*&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -250,11 +264,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.TriangleTest (1)" />
-        <item itemvalue="Gradle.TriangleTest.testMove (1)" />
-        <item itemvalue="Gradle.TriangleTest.testConstruction (1)" />
-        <item itemvalue="Gradle.TriangleTest.testArea (1)" />
-        <item itemvalue="Gradle.TriangleTest.testGetPoints (1)" />
+        <item itemvalue="Gradle.Tests in 'shapes'" />
+        <item itemvalue="Gradle.CircleTest (1)" />
+        <item itemvalue="Gradle.CircleTest.testArea" />
+        <item itemvalue="Gradle.EllipseTest.testMove (1)" />
+        <item itemvalue="Gradle.EllipseTest" />
       </list>
     </recent_temporary>
   </component>
@@ -285,7 +299,7 @@
       <workItem from="1719703720037" duration="2932000" />
       <workItem from="1719707212626" duration="6483000" />
       <workItem from="1719757252849" duration="1143000" />
-      <workItem from="1719758486514" duration="6216000" />
+      <workItem from="1719758486514" duration="7289000" />
     </task>
     <servers />
   </component>

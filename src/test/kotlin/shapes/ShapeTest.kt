@@ -1,4 +1,0 @@
-package shapes
-
-class ShapeTest {
-}

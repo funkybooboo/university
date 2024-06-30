@@ -10,13 +10,14 @@ import kotlin.test.assertNotEquals
 
 class SquareTest {
     // 2.4.1
-    // 2.4.2
     @Test
     fun testConstruction() {
         val square = Polygon(listOf(Point(1.0, 1.0), Point(2.0, 2.0)), Square());
         assertEquals(square.points.size, 2);
         assertNotEquals(square.points[0], square.points[1]);
     }
+
+    // 2.4.2
     @Test
     fun testInvalidConstruction() {
         assertFailsWith<InvalidParameterException> {

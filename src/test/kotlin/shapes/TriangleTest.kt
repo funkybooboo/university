@@ -1,4 +1,4 @@
-package shapes.polygon
+package shapes
 
 class TriangleTest {
 

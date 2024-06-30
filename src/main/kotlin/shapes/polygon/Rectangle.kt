@@ -7,7 +7,7 @@ import kotlin.math.abs
 open class Rectangle: PolygonPolicy {
     override fun isValidOrException(points: List<Point>) {
         if (points.size != 2) throw InvalidParameterException("Rectangle should only have two points");
-        if (points[0].x == points[1].x && points[0].y == points[1].y) {
+        if (points[0] == points[1]) {
             throw InvalidParameterException("Points can not be equal.");
         };
     }

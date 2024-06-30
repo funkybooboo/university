@@ -1,9 +1,13 @@
 package shapes
 
 abstract class Shape(
-    val points: List<Point>
+    private val _points: List<Point>
 ): Moveable {
+
+    val points: List<Point>
+        get() = _points.map{ point -> point.clone()};
+
     abstract fun area(): Double;
 
-    override fun move(deltaX: Double, deltaY: Double) = points.forEach { point -> point.move(deltaX, deltaY) };
+    override fun move(deltaX: Double, deltaY: Double) = _points.forEach { point -> point.move(deltaX, deltaY) };
 }

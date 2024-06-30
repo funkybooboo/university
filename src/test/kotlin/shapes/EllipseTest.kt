@@ -1,4 +1,4 @@
-package shapes.curve
+package shapes
 
 class EllipseTest {
 

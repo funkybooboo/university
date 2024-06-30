@@ -1,5 +1,0 @@
-package shapes
-
-class MoveableTest {
-
-}

@@ -1,9 +1,9 @@
-import shapes.Point
+package shapes
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class PointTest {
-
     // 2.1.1
     // 2.1.2
     @Test

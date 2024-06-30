@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0c7b47e5-9044-44df-967d-de4569b2fc39" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Point.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/Point.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Line.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/Line.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/LineTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/LineTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/PointTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/PointTest.kt" afterDir="false" />
     </list>
@@ -57,6 +57,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.PointTest (1).executor": "Run",
+    "Gradle.PointTest.executor": "Run",
     "Gradle.PointTest.testPointConstruction (1).executor": "Run",
     "Gradle.PointTest.testPointConstruction.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -97,7 +99,55 @@
       <recent name="shapes_strategy_pattern" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.PointTest">
+  <component name="RunManager" selected="Gradle.LineTest">
+    <configuration name="LineTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;shapes.LineTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="PointTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;shapes.PointTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="PointTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -148,6 +198,8 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.LineTest" />
+        <item itemvalue="Gradle.PointTest (1)" />
         <item itemvalue="Gradle.PointTest" />
         <item itemvalue="Gradle.PointTest.testPointConstruction (1)" />
       </list>
@@ -180,7 +232,7 @@
       <workItem from="1719703720037" duration="2932000" />
       <workItem from="1719707212626" duration="6483000" />
       <workItem from="1719757252849" duration="1143000" />
-      <workItem from="1719758486514" duration="1326000" />
+      <workItem from="1719758486514" duration="2409000" />
     </task>
     <servers />
   </component>

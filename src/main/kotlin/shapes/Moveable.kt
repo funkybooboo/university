@@ -1,4 +1,4 @@
-package shapes_strategy_pattern
+package shapes
 
 interface Moveable {
     fun move(deltaX: Double, deltaY: Double): Unit;

@@ -1,4 +1,4 @@
-package shapes_simple
+package shapes
 
 import java.security.InvalidParameterException
 import kotlin.math.pow

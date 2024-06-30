@@ -1,7 +1,7 @@
-package shapes_strategy_pattern.polygon
+package shapes.polygon
 
-import shapes_strategy_pattern.Point
-import shapes_strategy_pattern.Shape
+import shapes.Point
+import shapes.Shape
 
 class Polygon(
     points: List<Point>,

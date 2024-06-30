@@ -1,6 +1,6 @@
-package shapes_strategy_pattern.curve
+package shapes.curve
 
-import shapes_strategy_pattern.Point
+import shapes.Point
 
 interface CurvePolicy {
     fun isValidOrException(points: List<Point>, radii: List<Double>);

@@ -1,6 +1,4 @@
-package shapes_strategy_pattern
-
-import shapes_simple.Point
+package shapes
 
 class Point(
     x: Double,

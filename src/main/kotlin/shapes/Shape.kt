@@ -1,4 +1,4 @@
-package shapes_strategy_pattern
+package shapes
 
 abstract class Shape(
     val points: List<Point>

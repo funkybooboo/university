@@ -1,7 +1,7 @@
-package shapes_strategy_pattern.curve
+package shapes.curve
 
-import shapes_strategy_pattern.Point
-import shapes_strategy_pattern.Shape
+import shapes.Point
+import shapes.Shape
 
 class Curve(
     points: List<Point>,

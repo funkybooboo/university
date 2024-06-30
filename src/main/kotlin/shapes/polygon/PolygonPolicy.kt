@@ -1,6 +1,6 @@
-package shapes_strategy_pattern.polygon
+package shapes.polygon
 
-import shapes_strategy_pattern.Point
+import shapes.Point
 
 interface PolygonPolicy {
     fun isValidOrException(points: List<Point>);

@@ -1,4 +1,4 @@
-package shapes
+package shapes_simple
 
 import kotlin.math.abs;
 
@@ -21,5 +21,4 @@ class Triangle(
     }
 
     override fun area(): Double = abs(point1.x * (point2.y - point3.y) + point2.x * (point3.y - point1.y) + point3.x * (point1.y - point2.y)) / 2;
-
 }

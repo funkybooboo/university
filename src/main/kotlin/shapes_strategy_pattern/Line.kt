@@ -1,12 +1,13 @@
-package shapes
+package shapes_strategy_pattern
 
 import java.security.InvalidParameterException
-import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
-open class Rectangle(
+class Line(
     val point1: Point,
     val point2: Point
-): Moveable, Areaable {
+): Moveable {
 
     init {
         if (point1.x == point2.x && point1.y == point2.y) {
@@ -19,6 +20,7 @@ open class Rectangle(
         point2.move(deltaX, deltaY);
     }
 
-    override fun area(): Double = abs(point2.x - point1.x) * abs(point2.y - point1.y);
+    fun slope(): Double = (point2.y - point1.y) / (point2.x - point1.x);
 
+    fun length(): Double = sqrt(((point2.x - point1.x).pow(2)) + ((point2.y - point1.y).pow(2)));
 }

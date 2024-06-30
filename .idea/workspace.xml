@@ -5,15 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c7b47e5-9044-44df-967d-de4569b2fc39" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/AreaableTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/CircleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/curve/CircleTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/EllipseTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/curve/EllipseTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/LineTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/LineTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/MoveableTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/MoveableTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/PointTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/PointTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/RectangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/RectangleTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/SquareTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/SquareTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/TriangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/TriangleTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/design.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/design.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +73,9 @@
       <recent name="$PROJECT_DIR$/src/test/kotlin" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="shapes.polygon" />
+      <recent name="shapes.curve" />
+      <recent name="shapes" />
       <recent name="shapes_strategy_pattern.curve" />
       <recent name="shapes_strategy_pattern.Polygon" />
     </key>
@@ -113,7 +109,8 @@
       <workItem from="1719668547747" duration="3865000" />
       <workItem from="1719703720037" duration="2932000" />
       <workItem from="1719707212626" duration="6483000" />
-      <workItem from="1719757252849" duration="828000" />
+      <workItem from="1719757252849" duration="1143000" />
+      <workItem from="1719758486514" duration="322000" />
     </task>
     <servers />
   </component>

@@ -6,15 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="0c7b47e5-9044-44df-967d-de4569b2fc39" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/curve/Circle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/curve/Circle.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/curve/Ellipse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/curve/Ellipse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/CircleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/CircleTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/EllipseTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/EllipseTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/LineTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/LineTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/RectangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/RectangleTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/ShapeTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/SquareTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/SquareTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/TriangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/TriangleTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/design.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/uml_design.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/requirements.md" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,12 +56,16 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Gradle.CircleTest (1).executor": "Run",
+    "Gradle.CircleTest.executor": "Run",
+    "Gradle.CircleTest.testArea.executor": "Run",
     "Gradle.EllipseTest.executor": "Run",
     "Gradle.EllipseTest.testArea.executor": "Run",
     "Gradle.EllipseTest.testConstruction.executor": "Run",
     "Gradle.EllipseTest.testGetAttributes (1).executor": "Run",
     "Gradle.EllipseTest.testGetAttributes.executor": "Run",
     "Gradle.EllipseTest.testInvalidConstruction.executor": "Run",
+    "Gradle.EllipseTest.testMove (1).executor": "Run",
     "Gradle.EllipseTest.testMove.executor": "Run",
     "Gradle.LineTest.executor": "Run",
     "Gradle.PointTest (1).executor": "Run",
@@ -89,6 +86,7 @@
     "Gradle.SquareTest.testGetPoints.executor": "Run",
     "Gradle.SquareTest.testInvalidConstruction.executor": "Run",
     "Gradle.SquareTest.testMove.executor": "Run",
+    "Gradle.Tests in 'shapes'.executor": "Run",
     "Gradle.TriangleTest (1).executor": "Run",
     "Gradle.TriangleTest.executor": "Run",
     "Gradle.TriangleTest.testArea (1).executor": "Run",
@@ -126,6 +124,7 @@
       <recent name="$PROJECT_DIR$/src/test/kotlin/shapes" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/src/test/kotlin/shapes" />
       <recent name="$PROJECT_DIR$/src/test/kotlin" />
     </key>
@@ -299,7 +298,7 @@
       <workItem from="1719703720037" duration="2932000" />
       <workItem from="1719707212626" duration="6483000" />
       <workItem from="1719757252849" duration="1143000" />
-      <workItem from="1719758486514" duration="7289000" />
+      <workItem from="1719758486514" duration="7764000" />
     </task>
     <servers />
   </component>

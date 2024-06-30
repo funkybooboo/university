@@ -5,23 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c7b47e5-9044-44df-967d-de4569b2fc39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/CircleTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/SquareTest.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/TriangleTest.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Shape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/Shape.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/polygon/Rectangle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/polygon/Rectangle.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/polygon/Square.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/polygon/Square.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/MoveableTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/curve/CircleTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/curve/CurvePolicyTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/curve/CurveTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/curve/EllipseTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/EllipseTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/PolygonPolicyTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/PolygonTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/RectangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/RectangleTest.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/SquareTest.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/TriangleTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/polygon/Triangle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes/polygon/Triangle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/shapes/TriangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/TriangleTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +69,24 @@
     "Gradle.RectangleTest.testInvalidConstruction (1).executor": "Run",
     "Gradle.RectangleTest.testInvalidConstruction.executor": "Run",
     "Gradle.RectangleTest.testMove.executor": "Run",
+    "Gradle.SquareTest.testArea (1).executor": "Run",
+    "Gradle.SquareTest.testArea.executor": "Run",
+    "Gradle.SquareTest.testConstruction.executor": "Run",
+    "Gradle.SquareTest.testGetPoints.executor": "Run",
+    "Gradle.SquareTest.testInvalidConstruction.executor": "Run",
+    "Gradle.SquareTest.testMove.executor": "Run",
+    "Gradle.TriangleTest (1).executor": "Run",
+    "Gradle.TriangleTest.executor": "Run",
+    "Gradle.TriangleTest.testArea (1).executor": "Run",
+    "Gradle.TriangleTest.testArea.executor": "Run",
+    "Gradle.TriangleTest.testConstruction (1).executor": "Run",
+    "Gradle.TriangleTest.testConstruction.executor": "Run",
+    "Gradle.TriangleTest.testGetPoints (1).executor": "Run",
+    "Gradle.TriangleTest.testGetPoints.executor": "Run",
+    "Gradle.TriangleTest.testInvalidConstruction (1).executor": "Run",
+    "Gradle.TriangleTest.testInvalidConstruction.executor": "Run",
+    "Gradle.TriangleTest.testMove (1).executor": "Run",
+    "Gradle.TriangleTest.testMove.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
@@ -123,8 +127,8 @@
       <recent name="shapes_strategy_pattern" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.SquareTest.testMove">
-    <configuration name="SquareTest.testArea (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+  <component name="RunManager" selected="Gradle.TriangleTest (1)">
+    <configuration name="TriangleTest (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -137,7 +141,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.SquareTest.testArea&quot;" />
+            <option value="&quot;shapes.TriangleTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -148,7 +152,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="SquareTest.testConstruction" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="TriangleTest.testArea (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -161,7 +165,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.SquareTest.testConstruction&quot;" />
+            <option value="&quot;shapes.TriangleTest.testArea&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -172,7 +176,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="SquareTest.testGetPoints" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="TriangleTest.testConstruction (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -185,7 +189,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.SquareTest.testGetPoints&quot;" />
+            <option value="&quot;shapes.TriangleTest.testConstruction&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -196,7 +200,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="SquareTest.testInvalidConstruction" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="TriangleTest.testGetPoints (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -209,7 +213,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.SquareTest.testInvalidConstruction&quot;" />
+            <option value="&quot;shapes.TriangleTest.testGetPoints&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -220,7 +224,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="SquareTest.testMove" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="TriangleTest.testMove (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -233,7 +237,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;shapes.SquareTest.testMove&quot;" />
+            <option value="&quot;shapes.TriangleTest.testMove&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -246,11 +250,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.SquareTest.testMove" />
-        <item itemvalue="Gradle.SquareTest.testArea (1)" />
-        <item itemvalue="Gradle.SquareTest.testGetPoints" />
-        <item itemvalue="Gradle.SquareTest.testInvalidConstruction" />
-        <item itemvalue="Gradle.SquareTest.testConstruction" />
+        <item itemvalue="Gradle.TriangleTest (1)" />
+        <item itemvalue="Gradle.TriangleTest.testMove (1)" />
+        <item itemvalue="Gradle.TriangleTest.testConstruction (1)" />
+        <item itemvalue="Gradle.TriangleTest.testArea (1)" />
+        <item itemvalue="Gradle.TriangleTest.testGetPoints (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -281,7 +285,7 @@
       <workItem from="1719703720037" duration="2932000" />
       <workItem from="1719707212626" duration="6483000" />
       <workItem from="1719757252849" duration="1143000" />
-      <workItem from="1719758486514" duration="4784000" />
+      <workItem from="1719758486514" duration="6216000" />
     </task>
     <servers />
   </component>

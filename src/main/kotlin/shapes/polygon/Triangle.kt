@@ -7,8 +7,8 @@ import kotlin.math.abs
 class Triangle: PolygonPolicy {
     override fun isValidOrException(points: List<Point>) {
         if (points.size != 3) throw InvalidParameterException("Triangles should have three points");
-        if (points[0] == points[1] || points[0] == points[2] || points[1] == points[2]) {
-            throw IllegalArgumentException("Points must be distinct to form a triangle.")
+        if (area(points) == 0.0) {
+            throw InvalidParameterException("Triangle cannot have an area of 0");
         }
     }
 

@@ -13,6 +13,8 @@ class Point(
     val y: Double
         get() = _y;
 
+    fun clone(): Point = Point(_x, _y);
+
     override fun move(deltaX: Double, deltaY: Double) {
         _x += deltaX;
         _y += deltaY;
@@ -29,5 +31,9 @@ class Point(
         var result = _x.hashCode()
         result = 31 * result + _y.hashCode()
         return result
+    }
+
+    override fun toString(): String {
+        return "Point(x=$_x, y=$_y)"
     }
 }

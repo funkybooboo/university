@@ -1,4 +1,4 @@
-import kotlin.test.Test;
+package shapes.polygon
 
 class RectangleTest {
 

@@ -5,34 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c7b47e5-9044-44df-967d-de4569b2fc39" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/docs/design.pdf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_simple/Circle.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_simple/Point.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/Line.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/Moveable.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/Point.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/Shape.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/curve/Circle.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/curve/Curve.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/curve/CurvePolicy.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/curve/Ellipse.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/polygon/Polygon.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/polygon/PolygonPolicy.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/polygon/Rectangle.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/polygon/Square.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_strategy_pattern/polygon/Triangle.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/uml_design.pdf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Areaable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_simple/Areaable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Circle.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Ellipse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_simple/Ellipse.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Line.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_simple/Line.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Moveable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_simple/Moveable.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Point.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Rectangle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_simple/Rectangle.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Square.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_simple/Square.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/shapes/Triangle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/shapes_simple/Triangle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/AreaableTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/CircleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/curve/CircleTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/EllipseTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/curve/EllipseTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/LineTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/LineTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/MoveableTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/MoveableTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/PointTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/PointTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/RectangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/RectangleTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/SquareTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/SquareTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/TriangleTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/shapes/polygon/TriangleTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +113,7 @@
       <workItem from="1719668547747" duration="3865000" />
       <workItem from="1719703720037" duration="2932000" />
       <workItem from="1719707212626" duration="6483000" />
-      <workItem from="1719757252849" duration="330000" />
+      <workItem from="1719757252849" duration="828000" />
     </task>
     <servers />
   </component>

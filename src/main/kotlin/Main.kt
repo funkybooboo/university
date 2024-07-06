@@ -13,7 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 
@@ -63,10 +65,31 @@ fun App() {
                             horizontalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text(
-                                text = shipmentId,
-                                modifier = Modifier.weight(1f)
-                            )
+                            Column(
+                                modifier = Modifier.padding(16.dp)
+                            ) {
+                                Text(
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    text = "Tracking shipment: $shipmentId"
+                                )
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(text = "Status: In transit")
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(text = "Location: New York")
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(text = "Expected Delivery: July 10, 2024")
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Text(text = "Status Updates:")
+                                Text(text = "Update1")
+                                Text(text = "Update2")
+                                Text(text = "Update3")
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Text(text = "Notes:")
+                                Text(text = "Note1")
+                                Text(text = "Note2")
+                                Text(text = "Note3")
+                            }
                             Box(
                                 modifier = Modifier
                                     .padding(end = 8.dp)

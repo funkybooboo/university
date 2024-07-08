@@ -76,7 +76,7 @@ fun App() {
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(text = "Status: In transit")
                                 Spacer(modifier = Modifier.height(4.dp))
-                                Text(text = "Location: New York")
+                                Text(text = "backend.update.Location: New York")
                                 Spacer(modifier = Modifier.height(4.dp))
                                 Text(text = "Expected Delivery: July 10, 2024")
                                 Spacer(modifier = Modifier.height(10.dp))

@@ -4,10 +4,10 @@ import subject.update.Update
 class Shipment(
     val id: String,
 ): Subject() {
-    private val notes: MutableList<String> = mutableListOf()
-    private val updateHistory: MutableList<ShippingUpdate> = mutableListOf()
-    private val expectedDeliveryDateTimestampHistory: MutableList<Long> = mutableListOf()
-    private val locationHistory: MutableList<String> = mutableListOf()
+    val notes: MutableList<String> = mutableListOf()
+    val updateHistory: MutableList<ShippingUpdate> = mutableListOf()
+    val expectedDeliveryDateTimestampHistory: MutableList<Long> = mutableListOf()
+    val locationHistory: MutableList<String> = mutableListOf()
 
     fun addUpdate(update: Update) {
         addNote(update.getNote())

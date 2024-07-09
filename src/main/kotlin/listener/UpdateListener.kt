@@ -1,5 +1,5 @@
 package listener
 
 interface UpdateListener {
-    fun listen()
+    suspend fun listen()
 }

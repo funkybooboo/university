@@ -18,12 +18,36 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import kotlinx.coroutines.runBlocking
+import observer.TrackerViewHelper
+import subject.Shipment
+import subject.update.*
+import java.util.*
+
+// Configuration
+val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update> = mapOf(
+    Pair("created", ::Created),
+    Pair("shipped", ::Shipped),
+    Pair("location", ::Location),
+    Pair("delivered", ::Delivered),
+    Pair("delayed", ::Delayed),
+    Pair("lost", ::Lost),
+    Pair("canceled", ::Canceled),
+    Pair("noteadded", ::NoteAdded),
+)
+const val fileName = "data/test.txt"
+const val delimiter = ","
+const val waitTimeMills = 1000L
+
+val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, fileName, delimiter, waitTimeMills)
+var shipmentIds by remember { mutableStateOf(listOf<String>()) }
+val trackerViewHelper = TrackerViewHelper()
 
 @Composable
 @Preview
 fun App() {
-    var shipmentId by remember { mutableStateOf("") }
-    var shipmentIds by remember { mutableStateOf(listOf<String>()) }
+    var searchedShipmentId by remember { mutableStateOf("") }
+
 
     MaterialTheme {
         Column(
@@ -35,17 +59,24 @@ fun App() {
                 modifier = Modifier.fillMaxWidth()
             ) {
                 TextField(
-                    value = shipmentId,
+                    value = searchedShipmentId,
                     onValueChange = { text ->
-                        shipmentId = text
+                        searchedShipmentId = text
                     },
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(onClick = {
-                    if (shipmentId.isNotBlank()) {
-                        shipmentIds = shipmentIds + shipmentId
-                        shipmentId = ""
+                    if (searchedShipmentId.isNotBlank()) {
+                        shipmentIds = shipmentIds + searchedShipmentId
+                        val shipment = trackingSimulator.findShipment(searchedShipmentId)
+                        if (shipment == null) {
+                            // TODO notify the user they tried to track a shipment that doesnt exist
+                        }
+                        else {
+                            trackerViewHelper.startTracking(shipment)
+                        }
+                        searchedShipmentId = ""
                     }
                 }) {
                     Text(text = "Track")
@@ -53,67 +84,78 @@ fun App() {
             }
             LazyColumn {
                 items(shipmentIds) { shipmentId ->
-                    Card(
-                        backgroundColor = Color.LightGray,
-                        border = BorderStroke(1.dp, Color.Black),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp, horizontal = 16.dp)
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            modifier = Modifier.fillMaxWidth()
-                        ) {
-                            Column(
-                                modifier = Modifier.padding(16.dp)
-                            ) {
-                                Text(
-                                    fontSize = 20.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    text = "Tracking shipment: $shipmentId"
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(text = "Status: In transit")
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(text = "backend.update.Location: New York")
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(text = "Expected Delivery: July 10, 2024")
-                                Spacer(modifier = Modifier.height(10.dp))
-                                Text(text = "Status Updates:")
-                                Text(text = "Update1")
-                                Text(text = "Update2")
-                                Text(text = "Update3")
-                                Spacer(modifier = Modifier.height(10.dp))
-                                Text(text = "Notes:")
-                                Text(text = "Note1")
-                                Text(text = "Note2")
-                                Text(text = "Note3")
-                            }
-                            Box(
-                                modifier = Modifier
-                                    .padding(end = 8.dp)
-                                    .align(Alignment.Top)
-                                    .clickable {
-                                        shipmentIds = shipmentIds.filter { it != shipmentId }
-                                    }
-                            ) {
-                                Text(
-                                    text = "x",
-                                    color = Color.Blue,
-                                    modifier = Modifier.padding(8.dp)
-                                )
-                            }
-                        }
-                    }
+                    TrackingCard(shipmentId)
                 }
             }
         }
     }
 }
 
-fun main() = application {
-    Window(onCloseRequest = ::exitApplication) {
-        App()
+@Composable
+fun TrackingCard(shipmentId: String) {
+    val shipment: Shipment = trackingSimulator.findShipment(shipmentId)!!
+    Card(
+        backgroundColor = Color.LightGray,
+        border = BorderStroke(1.dp, Color.Black),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp, horizontal = 16.dp)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Text(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    text = "Tracking shipment: ${shipment.id}"
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(text = "Status: " + shipment.updateHistory[shipment.updateHistory.size-1].newStatus)
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(text = "Location: " + shipment.locationHistory[shipment.locationHistory.size-1])
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(text = "Expected Delivery: " + Date(shipment.expectedDeliveryDateTimestampHistory[shipment.expectedDeliveryDateTimestampHistory.size-1]))
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = "Status Updates:")
+                for (shippingUpdate in shipment.updateHistory) {
+                    Text(text = "Shipment went from " + shippingUpdate.previousStatus + " to " + shippingUpdate.newStatus + " at " + Date(shippingUpdate.timestamp))
+                }
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(text = "Notes:")
+                for (note in shipment.notes) {
+                    Text(text = note)
+                }
+            }
+            Box(
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .align(Alignment.Top)
+                    .clickable {
+                        shipmentIds = shipmentIds.filter { it != shipment.id }
+                        trackerViewHelper.stopTracking(shipment)
+                    }
+            ) {
+                Text(
+                    text = "x",
+                    color = Color.Blue,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
+        }
+    }
+}
+
+fun main() = runBlocking {
+    trackingSimulator.run()
+
+    application {
+        Window(onCloseRequest = ::exitApplication) {
+            App()
+        }
     }
 }

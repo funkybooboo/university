@@ -1,3 +1,5 @@
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
 import listener.FileReader
 import listener.Queue
 import subject.Shipment
@@ -7,45 +9,55 @@ class TrackingSimulator(
     private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update>,
     private val fileName: String,
     private val delimiter: String,
-    private val waitTime: Long
+    private val waitTimeMills: Long
 ) {
     private val shipments: MutableList<Shipment> = mutableListOf()
 
-    private fun findShipment(id: String): Shipment? {
+    suspend fun run() {
+        val queue = Queue<String>()
+
+        val fileReader = FileReader(queue, fileName)
+        fileReader.listen()
+
+        coroutineScope {
+            while (true) {
+                delay(waitTimeMills)
+
+                val info = queue.dequeue()?.strip()
+                if (info == "" || info == null) {
+                    println("No updates")
+                    continue
+                }
+
+                val update = getUpdate(info)
+
+                if (update == null) {
+                    println("An unknown update occurred")
+                    continue
+                }
+
+                if (update.type == "created") {
+                    addShipment(Shipment(update.shipmentId))
+                }
+
+                val shipment = findShipment(update.shipmentId)
+                if (shipment == null) {
+                    println("Update occurred on non existing shipment")
+                    continue
+                }
+
+                shipment.addUpdate(update)
+                shipment.notifyObservers()
+            }
+        }
+    }
+
+    fun findShipment(id: String): Shipment? {
         return shipments.find { it.id == id }
     }
 
     private fun addShipment(shipment: Shipment) {
         shipments.add(shipment)
-    }
-
-    fun run() {
-        val queue = Queue<String>()
-        val fileReader = FileReader(queue, fileName)
-
-        fileReader.listen()
-
-        while (true) {
-            Thread.sleep(waitTime)
-
-            val info = queue.dequeue()?.strip() ?: continue
-            if (info == "") continue
-
-            // TODO notify user that an invalid update occurred
-            val update = getUpdate(info) ?: continue
-
-            if (update.type == "created") {
-                addShipment(Shipment(update.shipmentId))
-            }
-
-            val shipment = findShipment(update.shipmentId)
-            if (shipment == null) {
-                // TODO notify user that an update occurred on a nonexistent shipment
-            } else {
-                shipment.addUpdate(update)
-                shipment.notifyObservers()
-            }
-        }
     }
 
     private fun getUpdate(info: String): Update? {

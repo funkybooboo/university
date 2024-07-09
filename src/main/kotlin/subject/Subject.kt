@@ -14,6 +14,6 @@ abstract class Subject {
     }
 
     fun notifyObservers() {
-        observers.forEach{it.update()}
+        observers.forEach{it.update(this)}
     }
 }

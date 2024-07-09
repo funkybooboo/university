@@ -1,4 +1,3 @@
-import androidx.compose.desktop.ui.tooling.preview.Preview
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -43,11 +42,19 @@ val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, fileName, del
 var shipmentIds by remember { mutableStateOf(listOf<String>()) }
 val trackerViewHelper = TrackerViewHelper()
 
+fun main() = runBlocking {
+    trackingSimulator.run()
+
+    application {
+        Window(onCloseRequest = ::exitApplication) {
+            App()
+        }
+    }
+}
+
 @Composable
-@Preview
 fun App() {
     var searchedShipmentId by remember { mutableStateOf("") }
-
 
     MaterialTheme {
         Column(
@@ -146,16 +153,6 @@ fun TrackingCard(shipmentId: String) {
                     modifier = Modifier.padding(8.dp)
                 )
             }
-        }
-    }
-}
-
-fun main() = runBlocking {
-    trackingSimulator.run()
-
-    application {
-        Window(onCloseRequest = ::exitApplication) {
-            App()
         }
     }
 }

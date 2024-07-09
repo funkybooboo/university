@@ -1,4 +1,9 @@
 package observer
 
-class TrackerViewHelper {
+class TrackerViewHelper(
+
+): Observer {
+    override fun update() {
+
+    }
 }

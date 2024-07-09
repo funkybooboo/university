@@ -1,4 +1,21 @@
 package subject.update
 
-class Shipped {
+class Shipped(
+    type: String,
+    shipmentId: String,
+    timeStampOfUpdate: Long,
+    otherInfo: String?
+): Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
+    override fun getLocation(): String? {
+        return null
+    }
+
+    override fun getNote(): String? {
+        return null
+    }
+
+    override fun getExpectedDeliveryDateTimestamp(): Long? {
+        // TODO throw error if its null?
+        return otherInfo?.toLong()
+    }
 }

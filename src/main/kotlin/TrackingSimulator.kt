@@ -6,7 +6,8 @@ import subject.update.Update
 class TrackingSimulator(
     private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update>,
     private val fileName: String,
-    private val delimiter: String
+    private val delimiter: String,
+    private val waitTime: Long
 ) {
     private val shipments: MutableList<Shipment> = mutableListOf()
 
@@ -25,7 +26,7 @@ class TrackingSimulator(
         fileReader.listen()
 
         while (true) {
-            Thread.sleep(1000)
+            Thread.sleep(waitTime)
 
             val info = queue.dequeue()?.strip() ?: continue
             if (info == "") continue

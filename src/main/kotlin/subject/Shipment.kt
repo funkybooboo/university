@@ -6,7 +6,8 @@ class Shipment(
     val notes: MutableList<String> = mutableListOf(),
     val updateHistory: MutableList<ShippingUpdate> = mutableListOf(),
     val expectedDeliveryDateTimestampHistory: MutableList<Long> = mutableListOf(),
-    val locationHistory: MutableList<String> = mutableListOf()
+    val locationHistory: MutableList<String> = mutableListOf(),
+
 ): ShipmentSubject() {
 
     fun addUpdate(update: Update) {

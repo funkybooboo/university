@@ -7,7 +7,7 @@ class TrackingSimulator(
     private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update>,
     private val delimiter: String,
     private val waitTimeMills: Long,
-    private val queue: Queue<String>
+    private val queue: Queue<String>,
 ) {
     private val shipments: MutableList<Shipment> = mutableListOf()
 

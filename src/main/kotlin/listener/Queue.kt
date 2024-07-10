@@ -1,7 +1,8 @@
 package listener
+
 import java.util.LinkedList
 
-class Queue<T> {
+class Queue<T>() {
     private val elements: LinkedList<T> = LinkedList()
 
     fun enqueue(item: T) {
@@ -14,9 +15,5 @@ class Queue<T> {
         } else {
             null
         }
-    }
-
-    fun isEmpty(): Boolean {
-        return elements.isEmpty()
     }
 }

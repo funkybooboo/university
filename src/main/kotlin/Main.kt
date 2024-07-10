@@ -38,18 +38,15 @@ const val waitTimeMills = 1000L
 
 val queue: Queue<String> = Queue()
 val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
-var shipmentIds by remember { mutableStateOf(listOf<String>()) }
 val trackerViewHelper = TrackerViewHelper()
 
-fun main() {
-    runBlocking {
-        launch {
-            val fileReader = FileReader(queue, fileName)
-            fileReader.listen()
-        }
-        launch {
-            trackingSimulator.run()
-        }
+fun main() = runBlocking {
+    launch {
+        val fileReader = FileReader(queue, fileName)
+        fileReader.listen()
+    }
+    launch {
+        trackingSimulator.run()
     }
     application {
         Window(onCloseRequest = ::exitApplication) {
@@ -60,6 +57,7 @@ fun main() {
 
 @Composable
 fun App() {
+    val shipmentIds by remember { mutableStateOf(mutableListOf<String>()) }
     var searchedShipmentId by remember { mutableStateOf("") }
     var snackbarVisible by remember { mutableStateOf(false) }
 
@@ -91,7 +89,7 @@ fun App() {
                             }
                         } else {
                             trackerViewHelper.startTracking(shipment)
-                            shipmentIds = shipmentIds + searchedShipmentId
+                            shipmentIds.add(searchedShipmentId)
                         }
                         searchedShipmentId = ""
                     }
@@ -101,7 +99,7 @@ fun App() {
             }
             LazyColumn {
                 items(shipmentIds) { shipmentId ->
-                    TrackingCard(shipmentId)
+                    TrackingCard(shipmentId, shipmentIds)
                 }
             }
         }
@@ -117,7 +115,7 @@ fun App() {
 }
 
 @Composable
-fun TrackingCard(shipmentId: String) {
+fun TrackingCard(shipmentId: String, shipmentIds: MutableList<String>) {
     val shipment: Shipment = trackerViewHelper.shipments[shipmentId]!!
     Card(
         backgroundColor = Color.LightGray,
@@ -148,7 +146,7 @@ fun TrackingCard(shipmentId: String) {
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Status Updates:")
                 for (shippingUpdate in shipment.updateHistory) {
-                    Text(text = "Shipment went from " + shippingUpdate.previousStatus + " to " + shippingUpdate.newStatus + " at " + Date(shippingUpdate.timestamp))
+                    Text(text = "Shipment went from " + shippingUpdate.previousStatus + " to " + shippingUpdate.newStatus + " at " + Date(shippingUpdate.timestamp).toString())
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Notes:")
@@ -161,7 +159,7 @@ fun TrackingCard(shipmentId: String) {
                     .padding(end = 8.dp)
                     .align(Alignment.Top)
                     .clickable {
-                        shipmentIds = shipmentIds.filter { it != shipment.id }
+                        shipmentIds.remove(shipment.id)
                         trackerViewHelper.stopTracking(shipment)
                     }
             ) {

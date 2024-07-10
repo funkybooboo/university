@@ -11,7 +11,7 @@ abstract class Logger {
     fun formatLogMessage(level: Level, threadId: String, message: String, exception: Exception?=null): String {
         val formattedTime = dateFormat.format(Date())
         val exceptionMessage = exception?.let { "- Exception: ${it.message}" } ?: ""
-        return "[${level.name}] $formattedTime [THREAD_ID] $threadId - $message $exceptionMessage"
+        return "[$threadId] [${level.name}] $formattedTime - $message $exceptionMessage"
     }
 
     abstract fun log(level: Level, threadId: String,  message: String, exception: Exception?=null)

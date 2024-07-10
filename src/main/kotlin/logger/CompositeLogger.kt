@@ -12,9 +12,8 @@ class CompositeLogger : Logger() {
     }
 
     override fun log(level: Level, threadId: String, message: String, exception: Exception?) {
-        val formattedMessage = formatLogMessage(level, threadId, message, exception)
         loggers.forEach { logger ->
-            logger.log(level, threadId, formattedMessage, exception)
+            logger.log(level, threadId, message, exception)
         }
     }
 }

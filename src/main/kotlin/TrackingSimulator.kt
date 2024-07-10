@@ -2,6 +2,7 @@ import kotlinx.coroutines.delay
 import listener.Queue
 import subject.Shipment
 import subject.update.Update
+import logger.Level
 
 class TrackingSimulator(
     private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update>,
@@ -17,49 +18,69 @@ class TrackingSimulator(
 
             val info = queue.dequeue()?.trim()
             if (info.isNullOrBlank()) {
-                println("No updates")
+                logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "No updates")
                 continue
             }
 
             val update = getUpdate(info)
             if (update == null) {
-                println("An unknown update occurred")
+                logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "An unknown update occurred: $info")
                 continue
             }
 
             if (update.type == "created") {
+                logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Creating new shipment: ${update.shipmentId}")
                 addShipment(Shipment(update.shipmentId))
             }
 
             val shipment = findShipment(update.shipmentId)
             if (shipment == null) {
-                println("Update occurred on non existing shipment")
+                logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Update occurred on non-existing shipment: ${update.shipmentId}")
                 continue
             }
 
             shipment.addUpdate(update)
             shipment.notifyObservers()
+
+            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Update processed for shipment: ${update.shipmentId}, Type: ${update.type}")
         }
     }
 
-    fun findShipment(id: String): Shipment? = shipments.find { it.id == id }?.copy()
+    fun findShipment(id: String): Shipment? {
+        val foundShipment = shipments.find { it.id == id }
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Finding shipment: $id - Found: ${foundShipment != null}")
+        return foundShipment?.copy()
+    }
 
-    private fun addShipment(shipment: Shipment) = shipments.add(shipment)
+    private fun addShipment(shipment: Shipment) {
+        shipments.add(shipment)
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Added new shipment: ${shipment.id}")
+    }
 
     private fun getUpdate(info: String): Update? {
         val parts = info.split(delimiter).map { it.lowercase() }
-        if (parts.size < 3 || parts.size > 4) return null
+        if (parts.size < 3 || parts.size > 4) {
+            logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Invalid update format: $info")
+            return null
+        }
+
         val type = parts[0]
         val shipmentId = parts[1]
         val timestampOfUpdate = parts[2].toLong()
-        val otherInfo = parts[3]
-        val updateConstructor = typeToUpdateConstructor[type] ?: return null
+        val otherInfo = parts.getOrNull(3)
+        val updateConstructor = typeToUpdateConstructor[type]
 
-        return try {
-            updateConstructor(type, shipmentId, timestampOfUpdate, otherInfo)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        return if (updateConstructor == null) {
+            logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Unknown update type: $type")
             null
+        } else {
+            try {
+                updateConstructor(type, shipmentId, timestampOfUpdate, otherInfo)
+            } catch (e: Exception) {
+                logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Error creating update: ${e.message}")
+                e.printStackTrace()
+                null
+            }
         }
     }
 }

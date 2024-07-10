@@ -19,6 +19,7 @@ import listener.Queue
 import logger.CompositeLogger
 import logger.ConsoleLogger
 import logger.FileLogger
+import logger.Level
 import observer.TrackerViewHelper
 import subject.Shipment
 import subject.update.*
@@ -39,7 +40,7 @@ const val fileName = "data/test.txt"
 const val delimiter = ","
 const val waitTimeMills = 1000L
 
-val compositeLogger = CompositeLogger()
+val logger = CompositeLogger()
 val queue: Queue<String> = Queue()
 val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 val trackerViewHelper = TrackerViewHelper()
@@ -47,17 +48,20 @@ val trackerViewHelper = TrackerViewHelper()
 fun main() = runBlocking {
     val fileLogger = FileLogger("log/logs.log")
     val consoleLogger = ConsoleLogger()
-    compositeLogger.registerLogger(consoleLogger)
-    compositeLogger.registerLogger(fileLogger)
+    logger.registerLogger(consoleLogger)
+    logger.registerLogger(fileLogger)
 
     launch {
         val fileReader = FileReader(queue, fileName)
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start listening")
         fileReader.listen()
     }
     launch {
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start simulation")
         trackingSimulator.run()
     }
     application {
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start ui")
         Window(onCloseRequest = ::exitApplication) {
             App()
         }
@@ -91,12 +95,15 @@ fun App() {
                     if (searchedShipmentId.isNotBlank()) {
                         val shipment = trackingSimulator.findShipment(searchedShipmentId)
                         if (shipment == null) {
+                            logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Shipment not found: $searchedShipmentId")
                             snackbarVisible = true
                             CoroutineScope(Dispatchers.Main).launch {
                                 delay(3000)
+                                logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Snackbar invisible")
                                 snackbarVisible = false
                             }
                         } else {
+                            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Tracking shipment: $searchedShipmentId")
                             trackerViewHelper.startTracking(shipment)
                             shipmentIds.add(searchedShipmentId)
                         }
@@ -115,6 +122,7 @@ fun App() {
     }
 
     if (snackbarVisible) {
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Snackbar visible")
         Snackbar(
             modifier = Modifier.padding(16.dp)
         ) {
@@ -126,6 +134,8 @@ fun App() {
 @Composable
 fun TrackingCard(shipmentId: String, shipmentIds: MutableList<String>) {
     val shipment: Shipment = trackerViewHelper.shipments[shipmentId]!!
+    logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Displaying tracking card for shipment: $shipmentId")
+
     Card(
         backgroundColor = Color.LightGray,
         border = BorderStroke(1.dp, Color.Black),
@@ -155,7 +165,7 @@ fun TrackingCard(shipmentId: String, shipmentIds: MutableList<String>) {
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Status Updates:")
                 for (shippingUpdate in shipment.updateHistory) {
-                    Text(text = "Shipment went from " + shippingUpdate.previousStatus + " to " + shippingUpdate.newStatus + " at " + Date(shippingUpdate.timestamp).toString())
+                    Text(text = shippingUpdate.toString())
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Notes:")
@@ -168,6 +178,7 @@ fun TrackingCard(shipmentId: String, shipmentIds: MutableList<String>) {
                     .padding(end = 8.dp)
                     .align(Alignment.Top)
                     .clickable {
+                        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Removing tracking card for shipment: $shipmentId")
                         shipmentIds.remove(shipment.id)
                         trackerViewHelper.stopTracking(shipment)
                     }

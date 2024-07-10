@@ -99,7 +99,6 @@ fun App(
                     if (searchedShipmentId.isNotBlank()) {
                         val shipment = trackingSimulator.findShipment(searchedShipmentId)
                         if (shipment == null) {
-                            // Handle Snackbar display
                             snackbarVisible = true
                             CoroutineScope(Dispatchers.Main).launch {
                                 delay(3000)
@@ -166,13 +165,17 @@ fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
                 Text(text = "Expected Delivery: " + Date(shipment.expectedDeliveryDateTimestampHistory.last()))
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Status Updates:")
-                for (shippingUpdate in shipment.updateHistory) {
-                    Text(text = shippingUpdate.toString())
+                LazyColumn {
+                    items(shipment.updateHistory) { shippingUpdate ->
+                        Text(text = shippingUpdate.toString())
+                    }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Notes:")
-                for (note in shipment.notes) {
-                    Text(text = note)
+                LazyColumn {
+                    items(shipment.notes) { note ->
+                        Text(text = note)
+                    }
                 }
             }
             Box(

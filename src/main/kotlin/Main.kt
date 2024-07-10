@@ -16,10 +16,16 @@ import androidx.compose.ui.window.application
 import kotlinx.coroutines.*
 import listener.FileReader
 import listener.Queue
+import logger.CompositeLogger
+import logger.ConsoleLogger
+import logger.FileLogger
 import observer.TrackerViewHelper
 import subject.Shipment
 import subject.update.*
 import java.util.*
+
+// Set up logging
+val consoleLogger = ConsoleLogger()
 
 // Configuration
 val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update> = mapOf(
@@ -41,6 +47,11 @@ val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, wa
 val trackerViewHelper = TrackerViewHelper()
 
 fun main() = runBlocking {
+    val fileLogger = FileLogger("log/logs.log")
+    val compositeLogger = CompositeLogger()
+    compositeLogger.registerLogger(consoleLogger)
+    compositeLogger.registerLogger(fileLogger)
+
     launch {
         val fileReader = FileReader(queue, fileName)
         fileReader.listen()

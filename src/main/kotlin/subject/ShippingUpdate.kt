@@ -14,8 +14,8 @@ class ShippingUpdate(
 
     override fun toString(): String {
         val formattedTime = dateFormat.format(Date(timestamp))
-        val logMessage = "Shipment went from $previousStatus to $newStatus at $formattedTime"
-        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), logMessage)
-        return logMessage
+        val message = "Shipment went from $previousStatus to $newStatus at $formattedTime"
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), message)
+        return message
     }
 }

@@ -24,9 +24,6 @@ import subject.Shipment
 import subject.update.*
 import java.util.*
 
-// Set up logging
-val consoleLogger = ConsoleLogger()
-
 // Configuration
 val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update> = mapOf(
     Pair("created", ::Created),
@@ -42,13 +39,14 @@ const val fileName = "data/test.txt"
 const val delimiter = ","
 const val waitTimeMills = 1000L
 
+val compositeLogger = CompositeLogger()
 val queue: Queue<String> = Queue()
 val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 val trackerViewHelper = TrackerViewHelper()
 
 fun main() = runBlocking {
     val fileLogger = FileLogger("log/logs.log")
-    val compositeLogger = CompositeLogger()
+    val consoleLogger = ConsoleLogger()
     compositeLogger.registerLogger(consoleLogger)
     compositeLogger.registerLogger(fileLogger)
 

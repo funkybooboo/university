@@ -5,16 +5,16 @@ import logger.Level
 import logger
 
 class Queue<T>() {
-    private val elements: LinkedList<T> = LinkedList()
+    private val items: LinkedList<T> = LinkedList()
 
     fun enqueue(item: T) {
-        elements.add(item)
+        items.add(item)
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Enqueued item: $item")
     }
 
     fun dequeue(): T? {
-        val item = if (elements.isNotEmpty()) {
-            elements.removeFirst()
+        val item = if (items.isNotEmpty()) {
+            items.removeFirst()
         } else {
             null
         }

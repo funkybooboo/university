@@ -25,34 +25,36 @@ import subject.Shipment
 import subject.update.*
 import java.util.*
 
-// Configuration
-val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update> = mapOf(
-    Pair("created", ::Created),
-    Pair("shipped", ::Shipped),
-    Pair("location", ::Location),
-    Pair("delivered", ::Delivered),
-    Pair("delayed", ::Delayed),
-    Pair("lost", ::Lost),
-    Pair("canceled", ::Canceled),
-    Pair("noteadded", ::NoteAdded),
-)
-const val fileName = "data/test.txt"
-const val delimiter = ","
-const val waitTimeMills = 1000L
-
 val logger = CompositeLogger()
-val queue: Queue<String> = Queue()
-val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
-val trackerViewHelper = TrackerViewHelper()
 
 fun main() = runBlocking {
+
     val fileLogger = FileLogger("log/logs.log")
     val consoleLogger = ConsoleLogger()
     logger.registerLogger(consoleLogger)
     logger.registerLogger(fileLogger)
 
+    // Configuration
+    val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update> = mapOf(
+        Pair("created", ::Created),
+        Pair("shipped", ::Shipped),
+        Pair("location", ::Location),
+        Pair("delivered", ::Delivered),
+        Pair("delayed", ::Delayed),
+        Pair("lost", ::Lost),
+        Pair("canceled", ::Canceled),
+        Pair("noteadded", ::NoteAdded),
+    )
+    val listenerFilePath = "data/test.txt"
+    val delimiter = ","
+    val waitTimeMills = 1000L
+
+    val queue: Queue<String> = Queue()
+    val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+    val trackerViewHelper = TrackerViewHelper()
+
     launch {
-        val fileReader = FileReader(queue, fileName)
+        val fileReader = FileReader(queue, listenerFilePath)
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start listening")
         fileReader.listen()
     }
@@ -61,16 +63,18 @@ fun main() = runBlocking {
         trackingSimulator.run()
     }
     application {
-        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start ui")
         Window(onCloseRequest = ::exitApplication) {
-            App()
+            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start ui")
+            App(trackerViewHelper, trackingSimulator)
         }
     }
 }
 
 @Composable
-fun App() {
-    val shipmentIds by remember { mutableStateOf(mutableListOf<String>()) }
+fun App(
+    trackerViewHelper: TrackerViewHelper,
+    trackingSimulator: TrackingSimulator
+) {
     var searchedShipmentId by remember { mutableStateOf("") }
     var snackbarVisible by remember { mutableStateOf(false) }
 
@@ -95,17 +99,14 @@ fun App() {
                     if (searchedShipmentId.isNotBlank()) {
                         val shipment = trackingSimulator.findShipment(searchedShipmentId)
                         if (shipment == null) {
-                            logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Shipment not found: $searchedShipmentId")
+                            // Handle Snackbar display
                             snackbarVisible = true
                             CoroutineScope(Dispatchers.Main).launch {
                                 delay(3000)
-                                logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Snackbar invisible")
                                 snackbarVisible = false
                             }
                         } else {
-                            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Tracking shipment: $searchedShipmentId")
                             trackerViewHelper.startTracking(shipment)
-                            shipmentIds.add(searchedShipmentId)
                         }
                         searchedShipmentId = ""
                     }
@@ -114,27 +115,28 @@ fun App() {
                 }
             }
             LazyColumn {
-                items(shipmentIds) { shipmentId ->
-                    TrackingCard(shipmentId, shipmentIds)
+                items(trackerViewHelper.shipments) { shipment ->
+                    TrackingCard(shipment, trackerViewHelper)
+                }
+            }
+
+            if (snackbarVisible) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+                    Snackbar(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(text = "Shipment not found!")
+                    }
                 }
             }
         }
     }
-
-    if (snackbarVisible) {
-        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Snackbar visible")
-        Snackbar(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(text = "Shipment not found!")
-        }
-    }
 }
 
+
 @Composable
-fun TrackingCard(shipmentId: String, shipmentIds: MutableList<String>) {
-    val shipment: Shipment = trackerViewHelper.shipments[shipmentId]!!
-    logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Displaying tracking card for shipment: $shipmentId")
+fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
+    logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Displaying tracking card for shipment: ${shipment.id}")
 
     Card(
         backgroundColor = Color.LightGray,
@@ -178,8 +180,7 @@ fun TrackingCard(shipmentId: String, shipmentIds: MutableList<String>) {
                     .padding(end = 8.dp)
                     .align(Alignment.Top)
                     .clickable {
-                        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Removing tracking card for shipment: $shipmentId")
-                        shipmentIds.remove(shipment.id)
+                        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Removing tracking card for shipment: ${shipment.id}")
                         trackerViewHelper.stopTracking(shipment)
                     }
             ) {

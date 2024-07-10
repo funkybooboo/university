@@ -4,11 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,8 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 import listener.FileReader
 import listener.Queue
 import observer.TrackerViewHelper
@@ -46,13 +41,15 @@ val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, wa
 var shipmentIds by remember { mutableStateOf(listOf<String>()) }
 val trackerViewHelper = TrackerViewHelper()
 
-fun main() = runBlocking {
-    launch {
-        val fileReader = FileReader(queue, fileName)
-        fileReader.listen()
-    }
-    launch {
-        trackingSimulator.run()
+fun main() {
+    runBlocking {
+        launch {
+            val fileReader = FileReader(queue, fileName)
+            fileReader.listen()
+        }
+        launch {
+            trackingSimulator.run()
+        }
     }
     application {
         Window(onCloseRequest = ::exitApplication) {
@@ -64,6 +61,7 @@ fun main() = runBlocking {
 @Composable
 fun App() {
     var searchedShipmentId by remember { mutableStateOf("") }
+    var snackbarVisible by remember { mutableStateOf(false) }
 
     MaterialTheme {
         Column(
@@ -84,13 +82,16 @@ fun App() {
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(onClick = {
                     if (searchedShipmentId.isNotBlank()) {
-                        shipmentIds = shipmentIds + searchedShipmentId
                         val shipment = trackingSimulator.findShipment(searchedShipmentId)
                         if (shipment == null) {
-                            // TODO notify the user they tried to track a shipment that doesnt exist
-                        }
-                        else {
+                            snackbarVisible = true
+                            CoroutineScope(Dispatchers.Main).launch {
+                                delay(3000)
+                                snackbarVisible = false
+                            }
+                        } else {
                             trackerViewHelper.startTracking(shipment)
+                            shipmentIds = shipmentIds + searchedShipmentId
                         }
                         searchedShipmentId = ""
                     }
@@ -105,11 +106,19 @@ fun App() {
             }
         }
     }
+
+    if (snackbarVisible) {
+        Snackbar(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = "Shipment not found!")
+        }
+    }
 }
 
 @Composable
 fun TrackingCard(shipmentId: String) {
-    val shipment: Shipment = trackingSimulator.findShipment(shipmentId)!!
+    val shipment: Shipment = trackerViewHelper.shipments[shipmentId]!!
     Card(
         backgroundColor = Color.LightGray,
         border = BorderStroke(1.dp, Color.Black),
@@ -131,11 +140,11 @@ fun TrackingCard(shipmentId: String) {
                     text = "Tracking shipment: ${shipment.id}"
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Status: " + shipment.updateHistory[shipment.updateHistory.size-1].newStatus)
+                Text(text = "Status: " + shipment.updateHistory.last().newStatus)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Location: " + shipment.locationHistory[shipment.locationHistory.size-1])
+                Text(text = "Location: " + shipment.locationHistory.last())
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Expected Delivery: " + Date(shipment.expectedDeliveryDateTimestampHistory[shipment.expectedDeliveryDateTimestampHistory.size-1]))
+                Text(text = "Expected Delivery: " + Date(shipment.expectedDeliveryDateTimestampHistory.last()))
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Status Updates:")
                 for (shippingUpdate in shipment.updateHistory) {

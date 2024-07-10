@@ -5,7 +5,7 @@ import subject.Shipment
 
 class TrackerViewHelper(): ShipmentObserver {
 
-    private val shipments = mutableStateMapOf<String, Shipment>()
+    val shipments = mutableStateMapOf<String, Shipment>()
 
     override fun notify(shipment: Shipment) {
         shipments[shipment.id] = shipment

@@ -2,19 +2,13 @@ package observer
 
 import androidx.compose.runtime.mutableStateMapOf
 import subject.Shipment
-import subject.Subject
 
-class TrackerViewHelper(): Observer {
+class TrackerViewHelper(): ShipmentObserver {
 
     private val shipments = mutableStateMapOf<String, Shipment>()
 
-    override fun update(subject: Subject) {
-        if (subject is Shipment) {
-            shipments[subject.id] = subject
-        } else {
-            // Handle unexpected subjects gracefully
-            println("Received unexpected subject: $subject")
-        }
+    override fun notify(shipment: Shipment) {
+        shipments[shipment.id] = shipment
     }
 
     fun startTracking(shipment: Shipment) {

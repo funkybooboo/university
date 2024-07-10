@@ -17,7 +17,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import listener.FileReader
+import listener.Queue
 import observer.TrackerViewHelper
 import subject.Shipment
 import subject.update.*
@@ -38,13 +41,19 @@ const val fileName = "data/test.txt"
 const val delimiter = ","
 const val waitTimeMills = 1000L
 
-val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, fileName, delimiter, waitTimeMills)
+val queue: Queue<String> = Queue()
+val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 var shipmentIds by remember { mutableStateOf(listOf<String>()) }
 val trackerViewHelper = TrackerViewHelper()
 
 fun main() = runBlocking {
-    trackingSimulator.run()
-
+    launch {
+        val fileReader = FileReader(queue, fileName)
+        fileReader.listen()
+    }
+    launch {
+        trackingSimulator.run()
+    }
     application {
         Window(onCloseRequest = ::exitApplication) {
             App()

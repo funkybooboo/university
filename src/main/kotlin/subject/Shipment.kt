@@ -3,11 +3,11 @@ import subject.update.Update
 
 class Shipment(
     val id: String,
-): Subject() {
-    val notes: MutableList<String> = mutableListOf()
-    val updateHistory: MutableList<ShippingUpdate> = mutableListOf()
-    val expectedDeliveryDateTimestampHistory: MutableList<Long> = mutableListOf()
+    val notes: MutableList<String> = mutableListOf(),
+    val updateHistory: MutableList<ShippingUpdate> = mutableListOf(),
+    val expectedDeliveryDateTimestampHistory: MutableList<Long> = mutableListOf(),
     val locationHistory: MutableList<String> = mutableListOf()
+): ShipmentSubject() {
 
     fun addUpdate(update: Update) {
         addNote(update.getNote())
@@ -18,6 +18,7 @@ class Shipment(
 
         val shippingUpdate = ShippingUpdate(previousState, update.type, update.timestampOfUpdate)
         updateHistory.add(shippingUpdate)
+        notifyObservers()
     }
 
     private fun addNote(note: String?) {
@@ -36,6 +37,16 @@ class Shipment(
         if (expectedDeliveryDateTimestamp != null) {
             expectedDeliveryDateTimestampHistory.add(expectedDeliveryDateTimestamp)
         }
+    }
+
+    override fun notifyObservers() {
+        observers.forEach {
+            it.notify(copy())
+        }
+    }
+
+    fun copy(): Shipment {
+        return Shipment(id, notes, updateHistory, expectedDeliveryDateTimestampHistory, locationHistory)
     }
 
 }

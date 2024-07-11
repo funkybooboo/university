@@ -1,8 +1,10 @@
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.runtime.remember
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -110,12 +112,6 @@ fun App(
                     Text(text = "Track")
                 }
             }
-            LaunchedEffect(snackbarVisible) {
-                if (snackbarVisible) {
-                    delay(3000)
-                    snackbarVisible = false
-                }
-            }
             LazyColumn {
                 items(trackerViewHelper.shipments) { shipment ->
                     TrackingCard(shipment, trackerViewHelper)
@@ -130,16 +126,17 @@ fun App(
                         Text(text = "Shipment not found!")
                     }
                 }
+                LaunchedEffect(snackbarVisible) {
+                    delay(3000)
+                    snackbarVisible = false
+                }
             }
         }
     }
 }
 
-
 @Composable
 fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
-    logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Displaying tracking card for shipment: ${shipment.id}")
-
     Card(
         backgroundColor = Color.LightGray,
         border = BorderStroke(1.dp, Color.Black),
@@ -161,11 +158,17 @@ fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
                     text = "Tracking shipment: ${shipment.id}"
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Status: " + shipment.updateHistory.last().newStatus)
+                if (shipment.updateHistory.isNotEmpty()) {
+                    Text(text = "Status: " + shipment.updateHistory.last().newStatus)
+                }
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Location: " + shipment.locationHistory.last())
+                if (shipment.locationHistory.isNotEmpty()) {
+                    Text(text = "Location: " + shipment.locationHistory.last())
+                }
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(text = "Expected Delivery: " + Date(shipment.expectedDeliveryDateTimestampHistory.last()))
+                if (shipment.expectedDeliveryDateTimestampHistory.isNotEmpty()) {
+                    Text(text = "Expected Delivery: " + Date(shipment.expectedDeliveryDateTimestampHistory.last()))
+                }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Status Updates:")
                 LazyColumn {
@@ -186,7 +189,6 @@ fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
                     .padding(end = 8.dp)
                     .align(Alignment.Top)
                     .clickable {
-                        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Removing tracking card for shipment: ${shipment.id}")
                         trackerViewHelper.stopTracking(shipment)
                     }
             ) {

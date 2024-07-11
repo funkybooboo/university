@@ -10,8 +10,12 @@ abstract class ShipmentSubject() {
     abstract fun notifyObservers()
 
     fun addObserver(observer: ShipmentObserver) {
-        observers.add(observer)
-        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Observer added: $observer")
+        if (!observers.contains(observer)) {
+            observers.add(observer)
+            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Observer added: $observer")
+        } else {
+            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Observer $observer already exists, not added again")
+        }
     }
 
     fun removeObserver(observer: ShipmentObserver) {

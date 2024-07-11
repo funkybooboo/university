@@ -72,11 +72,12 @@ fun main() = runBlocking {
 
 @Composable
 fun App(
-    trackerViewHelper: TrackerViewHelper,
+    initialTrackerViewHelper: TrackerViewHelper,
     trackingSimulator: TrackingSimulator
 ) {
     var searchedShipmentId by remember { mutableStateOf("") }
     var snackbarVisible by remember { mutableStateOf(false) }
+    val trackerViewHelper by remember { mutableStateOf(initialTrackerViewHelper) }
 
     MaterialTheme {
         Column(
@@ -100,10 +101,6 @@ fun App(
                         val shipment = trackingSimulator.findShipment(searchedShipmentId)
                         if (shipment == null) {
                             snackbarVisible = true
-                            CoroutineScope(Dispatchers.Main).launch {
-                                delay(3000)
-                                snackbarVisible = false
-                            }
                         } else {
                             trackerViewHelper.startTracking(shipment)
                         }
@@ -111,6 +108,12 @@ fun App(
                     }
                 }) {
                     Text(text = "Track")
+                }
+            }
+            LaunchedEffect(snackbarVisible) {
+                if (snackbarVisible) {
+                    delay(3000)
+                    snackbarVisible = false
                 }
             }
             LazyColumn {

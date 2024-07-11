@@ -9,10 +9,10 @@ class FileLogger(private val filePath: String) : Logger() {
         writeToFile(formatLogMessage(level, threadId, message, exception))
     }
 
-    private fun writeToFile(logMessage: String) {
+    private fun writeToFile(message: String) {
         try {
             PrintWriter(FileWriter(filePath, true)).use { writer ->
-                writer.println(logMessage)
+                writer.println(message)
             }
         } catch (e: Exception) {
             println("Error writing to file: ${e.message}")

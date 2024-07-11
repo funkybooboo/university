@@ -12,6 +12,13 @@ class Shipment(
     val locationHistory: MutableList<String> = mutableListOf(),
 ): ShipmentSubject() {
 
+    override fun notifyObservers() {
+        observers.forEach {
+            it.notify(copy())
+            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Notifying observer for shipment: $id")
+        }
+    }
+
     fun addUpdate(update: Update) {
         addNote(update.getNote())
         addLocation(update.getLocation())
@@ -44,13 +51,6 @@ class Shipment(
         if (expectedDeliveryDateTimestamp != null) {
             expectedDeliveryDateTimestampHistory.add(expectedDeliveryDateTimestamp)
             logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Expected delivery date timestamp added for shipment: $id - Timestamp: $expectedDeliveryDateTimestamp")
-        }
-    }
-
-    override fun notifyObservers() {
-        observers.forEach {
-            it.notify(copy())
-            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Notifying observer for shipment: $id")
         }
     }
 

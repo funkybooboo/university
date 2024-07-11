@@ -4,9 +4,9 @@ import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.*
 
-abstract class Logger {
+abstract class Logger() {
 
-    private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSSSS")
 
     fun formatLogMessage(level: Level, threadId: String, message: String, exception: Exception?=null): String {
         val formattedTime = dateFormat.format(Date())

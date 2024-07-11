@@ -7,7 +7,7 @@ import subject.Shipment
 import logger.Level
 import logger
 
-class TrackerViewHelper : ShipmentObserver {
+class TrackerViewHelper() : ShipmentObserver {
 
     private val _shipments = mutableMapOf<String, Shipment>()
 

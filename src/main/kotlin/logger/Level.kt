@@ -1,6 +1,6 @@
 package logger
 
-enum class Level {
+enum class Level() {
     INFO,
     WARNING,
     ERROR

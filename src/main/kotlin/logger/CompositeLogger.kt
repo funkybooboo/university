@@ -1,6 +1,6 @@
 package logger
 
-class CompositeLogger : Logger() {
+class CompositeLogger() : Logger() {
     private val loggers: MutableList<Logger> = mutableListOf()
 
     fun registerLogger(logger: Logger) {

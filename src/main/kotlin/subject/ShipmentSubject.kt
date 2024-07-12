@@ -9,7 +9,7 @@ abstract class ShipmentSubject() {
 
     abstract fun notifyObservers()
 
-    fun addObserver(observer: ShipmentObserver) {
+    open fun addObserver(observer: ShipmentObserver) {
         if (!observers.contains(observer)) {
             observers.add(observer)
             logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Observer added: $observer")

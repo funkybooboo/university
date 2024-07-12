@@ -3,13 +3,14 @@ package subject
 import subject.update.Update
 import logger.Logger.Level
 import logger
+import observer.ShipmentObserver
 
 class Shipment(
     val id: String,
     val notes: MutableList<String> = mutableListOf(),
     val updateHistory: MutableList<ShippingUpdate> = mutableListOf(),
     val expectedDeliveryDateTimestampHistory: MutableList<Long> = mutableListOf(),
-    val locationHistory: MutableList<String> = mutableListOf(),
+    val locationHistory: MutableList<String> = mutableListOf()
 ): ShipmentSubject() {
 
     override fun notifyObservers() {
@@ -19,6 +20,11 @@ class Shipment(
         }
     }
 
+    override fun addObserver(observer: ShipmentObserver) {
+        super.addObserver(observer)
+        observer.notify(copy())
+    }
+
     fun addUpdate(update: Update) {
         addNote(update.getNote())
         addLocation(update.getLocation())
@@ -26,7 +32,7 @@ class Shipment(
 
         val previousState = if (updateHistory.isEmpty()) "" else updateHistory.last().newStatus
 
-        val shippingUpdate = ShippingUpdate(previousState, update.type, update.timestampOfUpdate)
+        val shippingUpdate = ShippingUpdate(update.type, previousState, update.timestampOfUpdate)
         updateHistory.add(shippingUpdate)
         notifyObservers()
 

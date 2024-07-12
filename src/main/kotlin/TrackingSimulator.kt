@@ -49,7 +49,7 @@ class TrackingSimulator(
     fun findShipment(id: String): Shipment? {
         val foundShipment = shipments.find { it.id == id }
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Finding shipment: $id - Found: ${foundShipment != null}")
-        return foundShipment?.copy()
+        return foundShipment
     }
 
     private fun addShipment(shipment: Shipment) {

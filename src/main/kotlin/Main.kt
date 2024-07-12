@@ -26,6 +26,8 @@ import subject.Shipment
 import subject.update.*
 import java.util.*
 
+// TODO singleton stuff with logger, simulator, and viewhelper
+
 val logger = CompositeLogger()
 
 fun main() = runBlocking {
@@ -52,7 +54,6 @@ fun main() = runBlocking {
 
     val queue: Queue<String> = Queue()
     val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
-    val trackerViewHelper = TrackerViewHelper()
 
     launch {
         val fileReader = FileReader(queue, listenerFilePath)
@@ -66,19 +67,18 @@ fun main() = runBlocking {
     application {
         Window(onCloseRequest = ::exitApplication) {
             logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start ui")
-            App(trackerViewHelper, trackingSimulator)
+            App(trackingSimulator)
         }
     }
 }
 
 @Composable
 fun App(
-    initialTrackerViewHelper: TrackerViewHelper,
     trackingSimulator: TrackingSimulator
 ) {
     var searchedShipmentId by remember { mutableStateOf("") }
     var snackbarVisible by remember { mutableStateOf(false) }
-    val trackerViewHelper by remember { mutableStateOf(initialTrackerViewHelper) }
+    val trackerViewHelper = remember { TrackerViewHelper() }
 
     MaterialTheme {
         Column(
@@ -119,8 +119,9 @@ fun App(
                     )
             ) {
                 if (trackerViewHelper.shipments.isNotEmpty()) {
-                    for(shipment in trackerViewHelper.shipments) {
-                        TrackingCard(shipment, trackerViewHelper)
+                    for(shipment in trackerViewHelper.shipments.values) {
+                        TrackingCard(shipment, trackerViewHelper, trackingSimulator)
+                        println("hello")
                     }
                 }
                 else {
@@ -146,7 +147,7 @@ fun App(
 }
 
 @Composable
-fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
+fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper, trackingSimulator: TrackingSimulator) {
     Card(
         backgroundColor = Color.LightGray,
         border = BorderStroke(1.dp, Color.Black),
@@ -218,7 +219,8 @@ fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
                     .padding(end = 8.dp)
                     .align(Alignment.Top)
                     .clickable {
-                        trackerViewHelper.stopTracking(shipment)
+
+                        trackingSimulator.findShipment(shipment.id)?.let { trackerViewHelper.stopTracking(it) }
                     }
             ) {
                 Text(

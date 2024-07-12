@@ -1,7 +1,7 @@
 package listener
 
 import java.util.LinkedList
-import logger.Level
+import logger.Logger.Level
 import logger
 
 class Queue<T>() {

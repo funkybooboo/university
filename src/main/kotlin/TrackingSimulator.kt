@@ -2,7 +2,7 @@ import kotlinx.coroutines.delay
 import listener.Queue
 import subject.Shipment
 import subject.update.Update
-import logger.Level
+import logger.Logger.Level
 
 class TrackingSimulator(
     private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update>,

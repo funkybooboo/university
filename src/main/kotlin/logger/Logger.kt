@@ -6,6 +6,12 @@ import java.util.*
 
 abstract class Logger() {
 
+    enum class Level() {
+        INFO,
+        WARNING,
+        ERROR
+    }
+
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
 
     fun formatLogMessage(level: Level, threadId: String, message: String, exception: Exception?=null): String {

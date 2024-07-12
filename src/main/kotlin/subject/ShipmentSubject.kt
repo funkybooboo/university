@@ -1,7 +1,7 @@
 package subject
 
 import observer.ShipmentObserver
-import logger.Level
+import logger.Logger.Level
 import logger
 
 abstract class ShipmentSubject() {

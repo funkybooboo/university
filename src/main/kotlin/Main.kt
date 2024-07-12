@@ -20,7 +20,7 @@ import listener.Queue
 import logger.CompositeLogger
 import logger.ConsoleLogger
 import logger.FileLogger
-import logger.Level
+import logger.Logger.Level
 import observer.TrackerViewHelper
 import subject.Shipment
 import subject.update.*

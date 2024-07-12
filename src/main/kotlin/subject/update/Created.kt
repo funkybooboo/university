@@ -1,6 +1,6 @@
 package subject.update
 
-import logger.Level
+import logger.Logger.Level
 import logger
 
 class Created(

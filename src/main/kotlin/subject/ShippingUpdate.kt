@@ -2,7 +2,7 @@ package subject
 
 import java.text.SimpleDateFormat
 import java.util.*
-import logger.Level
+import logger.Logger.Level
 import logger
 
 class ShippingUpdate(

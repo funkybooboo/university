@@ -1,7 +1,7 @@
 package subject
 
 import subject.update.Update
-import logger.Level
+import logger.Logger.Level
 import logger
 
 class Shipment(

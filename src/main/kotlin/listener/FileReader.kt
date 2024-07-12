@@ -3,7 +3,7 @@ package listener
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
-import logger.Level
+import logger.Logger.Level
 import logger
 
 class FileReader(

@@ -18,8 +18,8 @@ import kotlinx.coroutines.*
 import logger.Logger.Level
 import manager.FileReaderManager.fileReader
 import manager.LoggerManager.logger
-import manager.TrackerViewHelperManager.trackerViewHelper
 import manager.TrackingSimulatorManager.trackingSimulator
+import observer.TrackerViewHelper
 import subject.Shipment
 import java.util.*
 
@@ -44,6 +44,7 @@ fun main() = runBlocking {
 fun App() {
     var searchedShipmentId by remember { mutableStateOf("") }
     var snackbarVisible by remember { mutableStateOf(false) }
+    val trackerViewHelper = remember { TrackerViewHelper() }
 
     MaterialTheme {
         Column(
@@ -85,7 +86,7 @@ fun App() {
             ) {
                 if (trackerViewHelper.shipments.isNotEmpty()) {
                     for(shipment in trackerViewHelper.shipments.values) {
-                        TrackingCard(shipment)
+                        TrackingCard(shipment, trackerViewHelper)
                         println("hello")
                     }
                 }
@@ -112,7 +113,7 @@ fun App() {
 }
 
 @Composable
-fun TrackingCard(shipment: Shipment) {
+fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
     Card(
         backgroundColor = Color.LightGray,
         border = BorderStroke(1.dp, Color.Black),

@@ -5,6 +5,12 @@ import java.io.PrintWriter
 
 class FileLogger(private val filePath: String) : Logger() {
 
+    init {
+        if (filePath.isBlank()) {
+            throw IllegalArgumentException("blank file path")
+        }
+    }
+
     override fun log(level: Level, threadId: String, message: String, exception: Exception?) {
         writeToFile(formatLogMessage(level, threadId, message, exception))
     }

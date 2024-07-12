@@ -11,6 +11,7 @@ class Shipped(
 ) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
+        // TODO check if valid data
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created Shipped update for shipment: $shipmentId")
     }
 

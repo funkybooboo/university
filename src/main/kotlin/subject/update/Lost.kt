@@ -11,6 +11,7 @@ class Lost(
 ) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
+        // TODO check if valid data
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created Lost update for shipment: $shipmentId")
     }
 

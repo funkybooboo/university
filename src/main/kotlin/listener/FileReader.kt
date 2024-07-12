@@ -10,6 +10,13 @@ class FileReader(
     queue: Queue<String>,
     private val filePath: String,
 ): UpdateListener(queue) {
+
+    init {
+        if (filePath.isBlank()) {
+            throw IllegalArgumentException("Blank file path");
+        }
+    }
+
     override suspend fun listen() = withContext(Dispatchers.IO) {
         try {
             val file = File(filePath)

@@ -60,7 +60,7 @@ class Shipment(
         }
     }
 
-    fun copy(): Shipment {
+    private fun copy(): Shipment {
         return Shipment(id, notes.toMutableList(), updateHistory.toMutableList(), expectedDeliveryDateTimestampHistory.toMutableList(), locationHistory.toMutableList())
     }
 }

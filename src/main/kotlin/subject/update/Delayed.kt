@@ -11,6 +11,7 @@ class Delayed(
 ) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
+        // TODO check if valid data
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created Delayed update for shipment: $shipmentId")
     }
 

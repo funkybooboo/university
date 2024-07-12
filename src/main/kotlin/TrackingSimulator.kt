@@ -13,6 +13,19 @@ class TrackingSimulator(
 ) {
     private val shipments: MutableList<Shipment> = mutableListOf()
 
+    init {
+        var createdFound = false;
+        for (key in typeToUpdateConstructor.keys) {
+            if (key == "created") {
+                createdFound = true;
+                break;
+            }
+        }
+        if (!createdFound) {
+            throw IllegalArgumentException("One of the keys in the typeToUpdateConstructor map has to be created")
+        }
+    }
+
     suspend fun run() {
         while (true) {
             delay(waitTimeMills)

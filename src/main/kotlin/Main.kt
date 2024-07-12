@@ -1,7 +1,6 @@
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.remember
 import androidx.compose.foundation.verticalScroll
@@ -112,9 +111,20 @@ fun App(
                     Text(text = "Track")
                 }
             }
-            LazyColumn {
-                items(trackerViewHelper.shipments) { shipment ->
-                    TrackingCard(shipment, trackerViewHelper)
+
+            Column (
+                Modifier
+                    .verticalScroll(
+                        rememberScrollState()
+                    )
+            ) {
+                if (trackerViewHelper.shipments.isNotEmpty()) {
+                    for(shipment in trackerViewHelper.shipments) {
+                        TrackingCard(shipment, trackerViewHelper)
+                    }
+                }
+                else {
+                    Text(text = "Tracking none")
                 }
             }
 
@@ -161,27 +171,46 @@ fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
                 if (shipment.updateHistory.isNotEmpty()) {
                     Text(text = "Status: " + shipment.updateHistory.last().newStatus)
                 }
+                else {
+                    Text(text = "Status: None")
+                }
                 Spacer(modifier = Modifier.height(4.dp))
                 if (shipment.locationHistory.isNotEmpty()) {
                     Text(text = "Location: " + shipment.locationHistory.last())
+                }
+                else {
+                    Text(text = "Location: None")
                 }
                 Spacer(modifier = Modifier.height(4.dp))
                 if (shipment.expectedDeliveryDateTimestampHistory.isNotEmpty()) {
                     Text(text = "Expected Delivery: " + Date(shipment.expectedDeliveryDateTimestampHistory.last()))
                 }
+                else {
+                    Text(text = "Expected Delivery: None")
+                }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Status Updates:")
-                LazyColumn {
-                    items(shipment.updateHistory) { shippingUpdate ->
-                        Text(text = shippingUpdate.toString())
+                if (shipment.updateHistory.size > 0) {
+                    Column {
+                        for (shippingUpdate in shipment.updateHistory) {
+                            Text(text = shippingUpdate.toString())
+                        }
                     }
+                }
+                else {
+                    Text(text = "None")
                 }
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(text = "Notes:")
-                LazyColumn {
-                    items(shipment.notes) { note ->
-                        Text(text = note)
+                if (shipment.notes.size > 0) {
+                    Column {
+                        for (note in shipment.notes) {
+                            Text(text = note)
+                        }
                     }
+                }
+                else {
+                    Text(text = "None")
                 }
             }
             Box(

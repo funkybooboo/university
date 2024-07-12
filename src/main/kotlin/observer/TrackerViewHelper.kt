@@ -1,9 +1,9 @@
 package observer
 
 import androidx.compose.runtime.mutableStateMapOf
-import subject.Shipment
 import logger.Logger.Level
-import logger
+import subject.Shipment
+import manager.LoggerManager.logger
 
 class TrackerViewHelper() : ShipmentObserver {
 

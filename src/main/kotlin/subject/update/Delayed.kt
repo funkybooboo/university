@@ -1,7 +1,7 @@
 package subject.update
 
 import logger.Logger.Level
-import logger
+import manager.LoggerManager.logger
 
 class Delayed(
     type: String,

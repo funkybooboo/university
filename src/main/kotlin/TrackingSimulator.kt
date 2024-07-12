@@ -2,6 +2,7 @@ import kotlinx.coroutines.delay
 import listener.Queue
 import subject.Shipment
 import subject.update.Update
+import manager.LoggerManager.logger
 import logger.Logger.Level
 
 class TrackingSimulator(

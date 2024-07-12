@@ -2,7 +2,7 @@ package listener
 
 import java.util.LinkedList
 import logger.Logger.Level
-import logger
+import manager.LoggerManager.logger
 
 class Queue<T>() {
     private val items: LinkedList<T> = LinkedList()

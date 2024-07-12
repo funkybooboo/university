@@ -15,48 +15,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.*
-import listener.FileReader
-import listener.Queue
-import logger.CompositeLogger
-import logger.ConsoleLogger
-import logger.FileLogger
 import logger.Logger.Level
-import observer.TrackerViewHelper
+import manager.FileReaderManager.fileReader
+import manager.LoggerManager.logger
+import manager.TrackerViewHelperManager.trackerViewHelper
+import manager.TrackingSimulatorManager.trackingSimulator
 import subject.Shipment
-import subject.update.*
 import java.util.*
 
-// TODO singleton stuff with logger, simulator, and viewhelper
-
-val logger = CompositeLogger()
-
 fun main() = runBlocking {
-
-    val fileLogger = FileLogger("log/logs.log")
-    val consoleLogger = ConsoleLogger()
-    logger.registerLogger(consoleLogger)
-    logger.registerLogger(fileLogger)
-
-    // Configuration
-    val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update> = mapOf(
-        Pair("created", ::Created),
-        Pair("shipped", ::Shipped),
-        Pair("location", ::Location),
-        Pair("delivered", ::Delivered),
-        Pair("delayed", ::Delayed),
-        Pair("lost", ::Lost),
-        Pair("canceled", ::Canceled),
-        Pair("noteadded", ::NoteAdded),
-    )
-    val listenerFilePath = "data/test.txt"
-    val delimiter = ","
-    val waitTimeMills = 1000L
-
-    val queue: Queue<String> = Queue()
-    val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
-
     launch {
-        val fileReader = FileReader(queue, listenerFilePath)
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start listening")
         fileReader.listen()
     }
@@ -67,18 +35,15 @@ fun main() = runBlocking {
     application {
         Window(onCloseRequest = ::exitApplication) {
             logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start ui")
-            App(trackingSimulator)
+            App()
         }
     }
 }
 
 @Composable
-fun App(
-    trackingSimulator: TrackingSimulator
-) {
+fun App() {
     var searchedShipmentId by remember { mutableStateOf("") }
     var snackbarVisible by remember { mutableStateOf(false) }
-    val trackerViewHelper = remember { TrackerViewHelper() }
 
     MaterialTheme {
         Column(
@@ -120,7 +85,7 @@ fun App(
             ) {
                 if (trackerViewHelper.shipments.isNotEmpty()) {
                     for(shipment in trackerViewHelper.shipments.values) {
-                        TrackingCard(shipment, trackerViewHelper, trackingSimulator)
+                        TrackingCard(shipment)
                         println("hello")
                     }
                 }
@@ -147,7 +112,7 @@ fun App(
 }
 
 @Composable
-fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper, trackingSimulator: TrackingSimulator) {
+fun TrackingCard(shipment: Shipment) {
     Card(
         backgroundColor = Color.LightGray,
         border = BorderStroke(1.dp, Color.Black),

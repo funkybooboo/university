@@ -3,7 +3,7 @@ package subject
 import java.text.SimpleDateFormat
 import java.util.*
 import logger.Logger.Level
-import logger
+import manager.LoggerManager.logger
 
 class ShippingUpdate(
     val newStatus: String,

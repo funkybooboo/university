@@ -2,7 +2,7 @@ package subject
 
 import observer.ShipmentObserver
 import logger.Logger.Level
-import logger
+import manager.LoggerManager.logger
 
 abstract class ShipmentSubject() {
     protected var observers: MutableList<ShipmentObserver> = mutableListOf()

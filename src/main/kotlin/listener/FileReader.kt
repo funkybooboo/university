@@ -4,7 +4,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 import logger.Logger.Level
-import logger
+import manager.LoggerManager.logger
 
 class FileReader(
     queue: Queue<String>,

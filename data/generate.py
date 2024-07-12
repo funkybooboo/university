@@ -51,7 +51,7 @@ def generate_random_update(update_type):
 
 
 def main():
-    num_updates = 50
+    num_updates = 5000
     with open("shipments.txt", "w") as file:
         for _ in range(num_updates):
             update_type = random.choice(update_types)

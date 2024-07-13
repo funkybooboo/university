@@ -11,7 +11,8 @@ class Delayed(
 ) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
-        // TODO check if valid data
+        if (type != "delayed") throw IllegalArgumentException("Invalid type")
+        if (otherInfo == null) throw IllegalArgumentException("otherInfo must have time information")
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created Delayed update for shipment: $shipmentId")
     }
 

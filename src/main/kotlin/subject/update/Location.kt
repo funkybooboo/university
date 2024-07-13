@@ -11,7 +11,8 @@ class Location(
 ) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
-        // TODO check if valid data
+        if (type != "location") throw IllegalArgumentException("Invalid type")
+        if (otherInfo == null) throw IllegalArgumentException("otherInfo must have location info")
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created Location update for shipment: $shipmentId")
     }
 

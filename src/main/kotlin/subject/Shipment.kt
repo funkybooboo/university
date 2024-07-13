@@ -25,6 +25,10 @@ class Shipment(
         observer.notify(copy())
     }
 
+    override fun hasObserver(observer: ShipmentObserver): Boolean {
+        return observers.contains(observer)
+    }
+
     fun addUpdate(update: Update) {
         addNote(update.getNote())
         addLocation(update.getLocation())

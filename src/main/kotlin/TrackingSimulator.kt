@@ -22,7 +22,7 @@ class TrackingSimulator(
             }
         }
         if (!createdFound) {
-            throw IllegalArgumentException("One of the keys in the typeToUpdateConstructor map has to be created")
+            throw IllegalArgumentException("One of the keys in the typeToUpdateConstructor map has to be 'created'")
         }
     }
 
@@ -66,12 +66,12 @@ class TrackingSimulator(
         return foundShipment
     }
 
-    private fun addShipment(shipment: Shipment) {
+    fun addShipment(shipment: Shipment) {
         shipments.add(shipment)
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Added new shipment: ${shipment.id}")
     }
 
-    private fun getUpdate(info: String): Update? {
+    fun getUpdate(info: String): Update? {
         val parts = info.split(delimiter).map { it.lowercase() }
         if (parts.size < 3 || parts.size > 4) {
             logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Invalid update format: $info")

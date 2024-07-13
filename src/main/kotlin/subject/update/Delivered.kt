@@ -11,7 +11,8 @@ class Delivered(
 ) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
-        // TODO check if valid data
+        if (type != "delivered") throw IllegalArgumentException("Invalid type")
+        if (otherInfo != null) throw IllegalArgumentException("otherInfo must be null")
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created Delivered update for shipment: $shipmentId")
     }
 

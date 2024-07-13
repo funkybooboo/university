@@ -7,23 +7,24 @@ import manager.LoggerManager.logger
 
 class TrackerViewHelper() : ShipmentObserver {
 
-    val shipments = mutableStateMapOf<String, Shipment>()
+    private val _shipments = mutableStateMapOf<String, Shipment>()
+    val shipments: Map<String, Shipment>
+        get() = _shipments
 
     override fun notify(shipment: Shipment) {
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Notification received for shipment: ${shipment.id}")
-        shipments[shipment.id] = shipment
-        println("hello1")
+        _shipments[shipment.id] = shipment
     }
 
     fun startTracking(shipment: Shipment) {
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Starting tracking for shipment: ${shipment.id}")
         shipment.addObserver(this)
-        shipments[shipment.id] = shipment
+        _shipments[shipment.id] = shipment
     }
 
     fun stopTracking(shipment: Shipment) {
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Stopping tracking for shipment: ${shipment.id}")
-        shipments[shipment.id]?.removeObserver(this)
-        shipments.remove(shipment.id)
+        _shipments[shipment.id]?.removeObserver(this)
+        _shipments.remove(shipment.id)
     }
 }

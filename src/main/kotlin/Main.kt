@@ -84,28 +84,26 @@ fun App() {
                         rememberScrollState()
                     )
             ) {
+                if (snackbarVisible) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
+                        Snackbar(
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            Text(text = "Shipment not found!")
+                        }
+                    }
+                    LaunchedEffect(snackbarVisible) {
+                        delay(3000)
+                        snackbarVisible = false
+                    }
+                }
                 if (trackerViewHelper.shipments.isNotEmpty()) {
                     for(shipment in trackerViewHelper.shipments.values) {
                         TrackingCard(shipment, trackerViewHelper)
-                        println("hello")
                     }
                 }
                 else {
                     Text(text = "Tracking none")
-                }
-            }
-
-            if (snackbarVisible) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
-                    Snackbar(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(text = "Shipment not found!")
-                    }
-                }
-                LaunchedEffect(snackbarVisible) {
-                    delay(3000)
-                    snackbarVisible = false
                 }
             }
         }

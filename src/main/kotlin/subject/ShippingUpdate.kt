@@ -7,8 +7,8 @@ import manager.LoggerManager.logger
 
 class ShippingUpdate(
     val newStatus: String,
-    private val previousStatus: String,
-    private val timestamp: Long
+    val previousStatus: String,
+    val timestamp: Long
 ) {
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm")
 

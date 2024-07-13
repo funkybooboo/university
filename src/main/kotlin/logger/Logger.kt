@@ -12,7 +12,7 @@ abstract class Logger() {
         ERROR
     }
 
-    private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
 
     fun formatLogMessage(level: Level, threadId: String, message: String, exception: Exception?=null): String {
         val formattedTime = dateFormat.format(Date())

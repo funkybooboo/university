@@ -11,7 +11,8 @@ class NoteAdded(
 ) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
-        // TODO check if valid data
+        if (type != "noteadded") throw IllegalArgumentException("Invalid type")
+        if (otherInfo == null) throw IllegalArgumentException("otherInfo must have note information")
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created NoteAdded update for shipment: $shipmentId")
     }
 

@@ -22,4 +22,6 @@ abstract class ShipmentSubject() {
         observers = observers.filter { it != observer }.toMutableList()
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Observer removed: $observer")
     }
+
+    abstract fun hasObserver(observer: ShipmentObserver): Boolean
 }

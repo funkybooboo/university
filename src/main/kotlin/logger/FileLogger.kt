@@ -15,7 +15,7 @@ class FileLogger(private val filePath: String) : Logger() {
         writeToFile(formatLogMessage(level, threadId, message, exception))
     }
 
-    private fun writeToFile(message: String) {
+    fun writeToFile(message: String) {
         try {
             PrintWriter(FileWriter(filePath, true)).use { writer ->
                 writer.println(message)

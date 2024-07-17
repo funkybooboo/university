@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shipment Tracking</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .snackbar {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>Shipment Tracking</h1>
+    <div>
+        <input type="text" id="shipmentId" placeholder="Enter Shipment ID">
+        <button onclick="startTracking()">Track</button>
+    </div>
+    <div id="shipmentList">
+        <!-- Shipment cards will be dynamically added here -->
+    </div>
+</div>
+
+<script>
+    let websocket;
+
+    function startTracking() {
+        const shipmentId = document.getElementById('shipmentId').value.trim();
+        if (shipmentId !== "") {
+            const command = `START_TRACKING: ${shipmentId}`;
+            sendCommand(command);
+        }
+    }
+
+    function sendCommand(command) {
+        if (!websocket || websocket.readyState !== WebSocket.OPEN) {
+            openWebSocket();
+        }
+        websocket.send(command);
+    }
+
+    function openWebSocket() {
+        websocket = new WebSocket("ws://localhost:8080/track-shipments");
+
+        websocket.onopen = function(event) {
+            console.log("WebSocket opened");
+        };
+
+        websocket.onmessage = function(event) {
+            const shipment = JSON.parse(event.data);
+            console.log("Received:", shipment);
+            updateUI(shipment);
+        };
+
+        websocket.onclose = function(event) {
+            console.log("WebSocket closed");
+        };
+
+        websocket.onerror = function(event) {
+            console.error("WebSocket error:", event);
+        };
+    }
+
+    function updateUI(shipment) {
+        const shipmentListDiv = document.getElementById('shipmentList');
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'card';
+        cardDiv.innerHTML = `
+                <h2>Shipment ID: ${shipment.id}</h2>
+                <p>Status: ${shipment.status}</p>
+                <p>Location: ${shipment.location}</p>
+                <p>Expected Delivery: ${shipment.expectedDelivery}</p>
+                <button onclick="stopTracking('${shipment.id}')">Stop Tracking</button>
+            `;
+        shipmentListDiv.appendChild(cardDiv);
+    }
+
+    function stopTracking(shipmentId) {
+        const command = `STOP_TRACKING: ${shipmentId}`;
+        sendCommand(command);
+        document.getElementById('shipmentList').innerHTML = "";
+    }
+
+    // Open WebSocket connection when the page loads
+    document.addEventListener("DOMContentLoaded", function() {
+        openWebSocket();
+    });
+</script>
+</body>
+</html>

@@ -1,16 +1,21 @@
 package observer
 
-import manager.TrackerViewHelperManager.trackerViewHelper
-import manager.ShipmentTrackerManager.shipmentTracker
-import manager.LoggerManager.logger
-import logger.Logger.Level
-
+import io.ktor.server.application.*
 import io.ktor.server.engine.*
+import io.ktor.server.http.content.*
 import io.ktor.server.netty.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.websocket.*
 import io.ktor.websocket.*
+import kotlinx.coroutines.channels.ClosedReceiveChannelException
+import kotlinx.coroutines.channels.consumeEach
+import manager.LoggerManager.logger
+import logger.Logger.Level
+import manager.ShipmentTrackerManager.shipmentTracker
+import manager.TrackerViewHelperManager.trackerViewHelper
 import subject.Shipment
+import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -20,49 +25,59 @@ class TrackerServer(private val port: Int) {
     suspend fun listen() {
         embeddedServer(Netty, port = port) {
             routing {
+
+                get("/") {
+                    val resourceUrl = call.resolveResource("tracker.html")
+                    val file = File(resourceUrl.toString())
+                    call.respondFile(file)
+                }
+
                 webSocket("/track-shipments") {
                     val clientId = connections.computeIfAbsent(this) { AtomicInteger() }.getAndIncrement()
 
                     logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "New client connected: $clientId")
 
                     try {
-                        // Send initial data
-                        for (shipment in trackerViewHelper.shipments.values) {
+                        // Send initial data to the client
+                        trackerViewHelper.shipments.values.forEach { shipment ->
                             send(shipment.toJson())
                         }
 
-                        // Listen for incoming messages
-                        for (frame in incoming) {
-                            frame as? Frame.Text ?: continue
-                            val text = frame.readText()
-                            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Received from client: $text")
+                        // Listen for incoming messages from the client
+                        incoming.consumeEach { frame ->
+                            if (frame is Frame.Text) {
+                                val text = frame.readText().trim()
 
-                            // Handle commands from the client
-                            when {
-                                text.startsWith("START_TRACKING:") -> {
-                                    val shipmentId = text.removePrefix("START_TRACKING:").trim()
-                                    val shipment = shipmentTracker.findShipment(shipmentId)
-                                    if (shipment != null) {
-                                        trackerViewHelper.startTracking(shipment)
+                                // Handle commands from the client
+                                when {
+                                    text.startsWith("START_TRACKING:") -> {
+                                        val shipmentId = text.removePrefix("START_TRACKING:").trim()
+                                        val shipment = shipmentTracker.findShipment(shipmentId)
+                                        if (shipment != null) {
+                                            trackerViewHelper.startTracking(shipment)
+                                            broadcastUpdate(shipment)
+                                        }
                                     }
-                                }
-                                text.startsWith("STOP_TRACKING:") -> {
-                                    val shipmentId = text.removePrefix("STOP_TRACKING:").trim()
-                                    val shipment = shipmentTracker.findShipment(shipmentId)
-                                    if (shipment != null) {
-                                        trackerViewHelper.stopTracking(shipment)
+                                    text.startsWith("STOP_TRACKING:") -> {
+                                        val shipmentId = text.removePrefix("STOP_TRACKING:").trim()
+                                        val shipment = shipmentTracker.findShipment(shipmentId)
+                                        if (shipment != null) {
+                                            trackerViewHelper.stopTracking(shipment)
+                                            broadcastUpdate(shipment)
+                                        }
                                     }
-                                }
-                                else -> {
-                                    logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Unsupported command from client: $text")
-                                    send("Unsupported command: $text")
+                                    else -> {
+                                        logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Unsupported command from client: $text")
+                                        send("Unsupported command: $text")
+                                    }
                                 }
                             }
                         }
-                    } catch (e: Exception) {
-                        logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Error in WebSocket connection: ${e.message}")
-                    } finally {
+                    } catch (e: ClosedReceiveChannelException) {
                         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Client disconnected: $clientId")
+                    } catch (e: Throwable) {
+                        logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Error handling WebSocket connection: ${e.message}")
+                    } finally {
                         connections.remove(this)
                     }
                 }
@@ -71,7 +86,7 @@ class TrackerServer(private val port: Int) {
     }
 
     suspend fun broadcastUpdate(shipment: Shipment) {
-        for (connection in connections.keys) {
+        connections.keys.forEach { connection ->
             try {
                 connection.send(shipment.toJson())
             } catch (e: Exception) {

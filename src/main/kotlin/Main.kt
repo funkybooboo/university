@@ -7,6 +7,10 @@ import manager.TrackerServerManager.trackerServer
 
 fun main(): Unit = runBlocking {
     launch {
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start shipment tracker")
+        shipmentTracker.listen()
+    }
+    launch {
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start update server")
         updateServer.listen()
     }
@@ -14,9 +18,4 @@ fun main(): Unit = runBlocking {
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start tracker server")
         trackerServer.listen()
     }
-    launch {
-        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start shipment tracker")
-        shipmentTracker.listen()
-    }
-    // TODO start both of the uis
 }

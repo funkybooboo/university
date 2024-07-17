@@ -15,3 +15,9 @@ dependencies {
     implementation("io.ktor:ktor-server-websockets:2.3.12")
     testImplementation(kotlin("test"))
 }
+
+sourceSets {
+    main {
+        resources.srcDirs("src/main/resources")
+    }
+}

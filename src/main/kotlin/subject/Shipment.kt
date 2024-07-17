@@ -13,14 +13,14 @@ class Shipment(
     val locationHistory: MutableList<String> = mutableListOf()
 ): ShipmentSubject() {
 
-    override fun notifyObservers() {
+    override suspend fun notifyObservers() {
         observers.forEach {
             it.notify(copy())
             logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Notifying observer for shipment: $id")
         }
     }
 
-    override fun addObserver(observer: ShipmentObserver) {
+    override suspend fun addObserver(observer: ShipmentObserver) {
         super.addObserver(observer)
         observer.notify(copy())
     }
@@ -29,7 +29,7 @@ class Shipment(
         return observers.contains(observer)
     }
 
-    fun addUpdate(update: Update) {
+    suspend fun addUpdate(update: Update) {
         addNote(update.getNote())
         addLocation(update.getLocation())
         addExpectedDeliveryDateTimestamp(update.getExpectedDeliveryDateTimestamp())
@@ -66,5 +66,17 @@ class Shipment(
 
     private fun copy(): Shipment {
         return Shipment(id, notes.toMutableList(), updateHistory.toMutableList(), expectedDeliveryDateTimestampHistory.toMutableList(), locationHistory.toMutableList())
+    }
+
+    fun toJson(): String {
+        return """
+        {
+            "id": "$id",
+            "status": "${updateHistory.lastOrNull()?.newStatus ?: "None"}",
+            "location": "${locationHistory.lastOrNull() ?: "None"}",
+            "expectedDelivery": "${expectedDeliveryDateTimestampHistory.lastOrNull()?.let { java.util.Date(it).toString() } ?: "None"}"
+            // Add more fields as needed
+        }
+        """.trimIndent()
     }
 }

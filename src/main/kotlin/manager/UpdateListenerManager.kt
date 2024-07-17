@@ -1,9 +1,9 @@
 package manager
 
-import listener.FileReader
+import listener.UpdateServer
 import manager.QueueManager.queue
 
 object UpdateListenerManager {
-    private const val listenerFilePath = "data/shipments0.txt"
-    val fileReader = FileReader(queue, listenerFilePath)
+    private const val port = 3001
+    val updateServer = UpdateServer(queue, port)
 }

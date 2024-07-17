@@ -7,6 +7,7 @@ import kotlinx.coroutines.runBlocking
 import listener.Queue
 import subject.Shipment
 import subject.update.*
+import tracker.ShipmentTracker
 import kotlin.test.Test
 import kotlin.test.assertNull
 
@@ -24,9 +25,8 @@ class ShipmentTrackerTest {
             Pair("noteadded", ::NoteAdded),
         )
         val delimiter = ","
-        val waitTimeMills = 1000L
         val queue = Queue<String>()
-        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
         assertNotNull(shipmentTracker)
     }
 
@@ -38,11 +38,10 @@ class ShipmentTrackerTest {
             // Missing "created" key intentionally
         )
         val delimiter = ","
-        val waitTimeMills = 1000L
         val queue = Queue<String>()
 
         // This should throw an IllegalArgumentException
-        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
     }
 
     @Test
@@ -52,19 +51,16 @@ class ShipmentTrackerTest {
             Pair("created", ::Created)
         )
         val delimiter = ","
-        val waitTimeMills = 100L
 
-        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
 
         runBlocking {
             val job = launch {
-                shipmentTracker.run()
+                shipmentTracker.listen()
             }
 
             val updateInfo = "created,123,1626177123"
             queue.enqueue(updateInfo)
-
-            delay(waitTimeMills * 2)
 
             val shipment = shipmentTracker.findShipment("123")
             assertNotNull(shipment)
@@ -83,11 +79,11 @@ class ShipmentTrackerTest {
         val delimiter = ","
         val waitTimeMills = 100L
 
-        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
 
         runBlocking {
             val job = launch {
-                shipmentTracker.run()
+                shipmentTracker.listen()
             }
 
             // No update in the queue
@@ -110,11 +106,11 @@ class ShipmentTrackerTest {
         val delimiter = ","
         val waitTimeMills = 100L
 
-        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
 
         runBlocking {
             val job = launch {
-                shipmentTracker.run()
+                shipmentTracker.listen()
             }
 
             val unknownUpdate = "unknown,123,1626177123"
@@ -138,11 +134,11 @@ class ShipmentTrackerTest {
         val delimiter = ","
         val waitTimeMills = 100L
 
-        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
 
         runBlocking {
             val job = launch {
-                shipmentTracker.run()
+                shipmentTracker.listen()
             }
 
             val updateInfo = "created,123,1626177123"
@@ -165,7 +161,7 @@ class ShipmentTrackerTest {
         val delimiter = ","
         val waitTimeMills = 1000L
         val queue = Queue<String>()
-        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
 
         val shipmentId = "123"
         val shipment = Shipment(shipmentId)
@@ -186,7 +182,7 @@ class ShipmentTrackerTest {
         val delimiter = ","
         val waitTimeMills = 1000L
         val queue = Queue<String>()
-        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
 
         val shipmentId = "123"
         val shipment = Shipment(shipmentId)
@@ -208,7 +204,7 @@ class ShipmentTrackerTest {
         val delimiter = ","
         val waitTimeMills = 1000L
         val queue = Queue<String>()
-        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
 
         val info1 = "created,123,1626177123"
         val update1 = shipmentTracker.getUpdate(info1)

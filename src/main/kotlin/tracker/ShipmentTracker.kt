@@ -1,4 +1,5 @@
-import kotlinx.coroutines.delay
+package tracker
+
 import listener.Queue
 import subject.Shipment
 import subject.update.Update
@@ -8,7 +9,6 @@ import logger.Logger.Level
 class ShipmentTracker(
     private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update>,
     private val delimiter: String,
-    private val waitTimeMills: Long,
     private val queue: Queue<String>,
 ) {
     private val shipments: MutableList<Shipment> = mutableListOf()
@@ -26,10 +26,8 @@ class ShipmentTracker(
         }
     }
 
-    suspend fun run() {
+    suspend fun listen() {
         while (true) {
-            delay(waitTimeMills)
-
             val info = queue.dequeue()?.trim()
             if (info.isNullOrBlank()) {
                 logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "No updates")

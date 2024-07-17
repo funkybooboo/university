@@ -1,6 +1,6 @@
 package manager
 
-import ShipmentTracker
+import tracker.ShipmentTracker
 import manager.QueueManager.queue
 import subject.update.*
 
@@ -17,5 +17,5 @@ object ShipmentTrackerManager {
     )
     private const val delimiter = ","
     private const val waitTimeMills = 1000L
-    val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+    val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
 }

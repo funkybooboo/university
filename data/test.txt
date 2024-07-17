@@ -1,0 +1,5 @@
+Line 1
+Line 2
+Line 3
+[1] [INFO] 2024-07-13 14:51:34.117 - Test log message 
+Test log message

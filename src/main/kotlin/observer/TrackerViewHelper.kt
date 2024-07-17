@@ -17,7 +17,7 @@ class TrackerViewHelper() : ShipmentObserver {
         trackerServer.broadcastUpdate(shipment)
     }
 
-    fun startTracking(shipment: Shipment) {
+    suspend fun startTracking(shipment: Shipment) {
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Starting tracking for shipment: ${shipment.id}")
         shipment.addObserver(this)
         _shipments[shipment.id] = shipment

@@ -1,4 +1,4 @@
-package tracker
+package observer
 
 import manager.TrackerViewHelperManager.trackerViewHelper
 import manager.ShipmentTrackerManager.shipmentTracker

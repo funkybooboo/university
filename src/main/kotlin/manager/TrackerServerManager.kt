@@ -1,6 +1,6 @@
 package manager
 
-import tracker.TrackerServer
+import observer.TrackerServer
 
 object TrackerServerManager {
     private const val port = 3000

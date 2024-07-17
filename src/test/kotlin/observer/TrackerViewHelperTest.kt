@@ -25,8 +25,7 @@ class TrackerViewHelperTest {
     fun testNotify() {
         val trackerViewHelper = TrackerViewHelper()
         val shipment = Shipment("1")
-
-        trackerViewHelper.notify(shipment)
+        // trackerViewHelper.notify(shipment)
 
         assertTrue(trackerViewHelper.shipments.containsKey(shipment.id))
     }

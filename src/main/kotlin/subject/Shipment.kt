@@ -69,14 +69,32 @@ class Shipment(
     }
 
     fun toJson(): String {
-        return """
-        {
-            "id": "$id",
-            "status": "${updateHistory.lastOrNull()?.newStatus ?: "None"}",
-            "location": "${locationHistory.lastOrNull() ?: "None"}",
-            "expectedDelivery": "${expectedDeliveryDateTimestampHistory.lastOrNull()?.let { java.util.Date(it).toString() } ?: "None"}"
-            // Add more fields as needed
+        val updatesJson = updateHistory.joinToString(",\n") { update ->
+            """{
+                "newStatus": "${update.newStatus}",
+                "previousState": "${update.previousStatus}",
+                "timestamp": "${update.timestamp}"
+            }""".trimIndent()
         }
+
+        val notesJson = notes.joinToString(",\n") { note ->
+            """{
+                "note": "$note"
+            }""".trimIndent()
+        }
+
+        return """
+            {
+                "id": "$id",
+                "location": "${locationHistory.lastOrNull() ?: "None"}",
+                "expectedDelivery": "${expectedDeliveryDateTimestampHistory.lastOrNull()?.let { java.util.Date(it).toString() } ?: "None"}",
+                "updateHistory": [
+                    $updatesJson
+                ],
+                "notes": [
+                    $notesJson
+                ]
+            }
         """.trimIndent()
     }
 }

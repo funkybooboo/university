@@ -1,6 +1,6 @@
 package manager
 
-import tracker.ShipmentTracker
+import ShipmentTracker
 import manager.QueueManager.queue
 import subject.update.*
 

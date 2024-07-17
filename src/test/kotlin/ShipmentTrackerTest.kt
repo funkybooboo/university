@@ -7,7 +7,6 @@ import kotlinx.coroutines.runBlocking
 import listener.Queue
 import subject.Shipment
 import subject.update.*
-import tracker.ShipmentTracker
 import kotlin.test.Test
 import kotlin.test.assertNull
 

@@ -1,5 +1,3 @@
-package tracker
-
 import listener.Queue
 import subject.Shipment
 import subject.update.Update

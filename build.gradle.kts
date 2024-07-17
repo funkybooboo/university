@@ -30,7 +30,7 @@ compose.desktop {
 
         nativeDistributions {
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "CS5700_Program2"
+            packageName = "CS5700_Program3"
             packageVersion = "1.0.0"
         }
     }

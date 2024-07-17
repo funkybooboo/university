@@ -1,10 +1,10 @@
 package manager
 
-import TrackingSimulator
+import ShipmentTracker
 import manager.QueueManager.queue
 import subject.update.*
 
-object TrackingSimulatorManager {
+object ShipmentTrackerManager {
     private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update> = mapOf(
         Pair("created", ::Created),
         Pair("shipped", ::Shipped),
@@ -17,5 +17,5 @@ object TrackingSimulatorManager {
     )
     private const val delimiter = ","
     private const val waitTimeMills = 1000L
-    val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+    val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 }

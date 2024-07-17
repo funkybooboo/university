@@ -5,7 +5,7 @@ import subject.update.Update
 import manager.LoggerManager.logger
 import logger.Logger.Level
 
-class TrackingSimulator(
+class ShipmentTracker(
     private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update>,
     private val delimiter: String,
     private val waitTimeMills: Long,

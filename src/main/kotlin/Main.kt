@@ -16,9 +16,9 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import kotlinx.coroutines.*
 import logger.Logger.Level
-import manager.FileReaderManager.fileReader
+import manager.UpdateListenerManager.fileReader
 import manager.LoggerManager.logger
-import manager.TrackingSimulatorManager.trackingSimulator
+import manager.ShipmentTrackerManager.shipmentTracker
 import observer.TrackerViewHelper
 import subject.Shipment
 import java.util.*
@@ -30,7 +30,7 @@ fun main() = runBlocking {
     }
     launch {
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Start simulation")
-        trackingSimulator.run()
+        shipmentTracker.run()
     }
     application {
         Window(onCloseRequest = ::exitApplication) {
@@ -65,7 +65,7 @@ fun App() {
                 Spacer(modifier = Modifier.width(16.dp))
                 Button(onClick = {
                     if (searchedShipmentId.isNotBlank()) {
-                        val shipment = trackingSimulator.findShipment(searchedShipmentId)
+                        val shipment = shipmentTracker.findShipment(searchedShipmentId)
                         if (shipment == null) {
                             snackbarVisible = true
                         } else {
@@ -184,7 +184,7 @@ fun TrackingCard(shipment: Shipment, trackerViewHelper: TrackerViewHelper) {
                     .align(Alignment.Top)
                     .clickable {
 
-                        trackingSimulator.findShipment(shipment.id)?.let { trackerViewHelper.stopTracking(it) }
+                        shipmentTracker.findShipment(shipment.id)?.let { trackerViewHelper.stopTracking(it) }
                     }
             ) {
                 Text(

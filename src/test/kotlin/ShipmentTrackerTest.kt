@@ -10,7 +10,7 @@ import subject.update.*
 import kotlin.test.Test
 import kotlin.test.assertNull
 
-class TrackingSimulatorTest {
+class ShipmentTrackerTest {
     @Test
     fun testConstruction() {
         val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update> = mapOf(
@@ -26,8 +26,8 @@ class TrackingSimulatorTest {
         val delimiter = ","
         val waitTimeMills = 1000L
         val queue = Queue<String>()
-        val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
-        assertNotNull(trackingSimulator)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        assertNotNull(shipmentTracker)
     }
 
     @Test(expected = IllegalArgumentException::class)
@@ -42,7 +42,7 @@ class TrackingSimulatorTest {
         val queue = Queue<String>()
 
         // This should throw an IllegalArgumentException
-        val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
     }
 
     @Test
@@ -54,11 +54,11 @@ class TrackingSimulatorTest {
         val delimiter = ","
         val waitTimeMills = 100L
 
-        val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 
         runBlocking {
             val job = launch {
-                trackingSimulator.run()
+                shipmentTracker.run()
             }
 
             val updateInfo = "created,123,1626177123"
@@ -66,7 +66,7 @@ class TrackingSimulatorTest {
 
             delay(waitTimeMills * 2)
 
-            val shipment = trackingSimulator.findShipment("123")
+            val shipment = shipmentTracker.findShipment("123")
             assertNotNull(shipment)
             assertEquals("123", shipment?.id)
 
@@ -83,18 +83,18 @@ class TrackingSimulatorTest {
         val delimiter = ","
         val waitTimeMills = 100L
 
-        val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 
         runBlocking {
             val job = launch {
-                trackingSimulator.run()
+                shipmentTracker.run()
             }
 
             // No update in the queue
 
             delay(waitTimeMills * 2)
 
-            val shipment = trackingSimulator.findShipment("123")
+            val shipment = shipmentTracker.findShipment("123")
             assertNull(shipment)
 
             job.cancelAndJoin()
@@ -110,11 +110,11 @@ class TrackingSimulatorTest {
         val delimiter = ","
         val waitTimeMills = 100L
 
-        val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 
         runBlocking {
             val job = launch {
-                trackingSimulator.run()
+                shipmentTracker.run()
             }
 
             val unknownUpdate = "unknown,123,1626177123"
@@ -122,7 +122,7 @@ class TrackingSimulatorTest {
 
             delay(waitTimeMills * 2)
 
-            val shipment = trackingSimulator.findShipment("123")
+            val shipment = shipmentTracker.findShipment("123")
             assertNull(shipment)
 
             job.cancelAndJoin()
@@ -138,11 +138,11 @@ class TrackingSimulatorTest {
         val delimiter = ","
         val waitTimeMills = 100L
 
-        val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 
         runBlocking {
             val job = launch {
-                trackingSimulator.run()
+                shipmentTracker.run()
             }
 
             val updateInfo = "created,123,1626177123"
@@ -150,7 +150,7 @@ class TrackingSimulatorTest {
 
             delay(waitTimeMills * 2)
 
-            val shipment = trackingSimulator.findShipment("123")
+            val shipment = shipmentTracker.findShipment("123")
             assertNull(shipment)
 
             job.cancelAndJoin()
@@ -165,13 +165,13 @@ class TrackingSimulatorTest {
         val delimiter = ","
         val waitTimeMills = 1000L
         val queue = Queue<String>()
-        val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 
         val shipmentId = "123"
         val shipment = Shipment(shipmentId)
-        trackingSimulator.addShipment(shipment)
+        shipmentTracker.addShipment(shipment)
 
-        val foundShipment = trackingSimulator.findShipment(shipmentId)
+        val foundShipment = shipmentTracker.findShipment(shipmentId)
 
         assertNotNull(foundShipment)
         assertEquals(shipmentId, foundShipment?.id)
@@ -186,13 +186,13 @@ class TrackingSimulatorTest {
         val delimiter = ","
         val waitTimeMills = 1000L
         val queue = Queue<String>()
-        val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 
         val shipmentId = "123"
         val shipment = Shipment(shipmentId)
-        trackingSimulator.addShipment(shipment)
+        shipmentTracker.addShipment(shipment)
 
-        val foundShipment = trackingSimulator.findShipment(shipmentId)
+        val foundShipment = shipmentTracker.findShipment(shipmentId)
 
         assertNotNull(foundShipment)
         assertEquals(shipmentId, foundShipment?.id)
@@ -208,25 +208,25 @@ class TrackingSimulatorTest {
         val delimiter = ","
         val waitTimeMills = 1000L
         val queue = Queue<String>()
-        val trackingSimulator = TrackingSimulator(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
+        val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, waitTimeMills, queue)
 
         val info1 = "created,123,1626177123"
-        val update1 = trackingSimulator.getUpdate(info1)
+        val update1 = shipmentTracker.getUpdate(info1)
 
         assertNotNull(update1)
         assertEquals("created", update1?.type)
         assertEquals("123", update1?.shipmentId)
 
         val info2 = "other,123,1626177123"
-        val update2 = trackingSimulator.getUpdate(info2)
+        val update2 = shipmentTracker.getUpdate(info2)
         assertNull(update2)
 
         val info3 = "shipped,123,1626177123"
-        val update3 = trackingSimulator.getUpdate(info3)
+        val update3 = shipmentTracker.getUpdate(info3)
         assertNull(update3)
 
         val info4 = "shipped,123"
-        val update4 = trackingSimulator.getUpdate(info4)
+        val update4 = shipmentTracker.getUpdate(info4)
         assertNull(update4)
     }
 

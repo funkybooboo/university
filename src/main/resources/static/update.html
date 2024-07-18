@@ -33,7 +33,32 @@
 </head>
 <body>
 <h1>Shipment Updater</h1>
-<textarea id="updateText" placeholder="Enter shipment update message"></textarea>
+<p>An update to shipment should have the following form:</p>
+<p>updateType,shipmentId,timestampOfUpdate,otherInfo. (otherInfo is optional)</p>
+<br>
+<p>There are 8 types of updates, here is an explanation of each of them:</p>
+<ul>
+    <li><strong>"created"</strong> - a new shipment has been created<br>
+        Example: "created,1243234,1999283774"</li>
+    <li><strong>"shipped"</strong> - the shipment has shipped<br>
+        Example: "shipped,1243234,1999437478,19999488398"<br>
+        The final value is the timestamp of the expected delivery date.</li>
+    <li><strong>"location"</strong> - the shipment has arrived at a new location<br>
+        Example: "location,1243234,1983893498,Los Angeles CA"</li>
+    <li><strong>"delivered"</strong> - the shipment has been delivered to the consumer<br>
+        Example: "delivered,1243234,1999345988"</li>
+    <li><strong>"delayed"</strong> - the shipment has been delayed<br>
+        Example: "delayed,1243234,1999948389,19999387834"<br>
+        The otherInfo is the new expected delivery date timestamp.</li>
+    <li><strong>"lost"</strong> - the shipment has been lost<br>
+        Example: "lost,1243234,1999934873"</li>
+    <li><strong>"canceled"</strong> - the shipment was canceled by the consumer<br>
+        Example: "canceled,1243234,199993487"</li>
+    <li><strong>"noteadded"</strong> - a note was added by the shipper to the shipment<br>
+        Example: "noteadded,1243234,199999495,packaging was damaged slightly during shipping"</li>
+</ul>
+<br>
+<textarea id="updateText" placeholder="Enter shipment update"></textarea>
 <br>
 <button onclick="sendUpdate()">Send Update</button>
 <div id="response" class="response"></div>
@@ -58,7 +83,7 @@
                     document.getElementById('response').innerText = 'Error sending update';
                 });
         } else {
-            alert('Please enter an update message');
+            alert('Please enter a shipment update');
         }
     }
 </script>

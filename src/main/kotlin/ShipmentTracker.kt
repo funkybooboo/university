@@ -1,3 +1,4 @@
+import kotlinx.coroutines.delay
 import listener.Queue
 import subject.Shipment
 import subject.update.Update
@@ -25,6 +26,9 @@ class ShipmentTracker(
     }
 
     suspend fun listen() {
+
+        delay(5000)
+
         while (true) {
             val info = queue.dequeue()?.trim()
             if (info.isNullOrBlank()) {

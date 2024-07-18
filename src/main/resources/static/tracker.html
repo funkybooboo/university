@@ -15,22 +15,11 @@
             padding: 10px;
             margin-bottom: 10px;
         }
-
-        .snackbar {
-            position: fixed;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #333;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-        }
     </style>
 </head>
 <body>
 <div id="app">
-    <h1>Shipment Tracking</h1>
+    <h1>Shipment Tracker</h1>
     <div>
         <input type="text" id="shipmentId" placeholder="Enter Shipment ID">
         <button onclick="startTracking()">Track</button>
@@ -49,6 +38,9 @@
             const command = `START_TRACKING: ${shipmentId}`;
             sendCommand(command);
         }
+        else {
+            alert("Please enter a shipment id")
+        }
     }
 
     function sendCommand(command) {
@@ -59,7 +51,7 @@
     }
 
     function openWebSocket() {
-        websocket = new WebSocket("ws://localhost:8080/track-shipments");
+        websocket = new WebSocket("ws://localhost:3000/track-shipments");
 
         websocket.onopen = function(event) {
             console.log("WebSocket opened");
@@ -77,21 +69,50 @@
 
         websocket.onerror = function(event) {
             console.error("WebSocket error:", event);
+            alert("WebSocket error occurred. Please check console for details.");
         };
     }
 
     function updateUI(shipment) {
         const shipmentListDiv = document.getElementById('shipmentList');
-        const cardDiv = document.createElement('div');
-        cardDiv.className = 'card';
-        cardDiv.innerHTML = `
-                <h2>Shipment ID: ${shipment.id}</h2>
-                <p>Status: ${shipment.status}</p>
-                <p>Location: ${shipment.location}</p>
-                <p>Expected Delivery: ${shipment.expectedDelivery}</p>
-                <button onclick="stopTracking('${shipment.id}')">Stop Tracking</button>
-            `;
-        shipmentListDiv.appendChild(cardDiv);
+        const existingCard = document.getElementById(shipment.id);
+
+        function createOrUpdateCard(cardId, htmlContent) {
+            if (existingCard) {
+                existingCard.innerHTML = htmlContent;
+            } else {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card';
+                cardDiv.id = cardId;
+                cardDiv.innerHTML = htmlContent;
+                shipmentListDiv.appendChild(cardDiv);
+            }
+        }
+
+        const updatesList = shipment.updateHistory.map(update =>
+            `<li>New Status: ${update.newStatus}, Previous Status: ${update.previousStatus}, Timestamp: ${update.timestamp}</li>`
+        ).join('');
+
+        const notesList = shipment.notes.map(note =>
+            `<li>Note: ${note}</li>`
+        ).join('');
+
+        const cardContent = `
+            <h2>Shipment ID: ${shipment.id}</h2>
+            <p>Status: ${shipment.status}</p>
+            <p>Location: ${shipment.location}</p>
+            <p>Expected Delivery: ${shipment.expectedDelivery}</p>
+
+            <h3>Updates:</h3>
+            <ul>${updatesList}</ul>
+
+            <h3>Notes:</h3>
+            <ul>${notesList}</ul>
+
+            <button onclick="stopTracking('${shipment.id}')">Stop Tracking</button>
+        `;
+
+        createOrUpdateCard(shipment.id, cardContent);
     }
 
     function stopTracking(shipmentId) {

@@ -1,0 +1,1 @@
+Make a log/ directory at the root of the project

@@ -18,7 +18,7 @@ class Queue<T>() {
         } else {
             null
         }
-        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Dequeued item: $item")
+        //logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Dequeued item: $item")
         return item
     }
 }

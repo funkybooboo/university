@@ -1,4 +1,3 @@
-import kotlinx.coroutines.delay
 import listener.Queue
 import subject.Shipment
 import subject.update.Update
@@ -13,26 +12,16 @@ class ShipmentTracker(
     private val shipments: MutableList<Shipment> = mutableListOf()
 
     init {
-        var createdFound = false;
-        for (key in typeToUpdateConstructor.keys) {
-            if (key == "created") {
-                createdFound = true;
-                break;
-            }
-        }
-        if (!createdFound) {
+        if (!typeToUpdateConstructor.keys.contains("created")) {
             throw IllegalArgumentException("One of the keys in the typeToUpdateConstructor map has to be 'created'")
         }
     }
 
     suspend fun listen() {
-
-        delay(5000)
-
         while (true) {
             val info = queue.dequeue()?.trim()
             if (info.isNullOrBlank()) {
-                logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "No updates")
+                //logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "No updates")
                 continue
             }
 

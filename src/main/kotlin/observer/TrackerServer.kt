@@ -1,8 +1,8 @@
 package observer
 
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
-import io.ktor.server.http.content.*
 import io.ktor.server.netty.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -23,13 +23,19 @@ class TrackerServer(private val trackerViewHelper: TrackerViewHelper, private va
 
     suspend fun listen() {
         embeddedServer(Netty, port = port) {
-            routing {
+            install(WebSockets)
 
+            routing {
                 get("/") {
-                    logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Tracker page request")
-                    val resourceUrl = call.resolveResource("tracker.html")
-                    val file = File(resourceUrl.toString())
-                    call.respondFile(file)
+                    logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Shipment Tracker page requested")
+                    val file = File("/home/nate/Software/School/CS5700_Program3/src/main/resources/static/tracker.html")
+                    if (file.exists()) {
+                        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Shipment Tracker page request successful")
+                        call.respondFile(file)
+                    } else {
+                        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Shipment Tracker page request failed")
+                        call.respond(HttpStatusCode.NotFound, "File not found")
+                    }
                 }
 
                 webSocket("/track-shipments") {
@@ -56,6 +62,10 @@ class TrackerServer(private val trackerViewHelper: TrackerViewHelper, private va
                                         if (shipment != null) {
                                             trackerViewHelper.startTracking(shipment)
                                             broadcastUpdate(shipment)
+                                            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Client $clientId started tracking shipment $shipmentId")
+                                        } else {
+                                            logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Shipment $shipmentId not found for client $clientId")
+                                            send("Shipment not found: $shipmentId")
                                         }
                                     }
                                     text.startsWith("STOP_TRACKING:") -> {
@@ -63,22 +73,26 @@ class TrackerServer(private val trackerViewHelper: TrackerViewHelper, private va
                                         val shipment = shipmentTracker.findShipment(shipmentId)
                                         if (shipment != null) {
                                             trackerViewHelper.stopTracking(shipment)
-                                            broadcastUpdate(shipment)
+                                            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Client $clientId stopped tracking shipment $shipmentId")
+                                        } else {
+                                            logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Shipment $shipmentId not found for client $clientId")
+                                            send("Shipment not found: $shipmentId")
                                         }
                                     }
                                     else -> {
-                                        logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Unsupported command from client: $text")
+                                        logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Unsupported command from client $clientId: $text")
                                         send("Unsupported command: $text")
                                     }
                                 }
                             }
                         }
                     } catch (e: ClosedReceiveChannelException) {
-                        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Client disconnected: $clientId")
+                        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Client $clientId disconnected")
                     } catch (e: Throwable) {
-                        logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Error handling WebSocket connection: ${e.message}")
+                        logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Error handling WebSocket connection for client $clientId: ${e.message}")
                     } finally {
                         connections.remove(this)
+                        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Connection closed for client $clientId")
                     }
                 }
             }
@@ -89,6 +103,7 @@ class TrackerServer(private val trackerViewHelper: TrackerViewHelper, private va
         connections.keys.forEach { connection ->
             try {
                 connection.send(shipment.toJson())
+                logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Update broadcasted to client")
             } catch (e: Exception) {
                 logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Failed to send update to client: ${e.message}")
             }

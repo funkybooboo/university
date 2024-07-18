@@ -32,17 +32,6 @@
 <script>
     let websocket;
 
-    function startTracking() {
-        const shipmentId = document.getElementById('shipmentId').value.trim();
-        if (shipmentId !== "") {
-            const command = `START_TRACKING: ${shipmentId}`;
-            sendCommand(command);
-        }
-        else {
-            alert("Please enter a shipment id")
-        }
-    }
-
     function sendCommand(command) {
         if (!websocket || websocket.readyState !== WebSocket.OPEN) {
             openWebSocket();
@@ -115,10 +104,28 @@
         createOrUpdateCard(shipment.id, cardContent);
     }
 
+    function startTracking() {
+        const shipmentId = document.getElementById('shipmentId').value.trim();
+        if (shipmentId !== "") {
+            const command = `START_TRACKING: ${shipmentId}`;
+            sendCommand(command);
+        }
+        else {
+            alert("Please enter a shipment id")
+        }
+    }
+
     function stopTracking(shipmentId) {
         const command = `STOP_TRACKING: ${shipmentId}`;
         sendCommand(command);
-        document.getElementById('shipmentList').innerHTML = "";
+
+        // Remove the specific card from the shipmentListDiv
+        const shipmentListDiv = document.getElementById('shipmentList');
+        const cardToRemove = document.getElementById(shipmentId);
+
+        if (cardToRemove) {
+            shipmentListDiv.removeChild(cardToRemove);
+        }
     }
 
     // Open WebSocket connection when the page loads

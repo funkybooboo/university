@@ -16,6 +16,5 @@ object ShipmentTrackerManager {
         Pair("noteadded", ::NoteAdded),
     )
     private const val delimiter = ","
-    private const val waitTimeMills = 1000L
     val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
 }

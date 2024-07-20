@@ -34,7 +34,7 @@ class Shipment(
         addLocation(update.getLocation())
         addExpectedDeliveryDateTimestamp(update.getExpectedDeliveryDateTimestamp())
 
-        val previousState = if (updateHistory.isEmpty()) "" else updateHistory.last().newStatus
+        val previousState = if (updateHistory.isEmpty()) "none" else updateHistory.last().newStatus
 
         val shippingUpdate = ShippingUpdate(update.type, previousState, update.timestampOfUpdate)
         updateHistory.add(shippingUpdate)
@@ -71,7 +71,7 @@ class Shipment(
         val updatesJson = updateHistory.joinToString(",\n") { update ->
             """{
                 "newStatus": "${update.newStatus}",
-                "previousState": "${update.previousStatus}",
+                "previousStatus": "${update.previousStatus}",
                 "timestamp": "${update.timestamp}"
             }""".trimIndent()
         }

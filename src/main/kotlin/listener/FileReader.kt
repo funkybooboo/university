@@ -1,15 +1,16 @@
 package listener
 
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.withContext
 import java.io.File
 import logger.Logger.Level
 import manager.LoggerManager.logger
 
 class FileReader(
-    queue: Queue<String>,
+    channel: Channel<String>,
     private val filePath: String,
-): UpdateListener(queue) {
+): UpdateListener(channel) {
 
     init {
         if (filePath.isBlank()) {
@@ -23,7 +24,7 @@ class FileReader(
             logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Starting to read file: $filePath")
             val lines = file.readLines()
             lines.forEach { line ->
-                queue.enqueue(line)
+                channel.send(line)
                 logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Enqueued line: $line")
             }
             logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "File reading completed: $filePath")

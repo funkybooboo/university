@@ -7,11 +7,12 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.channels.Channel
 import java.io.File
 import logger.Logger.Level
 import manager.LoggerManager.logger
 
-class UpdateServer(queue: Queue<String>, private val port: Int): UpdateListener(queue) {
+class UpdateServer(channel: Channel<String>, private val port: Int): UpdateListener(channel) {
     override suspend fun listen() {
         logger.log(Level.INFO, "UpdateServer", "Starting server on port $port")
 
@@ -36,12 +37,12 @@ class UpdateServer(queue: Queue<String>, private val port: Int): UpdateListener(
 
                 post("/update") {
                     try {
-                        val update = call.receiveText()
-                        if (update.isBlank()) {
+                        val line = call.receiveText()
+                        if (line.isBlank()) {
                             call.respond(HttpStatusCode.BadRequest, "Empty or blank update not allowed")
                         } else {
-                            queue.enqueue(update)
-                            call.respondText("Received and queued: $update")
+                            channel.send(line)
+                            call.respondText("Received and queued: $line")
                         }
                     } catch (e: Exception) {
                         logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Failed to handle POST request: ${e.message}")

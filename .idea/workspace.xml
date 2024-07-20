@@ -5,14 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="33fb0e5f-0983-4003-b832-57630ee53b69" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/manager/ChannelManager.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ShipmentTracker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ShipmentTracker.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/listener/FileReader.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/listener/FileReader.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/listener/UpdateListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/listener/UpdateListener.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/listener/UpdateServer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/listener/UpdateServer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/observer/TrackerServer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/observer/TrackerServer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/manager/ShipmentTrackerManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/manager/ShipmentTrackerManager.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/manager/UpdateListenerManager.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/manager/UpdateListenerManager.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/subject/Shipment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/subject/Shipment.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/tracker.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tracker.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/update.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +156,7 @@
       <workItem from="1721355394720" duration="166000" />
       <workItem from="1721355574463" duration="1024000" />
       <workItem from="1721431327371" duration="135000" />
-      <workItem from="1721431475760" duration="3689000" />
+      <workItem from="1721431475760" duration="5395000" />
     </task>
     <servers />
   </component>

@@ -1,4 +1,4 @@
-import listener.Queue
+import kotlinx.coroutines.channels.Channel
 import subject.Shipment
 import subject.update.Update
 import manager.LoggerManager.logger
@@ -7,7 +7,7 @@ import logger.Logger.Level
 class ShipmentTracker(
     private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update>,
     private val delimiter: String,
-    private val queue: Queue<String>,
+    private val channel: Channel<String>,
 ) {
     private val shipments: MutableList<Shipment> = mutableListOf()
 
@@ -21,8 +21,8 @@ class ShipmentTracker(
         logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Shipment Tracker has started listening")
 
         while (true) {
-            val info = queue.dequeue()?.trim()
-            if (info.isNullOrBlank()) {
+            val info = channel.receive().trim()
+            if (info.isBlank()) {
                 //logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "No updates")
                 continue
             }

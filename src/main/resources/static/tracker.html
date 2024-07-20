@@ -85,11 +85,11 @@
         }
 
         const updatesList = shipment.updateHistory.map(update =>
-            `<li><strong>Went from </strong> ${update.newStatus} <strong> to </strong> ${update.previousStatus}, <strong> at </strong> ${new Date(update.timestamp * 1000).toLocaleString()}</li>`
+            `<li><strong>Went from </strong> ${update.previousStatus} <strong> to </strong> ${update.newStatus} <strong> at </strong> ${new Date(update.timestamp * 1000).toLocaleString()}</li>`
         ).join('');
 
         const notesList = shipment.notes.map(note =>
-            `<li><strong>Note:</strong> ${note}</li>`
+            `<li><strong>Note:</strong> ${note.note}</li>`
         ).join('');
 
         const lastUpdateStatus = shipment.updateHistory.slice(-1)[0]?.newStatus || 'None';

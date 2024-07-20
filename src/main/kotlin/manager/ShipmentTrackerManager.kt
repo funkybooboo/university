@@ -1,7 +1,7 @@
 package manager
 
 import ShipmentTracker
-import manager.QueueManager.queue
+import manager.ChannelManager.channel
 import subject.update.*
 
 object ShipmentTrackerManager {
@@ -16,5 +16,5 @@ object ShipmentTrackerManager {
         Pair("noteadded", ::NoteAdded),
     )
     private const val delimiter = ","
-    val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, queue)
+    val shipmentTracker = ShipmentTracker(typeToUpdateConstructor, delimiter, channel)
 }

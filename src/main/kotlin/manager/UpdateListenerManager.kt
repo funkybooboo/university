@@ -1,9 +1,9 @@
 package manager
 
 import listener.UpdateServer
-import manager.QueueManager.queue
+import manager.ChannelManager.channel
 
 object UpdateListenerManager {
     private const val port = 3001
-    val updateServer = UpdateServer(queue, port)
+    val updateServer = UpdateServer(channel, port)
 }

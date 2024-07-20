@@ -13,7 +13,7 @@ import kotlinx.coroutines.channels.consumeEach
 import manager.LoggerManager.logger
 import logger.Logger.Level
 import manager.ShipmentTrackerManager.shipmentTracker
-import subject.Shipment
+import subject.shipment.Shipment
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger

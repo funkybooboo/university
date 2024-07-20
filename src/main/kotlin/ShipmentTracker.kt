@@ -1,21 +1,16 @@
 import kotlinx.coroutines.channels.Channel
-import subject.Shipment
-import subject.update.Update
+import subject.shipment.Shipment
 import manager.LoggerManager.logger
 import logger.Logger.Level
+import subject.shipment.ShipmentFactory
+import subject.update.UpdateFactory
 
 class ShipmentTracker(
-    private val typeToUpdateConstructor: Map<String, (String, String, Long, String?) -> Update>,
-    private val delimiter: String,
     private val channel: Channel<String>,
+    private val updateFactory: UpdateFactory,
+    private val shipmentFactory: ShipmentFactory,
 ) {
     private val shipments: MutableList<Shipment> = mutableListOf()
-
-    init {
-        if (!typeToUpdateConstructor.keys.contains("created")) {
-            throw IllegalArgumentException("One of the keys in the typeToUpdateConstructor map has to be 'created'")
-        }
-    }
 
     suspend fun listen() {
         logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Shipment Tracker has started listening")
@@ -27,15 +22,20 @@ class ShipmentTracker(
                 continue
             }
 
-            val update = getUpdate(info)
+            val update = updateFactory.createUpdate(info)
             if (update == null) {
                 logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "An unknown update occurred: $info")
                 continue
             }
 
-            if (update.type == "created") {
+            if (update.updateType == "created") {
                 logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Creating new shipment: ${update.shipmentId}")
-                addShipment(Shipment(update.shipmentId))
+                val shipment = shipmentFactory.createShipment(update.shipmentId, update.shipmentType!!)
+                if (shipment == null) {
+                    logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Failed to create shipment: ${update.shipmentId}")
+                    continue
+                }
+                addShipment(shipment)
             }
 
             val shipment = findShipment(update.shipmentId)
@@ -47,7 +47,7 @@ class ShipmentTracker(
             shipment.addUpdate(update)
             shipment.notifyObservers()
 
-            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Update processed for shipment: ${update.shipmentId}, Type: ${update.type}")
+            logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Update processed for shipment: ${update.shipmentId}, Type: ${update.updateType}")
         }
     }
 
@@ -57,35 +57,8 @@ class ShipmentTracker(
         return foundShipment
     }
 
-    fun addShipment(shipment: Shipment) {
+    private fun addShipment(shipment: Shipment) {
         shipments.add(shipment)
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Added new shipment: ${shipment.id}")
-    }
-
-    fun getUpdate(info: String): Update? {
-        val parts = info.split(delimiter).map { it.lowercase() }
-        if (parts.size < 3 || parts.size > 4) {
-            logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Invalid update format: $info")
-            return null
-        }
-
-        val type = parts[0]
-        val shipmentId = parts[1]
-        val timestampOfUpdate = parts[2].toLong()
-        val otherInfo = parts.getOrNull(3)
-        val updateConstructor = typeToUpdateConstructor[type]
-
-        return if (updateConstructor == null) {
-            logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Unknown update type: $type")
-            null
-        } else {
-            try {
-                updateConstructor(type, shipmentId, timestampOfUpdate, otherInfo)
-            } catch (e: Exception) {
-                logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Error creating update: ${e.message}")
-                e.printStackTrace()
-                null
-            }
-        }
     }
 }

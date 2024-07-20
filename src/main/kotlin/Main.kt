@@ -8,6 +8,11 @@ fun main(): Unit = runBlocking {
         shipmentTracker.listen()
     }
 
-    updateServer.listen()
-    trackerServer.listen()
+    launch {
+        updateServer.listen()
+    }
+
+    launch {
+        trackerServer.listen()
+    }
 }

@@ -4,14 +4,15 @@ import logger.Logger.Level
 import manager.LoggerManager.logger
 
 class Delivered(
-    type: String,
+    updateType: String,
+    shipmentType: String?,
     shipmentId: String,
     timeStampOfUpdate: Long,
     otherInfo: String?
-) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
+) : Update(updateType, shipmentType, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
-        if (type != "delivered") throw IllegalArgumentException("Invalid type")
+        if (updateType != "delivered") throw IllegalArgumentException("Invalid type")
         if (otherInfo != null) throw IllegalArgumentException("otherInfo must be null")
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created Delivered update for shipment: $shipmentId")
     }

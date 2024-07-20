@@ -4,14 +4,15 @@ import logger.Logger.Level
 import manager.LoggerManager.logger
 
 class NoteAdded(
-    type: String,
+    updateType: String,
+    shipmentType: String?,
     shipmentId: String,
     timeStampOfUpdate: Long,
     otherInfo: String?
-) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
+) : Update(updateType, shipmentType, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
-        if (type != "noteadded") throw IllegalArgumentException("Invalid type")
+        if (updateType != "noteadded") throw IllegalArgumentException("Invalid type")
         if (otherInfo == null) throw IllegalArgumentException("otherInfo must have note information")
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created NoteAdded update for shipment: $shipmentId")
     }

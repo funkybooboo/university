@@ -1,6 +1,6 @@
 package observer
 
-import subject.Shipment
+import subject.shipment.Shipment
 
 interface ShipmentObserver {
     suspend fun notify(shipment: Shipment)

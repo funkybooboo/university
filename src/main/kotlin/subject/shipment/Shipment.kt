@@ -1,16 +1,18 @@
-package subject
+package subject.shipment
 
 import subject.update.Update
 import logger.Logger.Level
 import manager.LoggerManager.logger
 import observer.ShipmentObserver
+import subject.ShippingUpdate
 
-class Shipment(
+abstract class Shipment(
     val id: String,
-    val notes: MutableList<String> = mutableListOf(),
-    val updateHistory: MutableList<ShippingUpdate> = mutableListOf(),
-    val expectedDeliveryDateTimestampHistory: MutableList<Long> = mutableListOf(),
-    val locationHistory: MutableList<String> = mutableListOf()
+    protected val notes: MutableList<String>,
+    protected val updateHistory: MutableList<ShippingUpdate>,
+    protected val expectedDeliveryDateTimestampHistory: MutableList<Long>,
+    protected val locationHistory: MutableList<String>,
+    protected val abnormalOccurrenceHistory: MutableList<String>
 ): ShipmentSubject() {
 
     override suspend fun notifyObservers() {
@@ -30,16 +32,17 @@ class Shipment(
     }
 
     fun addUpdate(update: Update) {
+        validate(update)
         addNote(update.getNote())
         addLocation(update.getLocation())
         addExpectedDeliveryDateTimestamp(update.getExpectedDeliveryDateTimestamp())
 
         val previousState = if (updateHistory.isEmpty()) "none" else updateHistory.last().newStatus
 
-        val shippingUpdate = ShippingUpdate(update.type, previousState, update.timestampOfUpdate)
+        val shippingUpdate = ShippingUpdate(update.updateType, previousState, update.timestampOfUpdate)
         updateHistory.add(shippingUpdate)
 
-        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Update added for shipment: $id, Type: ${update.type}")
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Update added for shipment: $id, Type: ${update.updateType}")
     }
 
     private fun addNote(note: String?) {
@@ -63,10 +66,6 @@ class Shipment(
         }
     }
 
-    private fun copy(): Shipment {
-        return Shipment(id, notes.toMutableList(), updateHistory.toMutableList(), expectedDeliveryDateTimestampHistory.toMutableList(), locationHistory.toMutableList())
-    }
-
     fun toJson(): String {
         val updatesJson = updateHistory.joinToString(",\n") { update ->
             """{
@@ -82,6 +81,12 @@ class Shipment(
             }""".trimIndent()
         }
 
+        val abnormalOccurrencesJson = abnormalOccurrenceHistory.joinToString(",\n") { occurrence ->
+            """{
+                "abnormalOccurrence": "$occurrence"
+            }""".trimIndent()
+        }
+
         return """
             {
                 "id": "$id",
@@ -92,8 +97,16 @@ class Shipment(
                 ],
                 "notes": [
                     $notesJson
+                ],
+                "abnormalOccurrences": [
+                    $abnormalOccurrencesJson
                 ]
             }
         """.trimIndent()
     }
+
+
+    abstract fun validate(update: Update)
+
+    protected abstract fun copy(): Shipment
 }

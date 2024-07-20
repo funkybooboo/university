@@ -46,7 +46,7 @@
             console.log("WebSocket opened");
         };
 
-        websocket.onmessage = websocket.onmessage = function(event) {
+        websocket.onmessage = function(event) {
             const message = event.data;
 
             if (message.startsWith("Shipment not found")) {
@@ -85,39 +85,48 @@
         }
 
         const updatesList = shipment.updateHistory.map(update =>
-            `<li><strong>Went from </strong> ${update.previousStatus} <strong> to </strong> ${update.newStatus} <strong> at </strong> ${new Date(update.timestamp * 1000).toLocaleString()}</li>`
+            `<li><strong>Went from </strong>${update.previousStatus}<strong> to </strong>${update.newStatus}<strong> at </strong>${new Date(update.timestamp * 1000).toLocaleString()}</li>`
         ).join('');
 
         const notesList = shipment.notes.map(note =>
             `<li><strong>Note:</strong> ${note.note}</li>`
         ).join('');
 
+        const abnormalOccurrencesList = shipment.abnormalOccurrences.map(occurrence =>
+            `<li><strong>Abnormal Occurrence:</strong> ${occurrence}</li>`
+        ).join('');
+
         const lastUpdateStatus = shipment.updateHistory.slice(-1)[0]?.newStatus || 'None';
 
         const cardContent = `
-        <div class="card-header">
-            <h2>Shipment ID: ${shipment.id}</h2>
-            <p><strong>Status:</strong> ${lastUpdateStatus}</p>
-            <p><strong>Location:</strong> ${shipment.location}</p>
-            <p><strong>Expected Delivery:</strong> ${shipment.expectedDelivery}</p>
-        </div>
-
-        <div class="card-body">
-            <div class="updates-section">
-                <h3>Updates:</h3>
-                <ul>${updatesList}</ul>
+            <div class="card-header">
+                <h2>Shipment ID: ${shipment.id}</h2>
+                <p><strong>Status:</strong> ${lastUpdateStatus}</p>
+                <p><strong>Location:</strong> ${shipment.location}</p>
+                <p><strong>Expected Delivery:</strong> ${shipment.expectedDelivery}</p>
             </div>
 
-            <div class="notes-section">
-                <h3>Notes:</h3>
-                <ul>${notesList}</ul>
-            </div>
-        </div>
+            <div class="card-body">
+                <div class="updates-section">
+                    <h3>Updates:</h3>
+                    <ul>${updatesList}</ul>
+                </div>
 
-        <div class="card-footer">
-            <button class="stop-tracking-btn" onclick="stopTracking('${shipment.id}')">Stop Tracking</button>
-        </div>
-    `;
+                <div class="notes-section">
+                    <h3>Notes:</h3>
+                    <ul>${notesList}</ul>
+                </div>
+
+                <div class="abnormal-section">
+                    <h3>Abnormal Occurrences:</h3>
+                    <ul>${abnormalOccurrencesList}</ul>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button class="stop-tracking-btn" onclick="stopTracking('${shipment.id}')">Stop Tracking</button>
+            </div>
+        `;
 
         createOrUpdateCard(shipment.id, cardContent);
     }
@@ -128,9 +137,8 @@
         if (shipmentId !== "") {
             const command = `START_TRACKING: ${shipmentId}`;
             sendCommand(command);
-        }
-        else {
-            alert("Please enter a shipment id")
+        } else {
+            alert("Please enter a shipment id");
         }
     }
 

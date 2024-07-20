@@ -1,12 +1,11 @@
 package observer
 
 import logger.Logger.Level
-import subject.Shipment
+import subject.shipment.Shipment
 import manager.LoggerManager.logger
 import manager.TrackerServerManager.trackerServer
 
 class TrackerViewHelper() : ShipmentObserver {
-
     private val _shipments = mutableMapOf<String, Shipment>()
     val shipments: Map<String, Shipment>
         get() = _shipments

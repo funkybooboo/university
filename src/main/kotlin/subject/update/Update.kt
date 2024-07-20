@@ -1,7 +1,8 @@
 package subject.update
 
 abstract class Update(
-    val type: String,
+    val updateType: String,
+    val shipmentType: String?,
     val shipmentId: String,
     val timestampOfUpdate: Long,
     val otherInfo: String?,

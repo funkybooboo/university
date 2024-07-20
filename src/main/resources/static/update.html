@@ -33,29 +33,35 @@
 </head>
 <body>
 <h1>Shipment Updater</h1>
-<p>An update to shipment should have the following form:</p>
-<p>updateType,shipmentId,timestampOfUpdate,otherInfo. (otherInfo is optional)</p>
-<br>
-<p>There are 8 types of updates, here is an explanation of each of them:</p>
+<p>An update to a shipment should have the following form:</p>
+<p><code>updateType,shipmentType,shipmentId,,timestampOfUpdate,otherInfo</code>. (otherInfo is optional, and shipmentType is only needed if updateType is "created")</p>
+<p>There are eight types of updates, here is an explanation of each of them:</p>
 <ul>
     <li><strong>"created"</strong> - a new shipment has been created<br>
-        Example: "created,1243234,1999283774"</li>
+        Example: <code>"created,standard,1243234,1999283774"</code></li>
     <li><strong>"shipped"</strong> - the shipment has shipped<br>
-        Example: "shipped,1243234,1999437478,19999488398"<br>
+        Example: <code>"shipped,1243234,1999437478,19999488398"</code><br>
         The final value is the timestamp of the expected delivery date.</li>
     <li><strong>"location"</strong> - the shipment has arrived at a new location<br>
-        Example: "location,1243234,1983893498,Los Angeles CA"</li>
+        Example: <code>"location,1243234,1983893498,Los Angeles CA"</code></li>
     <li><strong>"delivered"</strong> - the shipment has been delivered to the consumer<br>
-        Example: "delivered,1243234,1999345988"</li>
+        Example: <code>"delivered,1243234,1999345988"</code></li>
     <li><strong>"delayed"</strong> - the shipment has been delayed<br>
-        Example: "delayed,1243234,1999948389,19999387834"<br>
+        Example: <code>"delayed,1243234,1999948389,19999387834"</code><br>
         The otherInfo is the new expected delivery date timestamp.</li>
     <li><strong>"lost"</strong> - the shipment has been lost<br>
-        Example: "lost,1243234,1999934873"</li>
+        Example: <code>"lost,1243234,1999934873"</code></li>
     <li><strong>"canceled"</strong> - the shipment was canceled by the consumer<br>
-        Example: "canceled,1243234,199993487"</li>
+        Example: <code>"canceled,1243234,199993487"</code></li>
     <li><strong>"noteadded"</strong> - a note was added by the shipper to the shipment<br>
-        Example: "noteadded,1243234,199999495,packaging was damaged slightly during shipping"</li>
+        Example: <code>"noteadded,1243234,199999495,packaging was damaged slightly during shipping"</code></li>
+</ul>
+<p>The system has four types of shipments:</p>
+<ul>
+    <li><strong>"express" shipment:</strong> Cannot have an expected delivery date more than 3 days after creation.</li>
+    <li><strong>"overnight" shipment:</strong> Must have an expected delivery date of the day after it was created.</li>
+    <li><strong>"bulk" shipment:</strong> Should not have an expected delivery date sooner than 3 days after creation.</li>
+    <li><strong>"standard" shipment:</strong> No special conditions apply.</li>
 </ul>
 <br>
 <textarea id="updateText" placeholder="Enter shipment update"></textarea>

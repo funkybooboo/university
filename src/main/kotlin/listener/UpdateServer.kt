@@ -37,12 +37,15 @@ class UpdateServer(channel: Channel<String>, private val port: Int): UpdateListe
 
                 post("/update") {
                     try {
-                        val line = call.receiveText()
-                        if (line.isBlank()) {
+                        val text = call.receiveText()
+                        if (text.isBlank()) {
                             call.respond(HttpStatusCode.BadRequest, "Empty or blank update not allowed")
                         } else {
-                            channel.send(line)
-                            call.respondText("Received and queued: $line")
+                            val lines = text.split('\n')
+                            for (line in lines) {
+                                channel.send(line)
+                            }
+                            call.respondText("Received and queued: $text")
                         }
                     } catch (e: Exception) {
                         logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Failed to handle POST request: ${e.message}")

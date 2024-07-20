@@ -4,14 +4,15 @@ import logger.Logger.Level
 import manager.LoggerManager.logger
 
 class Delayed(
-    type: String,
+    updateType: String,
+    shipmentType: String?,
     shipmentId: String,
     timeStampOfUpdate: Long,
     otherInfo: String?
-) : Update(type, shipmentId, timeStampOfUpdate, otherInfo) {
+) : Update(updateType, shipmentType, shipmentId, timeStampOfUpdate, otherInfo) {
 
     init {
-        if (type != "delayed") throw IllegalArgumentException("Invalid type")
+        if (updateType != "delayed") throw IllegalArgumentException("Invalid type")
         if (otherInfo == null) throw IllegalArgumentException("otherInfo must have time information")
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Created Delayed update for shipment: $shipmentId")
     }

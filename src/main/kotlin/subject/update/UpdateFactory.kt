@@ -15,25 +15,36 @@ class UpdateFactory(
     }
 
     fun createUpdate(info: String): Update? {
-        val parts = info.split(delimiter).map { it.trim().lowercase() }
+
+        val parts = info.split(delimiter).map { it.trim() }
+        if (parts.size > 4 || parts.size < 3) {
+            logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Invalid update: $info")
+        }
+
         val updateType = parts[0]
 
         val updateConstructor = updateTypeToUpdateConstructor[updateType]
-            ?: run {
-                logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Unknown update type: $updateType")
-                return null
+        if (updateConstructor == null) {
+            logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Unknown update type: $updateType")
+            return null
+        }
+        try {
+            if (updateType == "created") {
+                val shipmentType = parts[1]
+                val shipmentId = parts[2]
+                val timestampOfUpdate = parts[3].toLong()
+                return updateConstructor(updateType, shipmentType, shipmentId, timestampOfUpdate, null)
             }
-
-        return try {
-            val shipmentType: String? = if (updateType == "created") parts.getOrNull(1) else null
-            val shipmentId: String = parts.getOrNull(2) ?: return null
-            val timestampOfUpdate: Long = parts.getOrNull(3)?.toLongOrNull() ?: return null
-            val otherInfo: String? = parts.getOrNull(4)
-
-            updateConstructor(updateType, shipmentType, shipmentId, timestampOfUpdate, otherInfo)
-        } catch (e: Exception) {
-            logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Error creating update: ${e.message}")
-            null
+            else {
+                val shipmentId = parts[1]
+                val timestampOfUpdate = parts[2].toLong()
+                val otherInfo = parts.getOrNull(3)
+                return updateConstructor(updateType, null, shipmentId, timestampOfUpdate, otherInfo)
+            }
+        }
+        catch (e: Exception) {
+            logger.log(Level.ERROR, Thread.currentThread().threadId().toString(), "Invalid Update Error: ${e.message}")
+            return null
         }
     }
 }

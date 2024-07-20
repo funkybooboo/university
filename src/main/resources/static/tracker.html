@@ -84,16 +84,19 @@
             }
         }
 
-        const updatesList = shipment.updateHistory.map(update =>
-            `<li><strong>Went from </strong>${update.previousStatus}<strong> to </strong>${update.newStatus}<strong> at </strong>${new Date(update.timestamp * 1000).toLocaleString()}</li>`
-        ).join('');
+        const updatesList = shipment.updateHistory.map(update => {
+            console.log("Update timestamp:", update.timestamp);
+            const date = new Date(parseInt(update.timestamp));
+            const formattedDate = date.toLocaleString();
+            return `<li><strong>Went from </strong>${update.previousStatus}<strong> to </strong>${update.newStatus}<strong> at </strong>${formattedDate}</li>`;
+        }).join('');
 
         const notesList = shipment.notes.map(note =>
             `<li><strong>Note:</strong> ${note.note}</li>`
         ).join('');
 
         const abnormalOccurrencesList = shipment.abnormalOccurrences.map(occurrence =>
-            `<li><strong>Abnormal Occurrence:</strong> ${occurrence}</li>`
+            `<li><strong>Abnormal Occurrence:</strong> ${occurrence.abnormalOccurrence}</li>`
         ).join('');
 
         const lastUpdateStatus = shipment.updateHistory.slice(-1)[0]?.newStatus || 'None';
@@ -101,6 +104,7 @@
         const cardContent = `
             <div class="card-header">
                 <h2>Shipment ID: ${shipment.id}</h2>
+                <p><strong>Shipment Type:</strong> ${shipment.shipmentType}</p>
                 <p><strong>Status:</strong> ${lastUpdateStatus}</p>
                 <p><strong>Location:</strong> ${shipment.location}</p>
                 <p><strong>Expected Delivery:</strong> ${shipment.expectedDelivery}</p>

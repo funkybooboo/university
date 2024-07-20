@@ -8,6 +8,7 @@ import subject.ShippingUpdate
 
 abstract class Shipment(
     val id: String,
+    val shipmentType: String,
     protected val notes: MutableList<String>,
     protected val updateHistory: MutableList<ShippingUpdate>,
     protected val expectedDeliveryDateTimestampHistory: MutableList<Long>,
@@ -90,6 +91,7 @@ abstract class Shipment(
         return """
             {
                 "id": "$id",
+                "shipmentType": "$shipmentType",
                 "location": "${locationHistory.lastOrNull() ?: "None"}",
                 "expectedDelivery": "${expectedDeliveryDateTimestampHistory.lastOrNull()?.let { java.util.Date(it).toString() } ?: "None"}",
                 "updateHistory": [

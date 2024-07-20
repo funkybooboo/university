@@ -1,7 +1,8 @@
 package observer
 
+import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
-import subject.Shipment
+import manager.ShipmentFactoryManager.shipmentFactory
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 
@@ -24,31 +25,33 @@ class TrackerViewHelperTest {
     @Test
     fun testNotify() {
         val trackerViewHelper = TrackerViewHelper()
-        val shipment = Shipment("1")
-
-        trackerViewHelper.notify(shipment)
-
-        assertTrue(trackerViewHelper.shipments.containsKey(shipment.id))
+        val shipment = shipmentFactory.createShipment("1", "bulk")
+        runBlocking {
+            trackerViewHelper.notify(shipment!!)
+        }
+        assertTrue(trackerViewHelper.shipments.containsKey(shipment!!.id))
     }
 
     @Test
     fun testStartTracking() {
         val trackerViewHelper = TrackerViewHelper()
-        val shipment = Shipment("1")
+        val shipment = shipmentFactory.createShipment("1", "bulk")
+        runBlocking {
+            trackerViewHelper.startTracking(shipment!!)
+        }
 
-        trackerViewHelper.startTracking(shipment)
-
-        assertTrue(trackerViewHelper.shipments.containsKey(shipment.id))
+        assertTrue(trackerViewHelper.shipments.containsKey(shipment!!.id))
     }
 
     @Test
     fun testStopTracking() {
         val trackerViewHelper = TrackerViewHelper()
-        val shipment = Shipment("1")
+        val shipment = shipmentFactory.createShipment("1", "bulk")
 
-        trackerViewHelper.startTracking(shipment)
-        trackerViewHelper.stopTracking(shipment)
-
+        runBlocking {
+            trackerViewHelper.startTracking(shipment!!)
+        }
+        trackerViewHelper.stopTracking(shipment!!)
         assertFalse(trackerViewHelper.shipments.containsKey(shipment.id))
     }
 }

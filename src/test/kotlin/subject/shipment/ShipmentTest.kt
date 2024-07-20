@@ -1,4 +1,4 @@
-package subject
+package subject.shipment
 
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertFalse

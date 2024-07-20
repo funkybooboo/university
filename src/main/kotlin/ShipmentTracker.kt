@@ -18,6 +18,8 @@ class ShipmentTracker(
     }
 
     suspend fun listen() {
+        logger.log(Level.WARNING, Thread.currentThread().threadId().toString(), "Shipment Tracker has started listening")
+
         while (true) {
             val info = queue.dequeue()?.trim()
             if (info.isNullOrBlank()) {

@@ -96,7 +96,9 @@ class TrackerServer(private val trackerViewHelper: TrackerViewHelper, private va
                     }
                 }
             }
-        }.start(wait = true)
+        }.start()
+
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Tracker Server started on port $port")
     }
 
     suspend fun broadcastUpdate(shipment: Shipment) {

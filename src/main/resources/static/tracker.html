@@ -46,10 +46,16 @@
             console.log("WebSocket opened");
         };
 
-        websocket.onmessage = function(event) {
-            const shipment = JSON.parse(event.data);
-            console.log("Received:", shipment);
-            updateUI(shipment);
+        websocket.onmessage = websocket.onmessage = function(event) {
+            const message = event.data;
+
+            if (message.startsWith("Shipment not found")) {
+                alert(message);
+            } else {
+                const shipment = JSON.parse(message);
+                console.log("Received:", shipment);
+                updateUI(shipment);
+            }
         };
 
         websocket.onclose = function(event) {
@@ -79,33 +85,46 @@
         }
 
         const updatesList = shipment.updateHistory.map(update =>
-            `<li>New Status: ${update.newStatus}, Previous Status: ${update.previousStatus}, Timestamp: ${update.timestamp}</li>`
+            `<li><strong>Went from </strong> ${update.newStatus} <strong> to </strong> ${update.previousStatus}, <strong> at </strong> ${new Date(update.timestamp * 1000).toLocaleString()}</li>`
         ).join('');
 
         const notesList = shipment.notes.map(note =>
-            `<li>Note: ${note}</li>`
+            `<li><strong>Note:</strong> ${note}</li>`
         ).join('');
 
+        const lastUpdateStatus = shipment.updateHistory.slice(-1)[0]?.newStatus || 'None';
+
         const cardContent = `
+        <div class="card-header">
             <h2>Shipment ID: ${shipment.id}</h2>
-            <p>Status: ${shipment.status}</p>
-            <p>Location: ${shipment.location}</p>
-            <p>Expected Delivery: ${shipment.expectedDelivery}</p>
+            <p><strong>Status:</strong> ${lastUpdateStatus}</p>
+            <p><strong>Location:</strong> ${shipment.location}</p>
+            <p><strong>Expected Delivery:</strong> ${shipment.expectedDelivery}</p>
+        </div>
 
-            <h3>Updates:</h3>
-            <ul>${updatesList}</ul>
+        <div class="card-body">
+            <div class="updates-section">
+                <h3>Updates:</h3>
+                <ul>${updatesList}</ul>
+            </div>
 
-            <h3>Notes:</h3>
-            <ul>${notesList}</ul>
+            <div class="notes-section">
+                <h3>Notes:</h3>
+                <ul>${notesList}</ul>
+            </div>
+        </div>
 
-            <button onclick="stopTracking('${shipment.id}')">Stop Tracking</button>
-        `;
+        <div class="card-footer">
+            <button class="stop-tracking-btn" onclick="stopTracking('${shipment.id}')">Stop Tracking</button>
+        </div>
+    `;
 
         createOrUpdateCard(shipment.id, cardContent);
     }
 
     function startTracking() {
         const shipmentId = document.getElementById('shipmentId').value.trim();
+        document.getElementById('shipmentId').value = '';
         if (shipmentId !== "") {
             const command = `START_TRACKING: ${shipmentId}`;
             sendCommand(command);

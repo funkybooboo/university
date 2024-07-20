@@ -66,6 +66,7 @@
 <script>
     function sendUpdate() {
         const updateText = document.getElementById('updateText').value.trim();
+        document.getElementById('updateText').value = '';
         if (updateText !== "") {
             fetch('/update', {
                 method: 'POST',

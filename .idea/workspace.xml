@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="33fb0e5f-0983-4003-b832-57630ee53b69" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/Main.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/Main.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ShipmentTracker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ShipmentTracker.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/listener/UpdateServer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/listener/UpdateServer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/observer/TrackerServer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/observer/TrackerServer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/subject/Shipment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/subject/Shipment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/tracker.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/tracker.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/update.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +109,7 @@
       <recent name="tracker" />
     </key>
   </component>
-  <component name="RunManager" selected="Kotlin.MainKt">
+  <component name="RunManager">
     <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="MainKt" />
       <module name="CS5700_Program3.main" />
@@ -142,11 +147,22 @@
       <updated>1721181226072</updated>
       <workItem from="1721181227387" duration="618000" />
       <workItem from="1721181860835" duration="7652000" />
-      <workItem from="1721256717413" duration="3621000" />
+      <workItem from="1721256717413" duration="17187000" />
+      <workItem from="1721308510769" duration="17000" />
+      <workItem from="1721341650784" duration="5778000" />
+      <workItem from="1721354566292" duration="798000" />
+      <workItem from="1721355394720" duration="166000" />
+      <workItem from="1721355574463" duration="1024000" />
+      <workItem from="1721431327371" duration="135000" />
+      <workItem from="1721431475760" duration="3689000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

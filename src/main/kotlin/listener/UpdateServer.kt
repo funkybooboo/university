@@ -11,8 +11,8 @@ import java.io.File
 import logger.Logger.Level
 import manager.LoggerManager.logger
 
-class UpdateServer(private val queue: Queue<String>, private val port: Int) {
-    suspend fun listen() {
+class UpdateServer(queue: Queue<String>, private val port: Int): UpdateListener(queue) {
+    override suspend fun listen() {
         logger.log(Level.INFO, "UpdateServer", "Starting server on port $port")
 
         embeddedServer(Netty, port = port) {
@@ -49,8 +49,8 @@ class UpdateServer(private val queue: Queue<String>, private val port: Int) {
                     }
                 }
             }
-        }.start(wait = true)
+        }.start()
 
-        logger.log(Level.INFO, "UpdateServer", "Server started on port $port")
+        logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Update Server started on port $port")
     }
 }

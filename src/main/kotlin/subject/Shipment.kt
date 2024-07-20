@@ -29,7 +29,7 @@ class Shipment(
         return observers.contains(observer)
     }
 
-    suspend fun addUpdate(update: Update) {
+    fun addUpdate(update: Update) {
         addNote(update.getNote())
         addLocation(update.getLocation())
         addExpectedDeliveryDateTimestamp(update.getExpectedDeliveryDateTimestamp())
@@ -38,7 +38,6 @@ class Shipment(
 
         val shippingUpdate = ShippingUpdate(update.type, previousState, update.timestampOfUpdate)
         updateHistory.add(shippingUpdate)
-        notifyObservers()
 
         logger.log(Level.INFO, Thread.currentThread().threadId().toString(), "Update added for shipment: $id, Type: ${update.type}")
     }

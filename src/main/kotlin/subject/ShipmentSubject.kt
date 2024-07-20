@@ -1,4 +1,4 @@
-package subject.shipment
+package subject
 
 import observer.ShipmentObserver
 import logger.Logger.Level

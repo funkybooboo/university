@@ -4,6 +4,7 @@ import subject.update.Update
 import logger.Logger.Level
 import manager.LoggerManager.logger
 import observer.ShipmentObserver
+import subject.ShipmentSubject
 import subject.ShippingUpdate
 
 abstract class Shipment(

@@ -34,7 +34,6 @@ abstract class Shipment(
     }
 
     fun addUpdate(update: Update) {
-        validate(update)
         addNote(update.getNote())
         addLocation(update.getLocation())
         addExpectedDeliveryDateTimestamp(update.getExpectedDeliveryDateTimestamp())
@@ -107,7 +106,6 @@ abstract class Shipment(
             }
         """.trimIndent()
     }
-
 
     abstract fun validate(update: Update)
 

@@ -1,50 +1,1000 @@
-canceled,s39929,1718634136
-shipped,s99070,1719332338,1719505930
-delivered,s77157,1718908440
-created,s80941,1718819384
-shipped,s32677,1718783459,1719373734
-delayed,s79164,1717305096,1717477322
-created,s75249,1718450251
-delayed,s19938,1718869856,1719021175
-delayed,s70006,1719600477,1719939906
-created,s97968,1718076850
-canceled,s60141,1718379840
-delivered,s71380,1717744995
-delivered,s78866,1719350834
-noteadded,s43466,1717770351,shipping label reprinted because of damage
-delivered,s48820,1717452698
-created,s36361,1719342602
-delivered,s22044,1719781437
-canceled,s44460,1719391646
-delayed,s15919,1719032899,1719461167
-shipped,s58325,1717521054,1717798169
-noteadded,s52054,1718212168,shipping label reprinted because of damage
-created,s52790,1718385151
-delivered,s21372,1718619007
-location,s27302,1719767372,New York NY
-delivered,s27439,1718846522
-canceled,s23073,1718924651
-location,s34472,1719814143,Houston TX
-shipped,s86420,1719213132,1719379345
-delayed,s68212,1719655110,1720255199
-shipped,s87676,1717363358,1717733114
-shipped,s63023,1719328981,1719466339
-delayed,s98152,1717343486,1717886723
-created,s47423,1718210385
-delivered,s12125,1719220733
-shipped,s63371,1719292227,1719815840
-shipped,s96229,1719079839,1719490323
-canceled,s92300,1719304019
-canceled,s11843,1718672962
-delayed,s33714,1719306192,1719414492
-delivered,s39595,1718236890
-shipped,s35802,1717678406,1717881051
-canceled,s79481,1718278168
-canceled,s70541,1717517889
-lost,s55266,1719759006
-noteadded,s42737,1717979944,shipping label reprinted because of damage
-lost,s16364,1717601400
-noteadded,s86118,1718774147,inspection completed on exported goods
-canceled,s51519,1719203172
-canceled,s12892,1717919110
-delayed,s96516,1717732264,1717875297
+lost,s9,1720053943
+lost,s4,1720352257
+location,s5,1720920840,Los Angeles CA
+delivered,s5,1719131733
+location,s5,1720976818,Los Angeles CA
+delivered,s4,1720238134
+created,overnight,s10,1721498720,1721585120
+lost,s9,1719493908
+created,standard,s8,1719643735,1719643735
+delivered,s7,1719052404
+lost,s5,1720851479
+location,s8,1720218882,New York NY
+location,s3,1721341559,Phoenix AZ
+delivered,s7,1721156272
+shipped,s5,1721080466,1721655005
+shipped,s10,1721095390,1721581139
+noteadded,s7,1720473565,shipping label reprinted because of damage
+canceled,s9,1720883196
+location,s6,1719130132,Chicago IL
+noteadded,s2,1719195066,inspection completed on exported goods
+location,s1,1720086883,Phoenix AZ
+shipped,s1,1720393135,1720974590
+noteadded,s9,1720957321,shipping label reprinted because of damage
+shipped,s1,1719165237,1719587595
+delivered,s3,1719577721
+location,s2,1720587731,New York NY
+shipped,s6,1719308781,1719416006
+noteadded,s8,1720509707,shipping label reprinted because of damage
+shipped,s4,1720033164,1720589042
+noteadded,s6,1719347009,package was damaged slightly during shipping
+created,express,s2,1719270436,1719329107
+location,s10,1721327490,Los Angeles CA
+delayed,s10,1720175750,1720487241
+canceled,s2,1720871322
+delivered,s3,1720360944
+canceled,s8,1721027050
+lost,s9,1720108066
+created,express,s1,1721227380,1721394411
+noteadded,s6,1719092906,shipping label reprinted because of damage
+noteadded,s3,1721246180,inspection completed on exported goods
+noteadded,s9,1719183099,inspection completed on exported goods
+canceled,s9,1720524492
+canceled,s10,1719656780
+location,s1,1719052247,Houston TX
+delayed,s10,1720351439,1720560051
+lost,s4,1720034294
+canceled,s10,1720233797
+canceled,s9,1721244822
+delivered,s3,1719246079
+created,overnight,s2,1720195930,1720282330
+noteadded,s4,1719369072,package was damaged slightly during shipping
+created,bulk,s9,1719032556,1721268557
+canceled,s2,1719906093
+delivered,s4,1719909428
+lost,s7,1719475853
+lost,s1,1719415715
+noteadded,s9,1721545383,inspection completed on exported goods
+lost,s3,1719719003
+location,s2,1721435932,Phoenix AZ
+shipped,s10,1721144448,1721295422
+shipped,s8,1719924163,1720211862
+delivered,s1,1721312718
+delivered,s10,1719872303
+created,express,s10,1719548946,1719582184
+canceled,s9,1719422291
+delayed,s9,1721331600,1721604047
+delayed,s9,1721259533,1721568931
+canceled,s3,1721383079
+canceled,s1,1721058911
+delivered,s9,1720314748
+delivered,s6,1721330250
+delayed,s7,1719223011,1719363519
+location,s4,1721159981,Houston TX
+location,s9,1720273615,Houston TX
+created,standard,s3,1720728375,1720728375
+canceled,s6,1719890081
+delivered,s9,1721118165
+created,express,s6,1721574675,1721831421
+noteadded,s1,1719904680,shipping label reprinted because of damage
+noteadded,s7,1721108951,package was damaged slightly during shipping
+noteadded,s6,1720101513,shipping label reprinted because of damage
+created,overnight,s5,1720061035,1720147435
+delivered,s7,1719034645
+location,s7,1721227126,New York NY
+noteadded,s3,1721194878,package was damaged slightly during shipping
+location,s10,1721546039,Los Angeles CA
+delivered,s6,1719834146
+canceled,s9,1720330461
+delivered,s9,1719386489
+delivered,s8,1719035528
+delivered,s8,1720885838
+delayed,s6,1720287926,1720428633
+delayed,s8,1720155910,1720533488
+delayed,s8,1721226816,1721672655
+lost,s4,1721070798
+canceled,s2,1719903278
+created,bulk,s2,1720988506,1722959108
+canceled,s3,1720814793
+canceled,s7,1720580631
+noteadded,s10,1721264228,shipping label reprinted because of damage
+created,express,s8,1721337943,1721404733
+lost,s5,1719898777
+delayed,s2,1719308874,1719465594
+delivered,s2,1720625466
+canceled,s1,1719848446
+noteadded,s4,1721454733,package was damaged slightly during shipping
+delayed,s7,1719477751,1719925920
+shipped,s1,1719278714,1719816593
+lost,s10,1721435064
+delayed,s6,1720607121,1720874621
+created,bulk,s9,1719118891,1720520944
+canceled,s8,1719206404
+shipped,s10,1721472594,1721836225
+noteadded,s10,1720092835,package was damaged slightly during shipping
+location,s4,1720656175,Chicago IL
+delivered,s2,1720746555
+delivered,s5,1719112699
+delayed,s2,1719282430,1719634111
+delayed,s3,1721268789,1721376479
+delivered,s3,1720752999
+lost,s7,1721284436
+created,standard,s2,1719318470,1719318470
+delayed,s1,1719203027,1719362257
+lost,s1,1720574974
+noteadded,s6,1721566791,shipping label reprinted because of damage
+delayed,s8,1719372663,1719867298
+noteadded,s10,1720083221,package was damaged slightly during shipping
+location,s8,1720721144,Los Angeles CA
+shipped,s1,1719802106,1720244586
+canceled,s4,1719126929
+shipped,s1,1720731170,1721149721
+noteadded,s6,1720969942,inspection completed on exported goods
+created,bulk,s7,1720860411,1722586182
+shipped,s10,1719784592,1720250039
+noteadded,s1,1721323551,package was damaged slightly during shipping
+created,express,s1,1721242244,1721475729
+shipped,s8,1721312545,1721551389
+location,s10,1720184788,Houston TX
+noteadded,s5,1719346279,inspection completed on exported goods
+delivered,s3,1720645330
+delivered,s2,1720934180
+delayed,s6,1719337285,1719797440
+shipped,s3,1719219460,1719321471
+canceled,s5,1720948965
+shipped,s4,1720240007,1720575885
+noteadded,s3,1719669782,package was damaged slightly during shipping
+location,s1,1721061516,Phoenix AZ
+delivered,s3,1720482994
+delivered,s4,1719171912
+delivered,s10,1721198579
+shipped,s7,1719395532,1719985054
+noteadded,s2,1719256966,package was damaged slightly during shipping
+location,s2,1721002150,Chicago IL
+delayed,s9,1721350504,1721542837
+delivered,s6,1721115503
+created,overnight,s7,1720732893,1720819293
+delayed,s8,1719613208,1719935396
+shipped,s2,1720009955,1720350917
+created,bulk,s4,1721062966,1722889581
+lost,s9,1719089732
+shipped,s1,1719808898,1720041816
+shipped,s8,1720154868,1720301533
+location,s8,1720604732,New York NY
+shipped,s8,1719213508,1719811690
+location,s1,1719597522,Chicago IL
+canceled,s5,1719043021
+shipped,s5,1720016939,1720339506
+created,overnight,s6,1719306455,1719392855
+location,s4,1720805052,Chicago IL
+location,s8,1719037455,Phoenix AZ
+noteadded,s2,1719482477,inspection completed on exported goods
+created,standard,s9,1719281537,1719281537
+noteadded,s2,1718990421,inspection completed on exported goods
+delivered,s7,1721406541
+lost,s3,1721491350
+delayed,s9,1720365405,1720662962
+created,express,s10,1719767240,1719949420
+canceled,s10,1721249367
+delivered,s1,1719255255
+shipped,s8,1720253138,1720424321
+location,s5,1721426425,Los Angeles CA
+lost,s4,1720874133
+created,overnight,s6,1719978152,1720064552
+location,s6,1720141545,Houston TX
+created,overnight,s10,1720080801,1720167201
+created,standard,s9,1721057992,1721057992
+created,bulk,s4,1720274252,1722653851
+canceled,s6,1720643347
+lost,s6,1721391770
+created,standard,s1,1720060010,1720060010
+canceled,s3,1721323215
+created,bulk,s9,1720822227,1723340536
+shipped,s8,1719501498,1719966795
+shipped,s10,1720844615,1720985342
+delivered,s3,1720535522
+canceled,s3,1720225042
+location,s5,1720023341,Houston TX
+delayed,s6,1721042670,1721489684
+shipped,s8,1719778388,1719988348
+lost,s3,1720804606
+created,overnight,s8,1721549487,1721635887
+location,s2,1719121869,New York NY
+canceled,s3,1720826487
+created,bulk,s5,1719640130,1721476570
+created,express,s3,1720521681,1720545332
+delivered,s9,1719008174
+created,overnight,s3,1720475808,1720562208
+noteadded,s5,1720847639,shipping label reprinted because of damage
+delivered,s9,1719550751
+noteadded,s5,1720634863,package was damaged slightly during shipping
+lost,s5,1721226649
+delivered,s3,1720707087
+created,express,s3,1721246540,1721408423
+canceled,s1,1720018334
+lost,s9,1719743444
+delayed,s7,1720080975,1720253615
+shipped,s9,1721169239,1721586925
+lost,s3,1719778662
+delivered,s5,1719910123
+delivered,s4,1720623897
+created,overnight,s8,1719142777,1719229177
+created,overnight,s1,1719879861,1719966261
+lost,s3,1720120926
+delayed,s4,1721241493,1721604486
+noteadded,s3,1719570651,package was damaged slightly during shipping
+canceled,s7,1720061834
+delivered,s1,1720490047
+noteadded,s10,1719004212,shipping label reprinted because of damage
+delayed,s2,1719904018,1720042643
+lost,s4,1720301345
+created,express,s5,1720924916,1721112577
+delivered,s3,1719010555
+delivered,s10,1720850466
+created,express,s3,1720166299,1720167486
+noteadded,s4,1720864721,inspection completed on exported goods
+location,s3,1720426644,Chicago IL
+delayed,s8,1719669070,1719922151
+location,s10,1720657584,Chicago IL
+canceled,s6,1719469041
+delayed,s6,1720673235,1721199775
+shipped,s9,1720101508,1720529701
+lost,s8,1720301985
+location,s8,1719644528,Houston TX
+delivered,s4,1720836032
+location,s8,1720256556,Chicago IL
+shipped,s5,1720932978,1721294182
+shipped,s1,1720272502,1720685993
+delivered,s7,1719951711
+delivered,s3,1720793441
+canceled,s1,1719424709
+shipped,s7,1721279835,1721624384
+delivered,s1,1721168630
+created,standard,s3,1719234484,1719234484
+shipped,s9,1720120428,1720330929
+delivered,s8,1720899306
+lost,s8,1719992954
+delayed,s9,1720270135,1720825769
+noteadded,s10,1720791867,shipping label reprinted because of damage
+location,s1,1721485109,Los Angeles CA
+delivered,s7,1720037160
+location,s1,1719207027,Phoenix AZ
+noteadded,s9,1721176846,package was damaged slightly during shipping
+delayed,s3,1721265303,1721459830
+delayed,s6,1721238942,1721466420
+canceled,s1,1720794778
+canceled,s7,1720247800
+created,overnight,s8,1721013450,1721099850
+canceled,s3,1720203608
+noteadded,s5,1720030482,package was damaged slightly during shipping
+delayed,s2,1720766846,1721289999
+shipped,s6,1719835629,1720433654
+noteadded,s6,1720917115,package was damaged slightly during shipping
+created,bulk,s8,1719364415,1721506484
+created,standard,s1,1720750372,1720750372
+delivered,s4,1719926374
+delayed,s8,1719446704,1720011697
+location,s3,1720216513,Los Angeles CA
+created,bulk,s8,1719092344,1721094437
+delayed,s9,1719813303,1719929763
+delivered,s5,1721414469
+created,bulk,s2,1721213840,1721551392
+shipped,s10,1720978905,1721065757
+created,standard,s9,1719132559,1719132559
+noteadded,s2,1720091446,shipping label reprinted because of damage
+delayed,s2,1721264074,1721391362
+canceled,s9,1719023455
+canceled,s3,1720141217
+delayed,s1,1720181580,1720548235
+noteadded,s6,1719003249,shipping label reprinted because of damage
+delivered,s7,1720824320
+delivered,s4,1721161142
+location,s6,1720212627,Phoenix AZ
+location,s3,1721412036,Houston TX
+lost,s6,1720331308
+canceled,s8,1719221961
+created,bulk,s5,1719090992,1720280015
+lost,s1,1720029917
+shipped,s7,1719500944,1719808849
+delayed,s10,1721028733,1721475364
+shipped,s4,1719581783,1719873481
+noteadded,s2,1720983887,shipping label reprinted because of damage
+delivered,s7,1721011499
+noteadded,s8,1721252283,shipping label reprinted because of damage
+created,standard,s1,1719665885,1719665885
+lost,s4,1720917707
+noteadded,s5,1720569516,package was damaged slightly during shipping
+delayed,s8,1720500274,1720897371
+lost,s5,1719252267
+delayed,s10,1719792546,1720091569
+noteadded,s3,1720333697,inspection completed on exported goods
+canceled,s5,1719813692
+delivered,s7,1719774977
+delayed,s6,1719086956,1719616282
+canceled,s1,1720891123
+location,s3,1720944086,New York NY
+noteadded,s8,1719810131,package was damaged slightly during shipping
+created,express,s2,1721397781,1721437661
+delivered,s3,1720585655
+noteadded,s5,1720735811,shipping label reprinted because of damage
+noteadded,s10,1720549297,inspection completed on exported goods
+canceled,s10,1721409896
+lost,s9,1720737386
+delayed,s5,1720716442,1721209013
+created,overnight,s9,1719010368,1719096768
+delivered,s8,1719806238
+lost,s1,1720969289
+location,s5,1721505238,New York NY
+lost,s8,1720689796
+delivered,s6,1721226598
+noteadded,s1,1720313347,inspection completed on exported goods
+delayed,s5,1721510909,1721945423
+canceled,s4,1719356822
+delivered,s5,1719421499
+delivered,s6,1719868225
+location,s10,1721097548,New York NY
+created,standard,s7,1721059806,1721059806
+location,s7,1720227723,Chicago IL
+location,s9,1719003777,Houston TX
+delayed,s4,1720592609,1720836824
+canceled,s10,1721113211
+delayed,s6,1720488907,1720843990
+canceled,s1,1719326239
+shipped,s10,1719328810,1719512169
+shipped,s7,1720106326,1720352248
+delayed,s2,1719649664,1720250473
+shipped,s6,1719953565,1720105690
+location,s3,1719559084,Los Angeles CA
+lost,s1,1720697445
+delayed,s5,1719579698,1719995901
+noteadded,s8,1721398127,shipping label reprinted because of damage
+location,s2,1720025937,New York NY
+canceled,s3,1719624811
+location,s4,1719550091,New York NY
+delivered,s10,1720557460
+delivered,s2,1719275326
+created,express,s9,1719861837,1719939119
+delivered,s5,1719460316
+shipped,s6,1721221446,1721505114
+shipped,s10,1720086195,1720642423
+location,s4,1721130630,New York NY
+lost,s3,1719650014
+location,s5,1719323841,Chicago IL
+noteadded,s8,1720065003,inspection completed on exported goods
+shipped,s2,1721365773,1721954736
+delayed,s8,1720995866,1721496687
+delayed,s1,1720067513,1720457302
+shipped,s10,1721494706,1722092867
+delivered,s3,1720599884
+created,overnight,s8,1720041773,1720128173
+noteadded,s10,1720397299,shipping label reprinted because of damage
+lost,s6,1721409599
+delayed,s3,1720187070,1720557659
+shipped,s1,1721146975,1721341300
+delayed,s3,1719222431,1719324856
+canceled,s1,1719105576
+delivered,s9,1720068292
+delayed,s9,1721278942,1721730069
+noteadded,s6,1719668394,inspection completed on exported goods
+shipped,s3,1720772744,1721024297
+delayed,s6,1721321857,1721510770
+lost,s9,1720543690
+lost,s10,1719893631
+shipped,s9,1719217741,1719528985
+lost,s7,1719832974
+noteadded,s1,1720099056,package was damaged slightly during shipping
+delayed,s1,1720853727,1721344284
+lost,s8,1720798073
+created,bulk,s8,1720914899,1722279878
+location,s5,1719932996,Los Angeles CA
+shipped,s7,1719286957,1719829387
+lost,s8,1720544148
+lost,s8,1720728339
+location,s10,1721508250,Phoenix AZ
+lost,s2,1719273857
+delivered,s1,1719566918
+delayed,s6,1721135961,1721713965
+location,s9,1719365796,Phoenix AZ
+location,s8,1720472836,Phoenix AZ
+shipped,s9,1719660520,1719807970
+canceled,s1,1721311216
+location,s2,1720369381,Houston TX
+created,express,s9,1719491398,1719547667
+lost,s6,1720873067
+delivered,s10,1720814017
+noteadded,s6,1719102660,shipping label reprinted because of damage
+canceled,s4,1719778875
+delivered,s1,1719810778
+created,overnight,s9,1719136150,1719222550
+created,bulk,s1,1721347603,1723695887
+location,s2,1719871022,Los Angeles CA
+lost,s5,1719120429
+canceled,s10,1720214413
+shipped,s4,1719221692,1719537258
+location,s4,1721155212,Phoenix AZ
+noteadded,s8,1721259895,package was damaged slightly during shipping
+delayed,s7,1720481663,1720829823
+delayed,s2,1720092305,1720617263
+delayed,s9,1720913159,1721250504
+created,express,s1,1721393166,1721596808
+created,standard,s3,1721462019,1721462019
+shipped,s6,1721262968,1721560168
+delivered,s8,1720380265
+lost,s9,1720402616
+noteadded,s4,1719721175,package was damaged slightly during shipping
+location,s7,1720841114,Houston TX
+delivered,s9,1719578165
+location,s7,1719900065,New York NY
+noteadded,s8,1719669141,inspection completed on exported goods
+canceled,s7,1721006102
+noteadded,s7,1721384237,inspection completed on exported goods
+delayed,s10,1720110310,1720388939
+delivered,s6,1720520169
+canceled,s7,1719753012
+canceled,s1,1719282381
+delivered,s9,1721555201
+delivered,s9,1720483114
+created,overnight,s7,1720074138,1720160538
+shipped,s2,1720805637,1721237074
+canceled,s5,1720989391
+delayed,s7,1720965015,1721183216
+lost,s6,1719669254
+noteadded,s4,1720127368,shipping label reprinted because of damage
+delivered,s8,1721406042
+canceled,s6,1719334134
+delayed,s9,1719428483,1719566458
+delivered,s8,1721234033
+location,s5,1720765260,Phoenix AZ
+location,s4,1720156402,Phoenix AZ
+location,s10,1721452258,Houston TX
+created,overnight,s2,1721123783,1721210183
+delivered,s9,1720457119
+noteadded,s6,1720122937,inspection completed on exported goods
+lost,s10,1719651600
+delivered,s3,1719791737
+lost,s7,1719395550
+delayed,s6,1721523862,1722000153
+canceled,s9,1720247724
+noteadded,s6,1721003721,shipping label reprinted because of damage
+shipped,s2,1719537952,1720095284
+location,s3,1720962988,Los Angeles CA
+delivered,s4,1719277257
+delayed,s7,1719119298,1719560239
+delivered,s4,1720516360
+noteadded,s2,1719061851,inspection completed on exported goods
+created,overnight,s4,1720027352,1720113752
+delivered,s5,1720574234
+canceled,s6,1720242075
+lost,s6,1720997173
+lost,s4,1721015644
+location,s3,1719569759,Chicago IL
+location,s9,1720067145,Chicago IL
+delayed,s3,1721020688,1721181301
+lost,s9,1720550744
+lost,s5,1721390105
+created,bulk,s6,1720754542,1722584231
+created,overnight,s9,1721270810,1721357210
+canceled,s7,1721264580
+noteadded,s4,1720933789,inspection completed on exported goods
+shipped,s3,1719566343,1719719803
+noteadded,s10,1719940598,package was damaged slightly during shipping
+shipped,s7,1720052231,1720435923
+lost,s2,1719832326
+created,express,s7,1720607069,1720625603
+canceled,s9,1721399983
+lost,s5,1721012369
+shipped,s8,1719627157,1720107247
+created,standard,s4,1719083743,1719083743
+canceled,s1,1719374497
+delayed,s10,1720788257,1721228929
+delivered,s2,1720154209
+noteadded,s4,1719685615,inspection completed on exported goods
+lost,s4,1719026130
+canceled,s5,1721239283
+shipped,s4,1721300867,1721592712
+canceled,s4,1720428252
+canceled,s6,1720011886
+lost,s9,1720275930
+canceled,s1,1719844552
+delivered,s8,1719614434
+canceled,s10,1718989521
+lost,s2,1719156388
+shipped,s3,1719507293,1720030935
+delayed,s9,1720563228,1721140303
+created,bulk,s8,1719474023,1720553159
+created,standard,s7,1719877871,1719877871
+shipped,s5,1719849648,1720422994
+location,s5,1719802101,Chicago IL
+delayed,s6,1720139638,1720241073
+location,s3,1720972305,Chicago IL
+noteadded,s6,1719159110,package was damaged slightly during shipping
+location,s5,1720862107,New York NY
+shipped,s4,1720845565,1721301378
+shipped,s7,1720375285,1720977664
+delayed,s4,1719059665,1719402000
+location,s6,1719785618,Los Angeles CA
+created,standard,s3,1719202195,1719202195
+created,express,s10,1719891816,1720068388
+delivered,s9,1720878563
+location,s7,1719106383,New York NY
+delayed,s10,1719339100,1719619855
+shipped,s1,1720363292,1720531986
+created,overnight,s6,1721078274,1721164674
+created,express,s7,1720114914,1720185421
+shipped,s3,1719849245,1720188058
+canceled,s5,1719444405
+delivered,s8,1719406589
+lost,s3,1720512493
+delayed,s2,1721264166,1721393758
+shipped,s2,1719179229,1719705447
+canceled,s4,1721418816
+shipped,s1,1721461163,1721863586
+location,s6,1721562846,Chicago IL
+delayed,s2,1720710423,1721133938
+created,express,s7,1719751083,1719767357
+canceled,s1,1720476781
+delivered,s6,1719577049
+lost,s1,1719291332
+lost,s6,1719874409
+created,express,s9,1721480932,1721730629
+created,overnight,s3,1721015626,1721102026
+location,s8,1720206568,Chicago IL
+shipped,s1,1720753917,1720924040
+canceled,s6,1719374996
+noteadded,s1,1720637758,shipping label reprinted because of damage
+shipped,s9,1721281406,1721755312
+delayed,s8,1721166775,1721567557
+delivered,s4,1720776656
+delayed,s4,1720722514,1721054793
+canceled,s10,1719755167
+delivered,s7,1720338892
+lost,s3,1719513761
+created,bulk,s6,1720611110,1720969680
+delivered,s10,1721231568
+delivered,s7,1720682554
+created,express,s10,1719385259,1719557001
+created,bulk,s9,1720604112,1721916294
+delivered,s6,1719295574
+created,express,s9,1720314436,1720387158
+delivered,s8,1720913603
+location,s7,1719481614,Los Angeles CA
+canceled,s9,1719818905
+delayed,s10,1721528208,1721618150
+canceled,s3,1720317612
+location,s6,1719856067,Phoenix AZ
+noteadded,s2,1719216842,inspection completed on exported goods
+location,s10,1719497323,Chicago IL
+delivered,s7,1719581352
+shipped,s6,1720081430,1720670081
+delayed,s4,1721305571,1721812120
+noteadded,s1,1720460165,package was damaged slightly during shipping
+delayed,s3,1719775019,1720358822
+canceled,s8,1720783844
+delivered,s4,1720030024
+delayed,s7,1720143777,1720319858
+lost,s1,1720179182
+created,bulk,s3,1719343647,1720081517
+delivered,s7,1720201535
+created,standard,s5,1720532214,1720532214
+created,bulk,s1,1720064820,1721386569
+created,express,s3,1719668591,1719835973
+delivered,s7,1719670844
+canceled,s2,1721358269
+shipped,s9,1719406624,1720004013
+location,s3,1719052240,Chicago IL
+delivered,s6,1719262332
+canceled,s6,1720351365
+canceled,s7,1721034749
+noteadded,s9,1719738799,inspection completed on exported goods
+shipped,s1,1720780064,1721079427
+created,standard,s2,1720156168,1720156168
+delivered,s2,1719262998
+location,s2,1719220945,Houston TX
+shipped,s2,1720436368,1720730437
+noteadded,s10,1719544200,package was damaged slightly during shipping
+lost,s10,1720789588
+location,s4,1719425959,New York NY
+delivered,s1,1721403989
+location,s10,1720181015,Los Angeles CA
+delayed,s8,1720687548,1721157309
+canceled,s3,1721402131
+delayed,s2,1720580748,1720964874
+created,standard,s7,1720715792,1720715792
+canceled,s4,1719132119
+noteadded,s5,1720583707,inspection completed on exported goods
+canceled,s10,1719532408
+noteadded,s5,1719150062,package was damaged slightly during shipping
+noteadded,s7,1721408539,inspection completed on exported goods
+created,overnight,s10,1720553342,1720639742
+lost,s9,1720084140
+delayed,s4,1721245296,1721337414
+shipped,s8,1720184408,1720703990
+created,overnight,s9,1721055449,1721141849
+noteadded,s6,1721389983,shipping label reprinted because of damage
+lost,s7,1719933916
+created,bulk,s1,1720874575,1721650506
+location,s8,1720726394,Houston TX
+location,s8,1721218669,Houston TX
+canceled,s2,1719747346
+delayed,s3,1720089254,1720482791
+lost,s9,1719983004
+created,express,s4,1721108229,1721159798
+delivered,s9,1719220659
+noteadded,s5,1719910264,shipping label reprinted because of damage
+canceled,s8,1720638086
+canceled,s8,1719814687
+canceled,s9,1720564207
+lost,s1,1719576904
+location,s4,1721041711,Phoenix AZ
+lost,s9,1720868299
+location,s3,1719730514,Los Angeles CA
+canceled,s7,1720979725
+noteadded,s8,1719487362,inspection completed on exported goods
+delivered,s10,1720230850
+noteadded,s6,1720353633,inspection completed on exported goods
+delayed,s4,1720469731,1720879127
+lost,s4,1720534889
+created,express,s10,1720524714,1720547198
+created,express,s9,1720896085,1721016356
+noteadded,s9,1721148472,shipping label reprinted because of damage
+delayed,s2,1720830638,1721041683
+canceled,s2,1719400422
+location,s4,1719649795,Chicago IL
+delayed,s7,1720860907,1721264071
+created,express,s3,1719102320,1719139665
+lost,s2,1720078757
+shipped,s1,1721255021,1721653229
+canceled,s5,1719400251
+canceled,s7,1719176111
+delivered,s3,1719438307
+shipped,s6,1719844740,1720327805
+delayed,s8,1721333191,1721622712
+delivered,s4,1721105388
+shipped,s10,1720986681,1721518341
+canceled,s9,1721059506
+location,s2,1719267657,New York NY
+canceled,s4,1720310321
+shipped,s1,1720756853,1720968465
+noteadded,s5,1721049201,inspection completed on exported goods
+created,express,s7,1721376438,1721613629
+location,s4,1719469573,Houston TX
+created,standard,s10,1719707664,1719707664
+delivered,s5,1720763821
+noteadded,s8,1719401319,package was damaged slightly during shipping
+lost,s4,1720835643
+created,bulk,s3,1719659469,1720649505
+noteadded,s4,1720335924,inspection completed on exported goods
+delayed,s3,1720857905,1721234704
+created,express,s2,1719074278,1719212958
+noteadded,s2,1720562288,package was damaged slightly during shipping
+created,express,s1,1720015032,1720189215
+location,s5,1721039860,Houston TX
+canceled,s1,1719650777
+created,standard,s8,1720116164,1720116164
+canceled,s1,1721318722
+noteadded,s3,1721318625,inspection completed on exported goods
+lost,s9,1720360919
+lost,s6,1720410346
+delivered,s6,1720264558
+delivered,s9,1718990905
+noteadded,s7,1719277770,inspection completed on exported goods
+lost,s8,1719467562
+canceled,s4,1721204352
+noteadded,s9,1721384756,inspection completed on exported goods
+canceled,s5,1720743984
+shipped,s2,1719596349,1720200902
+noteadded,s10,1719797123,package was damaged slightly during shipping
+noteadded,s9,1721532583,inspection completed on exported goods
+shipped,s3,1719092212,1719496391
+created,bulk,s10,1719601803,1721592299
+delivered,s5,1721239260
+created,express,s6,1721133645,1721306193
+location,s6,1720328382,Phoenix AZ
+delayed,s6,1721505795,1722094795
+created,express,s6,1720229611,1720351469
+location,s10,1720078888,Chicago IL
+noteadded,s9,1720713949,shipping label reprinted because of damage
+lost,s6,1721508278
+created,standard,s10,1720881850,1720881850
+canceled,s7,1721463995
+location,s10,1721183176,New York NY
+created,bulk,s8,1719927997,1721012367
+lost,s5,1719617646
+delivered,s5,1721284659
+location,s10,1719284568,New York NY
+location,s8,1720924366,Phoenix AZ
+shipped,s9,1721278281,1721381148
+noteadded,s3,1721419059,inspection completed on exported goods
+shipped,s7,1721326041,1721677390
+delayed,s8,1720278659,1720606513
+delivered,s2,1719653797
+delayed,s7,1721198483,1721619894
+shipped,s1,1720555497,1720789525
+lost,s1,1720792130
+lost,s10,1720601965
+noteadded,s9,1721556840,package was damaged slightly during shipping
+lost,s1,1721317921
+delayed,s6,1721054820,1721325960
+location,s9,1719717916,New York NY
+delivered,s7,1720792072
+lost,s8,1720364067
+shipped,s10,1720186528,1720781359
+lost,s3,1721235858
+shipped,s6,1721028170,1721568562
+shipped,s7,1720876137,1721245522
+delayed,s4,1720344858,1720827083
+created,bulk,s6,1721477973,1722001392
+created,bulk,s1,1719594709,1720958601
+noteadded,s10,1720053447,shipping label reprinted because of damage
+noteadded,s1,1720096874,package was damaged slightly during shipping
+delayed,s5,1720145584,1720252558
+created,express,s4,1720877781,1720934151
+location,s3,1719385058,Chicago IL
+delivered,s3,1720226742
+delivered,s1,1721525508
+lost,s6,1719356324
+delayed,s10,1721308284,1721868415
+delayed,s3,1720286799,1720885722
+lost,s8,1719643543
+lost,s2,1721409299
+canceled,s8,1719871408
+canceled,s4,1720070771
+created,standard,s8,1720412052,1720412052
+delivered,s4,1720568986
+shipped,s3,1719090755,1719629258
+created,standard,s7,1719792184,1719792184
+shipped,s10,1719559805,1719890464
+created,express,s1,1719000056,1719118914
+lost,s3,1719187065
+delayed,s4,1720358165,1720948797
+location,s8,1721337676,Houston TX
+location,s1,1719875039,New York NY
+canceled,s2,1719851109
+delivered,s1,1720389559
+noteadded,s5,1720442495,shipping label reprinted because of damage
+delivered,s7,1719136408
+delivered,s2,1721140907
+delivered,s2,1718995834
+shipped,s3,1719842467,1720346049
+delayed,s9,1720085982,1720454051
+canceled,s6,1721216521
+lost,s6,1719389436
+canceled,s7,1720317462
+created,overnight,s8,1721215500,1721301900
+delivered,s3,1720257326
+location,s2,1721155641,Houston TX
+delivered,s4,1720914844
+delayed,s3,1721250292,1721647308
+delayed,s1,1719254003,1719554208
+delivered,s1,1720573138
+created,bulk,s4,1719441809,1721746234
+shipped,s3,1720118666,1720291052
+lost,s9,1720369806
+noteadded,s8,1721102174,shipping label reprinted because of damage
+shipped,s10,1720978931,1721082036
+lost,s4,1720990686
+noteadded,s2,1719297559,inspection completed on exported goods
+delivered,s4,1719352973
+delayed,s8,1719165282,1719553135
+created,standard,s3,1720866654,1720866654
+delivered,s2,1720982527
+canceled,s9,1721554039
+noteadded,s4,1720666107,shipping label reprinted because of damage
+delayed,s10,1719415091,1719725604
+location,s6,1721425942,Los Angeles CA
+location,s6,1720098178,Chicago IL
+delayed,s6,1719235438,1719655315
+delivered,s10,1719444523
+created,bulk,s1,1719734630,1722214098
+delivered,s3,1719914562
+lost,s10,1721009462
+noteadded,s1,1719395163,inspection completed on exported goods
+shipped,s7,1720162128,1720572412
+delivered,s4,1720343539
+lost,s2,1719253228
+lost,s10,1720188202
+lost,s5,1720072979
+created,standard,s4,1719621373,1719621373
+canceled,s2,1719213437
+canceled,s7,1720851018
+lost,s5,1720731206
+delivered,s9,1721347813
+created,bulk,s4,1720562803,1720828848
+noteadded,s10,1721359905,shipping label reprinted because of damage
+noteadded,s8,1719360994,inspection completed on exported goods
+noteadded,s9,1720981111,shipping label reprinted because of damage
+created,bulk,s8,1719977866,1721164574
+created,standard,s4,1721196240,1721196240
+lost,s6,1719126032
+canceled,s3,1721234701
+noteadded,s3,1720299986,shipping label reprinted because of damage
+canceled,s7,1719582154
+canceled,s8,1719928234
+lost,s5,1719874815
+noteadded,s2,1720082584,package was damaged slightly during shipping
+lost,s3,1719591117
+delivered,s2,1719183024
+canceled,s5,1720209610
+noteadded,s3,1719350057,package was damaged slightly during shipping
+lost,s2,1719184016
+shipped,s5,1721429504,1721833533
+created,bulk,s9,1720497359,1720866199
+location,s1,1718990124,New York NY
+delayed,s3,1720025630,1720380319
+lost,s6,1720659266
+created,bulk,s2,1721332123,1721693270
+noteadded,s7,1719948553,shipping label reprinted because of damage
+delayed,s4,1720669662,1721113849
+delivered,s5,1720681475
+canceled,s5,1719681965
+lost,s7,1719796690
+shipped,s7,1719058374,1719442800
+delayed,s5,1719748296,1720008508
+location,s3,1721221114,Los Angeles CA
+created,overnight,s4,1719199359,1719285759
+lost,s10,1720225047
+delayed,s7,1720644971,1721084080
+shipped,s10,1719407282,1719853234
+lost,s3,1720012591
+shipped,s4,1720516459,1721062809
+noteadded,s9,1721176796,shipping label reprinted because of damage
+lost,s6,1721363311
+location,s9,1720838041,New York NY
+canceled,s5,1719614233
+delayed,s9,1721302151,1721646839
+shipped,s6,1720367423,1720940053
+delayed,s3,1719931667,1720396211
+lost,s5,1720978611
+canceled,s4,1719706120
+shipped,s2,1720642293,1721033922
+canceled,s3,1720045169
+created,overnight,s5,1719152299,1719238699
+delayed,s10,1720209069,1720482416
+location,s9,1719718208,New York NY
+delayed,s4,1719203924,1719464099
+lost,s4,1719757165
+canceled,s1,1719819672
+canceled,s8,1720045457
+noteadded,s5,1720517236,package was damaged slightly during shipping
+created,overnight,s8,1720963802,1721050202
+delayed,s9,1719114805,1719388611
+location,s4,1719842952,New York NY
+shipped,s7,1721438013,1721817335
+delayed,s10,1719887213,1720030600
+canceled,s9,1719566206
+location,s10,1720778949,Los Angeles CA
+canceled,s8,1720531846
+delivered,s8,1720715626
+created,overnight,s4,1719055685,1719142085
+created,standard,s3,1719381876,1719381876
+location,s1,1719287543,New York NY
+location,s1,1720310218,Chicago IL
+delivered,s7,1720050213
+shipped,s10,1721268742,1721755368
+shipped,s7,1720686825,1720832486
+canceled,s7,1720325516
+delivered,s4,1721391063
+delayed,s3,1720521316,1721102579
+canceled,s2,1719660692
+shipped,s10,1721029277,1721419544
+delayed,s8,1720613918,1720931324
+lost,s8,1719532406
+lost,s5,1720609867
+delivered,s9,1719957637
+delayed,s10,1720847991,1721024493
+lost,s4,1719125265
+lost,s9,1720413601
+location,s10,1720567876,Chicago IL
+shipped,s2,1720856144,1721087388
+created,standard,s9,1719521148,1719521148
+delivered,s1,1719509956
+noteadded,s10,1719673482,package was damaged slightly during shipping
+location,s5,1719563688,New York NY
+delayed,s4,1721537068,1721917695
+noteadded,s4,1720306800,shipping label reprinted because of damage
+delayed,s4,1719059324,1719394711
+location,s6,1720451822,New York NY
+location,s2,1721162361,Chicago IL
+created,express,s4,1718991246,1719115528
+created,standard,s2,1719795999,1719795999
+shipped,s10,1719037983,1719422374
+delivered,s7,1721052725
+created,express,s4,1721024503,1721173209
+delayed,s1,1719966092,1720570772
+delayed,s2,1719702787,1719860191
+delivered,s1,1720975259
+lost,s4,1719422171
+noteadded,s4,1720413000,shipping label reprinted because of damage
+created,overnight,s6,1718996068,1719082468
+delayed,s3,1719291898,1719393444
+delivered,s7,1721215024
+location,s10,1720302644,New York NY
+shipped,s7,1721395675,1721813487
+location,s3,1719177952,New York NY
+delivered,s3,1720998679
+delivered,s1,1719829598
+delayed,s5,1719334899,1719514938
+created,bulk,s7,1720070493,1720963079
+location,s4,1719432357,Chicago IL
+created,standard,s9,1719845634,1719845634
+created,bulk,s8,1719080933,1719781585
+created,standard,s7,1719167834,1719167834
+noteadded,s6,1720415630,shipping label reprinted because of damage
+noteadded,s3,1719565166,package was damaged slightly during shipping
+noteadded,s1,1720003946,package was damaged slightly during shipping
+delayed,s1,1720978419,1721141111
+canceled,s5,1719312403
+noteadded,s3,1720135900,package was damaged slightly during shipping
+lost,s9,1720893151
+delivered,s4,1720826491
+lost,s10,1719087275
+delivered,s10,1721078281
+location,s6,1721423729,New York NY
+created,overnight,s2,1721286378,1721372778
+location,s10,1720523166,Houston TX
+created,express,s3,1720056002,1720194180
+location,s6,1721044035,Los Angeles CA
+delivered,s3,1719790952
+lost,s1,1719385463
+location,s7,1720170917,Phoenix AZ
+delayed,s10,1720840767,1721230755
+location,s6,1720464681,Los Angeles CA
+delayed,s2,1720663161,1720791719
+noteadded,s9,1720738737,shipping label reprinted because of damage
+shipped,s9,1720317269,1720864065
+lost,s1,1719136015
+delivered,s1,1719582038
+shipped,s7,1721139361,1721474957
+lost,s6,1719573699
+noteadded,s8,1719466179,shipping label reprinted because of damage
+shipped,s6,1719732774,1720323341
+delivered,s3,1721561408
+delayed,s3,1719444611,1719537420
+noteadded,s4,1721424096,package was damaged slightly during shipping
+canceled,s1,1720005529
+location,s2,1719747101,New York NY
+created,overnight,s5,1720867300,1720953700
+location,s5,1720542639,Los Angeles CA
+created,standard,s6,1719372189,1719372189
+delivered,s6,1721111412
+noteadded,s6,1719274563,shipping label reprinted because of damage
+noteadded,s9,1719759204,shipping label reprinted because of damage
+lost,s4,1721491719
+delayed,s6,1720219523,1720795059
+location,s6,1721438080,Los Angeles CA
+lost,s6,1720981622
+location,s8,1719370965,Houston TX
+canceled,s3,1719111078
+created,express,s1,1719844875,1720034136
+delayed,s3,1720527748,1720904227
+noteadded,s9,1720306107,inspection completed on exported goods
+created,standard,s2,1721010232,1721010232
+lost,s5,1718990642
+lost,s5,1719680959
+lost,s1,1720591521
+noteadded,s9,1720123395,package was damaged slightly during shipping
+created,standard,s5,1719241774,1719241774
+lost,s3,1720991779
+created,express,s4,1720190534,1720314857
+noteadded,s1,1720055020,shipping label reprinted because of damage
+canceled,s10,1721145192
+lost,s5,1721481118
+shipped,s3,1720990305,1721439038
+canceled,s5,1720886863
+canceled,s2,1719982883
+delivered,s3,1721108256
+noteadded,s10,1720034953,package was damaged slightly during shipping
+lost,s9,1719554887
+delayed,s8,1721570761,1722056085
+delayed,s7,1720430056,1720535377
+canceled,s9,1721568889
+noteadded,s5,1719222734,package was damaged slightly during shipping
+location,s6,1719690981,Chicago IL
+canceled,s1,1719461638
+lost,s10,1720989441
+delivered,s2,1720582157
+noteadded,s8,1721113187,package was damaged slightly during shipping
+noteadded,s7,1720253155,shipping label reprinted because of damage
+delayed,s8,1719197085,1719674233
+location,s9,1720012250,Los Angeles CA
+delivered,s10,1720996860

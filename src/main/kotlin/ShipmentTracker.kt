@@ -44,6 +44,7 @@ class ShipmentTracker(
                 continue
             }
 
+            shipment.validate(update)
             shipment.addUpdate(update)
             shipment.notifyObservers()
 

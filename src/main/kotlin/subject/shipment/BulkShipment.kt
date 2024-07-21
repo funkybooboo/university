@@ -35,8 +35,9 @@ class BulkShipment(
     }
 
     override fun validate(update: Update) {
-        val createdTimestamp = updateHistory.firstOrNull()?.timestamp ?: return
-        val expectedDeliveryTimestamp = update.timestampOfUpdate
+        if (!(update.updateType == "shipped" || update.updateType == "delayed")) return
+        val createdTimestamp = updateHistory.firstOrNull()!!.timestamp
+        val expectedDeliveryTimestamp = update.getExpectedDeliveryDateTimestamp()!!
         val minimumAllowedTimestamp = createdTimestamp + 3 * 24 * 60 * 60 * 1000
 
         if (expectedDeliveryTimestamp < minimumAllowedTimestamp) {

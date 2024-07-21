@@ -1,6 +1,9 @@
 package listener
 
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
@@ -37,10 +40,17 @@ class FileReaderTest {
         testFile.writeText("Line 1\nLine 2\nLine 3\n")
 
         runBlocking {
-            fileReader.listen()
+            val job = launch {
+                fileReader.listen()
+            }
+
+            delay(1000)
+
             assertEquals("Line 1", channel.receive())
             assertEquals("Line 2", channel.receive())
             assertEquals("Line 3", channel.receive())
+
+            job.cancelAndJoin()
         }
     }
 }

@@ -35,8 +35,9 @@ class OvernightShipment(
     }
 
     override fun validate(update: Update) {
-        val createdTimestamp = updateHistory.firstOrNull()?.timestamp ?: return
-        val expectedDeliveryTimestamp = update.timestampOfUpdate
+        if (!(update.updateType == "shipped" || update.updateType == "delayed")) return
+        val createdTimestamp = updateHistory.firstOrNull()!!.timestamp
+        val expectedDeliveryTimestamp = update.getExpectedDeliveryDateTimestamp()!!
         val minimumAllowedTimestamp = createdTimestamp + 24 * 60 * 60 * 1000
         val maximumAllowedTimestamp = createdTimestamp + 2 * 24 * 60 * 60 * 1000
 

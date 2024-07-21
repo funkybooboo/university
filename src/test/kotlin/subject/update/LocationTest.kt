@@ -8,25 +8,25 @@ import kotlin.test.assertNotNull
 class LocationTest {
     @Test
     fun testConstruction() {
-        val type = "location"
+        val updateType = "location"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = "New York, USA"
 
-        val update = Location(type, shipmentId, timeStamp, otherInfo)
+        val update = Location(updateType, null, shipmentId, timeStamp, otherInfo)
         assertNotNull(update)
     }
 
     @Test
     fun testCanGetAttributes() {
-        val type = "location"
+        val updateType = "location"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = "New York, USA"
 
-        val update = Location(type, shipmentId, timeStamp, otherInfo)
+        val update = Location(updateType, null, shipmentId, timeStamp, otherInfo)
 
-        assertEquals(type, update.type)
+        assertEquals(updateType, update.updateType)
         assertEquals(shipmentId, update.shipmentId)
         assertEquals(timeStamp, update.timestampOfUpdate)
         assertEquals(otherInfo, update.otherInfo)
@@ -34,12 +34,12 @@ class LocationTest {
 
     @Test
     fun testGetLocation() {
-        val type = "location"
+        val updateType = "location"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = "New York, USA"
 
-        val update = Location(type, shipmentId, timeStamp, otherInfo)
+        val update = Location(updateType, null, shipmentId, timeStamp, otherInfo)
 
         val location = update.getLocation()
 
@@ -48,12 +48,12 @@ class LocationTest {
 
     @Test
     fun testGetNote() {
-        val type = "location"
+        val updateType = "location"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = "New York, USA"
 
-        val update = Location(type, shipmentId, timeStamp, otherInfo)
+        val update = Location(updateType, null, shipmentId, timeStamp, otherInfo)
 
         val note = update.getNote()
 
@@ -62,12 +62,12 @@ class LocationTest {
 
     @Test
     fun testGetExpectedDeliveryDateTimestamp() {
-        val type = "location"
+        val updateType = "location"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = "New York, USA"
 
-        val update = Location(type, shipmentId, timeStamp, otherInfo)
+        val update = Location(updateType, null, shipmentId, timeStamp, otherInfo)
 
         val expectedTimestamp = update.getExpectedDeliveryDateTimestamp()
 

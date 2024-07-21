@@ -8,25 +8,25 @@ import kotlin.test.assertNotNull
 class DeliveredTest {
     @Test
     fun testConstruction() {
-        val type = "delivered"
+        val updateType = "delivered"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo: String? = null
 
-        val update = Delivered(type, shipmentId, timeStamp, otherInfo)
+        val update = Delivered(updateType, null, shipmentId, timeStamp, otherInfo)
         assertNotNull(update)
     }
 
     @Test
     fun testCanGetAttributes() {
-        val type = "delivered"
+        val updateType = "delivered"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo: String? = null
 
-        val update = Delivered(type, shipmentId, timeStamp, otherInfo)
+        val update = Delivered(updateType, null, shipmentId, timeStamp, otherInfo)
 
-        assertEquals(type, update.type)
+        assertEquals(updateType, update.updateType)
         assertEquals(shipmentId, update.shipmentId)
         assertEquals(timeStamp, update.timestampOfUpdate)
         assertEquals(otherInfo, update.otherInfo)
@@ -34,12 +34,12 @@ class DeliveredTest {
 
     @Test
     fun testGetLocation() {
-        val type = "delivered"
+        val updateType = "delivered"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo: String? = null
 
-        val update = Delivered(type, shipmentId, timeStamp, otherInfo)
+        val update = Delivered(updateType, null, shipmentId, timeStamp, otherInfo)
 
         val location = update.getLocation()
 
@@ -48,12 +48,12 @@ class DeliveredTest {
 
     @Test
     fun testGetNote() {
-        val type = "delivered"
+        val updateType = "delivered"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo: String? = null
 
-        val update = Delivered(type, shipmentId, timeStamp, otherInfo)
+        val update = Delivered(updateType, null, shipmentId, timeStamp, otherInfo)
 
         val note = update.getNote()
 
@@ -62,12 +62,12 @@ class DeliveredTest {
 
     @Test
     fun testGetExpectedDeliveryDateTimestamp() {
-        val type = "delivered"
+        val updateType = "delivered"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo: String? = null
 
-        val update = Delivered(type, shipmentId, timeStamp, otherInfo)
+        val update = Delivered(updateType, null, shipmentId, timeStamp, otherInfo)
 
         val expectedTimestamp = update.getExpectedDeliveryDateTimestamp()
 

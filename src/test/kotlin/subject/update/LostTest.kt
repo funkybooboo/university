@@ -8,25 +8,25 @@ import kotlin.test.assertNotNull
 class LostTest {
     @Test
     fun testConstruction() {
-        val type = "lost"
+        val updateType = "lost"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = null
 
-        val update = Lost(type, shipmentId, timeStamp, otherInfo)
+        val update = Lost(updateType, null, shipmentId, timeStamp, otherInfo)
         assertNotNull(update)
     }
 
     @Test
     fun testCanGetAttributes() {
-        val type = "lost"
+        val updateType = "lost"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = null
 
-        val update = Lost(type, shipmentId, timeStamp, otherInfo)
+        val update = Lost(updateType, null, shipmentId, timeStamp, otherInfo)
 
-        assertEquals(type, update.type)
+        assertEquals(updateType, update.updateType)
         assertEquals(shipmentId, update.shipmentId)
         assertEquals(timeStamp, update.timestampOfUpdate)
         assertEquals(otherInfo, update.otherInfo)
@@ -34,12 +34,12 @@ class LostTest {
 
     @Test
     fun testGetLocation() {
-        val type = "lost"
+        val updateType = "lost"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = null
 
-        val update = Lost(type, shipmentId, timeStamp, otherInfo)
+        val update = Lost(updateType, null, shipmentId, timeStamp, otherInfo)
 
         val location = update.getLocation()
 
@@ -48,12 +48,12 @@ class LostTest {
 
     @Test
     fun testGetNote() {
-        val type = "lost"
+        val updateType = "lost"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = null
 
-        val update = Lost(type, shipmentId, timeStamp, otherInfo)
+        val update = Lost(updateType, null, shipmentId, timeStamp, otherInfo)
 
         val note = update.getNote()
 
@@ -62,12 +62,12 @@ class LostTest {
 
     @Test
     fun testGetExpectedDeliveryDateTimestamp() {
-        val type = "lost"
+        val updateType = "lost"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
         val otherInfo = null
 
-        val update = Lost(type, shipmentId, timeStamp, otherInfo)
+        val update = Lost(updateType, null, shipmentId, timeStamp, otherInfo)
 
         val expectedTimestamp = update.getExpectedDeliveryDateTimestamp()
 

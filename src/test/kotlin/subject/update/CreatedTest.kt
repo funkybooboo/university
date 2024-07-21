@@ -8,34 +8,34 @@ import kotlin.test.assertNotNull
 class CreatedTest {
     @Test
     fun testConstruction() {
-        val type = "created"
+        val updateType = "created"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
 
-        val update = Created(type, shipmentId, timeStamp, null)
+        val update = Created(updateType, "standard", shipmentId, timeStamp, null)
         assertNotNull(update)
     }
 
     @Test
     fun testCanGetAttributes() {
-        val type = "created"
+        val updateType = "created"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
 
-        val update = Created(type, shipmentId, timeStamp, null)
+        val update = Created(updateType, "standard", shipmentId, timeStamp, null)
 
-        assertEquals(type, update.type)
+        assertEquals(updateType, update.updateType)
         assertEquals(shipmentId, update.shipmentId)
         assertEquals(timeStamp, update.timestampOfUpdate)
     }
 
     @Test
     fun testGetLocation() {
-        val type = "created"
+        val updateType = "created"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
 
-        val update = Created(type, shipmentId, timeStamp, null)
+        val update = Created(updateType, "standard", shipmentId, timeStamp, null)
 
         val location = update.getLocation()
 
@@ -44,11 +44,11 @@ class CreatedTest {
 
     @Test
     fun testGetNote() {
-        val type = "created"
+        val updateType = "created"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
 
-        val update = Created(type, shipmentId, timeStamp, null)
+        val update = Created(updateType, "standard", shipmentId, timeStamp, null)
 
         val note = update.getNote()
 
@@ -57,11 +57,11 @@ class CreatedTest {
 
     @Test
     fun testGetExpectedDeliveryDateTimestamp() {
-        val type = "created"
+        val updateType = "created"
         val shipmentId = "123"
         val timeStamp = System.currentTimeMillis()
 
-        val update = Created(type, shipmentId, timeStamp, null)
+        val update = Created(updateType, "standard", shipmentId, timeStamp, null)
 
         val timestamp = update.getExpectedDeliveryDateTimestamp()
 

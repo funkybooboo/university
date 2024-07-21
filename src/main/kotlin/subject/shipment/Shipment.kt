@@ -10,11 +10,11 @@ import subject.ShippingUpdate
 abstract class Shipment(
     val id: String,
     val shipmentType: String,
-    protected val notes: MutableList<String> = mutableListOf(),
-    protected val updateHistory: MutableList<ShippingUpdate> = mutableListOf(),
-    protected val expectedDeliveryDateTimestampHistory: MutableList<Long> = mutableListOf(),
-    protected val locationHistory: MutableList<String> = mutableListOf(),
-    protected val abnormalOccurrenceHistory: MutableList<String> = mutableListOf()
+    val notes: MutableList<String> = mutableListOf(),
+    val updateHistory: MutableList<ShippingUpdate> = mutableListOf(),
+    val expectedDeliveryDateTimestampHistory: MutableList<Long> = mutableListOf(),
+    val locationHistory: MutableList<String> = mutableListOf(),
+    val abnormalOccurrenceHistory: MutableList<String> = mutableListOf()
 ): ShipmentSubject() {
 
     override suspend fun notifyObservers() {
@@ -111,5 +111,5 @@ abstract class Shipment(
 
     abstract fun validate(update: Update)
 
-    protected abstract fun copy(): Shipment
+    abstract fun copy(): Shipment
 }

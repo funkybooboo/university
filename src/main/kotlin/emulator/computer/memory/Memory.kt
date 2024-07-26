@@ -1,4 +1,5 @@
 package com.natestott.emulator.computer.memory
 
-class Memory {
-}
+abstract class Memory(
+    private val bytes: ByteArray
+) {}

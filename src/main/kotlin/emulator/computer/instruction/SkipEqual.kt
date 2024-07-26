@@ -1,6 +1,6 @@
 package com.natestott.emulator.computer.instruction
 
-class Write(
+class SkipEqual(
     bytes: ByteArray
 ): Instruction(bytes) {
     override fun performOperation() {

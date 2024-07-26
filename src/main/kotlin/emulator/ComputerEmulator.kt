@@ -5,6 +5,7 @@ import com.natestott.emulator.computer.Cpu
 import com.natestott.emulator.computer.memory.contiguous.Rom
 import java.io.File
 import java.io.IOException
+import com.natestott.emulator.computer.ChannelManager.channel
 
 class ComputerEmulator {
     fun start() {
@@ -13,8 +14,8 @@ class ComputerEmulator {
         val binaryProgram = getBinaryProgramFromBinaryFile(binaryFile)
         val rom = getRomFromBinaryProgram(binaryProgram)
 
-        val controlUnit = ControlUnit(rom)
-        val cpu = Cpu()
+        val controlUnit = ControlUnit(rom, channel)
+        val cpu = Cpu(channel)
         // TODO thread stuff with controlunit and cpu
     }
 
@@ -34,7 +35,7 @@ class ComputerEmulator {
             val binaryProgram = binaryFile.readBytes()
             return binaryProgram
         } catch (e: IOException) {
-            throw RuntimeException("Failed to read binary file", e)
+            throw IOException("Failed to read binary file", e)
         }
     }
 

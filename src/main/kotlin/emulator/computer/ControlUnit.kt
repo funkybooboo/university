@@ -1,9 +1,12 @@
 package com.natestott.emulator.computer
 
+import com.natestott.emulator.computer.instruction.Instruction
 import com.natestott.emulator.computer.memory.contiguous.Rom
+import kotlinx.coroutines.channels.Channel
 
 class ControlUnit(
-    val rom: Rom
+    val rom: Rom,
+    private val channel: Channel<Instruction>
 ) {
     fun runProgram() {
 

@@ -1,6 +1,6 @@
 package com.natestott.emulator.computer.memory.register
 
-class TManager() {
+object TManager {
     val t = T()
 }
 

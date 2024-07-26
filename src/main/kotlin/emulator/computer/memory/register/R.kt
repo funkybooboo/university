@@ -1,6 +1,6 @@
 package com.natestott.emulator.computer.memory.register
 
-class RManger() {
+object RManger {
     val r = Array(8) { R() }
 }
 

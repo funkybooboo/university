@@ -1,6 +1,6 @@
 package com.natestott.emulator.computer.memory.register
 
-class PManager() {
+object PManager {
     val p = P()
 }
 

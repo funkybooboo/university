@@ -9,18 +9,21 @@ import com.natestott.emulator.computer.ChannelManager.channel
 
 class ComputerEmulator {
     fun start() {
-        val pathToBinaryFile = getPathToBinaryFile()
-        val binaryFile = getBinaryFile(pathToBinaryFile)
-        val binaryProgram = getBinaryProgramFromBinaryFile(binaryFile)
-        val rom = getRomFromBinaryProgram(binaryProgram)
+        while (true) {
+            val pathToBinaryFile = getPathToBinaryFile()
+            if (pathToBinaryFile.lowercase() == "q" || pathToBinaryFile.lowercase() == "quit") break
+            val binaryFile = getBinaryFile(pathToBinaryFile)
+            val binaryProgram = getBinaryProgramFromBinaryFile(binaryFile)
+            val rom = getRomFromBinaryProgram(binaryProgram)
 
-        val controlUnit = ControlUnit(rom, channel)
-        val cpu = Cpu(channel)
-        // TODO thread stuff with controlunit and cpu
+            val controlUnit = ControlUnit(rom, channel)
+            val cpu = Cpu(channel)
+            // TODO thread stuff with controlunit and cpu
+        }
     }
 
     private fun getPathToBinaryFile(): String {
-        println("Path to binary file: ")
+        println("Path to binary file or type q to quit: ")
         val pathToBinaryFile = readlnOrNull() ?: throw IOException("Please provide a path to a binary file")
         return pathToBinaryFile
     }

@@ -11,7 +11,7 @@ class ComputerEmulator {
         val pathToBinaryFile = getPathToBinaryFile()
         val binaryFile = getBinaryFile(pathToBinaryFile)
         val binaryProgram = getBinaryProgramFromBinaryFile(binaryFile)
-        val rom = Rom(binaryProgram)
+        val rom = getRomFromBinaryProgram(binaryProgram)
 
         val controlUnit = ControlUnit(rom)
         val cpu = Cpu()
@@ -36,5 +36,17 @@ class ComputerEmulator {
         } catch (e: IOException) {
             throw RuntimeException("Failed to read binary file", e)
         }
+    }
+
+    private fun getRomFromBinaryProgram(binaryProgram: ByteArray): Rom {
+        if (binaryProgram.size > 4096) {
+            throw IllegalArgumentException("binary program cannot be more then 4096 bytes")
+        }
+        val memory = ByteArray(4096)
+        for (i in 0..binaryProgram.size) {
+            memory[i] = binaryProgram[i]
+        }
+        val rom = Rom(memory)
+        return rom
     }
 }

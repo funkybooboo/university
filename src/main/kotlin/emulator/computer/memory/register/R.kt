@@ -4,7 +4,7 @@ import com.natestott.emulator.logger.LoggerManager.logger
 import com.natestott.emulator.logger.Logger.Level
 
 object RManager {
-    val r = Array(8) { R() }
+    val r = arrayOf(R(),R(),R(),R(),R(),R(),R(),R())
 }
 
 class R : Register(

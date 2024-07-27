@@ -10,16 +10,11 @@ class Draw(
 ) : Instruction(nibbles) {
     override fun performOperation() {
         val rxIndex = nibbles[0].toInt()
-        val ryIndex = nibbles[1].toInt()
-        val rzIndex = nibbles[2].toInt()
+        val row = nibbles[1]
+        val col = nibbles[2]
 
         val rx = r[rxIndex]
-        val ry = r[ryIndex]
-        val rz = r[rzIndex]
-
         val asciiValue = rx.read()[0].toInt()
-        val row = ry.read()[0].toInt()
-        val col = rz.read()[0].toInt()
 
         if (asciiValue > 0x7F) {
             throw IllegalArgumentException("ASCII value in rX is greater than 0x7F.")
@@ -27,6 +22,6 @@ class Draw(
 
         logger.log(Level.INFO, "Drawing character '${asciiValue.toChar()}' at row $row, column $col")
 
-        screen.draw(asciiValue.toByte(), row.toByte(), col.toByte())
+        screen.draw(asciiValue.toByte(), row, col)
     }
 }

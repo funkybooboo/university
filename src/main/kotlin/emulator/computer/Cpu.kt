@@ -28,7 +28,6 @@ class Cpu(
             }
 
             logger.log(Level.INFO, "Retrieved next instruction: ${bytes.joinToString(", ")}")
-
             val nibbles01 = breakByteIntoNibbles(bytes[0])
             val nibbles23 = breakByteIntoNibbles(bytes[1])
             val nibble0 =nibbles01.first

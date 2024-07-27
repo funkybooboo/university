@@ -5,6 +5,9 @@ import com.natestott.emulator.computer.memory.Memory
 abstract class Register(
     bytes: ByteArray
 ): Memory(bytes) {
-    abstract fun read(): ByteArray
+    fun read(): ByteArray {
+        return bytes.copyOf()
+    }
+
     abstract fun write(bytes: ByteArray)
 }

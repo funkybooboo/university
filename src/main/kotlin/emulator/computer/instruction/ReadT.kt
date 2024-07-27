@@ -1,13 +1,15 @@
 package com.natestott.emulator.computer.instruction
 
-class ReadT(
-    bytes: ByteArray
-): Instruction(bytes) {
-    override fun performOperation() {
-        TODO("Not yet implemented")
-    }
+import com.natestott.emulator.computer.memory.register.RManager.r
+import com.natestott.emulator.computer.memory.register.TManager.t
 
-    override fun incrementProgramCounter() {
-        TODO("Not yet implemented")
+class ReadT(
+    nibbles: ByteArray
+): Instruction(nibbles) {
+    override fun performOperation() {
+        val rxIndex = nibbles[0].toInt()
+        val rx = r[rxIndex]
+        val tValue = t.read()[0]
+        rx.write(byteArrayOf(tValue))
     }
 }

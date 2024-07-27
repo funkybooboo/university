@@ -1,13 +1,20 @@
 package com.natestott.emulator.computer.instruction
 
-class Add(
-    bytes: ByteArray
-): Instruction(bytes) {
-    override fun performOperation() {
-        TODO("Not yet implemented")
-    }
+import com.natestott.emulator.computer.memory.register.RManager.r
 
-    override fun incrementProgramCounter() {
-        TODO("Not yet implemented")
+class Add(
+    nibbles: ByteArray
+): Instruction(nibbles) {
+    override fun performOperation() {
+        val rxIndex = nibbles[0].toInt()
+        val rx = r[rxIndex]
+
+        val ryIndex = nibbles[1].toInt()
+        val ry = r[ryIndex]
+
+        val rzIndex = nibbles[2].toInt()
+        val rz = r[rzIndex]
+
+        rz.write(rx.read() + ry.read())
     }
 }

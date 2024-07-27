@@ -7,12 +7,8 @@ object AManager{
 class A(): Register(
     ByteArray(2)
 ) {
-    override fun read(): ByteArray {
-        TODO("Not yet implemented")
-    }
-
     override fun write(bytes: ByteArray) {
-        TODO("Not yet implemented")
+        require(bytes.size == 2) { "ByteArray must be of size 2." }
+        bytes.copyInto(destination = this.bytes, startIndex = 0, endIndex = 2)
     }
-
 }

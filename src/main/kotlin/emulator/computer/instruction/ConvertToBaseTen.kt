@@ -1,13 +1,39 @@
 package com.natestott.emulator.computer.instruction
 
-class ConvertToBaseTen(
-    bytes: ByteArray
-): Instruction(bytes) {
-    override fun performOperation() {
-        TODO("Not yet implemented")
-    }
+import com.natestott.emulator.computer.byteArrayToInt
+import com.natestott.emulator.computer.memory.contiguous.RamManager.ram
+import com.natestott.emulator.computer.memory.contiguous.RomManager
+import com.natestott.emulator.computer.memory.register.RManager.r
+import com.natestott.emulator.computer.memory.register.AManager.a
+import com.natestott.emulator.computer.memory.register.MManager.m
 
-    override fun incrementProgramCounter() {
-        TODO("Not yet implemented")
+class ConvertToBaseTen(
+    nibbles: ByteArray
+): Instruction(nibbles) {
+    override fun performOperation() {
+        val rxIndex = nibbles[0].toInt()
+        val rx = r[rxIndex]
+
+        val address = byteArrayToInt(a.read())
+
+        val value = rx.read()[0].toInt()
+
+        val hundreds = value / 100
+        val tens = (value % 100) / 10
+        val ones = value % 10
+
+        val mByteArray = m.read()
+        val isUsingROM = mByteArray[0].toInt() != 0
+
+        if (isUsingROM) {
+            RomManager.getRom()!!.write(address, hundreds.toByte())
+            RomManager.getRom()!!.write(address + 1, tens.toByte())
+            RomManager.getRom()!!.write(address + 2, ones.toByte())
+        }
+        else {
+            ram.write(address, hundreds.toByte())
+            ram.write(address + 1, tens.toByte())
+            ram.write(address + 2, ones.toByte())
+        }
     }
 }

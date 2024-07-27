@@ -1,13 +1,18 @@
 package com.natestott.emulator.computer.instruction
 
-class SwitchMemory(
-    bytes: ByteArray
-): Instruction(bytes) {
-    override fun performOperation() {
-        TODO("Not yet implemented")
-    }
+import com.natestott.emulator.computer.memory.register.MManager.m
 
-    override fun incrementProgramCounter() {
-        TODO("Not yet implemented")
+class SwitchMemory(
+    nibbles: ByteArray
+): Instruction(nibbles) {
+    override fun performOperation() {
+        val currentMValue = m.read()[0].toInt()
+        val newMValue = if (currentMValue == 0) {
+            1
+        } else {
+            0
+        }
+        val newMValueBytes = byteArrayOf(newMValue.toByte())
+        m.write(newMValueBytes)
     }
 }

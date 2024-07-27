@@ -1,13 +1,15 @@
 package com.natestott.emulator
 
-import com.natestott.emulator.computer.ControlUnit
 import com.natestott.emulator.computer.Cpu
-import com.natestott.emulator.computer.memory.contiguous.Rom
+import com.natestott.emulator.computer.memory.contiguous.RomManager
 import java.io.File
 import java.io.IOException
-import com.natestott.emulator.computer.ChannelManager.channel
+import com.natestott.emulator.computer.memory.contiguous.Rom
 
 class ComputerEmulator {
+
+    private val cpu = Cpu()
+
     fun start() {
         while (true) {
             val pathToBinaryFile = getPathToBinaryFile()
@@ -15,10 +17,7 @@ class ComputerEmulator {
             val binaryFile = getBinaryFile(pathToBinaryFile)
             val binaryProgram = getBinaryProgramFromBinaryFile(binaryFile)
             val rom = getRomFromBinaryProgram(binaryProgram)
-
-            val controlUnit = ControlUnit(rom, channel)
-            val cpu = Cpu(channel)
-            // TODO thread stuff with controlunit and cpu
+            cpu.executeProgram(rom)
         }
     }
 
@@ -29,28 +28,26 @@ class ComputerEmulator {
     }
 
     private fun getBinaryFile(pathToBinaryFile: String): File {
-        val binaryFile = File(pathToBinaryFile)
-        return binaryFile
+        return File(pathToBinaryFile)
     }
 
     private fun getBinaryProgramFromBinaryFile(binaryFile: File): ByteArray {
-        try {
-            val binaryProgram = binaryFile.readBytes()
-            return binaryProgram
+        return try {
+            binaryFile.readBytes()
         } catch (e: IOException) {
             throw IOException("Failed to read binary file", e)
         }
     }
 
     private fun getRomFromBinaryProgram(binaryProgram: ByteArray): Rom {
-        if (binaryProgram.size > 4096) {
-            throw IllegalArgumentException("binary program cannot be more then 4096 bytes")
+        if (binaryProgram.size < 4096) {
+            throw IllegalArgumentException("Binary program cannot be less than 4096 bytes")
         }
         val memory = ByteArray(4096)
-        for (i in 0..binaryProgram.size) {
+        for (i in binaryProgram.indices) { // Fixed to avoid IndexOutOfBoundsException
             memory[i] = binaryProgram[i]
         }
-        val rom = Rom(memory)
-        return rom
+        RomManager.initializeRom(memory)
+        return RomManager.getRom()!!
     }
 }

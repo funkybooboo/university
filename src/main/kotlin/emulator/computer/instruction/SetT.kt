@@ -1,13 +1,18 @@
 package com.natestott.emulator.computer.instruction
 
-class SetT(
-    bytes: ByteArray
-): Instruction(bytes) {
-    override fun performOperation() {
-        TODO("Not yet implemented")
-    }
+import com.natestott.emulator.computer.memory.register.TManager.t
 
-    override fun incrementProgramCounter() {
-        TODO("Not yet implemented")
+class SetT(
+    nibbles: ByteArray
+): Instruction(nibbles) {
+    override fun performOperation() {
+        val highNibble = nibbles[0].toInt()
+        val lowNibble = nibbles[1].toInt()
+
+        val value = (highNibble shl 4) or lowNibble
+
+        val valueByteArray = byteArrayOf(value.toByte())
+
+        t.write(valueByteArray)
     }
 }

@@ -1,6 +1,5 @@
 package com.natestott.emulator.computer
 
-import com.natestott.emulator.computer.memory.register.PManager.p
 import com.natestott.emulator.logger.LoggerManager.logger
 import com.natestott.emulator.logger.Logger.Level
 
@@ -8,7 +7,7 @@ fun breakByteIntoNibbles(byte: Byte): Pair<Byte, Byte> {
     val unsignedByte = byte.toUByte().toInt()
     val highNibble = (unsignedByte shr 4) and 0x0F
     val lowNibble = unsignedByte and 0x0F
-    logger.log(Level.INFO, "Breaking byte ${byte.toUByte()} into nibbles: highNibble=$highNibble, lowNibble=$lowNibble")
+    logger.log(Level.INFO, "Breaking byte $unsignedByte into nibbles: highNibble=$highNibble, lowNibble=$lowNibble")
     return Pair(highNibble.toByte(), lowNibble.toByte())
 }
 

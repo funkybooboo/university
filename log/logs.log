@@ -5,3 +5,556 @@
 [INFO] 2024-07-27 16:55:24.428 - ROM initialized with 4096 bytes 
 [INFO] 2024-07-27 16:55:24.429 - ROM initialized successfully 
 [INFO] 2024-07-27 16:55:38.452 - Starting program execution 
+[INFO] 2024-07-27 16:57:07.142 - Starting the computer emulator 
+[INFO] 2024-07-27 16:57:09.845 - Path to binary file obtained: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 16:57:09.846 - Binary file object created: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 16:57:09.861 - Binary file read successfully. Size: 20 bytes 
+[INFO] 2024-07-27 16:57:09.863 - ROM initialized with 4096 bytes 
+[INFO] 2024-07-27 16:57:09.864 - ROM initialized successfully 
+[INFO] 2024-07-27 16:57:09.864 - Starting program execution 
+[INFO] 2024-07-27 16:57:09.880 - Reading from register: 0, 0 
+[INFO] 2024-07-27 16:57:09.885 - Converting byteArray 0, 0 to Int: result=0 
+[ERROR] 2024-07-27 16:57:09.885 - Exception while reading next instruction bytes: ByteArray must be of size 2. - Exception: ByteArray must be of size 2.
+[INFO] 2024-07-27 16:57:09.886 - End of program detected. Shutting down executor. 
+[ERROR] 2024-07-27 16:57:09.887 - Exception during execution scheduling: null - Exception: null
+[INFO] 2024-07-27 16:57:09.887 - Executor service shut down 
+[INFO] 2024-07-27 16:57:09.887 - Program executed successfully 
+[INFO] 2024-07-27 16:59:24.339 - Starting the computer emulator 
+[INFO] 2024-07-27 16:59:44.135 - Path to binary file obtained: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 16:59:44.136 - Binary file object created: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 16:59:44.148 - Binary file read successfully. Size: 20 bytes 
+[INFO] 2024-07-27 16:59:44.150 - ROM initialized with 4096 bytes 
+[INFO] 2024-07-27 16:59:44.150 - ROM initialized successfully 
+[INFO] 2024-07-27 16:59:44.151 - Starting program execution 
+[INFO] 2024-07-27 16:59:44.171 - Reading from register: 0, 0 
+[INFO] 2024-07-27 16:59:44.178 - Converting byteArray 0, 0 to Int: result=0 
+[INFO] 2024-07-27 16:59:44.184 - Reading from ROM address 0: 0 
+[INFO] 2024-07-27 16:59:44.184 - Reading from ROM address 1: 72 
+[INFO] 2024-07-27 16:59:44.185 - Creating instruction with bytes: 0, 72 
+[INFO] 2024-07-27 16:59:44.191 - Parsed nibbles: 0, 0, 4, 8 
+[INFO] 2024-07-27 16:59:44.192 - Instruction initialized with nibbles: 0, 4, 8 
+[INFO] 2024-07-27 16:59:44.193 - Created instruction: Store 
+[INFO] 2024-07-27 16:59:44.193 - Executing instruction with nibbles: 0, 4, 8 
+[INFO] 2024-07-27 16:59:44.198 - Combining nibbles: highNibble=4, lowNibble=8, combinedByte=72 
+[INFO] 2024-07-27 16:59:44.198 - Performing Store Operation: 
+[INFO] 2024-07-27 16:59:44.198 - Reading from register: 0 
+[INFO] 2024-07-27 16:59:44.199 - Register R0 before store operation: 0 
+[INFO] 2024-07-27 16:59:44.199 - High nibble: 4 
+[INFO] 2024-07-27 16:59:44.199 - Low nibble: 8 
+[INFO] 2024-07-27 16:59:44.199 - Combined byte: 72 
+[INFO] 2024-07-27 16:59:44.199 - Writing to register R: 72 
+[INFO] 2024-07-27 16:59:44.199 - Register R after write: 72 
+[INFO] 2024-07-27 16:59:44.200 - Reading from register: 72 
+[INFO] 2024-07-27 16:59:44.200 - Register R0 after store operation: 72 
+[INFO] 2024-07-27 16:59:44.200 - Reading from register: 0, 0 
+[INFO] 2024-07-27 16:59:44.200 - Converting byteArray 0, 0 to Int: result=0 
+[INFO] 2024-07-27 16:59:44.200 - Converting Int 2 to byteArray: 0, 2 
+[INFO] 2024-07-27 16:59:44.201 - Converting byteArray 0, 2 to Int: result=2 
+[INFO] 2024-07-27 16:59:44.201 - Attempting to write to register P: 0, 2 (intValue=2) 
+[INFO] 2024-07-27 16:59:44.201 - Register P after write: 0, 2 (intValue=2) 
+[INFO] 2024-07-27 16:59:44.204 - Program Counter incremented from 0 to 2 
+[INFO] 2024-07-27 16:59:44.205 - Reading from register: 0 
+[INFO] 2024-07-27 16:59:44.205 - Reading from register: 0, 2 
+[INFO] 2024-07-27 16:59:44.205 - Converting byteArray 0, 2 to Int: result=2 
+[INFO] 2024-07-27 16:59:44.206 - Reading from ROM address 2: 1 
+[INFO] 2024-07-27 16:59:44.206 - Reading from ROM address 3: 69 
+[INFO] 2024-07-27 16:59:44.206 - Creating instruction with bytes: 1, 69 
+[INFO] 2024-07-27 16:59:44.206 - Parsed nibbles: 0, 1, 4, 5 
+[INFO] 2024-07-27 16:59:44.206 - Instruction initialized with nibbles: 1, 4, 5 
+[INFO] 2024-07-27 16:59:44.206 - Created instruction: Store 
+[INFO] 2024-07-27 16:59:44.206 - Executing instruction with nibbles: 1, 4, 5 
+[INFO] 2024-07-27 16:59:44.206 - Combining nibbles: highNibble=4, lowNibble=5, combinedByte=69 
+[INFO] 2024-07-27 16:59:44.206 - Performing Store Operation: 
+[INFO] 2024-07-27 16:59:44.207 - Reading from register: 0 
+[INFO] 2024-07-27 16:59:44.207 - Register R1 before store operation: 0 
+[INFO] 2024-07-27 16:59:44.207 - High nibble: 4 
+[INFO] 2024-07-27 16:59:44.207 - Low nibble: 5 
+[INFO] 2024-07-27 16:59:44.207 - Combined byte: 69 
+[INFO] 2024-07-27 16:59:44.207 - Writing to register R: 69 
+[INFO] 2024-07-27 16:59:44.207 - Register R after write: 69 
+[INFO] 2024-07-27 16:59:44.207 - Reading from register: 69 
+[INFO] 2024-07-27 16:59:44.207 - Register R1 after store operation: 69 
+[INFO] 2024-07-27 16:59:44.207 - Reading from register: 0, 2 
+[INFO] 2024-07-27 16:59:44.207 - Converting byteArray 0, 2 to Int: result=2 
+[INFO] 2024-07-27 16:59:44.208 - Converting Int 4 to byteArray: 0, 4 
+[INFO] 2024-07-27 16:59:44.208 - Converting byteArray 0, 4 to Int: result=4 
+[INFO] 2024-07-27 16:59:44.208 - Attempting to write to register P: 0, 4 (intValue=4) 
+[INFO] 2024-07-27 16:59:44.208 - Register P after write: 0, 4 (intValue=4) 
+[INFO] 2024-07-27 16:59:44.208 - Program Counter incremented from 2 to 4 
+[INFO] 2024-07-27 16:59:44.208 - Reading from register: 0, 4 
+[INFO] 2024-07-27 16:59:44.209 - Converting byteArray 0, 4 to Int: result=4 
+[INFO] 2024-07-27 16:59:44.209 - Reading from ROM address 4: 2 
+[INFO] 2024-07-27 16:59:44.210 - Reading from ROM address 5: 76 
+[INFO] 2024-07-27 16:59:44.210 - Creating instruction with bytes: 2, 76 
+[INFO] 2024-07-27 16:59:44.210 - Parsed nibbles: 0, 2, 4, 12 
+[INFO] 2024-07-27 16:59:44.210 - Instruction initialized with nibbles: 2, 4, 12 
+[INFO] 2024-07-27 16:59:44.210 - Created instruction: Store 
+[INFO] 2024-07-27 16:59:44.210 - Executing instruction with nibbles: 2, 4, 12 
+[INFO] 2024-07-27 16:59:44.210 - Combining nibbles: highNibble=4, lowNibble=12, combinedByte=76 
+[INFO] 2024-07-27 16:59:44.211 - Performing Store Operation: 
+[INFO] 2024-07-27 16:59:44.211 - Reading from register: 0 
+[INFO] 2024-07-27 16:59:44.211 - Register R2 before store operation: 0 
+[INFO] 2024-07-27 16:59:44.211 - High nibble: 4 
+[INFO] 2024-07-27 16:59:44.211 - Low nibble: 12 
+[INFO] 2024-07-27 16:59:44.211 - Combined byte: 76 
+[INFO] 2024-07-27 16:59:44.211 - Writing to register R: 76 
+[INFO] 2024-07-27 16:59:44.211 - Register R after write: 76 
+[INFO] 2024-07-27 16:59:44.211 - Reading from register: 76 
+[INFO] 2024-07-27 16:59:44.211 - Register R2 after store operation: 76 
+[INFO] 2024-07-27 16:59:44.212 - Reading from register: 0, 4 
+[INFO] 2024-07-27 16:59:44.212 - Converting byteArray 0, 4 to Int: result=4 
+[INFO] 2024-07-27 16:59:44.212 - Converting Int 6 to byteArray: 0, 6 
+[INFO] 2024-07-27 16:59:44.212 - Converting byteArray 0, 6 to Int: result=6 
+[INFO] 2024-07-27 16:59:44.212 - Attempting to write to register P: 0, 6 (intValue=6) 
+[INFO] 2024-07-27 16:59:44.212 - Register P after write: 0, 6 (intValue=6) 
+[INFO] 2024-07-27 16:59:44.212 - Program Counter incremented from 4 to 6 
+[INFO] 2024-07-27 16:59:44.212 - Reading from register: 0, 6 
+[INFO] 2024-07-27 16:59:44.212 - Converting byteArray 0, 6 to Int: result=6 
+[INFO] 2024-07-27 16:59:44.213 - Reading from ROM address 6: 3 
+[INFO] 2024-07-27 16:59:44.213 - Reading from ROM address 7: 76 
+[INFO] 2024-07-27 16:59:44.213 - Creating instruction with bytes: 3, 76 
+[INFO] 2024-07-27 16:59:44.213 - Parsed nibbles: 0, 3, 4, 12 
+[INFO] 2024-07-27 16:59:44.213 - Instruction initialized with nibbles: 3, 4, 12 
+[INFO] 2024-07-27 16:59:44.213 - Created instruction: Store 
+[INFO] 2024-07-27 16:59:44.213 - Executing instruction with nibbles: 3, 4, 12 
+[INFO] 2024-07-27 16:59:44.213 - Combining nibbles: highNibble=4, lowNibble=12, combinedByte=76 
+[INFO] 2024-07-27 16:59:44.213 - Performing Store Operation: 
+[INFO] 2024-07-27 16:59:44.214 - Reading from register: 0 
+[INFO] 2024-07-27 16:59:44.214 - Register R3 before store operation: 0 
+[INFO] 2024-07-27 16:59:44.214 - High nibble: 4 
+[INFO] 2024-07-27 16:59:44.214 - Low nibble: 12 
+[INFO] 2024-07-27 16:59:44.214 - Combined byte: 76 
+[INFO] 2024-07-27 16:59:44.214 - Writing to register R: 76 
+[INFO] 2024-07-27 16:59:44.214 - Register R after write: 76 
+[INFO] 2024-07-27 16:59:44.214 - Reading from register: 76 
+[INFO] 2024-07-27 16:59:44.214 - Register R3 after store operation: 76 
+[INFO] 2024-07-27 16:59:44.214 - Reading from register: 0, 6 
+[INFO] 2024-07-27 16:59:44.215 - Converting byteArray 0, 6 to Int: result=6 
+[INFO] 2024-07-27 16:59:44.215 - Converting Int 8 to byteArray: 0, 8 
+[INFO] 2024-07-27 16:59:44.215 - Converting byteArray 0, 8 to Int: result=8 
+[INFO] 2024-07-27 16:59:44.215 - Attempting to write to register P: 0, 8 (intValue=8) 
+[INFO] 2024-07-27 16:59:44.215 - Register P after write: 0, 8 (intValue=8) 
+[INFO] 2024-07-27 16:59:44.215 - Program Counter incremented from 6 to 8 
+[INFO] 2024-07-27 16:59:44.215 - Reading from register: 0, 8 
+[INFO] 2024-07-27 16:59:44.215 - Converting byteArray 0, 8 to Int: result=8 
+[INFO] 2024-07-27 16:59:44.215 - Reading from ROM address 8: 4 
+[INFO] 2024-07-27 16:59:44.215 - Reading from ROM address 9: 79 
+[INFO] 2024-07-27 16:59:44.216 - Creating instruction with bytes: 4, 79 
+[INFO] 2024-07-27 16:59:44.216 - Parsed nibbles: 0, 4, 4, 15 
+[INFO] 2024-07-27 16:59:44.216 - Instruction initialized with nibbles: 4, 4, 15 
+[INFO] 2024-07-27 16:59:44.216 - Created instruction: Store 
+[INFO] 2024-07-27 16:59:44.216 - Executing instruction with nibbles: 4, 4, 15 
+[INFO] 2024-07-27 16:59:44.216 - Combining nibbles: highNibble=4, lowNibble=15, combinedByte=79 
+[INFO] 2024-07-27 16:59:44.216 - Performing Store Operation: 
+[INFO] 2024-07-27 16:59:44.216 - Reading from register: 0 
+[INFO] 2024-07-27 16:59:44.216 - Register R4 before store operation: 0 
+[INFO] 2024-07-27 16:59:44.216 - High nibble: 4 
+[INFO] 2024-07-27 16:59:44.217 - Low nibble: 15 
+[INFO] 2024-07-27 16:59:44.217 - Combined byte: 79 
+[INFO] 2024-07-27 16:59:44.217 - Writing to register R: 79 
+[INFO] 2024-07-27 16:59:44.217 - Register R after write: 79 
+[INFO] 2024-07-27 16:59:44.217 - Reading from register: 79 
+[INFO] 2024-07-27 16:59:44.217 - Register R4 after store operation: 79 
+[INFO] 2024-07-27 16:59:44.217 - Reading from register: 0, 8 
+[INFO] 2024-07-27 16:59:44.217 - Converting byteArray 0, 8 to Int: result=8 
+[INFO] 2024-07-27 16:59:44.217 - Converting Int 10 to byteArray: 0, 10 
+[INFO] 2024-07-27 16:59:44.217 - Converting byteArray 0, 10 to Int: result=10 
+[INFO] 2024-07-27 16:59:44.217 - Attempting to write to register P: 0, 10 (intValue=10) 
+[INFO] 2024-07-27 16:59:44.218 - Register P after write: 0, 10 (intValue=10) 
+[INFO] 2024-07-27 16:59:44.218 - Program Counter incremented from 8 to 10 
+[INFO] 2024-07-27 16:59:44.218 - Reading from register: 0, 10 
+[INFO] 2024-07-27 16:59:44.218 - Converting byteArray 0, 10 to Int: result=10 
+[INFO] 2024-07-27 16:59:44.218 - Reading from ROM address 10: 240 
+[INFO] 2024-07-27 16:59:44.218 - Reading from ROM address 11: 0 
+[INFO] 2024-07-27 16:59:44.218 - Creating instruction with bytes: -16, 0 
+[INFO] 2024-07-27 16:59:44.218 - Parsed nibbles: 15, 0, 0, 0 
+[INFO] 2024-07-27 16:59:44.219 - Instruction initialized with nibbles: 0, 0, 0 
+[INFO] 2024-07-27 16:59:44.219 - Created instruction: Draw 
+[INFO] 2024-07-27 16:59:44.219 - Executing instruction with nibbles: 0, 0, 0 
+[INFO] 2024-07-27 16:59:44.219 - Reading from register: 72 
+[INFO] 2024-07-27 16:59:44.219 - Reading from register: 72 
+[INFO] 2024-07-27 16:59:44.219 - Reading from register: 72 
+[INFO] 2024-07-27 16:59:44.222 - Drawing character 'H' at row 72, column 72 
+[ERROR] 2024-07-27 16:59:44.223 - Attempted to draw out of bounds: row 72, column 72 
+[ERROR] 2024-07-27 16:59:44.223 - Exception during instruction execution: Row or column out of bounds. - Exception: Row or column out of bounds.
+[ERROR] 2024-07-27 16:59:44.224 - Exception during execution scheduling: null - Exception: null
+[INFO] 2024-07-27 16:59:44.224 - Executor service shut down 
+[INFO] 2024-07-27 16:59:44.224 - Program executed successfully 
+[INFO] 2024-07-27 17:01:13.902 - Starting the computer emulator 
+[INFO] 2024-07-27 17:01:24.690 - Path to binary file obtained: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:01:24.691 - Binary file object created: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:01:24.702 - Binary file read successfully. Size: 20 bytes 
+[INFO] 2024-07-27 17:01:24.704 - ROM initialized with 4096 bytes 
+[INFO] 2024-07-27 17:01:24.704 - ROM initialized successfully 
+[INFO] 2024-07-27 17:01:24.704 - Starting program execution 
+[INFO] 2024-07-27 17:01:24.723 - Reading from register: 0 0 
+[INFO] 2024-07-27 17:01:24.726 - Converting byteArray 0, 0 to Int: result=0 
+[INFO] 2024-07-27 17:01:24.728 - Reading from ROM address 0: 0 
+[INFO] 2024-07-27 17:01:24.728 - Reading from ROM address 1: 72 
+[INFO] 2024-07-27 17:01:24.729 - Creating instruction with bytes: 0, 72 
+[INFO] 2024-07-27 17:01:24.732 - Parsed nibbles: 0, 0, 4, 8 
+[INFO] 2024-07-27 17:01:24.732 - Instruction initialized with nibbles: 0, 4, 8 
+[INFO] 2024-07-27 17:01:24.732 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:24.732 - Executing instruction with nibbles: 0, 4, 8 
+[INFO] 2024-07-27 17:01:24.734 - Combining nibbles: highNibble=4, lowNibble=8, combinedByte=72 
+[INFO] 2024-07-27 17:01:24.735 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:24.735 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:24.735 - Register R0 before store operation: 0 
+[INFO] 2024-07-27 17:01:24.735 - High nibble: 4 
+[INFO] 2024-07-27 17:01:24.735 - Low nibble: 8 
+[INFO] 2024-07-27 17:01:24.735 - Combined byte: 72 
+[INFO] 2024-07-27 17:01:24.735 - Writing to register R: 72 
+[INFO] 2024-07-27 17:01:24.735 - Register R after write: 72 
+[INFO] 2024-07-27 17:01:24.736 - Reading from register: 72 
+[INFO] 2024-07-27 17:01:24.736 - Register R0 after store operation: 72 
+[INFO] 2024-07-27 17:01:24.736 - Reading from register: 0 0 
+[INFO] 2024-07-27 17:01:24.736 - Converting byteArray 0, 0 to Int: result=0 
+[INFO] 2024-07-27 17:01:24.736 - Converting Int 2 to byteArray: 0, 2 
+[INFO] 2024-07-27 17:01:24.736 - Converting byteArray 0, 2 to Int: result=2 
+[INFO] 2024-07-27 17:01:24.736 - Attempting to write to register P: 0, 2 (intValue=2) 
+[INFO] 2024-07-27 17:01:24.737 - Register P after write: 0, 2 (intValue=2) 
+[INFO] 2024-07-27 17:01:24.738 - Program Counter incremented from 0 to 2 
+[INFO] 2024-07-27 17:01:24.738 - Reading from register: 0 2 
+[INFO] 2024-07-27 17:01:24.738 - Converting byteArray 0, 2 to Int: result=2 
+[INFO] 2024-07-27 17:01:24.739 - Reading from ROM address 2: 1 
+[INFO] 2024-07-27 17:01:24.739 - Reading from ROM address 3: 69 
+[INFO] 2024-07-27 17:01:24.739 - Creating instruction with bytes: 1, 69 
+[INFO] 2024-07-27 17:01:24.739 - Parsed nibbles: 0, 1, 4, 5 
+[INFO] 2024-07-27 17:01:24.739 - Instruction initialized with nibbles: 1, 4, 5 
+[INFO] 2024-07-27 17:01:24.739 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:24.739 - Executing instruction with nibbles: 1, 4, 5 
+[INFO] 2024-07-27 17:01:24.739 - Combining nibbles: highNibble=4, lowNibble=5, combinedByte=69 
+[INFO] 2024-07-27 17:01:24.739 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:24.740 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:24.740 - Register R1 before store operation: 0 
+[INFO] 2024-07-27 17:01:24.740 - High nibble: 4 
+[INFO] 2024-07-27 17:01:24.740 - Low nibble: 5 
+[INFO] 2024-07-27 17:01:24.740 - Combined byte: 69 
+[INFO] 2024-07-27 17:01:24.740 - Writing to register R: 69 
+[INFO] 2024-07-27 17:01:24.740 - Register R after write: 69 
+[INFO] 2024-07-27 17:01:24.740 - Reading from register: 69 
+[INFO] 2024-07-27 17:01:24.740 - Register R1 after store operation: 69 
+[INFO] 2024-07-27 17:01:24.740 - Reading from register: 0 2 
+[INFO] 2024-07-27 17:01:24.741 - Converting byteArray 0, 2 to Int: result=2 
+[INFO] 2024-07-27 17:01:24.741 - Converting Int 4 to byteArray: 0, 4 
+[INFO] 2024-07-27 17:01:24.741 - Converting byteArray 0, 4 to Int: result=4 
+[INFO] 2024-07-27 17:01:24.741 - Attempting to write to register P: 0, 4 (intValue=4) 
+[INFO] 2024-07-27 17:01:24.741 - Register P after write: 0, 4 (intValue=4) 
+[INFO] 2024-07-27 17:01:24.741 - Program Counter incremented from 2 to 4 
+[INFO] 2024-07-27 17:01:24.741 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:24.742 - Reading from register: 0 4 
+[INFO] 2024-07-27 17:01:24.742 - Converting byteArray 0, 4 to Int: result=4 
+[INFO] 2024-07-27 17:01:24.742 - Reading from ROM address 4: 2 
+[INFO] 2024-07-27 17:01:24.742 - Reading from ROM address 5: 76 
+[INFO] 2024-07-27 17:01:24.742 - Creating instruction with bytes: 2, 76 
+[INFO] 2024-07-27 17:01:24.742 - Parsed nibbles: 0, 2, 4, 12 
+[INFO] 2024-07-27 17:01:24.742 - Instruction initialized with nibbles: 2, 4, 12 
+[INFO] 2024-07-27 17:01:24.742 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:24.742 - Executing instruction with nibbles: 2, 4, 12 
+[INFO] 2024-07-27 17:01:24.742 - Combining nibbles: highNibble=4, lowNibble=12, combinedByte=76 
+[INFO] 2024-07-27 17:01:24.742 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:24.743 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:24.743 - Register R2 before store operation: 0 
+[INFO] 2024-07-27 17:01:24.743 - High nibble: 4 
+[INFO] 2024-07-27 17:01:24.743 - Low nibble: 12 
+[INFO] 2024-07-27 17:01:24.743 - Combined byte: 76 
+[INFO] 2024-07-27 17:01:24.743 - Writing to register R: 76 
+[INFO] 2024-07-27 17:01:24.743 - Register R after write: 76 
+[INFO] 2024-07-27 17:01:24.743 - Reading from register: 76 
+[INFO] 2024-07-27 17:01:24.743 - Register R2 after store operation: 76 
+[INFO] 2024-07-27 17:01:24.743 - Reading from register: 0 4 
+[INFO] 2024-07-27 17:01:24.743 - Converting byteArray 0, 4 to Int: result=4 
+[INFO] 2024-07-27 17:01:24.743 - Converting Int 6 to byteArray: 0, 6 
+[INFO] 2024-07-27 17:01:24.744 - Converting byteArray 0, 6 to Int: result=6 
+[INFO] 2024-07-27 17:01:24.744 - Attempting to write to register P: 0, 6 (intValue=6) 
+[INFO] 2024-07-27 17:01:24.744 - Register P after write: 0, 6 (intValue=6) 
+[INFO] 2024-07-27 17:01:24.744 - Program Counter incremented from 4 to 6 
+[INFO] 2024-07-27 17:01:24.744 - Reading from register: 0 6 
+[INFO] 2024-07-27 17:01:24.744 - Converting byteArray 0, 6 to Int: result=6 
+[INFO] 2024-07-27 17:01:24.744 - Reading from ROM address 6: 3 
+[INFO] 2024-07-27 17:01:24.744 - Reading from ROM address 7: 76 
+[INFO] 2024-07-27 17:01:24.744 - Creating instruction with bytes: 3, 76 
+[INFO] 2024-07-27 17:01:24.744 - Parsed nibbles: 0, 3, 4, 12 
+[INFO] 2024-07-27 17:01:24.744 - Instruction initialized with nibbles: 3, 4, 12 
+[INFO] 2024-07-27 17:01:24.744 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:24.744 - Executing instruction with nibbles: 3, 4, 12 
+[INFO] 2024-07-27 17:01:24.745 - Combining nibbles: highNibble=4, lowNibble=12, combinedByte=76 
+[INFO] 2024-07-27 17:01:24.745 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:24.745 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:24.745 - Register R3 before store operation: 0 
+[INFO] 2024-07-27 17:01:24.745 - High nibble: 4 
+[INFO] 2024-07-27 17:01:24.745 - Low nibble: 12 
+[INFO] 2024-07-27 17:01:24.745 - Combined byte: 76 
+[INFO] 2024-07-27 17:01:24.745 - Writing to register R: 76 
+[INFO] 2024-07-27 17:01:24.745 - Register R after write: 76 
+[INFO] 2024-07-27 17:01:24.745 - Reading from register: 76 
+[INFO] 2024-07-27 17:01:24.745 - Register R3 after store operation: 76 
+[INFO] 2024-07-27 17:01:24.745 - Reading from register: 0 6 
+[INFO] 2024-07-27 17:01:24.746 - Converting byteArray 0, 6 to Int: result=6 
+[INFO] 2024-07-27 17:01:24.746 - Converting Int 8 to byteArray: 0, 8 
+[INFO] 2024-07-27 17:01:24.746 - Converting byteArray 0, 8 to Int: result=8 
+[INFO] 2024-07-27 17:01:24.746 - Attempting to write to register P: 0, 8 (intValue=8) 
+[INFO] 2024-07-27 17:01:24.746 - Register P after write: 0, 8 (intValue=8) 
+[INFO] 2024-07-27 17:01:24.746 - Program Counter incremented from 6 to 8 
+[INFO] 2024-07-27 17:01:24.746 - Reading from register: 0 8 
+[INFO] 2024-07-27 17:01:24.747 - Converting byteArray 0, 8 to Int: result=8 
+[INFO] 2024-07-27 17:01:24.747 - Reading from ROM address 8: 4 
+[INFO] 2024-07-27 17:01:24.747 - Reading from ROM address 9: 79 
+[INFO] 2024-07-27 17:01:24.747 - Creating instruction with bytes: 4, 79 
+[INFO] 2024-07-27 17:01:24.747 - Parsed nibbles: 0, 4, 4, 15 
+[INFO] 2024-07-27 17:01:24.747 - Instruction initialized with nibbles: 4, 4, 15 
+[INFO] 2024-07-27 17:01:24.747 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:24.747 - Executing instruction with nibbles: 4, 4, 15 
+[INFO] 2024-07-27 17:01:24.747 - Combining nibbles: highNibble=4, lowNibble=15, combinedByte=79 
+[INFO] 2024-07-27 17:01:24.747 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:24.747 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:24.747 - Register R4 before store operation: 0 
+[INFO] 2024-07-27 17:01:24.747 - High nibble: 4 
+[INFO] 2024-07-27 17:01:24.747 - Low nibble: 15 
+[INFO] 2024-07-27 17:01:24.747 - Combined byte: 79 
+[INFO] 2024-07-27 17:01:24.748 - Writing to register R: 79 
+[INFO] 2024-07-27 17:01:24.748 - Register R after write: 79 
+[INFO] 2024-07-27 17:01:24.748 - Reading from register: 79 
+[INFO] 2024-07-27 17:01:24.748 - Register R4 after store operation: 79 
+[INFO] 2024-07-27 17:01:24.748 - Reading from register: 0 8 
+[INFO] 2024-07-27 17:01:24.748 - Converting byteArray 0, 8 to Int: result=8 
+[INFO] 2024-07-27 17:01:24.748 - Converting Int 10 to byteArray: 0, 10 
+[INFO] 2024-07-27 17:01:24.748 - Converting byteArray 0, 10 to Int: result=10 
+[INFO] 2024-07-27 17:01:24.748 - Attempting to write to register P: 0, 10 (intValue=10) 
+[INFO] 2024-07-27 17:01:24.748 - Register P after write: 0, 10 (intValue=10) 
+[INFO] 2024-07-27 17:01:24.748 - Program Counter incremented from 8 to 10 
+[INFO] 2024-07-27 17:01:24.748 - Reading from register: 0 10 
+[INFO] 2024-07-27 17:01:24.748 - Converting byteArray 0, 10 to Int: result=10 
+[INFO] 2024-07-27 17:01:24.749 - Reading from ROM address 10: 240 
+[INFO] 2024-07-27 17:01:24.749 - Reading from ROM address 11: 0 
+[INFO] 2024-07-27 17:01:24.749 - Creating instruction with bytes: -16, 0 
+[INFO] 2024-07-27 17:01:24.749 - Parsed nibbles: 15, 0, 0, 0 
+[INFO] 2024-07-27 17:01:24.749 - Instruction initialized with nibbles: 0, 0, 0 
+[INFO] 2024-07-27 17:01:24.749 - Created instruction: Draw 
+[INFO] 2024-07-27 17:01:24.749 - Executing instruction with nibbles: 0, 0, 0 
+[INFO] 2024-07-27 17:01:24.749 - Reading from register: 72 
+[INFO] 2024-07-27 17:01:24.749 - Reading from register: 72 
+[INFO] 2024-07-27 17:01:24.749 - Reading from register: 72 
+[INFO] 2024-07-27 17:01:24.752 - Drawing character 'H' at row 72, column 72 
+[ERROR] 2024-07-27 17:01:24.752 - Attempted to draw out of bounds: row 72, column 72 
+[ERROR] 2024-07-27 17:01:24.753 - Exception during instruction execution: Row or column out of bounds. - Exception: Row or column out of bounds.
+[ERROR] 2024-07-27 17:01:24.753 - Exception during execution scheduling: null - Exception: null
+[INFO] 2024-07-27 17:01:24.753 - Executor service shut down 
+[INFO] 2024-07-27 17:01:24.753 - Program executed successfully 
+[INFO] 2024-07-27 17:01:46.285 - Starting the computer emulator 
+[INFO] 2024-07-27 17:01:49.860 - Path to binary file obtained: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:01:49.861 - Binary file object created: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:01:49.875 - Binary file read successfully. Size: 20 bytes 
+[INFO] 2024-07-27 17:01:49.877 - ROM initialized with 4096 bytes 
+[INFO] 2024-07-27 17:01:49.877 - ROM initialized successfully 
+[INFO] 2024-07-27 17:01:49.877 - Starting program execution 
+[INFO] 2024-07-27 17:01:49.891 - Reading from register: 0, 0 
+[INFO] 2024-07-27 17:01:49.895 - Converting byteArray 0, 0 to Int: result=0 
+[INFO] 2024-07-27 17:01:49.898 - Reading from ROM address 0: 0 
+[INFO] 2024-07-27 17:01:49.899 - Reading from ROM address 1: 72 
+[INFO] 2024-07-27 17:01:49.899 - Creating instruction with bytes: 0, 72 
+[INFO] 2024-07-27 17:01:49.903 - Parsed nibbles: 0, 0, 4, 8 
+[INFO] 2024-07-27 17:01:49.903 - Instruction initialized with nibbles: 0, 4, 8 
+[INFO] 2024-07-27 17:01:49.903 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:49.903 - Executing instruction with nibbles: 0, 4, 8 
+[INFO] 2024-07-27 17:01:49.906 - Combining nibbles: highNibble=4, lowNibble=8, combinedByte=72 
+[INFO] 2024-07-27 17:01:49.906 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:49.907 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:49.907 - Register R0 before store operation: 0 
+[INFO] 2024-07-27 17:01:49.908 - High nibble: 4 
+[INFO] 2024-07-27 17:01:49.908 - Low nibble: 8 
+[INFO] 2024-07-27 17:01:49.908 - Combined byte: 72 
+[INFO] 2024-07-27 17:01:49.909 - Writing to register R: 72 
+[INFO] 2024-07-27 17:01:49.909 - Register R after write: 72 
+[INFO] 2024-07-27 17:01:49.909 - Reading from register: 72 
+[INFO] 2024-07-27 17:01:49.910 - Register R0 after store operation: 72 
+[INFO] 2024-07-27 17:01:49.910 - Reading from register: 0, 0 
+[INFO] 2024-07-27 17:01:49.910 - Converting byteArray 0, 0 to Int: result=0 
+[INFO] 2024-07-27 17:01:49.910 - Converting Int 2 to byteArray: 0, 2 
+[INFO] 2024-07-27 17:01:49.911 - Converting byteArray 0, 2 to Int: result=2 
+[INFO] 2024-07-27 17:01:49.911 - Attempting to write to register P: 0, 2 (intValue=2) 
+[INFO] 2024-07-27 17:01:49.911 - Register P after write: 0, 2 (intValue=2) 
+[INFO] 2024-07-27 17:01:49.914 - Program Counter incremented from 0 to 2 
+[INFO] 2024-07-27 17:01:49.914 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:49.914 - Reading from register: 0, 2 
+[INFO] 2024-07-27 17:01:49.914 - Converting byteArray 0, 2 to Int: result=2 
+[INFO] 2024-07-27 17:01:49.914 - Reading from ROM address 2: 1 
+[INFO] 2024-07-27 17:01:49.915 - Reading from ROM address 3: 69 
+[INFO] 2024-07-27 17:01:49.915 - Creating instruction with bytes: 1, 69 
+[INFO] 2024-07-27 17:01:49.915 - Parsed nibbles: 0, 1, 4, 5 
+[INFO] 2024-07-27 17:01:49.915 - Instruction initialized with nibbles: 1, 4, 5 
+[INFO] 2024-07-27 17:01:49.915 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:49.915 - Executing instruction with nibbles: 1, 4, 5 
+[INFO] 2024-07-27 17:01:49.915 - Combining nibbles: highNibble=4, lowNibble=5, combinedByte=69 
+[INFO] 2024-07-27 17:01:49.915 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:49.915 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:49.916 - Register R1 before store operation: 0 
+[INFO] 2024-07-27 17:01:49.916 - High nibble: 4 
+[INFO] 2024-07-27 17:01:49.916 - Low nibble: 5 
+[INFO] 2024-07-27 17:01:49.916 - Combined byte: 69 
+[INFO] 2024-07-27 17:01:49.916 - Writing to register R: 69 
+[INFO] 2024-07-27 17:01:49.916 - Register R after write: 69 
+[INFO] 2024-07-27 17:01:49.916 - Reading from register: 69 
+[INFO] 2024-07-27 17:01:49.916 - Register R1 after store operation: 69 
+[INFO] 2024-07-27 17:01:49.916 - Reading from register: 0, 2 
+[INFO] 2024-07-27 17:01:49.916 - Converting byteArray 0, 2 to Int: result=2 
+[INFO] 2024-07-27 17:01:49.916 - Converting Int 4 to byteArray: 0, 4 
+[INFO] 2024-07-27 17:01:49.916 - Converting byteArray 0, 4 to Int: result=4 
+[INFO] 2024-07-27 17:01:49.917 - Attempting to write to register P: 0, 4 (intValue=4) 
+[INFO] 2024-07-27 17:01:49.917 - Register P after write: 0, 4 (intValue=4) 
+[INFO] 2024-07-27 17:01:49.917 - Program Counter incremented from 2 to 4 
+[INFO] 2024-07-27 17:01:49.917 - Reading from register: 0, 4 
+[INFO] 2024-07-27 17:01:49.918 - Converting byteArray 0, 4 to Int: result=4 
+[INFO] 2024-07-27 17:01:49.918 - Reading from ROM address 4: 2 
+[INFO] 2024-07-27 17:01:49.918 - Reading from ROM address 5: 76 
+[INFO] 2024-07-27 17:01:49.918 - Creating instruction with bytes: 2, 76 
+[INFO] 2024-07-27 17:01:49.918 - Parsed nibbles: 0, 2, 4, 12 
+[INFO] 2024-07-27 17:01:49.918 - Instruction initialized with nibbles: 2, 4, 12 
+[INFO] 2024-07-27 17:01:49.918 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:49.919 - Executing instruction with nibbles: 2, 4, 12 
+[INFO] 2024-07-27 17:01:49.919 - Combining nibbles: highNibble=4, lowNibble=12, combinedByte=76 
+[INFO] 2024-07-27 17:01:49.919 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:49.919 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:49.919 - Register R2 before store operation: 0 
+[INFO] 2024-07-27 17:01:49.919 - High nibble: 4 
+[INFO] 2024-07-27 17:01:49.919 - Low nibble: 12 
+[INFO] 2024-07-27 17:01:49.919 - Combined byte: 76 
+[INFO] 2024-07-27 17:01:49.919 - Writing to register R: 76 
+[INFO] 2024-07-27 17:01:49.919 - Register R after write: 76 
+[INFO] 2024-07-27 17:01:49.919 - Reading from register: 76 
+[INFO] 2024-07-27 17:01:49.920 - Register R2 after store operation: 76 
+[INFO] 2024-07-27 17:01:49.920 - Reading from register: 0, 4 
+[INFO] 2024-07-27 17:01:49.920 - Converting byteArray 0, 4 to Int: result=4 
+[INFO] 2024-07-27 17:01:49.920 - Converting Int 6 to byteArray: 0, 6 
+[INFO] 2024-07-27 17:01:49.920 - Converting byteArray 0, 6 to Int: result=6 
+[INFO] 2024-07-27 17:01:49.920 - Attempting to write to register P: 0, 6 (intValue=6) 
+[INFO] 2024-07-27 17:01:49.921 - Register P after write: 0, 6 (intValue=6) 
+[INFO] 2024-07-27 17:01:49.921 - Program Counter incremented from 4 to 6 
+[INFO] 2024-07-27 17:01:49.921 - Reading from register: 0, 6 
+[INFO] 2024-07-27 17:01:49.921 - Converting byteArray 0, 6 to Int: result=6 
+[INFO] 2024-07-27 17:01:49.921 - Reading from ROM address 6: 3 
+[INFO] 2024-07-27 17:01:49.921 - Reading from ROM address 7: 76 
+[INFO] 2024-07-27 17:01:49.921 - Creating instruction with bytes: 3, 76 
+[INFO] 2024-07-27 17:01:49.921 - Parsed nibbles: 0, 3, 4, 12 
+[INFO] 2024-07-27 17:01:49.921 - Instruction initialized with nibbles: 3, 4, 12 
+[INFO] 2024-07-27 17:01:49.921 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:49.921 - Executing instruction with nibbles: 3, 4, 12 
+[INFO] 2024-07-27 17:01:49.922 - Combining nibbles: highNibble=4, lowNibble=12, combinedByte=76 
+[INFO] 2024-07-27 17:01:49.922 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:49.922 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:49.922 - Register R3 before store operation: 0 
+[INFO] 2024-07-27 17:01:49.922 - High nibble: 4 
+[INFO] 2024-07-27 17:01:49.922 - Low nibble: 12 
+[INFO] 2024-07-27 17:01:49.922 - Combined byte: 76 
+[INFO] 2024-07-27 17:01:49.922 - Writing to register R: 76 
+[INFO] 2024-07-27 17:01:49.922 - Register R after write: 76 
+[INFO] 2024-07-27 17:01:49.922 - Reading from register: 76 
+[INFO] 2024-07-27 17:01:49.922 - Register R3 after store operation: 76 
+[INFO] 2024-07-27 17:01:49.922 - Reading from register: 0, 6 
+[INFO] 2024-07-27 17:01:49.923 - Converting byteArray 0, 6 to Int: result=6 
+[INFO] 2024-07-27 17:01:49.923 - Converting Int 8 to byteArray: 0, 8 
+[INFO] 2024-07-27 17:01:49.923 - Converting byteArray 0, 8 to Int: result=8 
+[INFO] 2024-07-27 17:01:49.923 - Attempting to write to register P: 0, 8 (intValue=8) 
+[INFO] 2024-07-27 17:01:49.923 - Register P after write: 0, 8 (intValue=8) 
+[INFO] 2024-07-27 17:01:49.923 - Program Counter incremented from 6 to 8 
+[INFO] 2024-07-27 17:01:49.923 - Reading from register: 0, 8 
+[INFO] 2024-07-27 17:01:49.923 - Converting byteArray 0, 8 to Int: result=8 
+[INFO] 2024-07-27 17:01:49.923 - Reading from ROM address 8: 4 
+[INFO] 2024-07-27 17:01:49.923 - Reading from ROM address 9: 79 
+[INFO] 2024-07-27 17:01:49.923 - Creating instruction with bytes: 4, 79 
+[INFO] 2024-07-27 17:01:49.923 - Parsed nibbles: 0, 4, 4, 15 
+[INFO] 2024-07-27 17:01:49.924 - Instruction initialized with nibbles: 4, 4, 15 
+[INFO] 2024-07-27 17:01:49.924 - Created instruction: Store 
+[INFO] 2024-07-27 17:01:49.924 - Executing instruction with nibbles: 4, 4, 15 
+[INFO] 2024-07-27 17:01:49.924 - Combining nibbles: highNibble=4, lowNibble=15, combinedByte=79 
+[INFO] 2024-07-27 17:01:49.924 - Performing Store Operation: 
+[INFO] 2024-07-27 17:01:49.924 - Reading from register: 0 
+[INFO] 2024-07-27 17:01:49.924 - Register R4 before store operation: 0 
+[INFO] 2024-07-27 17:01:49.924 - High nibble: 4 
+[INFO] 2024-07-27 17:01:49.925 - Low nibble: 15 
+[INFO] 2024-07-27 17:01:49.925 - Combined byte: 79 
+[INFO] 2024-07-27 17:01:49.925 - Writing to register R: 79 
+[INFO] 2024-07-27 17:01:49.925 - Register R after write: 79 
+[INFO] 2024-07-27 17:01:49.925 - Reading from register: 79 
+[INFO] 2024-07-27 17:01:49.925 - Register R4 after store operation: 79 
+[INFO] 2024-07-27 17:01:49.925 - Reading from register: 0, 8 
+[INFO] 2024-07-27 17:01:49.925 - Converting byteArray 0, 8 to Int: result=8 
+[INFO] 2024-07-27 17:01:49.926 - Converting Int 10 to byteArray: 0, 10 
+[INFO] 2024-07-27 17:01:49.926 - Converting byteArray 0, 10 to Int: result=10 
+[INFO] 2024-07-27 17:01:49.926 - Attempting to write to register P: 0, 10 (intValue=10) 
+[INFO] 2024-07-27 17:01:49.926 - Register P after write: 0, 10 (intValue=10) 
+[INFO] 2024-07-27 17:01:49.926 - Program Counter incremented from 8 to 10 
+[INFO] 2024-07-27 17:01:49.926 - Reading from register: 0, 10 
+[INFO] 2024-07-27 17:01:49.926 - Converting byteArray 0, 10 to Int: result=10 
+[INFO] 2024-07-27 17:01:49.927 - Reading from ROM address 10: 240 
+[INFO] 2024-07-27 17:01:49.927 - Reading from ROM address 11: 0 
+[INFO] 2024-07-27 17:01:49.927 - Creating instruction with bytes: -16, 0 
+[INFO] 2024-07-27 17:01:49.927 - Parsed nibbles: 15, 0, 0, 0 
+[INFO] 2024-07-27 17:01:49.927 - Instruction initialized with nibbles: 0, 0, 0 
+[INFO] 2024-07-27 17:01:49.927 - Created instruction: Draw 
+[INFO] 2024-07-27 17:01:49.928 - Executing instruction with nibbles: 0, 0, 0 
+[INFO] 2024-07-27 17:01:49.928 - Reading from register: 72 
+[INFO] 2024-07-27 17:01:49.928 - Reading from register: 72 
+[INFO] 2024-07-27 17:01:49.928 - Reading from register: 72 
+[INFO] 2024-07-27 17:01:49.934 - Drawing character 'H' at row 72, column 72 
+[ERROR] 2024-07-27 17:01:49.936 - Attempted to draw out of bounds: row 72, column 72 
+[ERROR] 2024-07-27 17:01:49.936 - Exception during instruction execution: Row or column out of bounds. - Exception: Row or column out of bounds.
+[ERROR] 2024-07-27 17:01:49.936 - Exception during execution scheduling: null - Exception: null
+[INFO] 2024-07-27 17:01:49.937 - Executor service shut down 
+[INFO] 2024-07-27 17:01:49.937 - Program executed successfully 
+[INFO] 2024-07-27 17:05:07.134 - Starting the computer emulator 
+[INFO] 2024-07-27 17:05:09.462 - Path to binary file obtained: [INFO] 2024-07-27 17:01:49.927 - Creating instruction with bytes: -16, 0  
+[ERROR] 2024-07-27 17:05:09.463 - The file does not exist: [INFO] 2024-07-27 17:01:49.927 - Creating instruction with bytes: -16, 0  
+[ERROR] 2024-07-27 17:05:09.464 - An I/O error occurred: File not found: [INFO] 2024-07-27 17:01:49.927 - Creating instruction with bytes: -16, 0  - Exception: File not found: [INFO] 2024-07-27 17:01:49.927 - Creating instruction with bytes: -16, 0 
+[INFO] 2024-07-27 17:05:12.448 - Starting the computer emulator 
+[INFO] 2024-07-27 17:05:21.555 - Path to binary file obtained: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:05:21.556 - Binary file object created: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:05:21.570 - Binary file read successfully. Size: 20 bytes 
+[INFO] 2024-07-27 17:05:21.572 - ROM initialized with 4096 bytes 
+[INFO] 2024-07-27 17:05:21.572 - ROM initialized successfully 
+[INFO] 2024-07-27 17:05:21.572 - Starting program execution 
+[INFO] 2024-07-27 17:05:41.884 - Reading from register: 0, 0 
+[INFO] 2024-07-27 17:05:41.888 - Converting byteArray 0, 0 to Int: result=0 
+[INFO] 2024-07-27 17:05:44.849 - Starting the computer emulator 
+[INFO] 2024-07-27 17:05:49.809 - Starting the computer emulator 
+[INFO] 2024-07-27 17:05:53.799 - Path to binary file obtained: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:05:53.800 - Binary file object created: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:05:53.814 - Binary file read successfully. Size: 20 bytes 
+[INFO] 2024-07-27 17:05:53.816 - ROM initialized with 4096 bytes 
+[INFO] 2024-07-27 17:05:53.817 - ROM initialized successfully 
+[INFO] 2024-07-27 17:05:53.817 - Starting program execution 
+[INFO] 2024-07-27 17:06:10.320 - Reading from register: 0, 0 
+[INFO] 2024-07-27 17:06:11.495 - Converting byteArray 0, 0 to Int: result=0 
+[INFO] 2024-07-27 17:06:17.354 - Reading from ROM address 0: 0 
+[INFO] 2024-07-27 17:06:18.935 - Reading from ROM address 1: 72 
+[INFO] 2024-07-27 17:06:24.778 - Reading from ROM address 1: 72 
+[INFO] 2024-07-27 17:06:26.081 - Reading from ROM address 1: 72 
+[INFO] 2024-07-27 17:06:57.348 - Creating instruction with bytes: 0, 72 
+[INFO] 2024-07-27 17:06:57.377 - Parsed nibbles: 0, 0, 4, 8 
+[INFO] 2024-07-27 17:06:57.379 - Instruction initialized with nibbles: 0, 4, 8 
+[INFO] 2024-07-27 17:06:57.380 - Created instruction: Store 
+[INFO] 2024-07-27 17:07:09.295 - Executing instruction with nibbles: 0, 4, 8 
+[INFO] 2024-07-27 17:07:09.314 - Combining nibbles: highNibble=4, lowNibble=8, combinedByte=72 
+[INFO] 2024-07-27 17:07:09.315 - Performing Store Operation: 
+[INFO] 2024-07-27 17:07:09.316 - Reading from register: 0 
+[INFO] 2024-07-27 17:07:09.317 - Register R0 before store operation: 0 
+[INFO] 2024-07-27 17:07:09.318 - High nibble: 4 
+[INFO] 2024-07-27 17:07:09.319 - Low nibble: 8 
+[INFO] 2024-07-27 17:07:09.320 - Combined byte: 72 
+[INFO] 2024-07-27 17:07:09.321 - Writing to register R: 72 
+[INFO] 2024-07-27 17:07:09.321 - Register R after write: 72 
+[INFO] 2024-07-27 17:23:03.995 - Starting the computer emulator 
+[INFO] 2024-07-27 17:23:11.186 - Path to binary file obtained: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:23:11.187 - Binary file object created: /home/nate/Software/School/CS5700_Program4/roms/hello.out 
+[INFO] 2024-07-27 17:23:11.199 - Binary file read successfully. Size: 20 bytes 
+[INFO] 2024-07-27 17:23:11.201 - ROM initialized with 4096 bytes 
+[INFO] 2024-07-27 17:23:11.201 - ROM initialized successfully 
+[INFO] 2024-07-27 17:23:11.202 - Starting program execution 
+[INFO] 2024-07-27 17:23:11.228 - Reading from register: 0, 0 
+[INFO] 2024-07-27 17:23:11.234 - Converting byteArray 0, 0 to Int: result=0 
+[INFO] 2024-07-27 17:23:11.239 - Reading from ROM address 0: 0 
+[INFO] 2024-07-27 17:23:11.239 - Reading from ROM address 1: 72 
+[INFO] 2024-07-27 17:24:08.966 - Retrieved next instruction: 0, 72 
+[INFO] 2024-07-27 17:24:55.153 - Breaking byte 0 into nibbles: highNibble=0, lowNibble=0 
+[INFO] 2024-07-27 17:24:55.630 - Breaking byte 72 into nibbles: highNibble=4, lowNibble=8 
+[INFO] 2024-07-27 17:24:58.972 - Parsed nibbles: 0, 0, 4, 8 

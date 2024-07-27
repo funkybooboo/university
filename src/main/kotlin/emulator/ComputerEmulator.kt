@@ -39,7 +39,7 @@ class ComputerEmulator {
     }
 
     private fun getPathToBinaryFile(): String {
-        println("Path to binary file or type q to quit: ")
+        println("Path to binary file: ")
         val pathToBinaryFile = readlnOrNull() ?: throw IOException("No path provided")
         if (pathToBinaryFile.lowercase() == "q") {
             logger.log(Level.INFO, "User chose to quit")

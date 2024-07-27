@@ -20,12 +20,24 @@ class Cpu(
     private val cpuRunnable = Runnable {
         try {
             val bytes = readNextInstructionBytes()
+            require(bytes.size == 2) { "ByteArray must contain exactly 2 bytes." }
             if (bytes[0].toInt() == 0 && bytes[1].toInt() == 0) {
                 logger.log(Level.INFO, "End of program detected. Shutting down executor.")
                 executor.shutdown()
                 return@Runnable
             }
-            val instruction = instructionFactory.createInstruction(bytes)
+
+            logger.log(Level.INFO, "Retrieved next instruction: ${bytes.joinToString(", ")}")
+
+            val nibbles01 = breakByteIntoNibbles(bytes[0])
+            val nibbles23 = breakByteIntoNibbles(bytes[1])
+            val nibble0 =nibbles01.first
+            val nibble1 = nibbles01.second
+            val nibble2 = nibbles23.first
+            val nibble3 = nibbles23.second
+            logger.log(Level.INFO, "Parsed nibbles: $nibble0, $nibble1, $nibble2, $nibble3")
+
+            val instruction = instructionFactory.createInstruction(nibble0, nibble1, nibble2, nibble3)
             instruction.execute()
         } catch (e: Exception) {
             logger.log(Level.ERROR, "Exception during instruction execution: ${e.message}", e)
@@ -77,10 +89,9 @@ class Cpu(
     private fun readNextInstructionBytes(): ByteArray {
         return try {
             val p = PManager.p.read()
-            val address1 = byteArrayToInt(p)
-            val address2 = byteArrayToInt(p + 1)
-            val byte1 = rom?.read(address1) ?: 0
-            val byte2 = rom?.read(address2) ?: 0
+            val pc = byteArrayToInt(p)
+            val byte1 = rom?.read(pc) ?: 0
+            val byte2 = rom?.read(pc + 1) ?: 0
             byteArrayOf(byte1, byte2)
         } catch (e: Exception) {
             logger.log(Level.ERROR, "Exception while reading next instruction bytes: ${e.message}", e)

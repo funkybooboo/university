@@ -23,22 +23,10 @@ class InstructionFactory {
         ::Draw
     )
 
-    fun createInstruction(bytes: ByteArray): Instruction {
-        require(bytes.size == 2) { "ByteArray must contain exactly 2 bytes." }
+    fun createInstruction(nibble0: Byte, nibble1: Byte, nibble2: Byte, nibble3: Byte): Instruction {
+        val instructionConstructor = instructions[nibble0.toInt()]
 
-        val combinedBytes = ((bytes[0].toInt() and 0xFF) shl 8) or (bytes[1].toInt() and 0xFF)
-
-        val nibble0 = (combinedBytes shr 12) and 0x0F
-        val nibble1 = (combinedBytes shr 8) and 0x0F
-        val nibble2 = (combinedBytes shr 4) and 0x0F
-        val nibble3 = combinedBytes and 0x0F
-
-        logger.log(Level.INFO, "Creating instruction with bytes: ${bytes.joinToString(", ")}")
-        logger.log(Level.INFO, "Parsed nibbles: $nibble0, $nibble1, $nibble2, $nibble3")
-
-        val instructionConstructor = instructions[nibble0]
-
-        val instruction = instructionConstructor(byteArrayOf(nibble1.toByte(), nibble2.toByte(), nibble3.toByte()))
+        val instruction = instructionConstructor(byteArrayOf(nibble1, nibble2, nibble3))
         logger.log(Level.INFO, "Created instruction: ${instruction.javaClass.simpleName}")
 
         return instruction

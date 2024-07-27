@@ -1,5 +1,8 @@
 package com.natestott.emulator.computer.instruction
 
+import com.natestott.emulator.logger.LoggerManager.logger
+import com.natestott.emulator.logger.Logger.Level
+
 class InstructionFactory {
     private val instructions = arrayOf(
         ::Store,
@@ -30,9 +33,14 @@ class InstructionFactory {
         val nibble2 = (combinedBytes shr 4) and 0x0F
         val nibble3 = combinedBytes and 0x0F
 
+        logger.log(Level.INFO, "Creating instruction with bytes: ${bytes.joinToString(", ")}")
+        logger.log(Level.INFO, "Parsed nibbles: $nibble0, $nibble1, $nibble2, $nibble3")
+
         val instructionConstructor = instructions[nibble0]
 
-        return instructionConstructor(byteArrayOf(nibble1.toByte(), nibble2.toByte(), nibble3.toByte()))
-    }
+        val instruction = instructionConstructor(byteArrayOf(nibble1.toByte(), nibble2.toByte(), nibble3.toByte()))
+        logger.log(Level.INFO, "Created instruction: ${instruction.javaClass.simpleName}")
 
+        return instruction
+    }
 }

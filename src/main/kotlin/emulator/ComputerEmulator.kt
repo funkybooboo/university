@@ -5,49 +5,78 @@ import com.natestott.emulator.computer.memory.contiguous.RomManager
 import java.io.File
 import java.io.IOException
 import com.natestott.emulator.computer.memory.contiguous.Rom
+import com.natestott.emulator.logger.LoggerManager.logger
+import com.natestott.emulator.logger.Logger.Level
 
 class ComputerEmulator {
 
     private val cpu = Cpu()
 
-    fun start() {
-        while (true) {
+    fun run() {
+        logger.log(Level.INFO, "Starting the computer emulator")
+
+        try {
             val pathToBinaryFile = getPathToBinaryFile()
-            if (pathToBinaryFile.lowercase() == "q" || pathToBinaryFile.lowercase() == "quit") break
+            logger.log(Level.INFO, "Path to binary file obtained: $pathToBinaryFile")
+
             val binaryFile = getBinaryFile(pathToBinaryFile)
+            logger.log(Level.INFO, "Binary file object created: ${binaryFile.absolutePath}")
+
             val binaryProgram = getBinaryProgramFromBinaryFile(binaryFile)
+            logger.log(Level.INFO, "Binary file read successfully. Size: ${binaryProgram.size} bytes")
+
             val rom = getRomFromBinaryProgram(binaryProgram)
+            logger.log(Level.INFO, "ROM initialized successfully")
+
             cpu.executeProgram(rom)
+            logger.log(Level.INFO, "Program executed successfully")
+
+        } catch (e: IOException) {
+            logger.log(Level.ERROR, "An I/O error occurred: ${e.message}", e)
+        } catch (e: Exception) {
+            logger.log(Level.ERROR, "An unexpected error occurred: ${e.message}", e)
         }
     }
 
     private fun getPathToBinaryFile(): String {
         println("Path to binary file or type q to quit: ")
-        val pathToBinaryFile = readlnOrNull() ?: throw IOException("Please provide a path to a binary file")
+        val pathToBinaryFile = readlnOrNull() ?: throw IOException("No path provided")
+        if (pathToBinaryFile.lowercase() == "q") {
+            logger.log(Level.INFO, "User chose to quit")
+            throw IOException("User opted to quit")
+        }
         return pathToBinaryFile
     }
 
     private fun getBinaryFile(pathToBinaryFile: String): File {
-        return File(pathToBinaryFile)
+        val file = File(pathToBinaryFile)
+        if (!file.exists()) {
+            logger.log(Level.ERROR, "The file does not exist: $pathToBinaryFile")
+            throw IOException("File not found: $pathToBinaryFile")
+        }
+        return file
     }
 
     private fun getBinaryProgramFromBinaryFile(binaryFile: File): ByteArray {
         return try {
             binaryFile.readBytes()
         } catch (e: IOException) {
+            logger.log(Level.ERROR, "Failed to read binary file: ${binaryFile.absolutePath}", e)
             throw IOException("Failed to read binary file", e)
         }
     }
 
     private fun getRomFromBinaryProgram(binaryProgram: ByteArray): Rom {
-        if (binaryProgram.size < 4096) {
-            throw IllegalArgumentException("Binary program cannot be less than 4096 bytes")
-        }
         val memory = ByteArray(4096)
-        for (i in binaryProgram.indices) { // Fixed to avoid IndexOutOfBoundsException
+        for (i in binaryProgram.indices) {
             memory[i] = binaryProgram[i]
         }
         RomManager.initializeRom(memory)
-        return RomManager.getRom()!!
+        val rom = RomManager.getRom()
+        if (rom == null) {
+            logger.log(Level.ERROR, "Failed to initialize ROM")
+            throw IOException("Failed to initialize ROM")
+        }
+        return rom
     }
 }

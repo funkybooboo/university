@@ -12,11 +12,15 @@ class ComputerEmulator {
 
     private val cpu = Cpu()
 
-    fun run() {
+    fun run(filePath: String? = null) {
         logger.log(Level.INFO, "Starting the computer emulator")
 
+        var pathToBinaryFile = filePath
+
         try {
-            val pathToBinaryFile = getPathToBinaryFile()
+            if (pathToBinaryFile == null) {
+                pathToBinaryFile = getPathToBinaryFile()
+            }
             logger.log(Level.INFO, "Path to binary file obtained: $pathToBinaryFile")
 
             val binaryFile = getBinaryFile(pathToBinaryFile)
@@ -33,6 +37,8 @@ class ComputerEmulator {
 
         } catch (e: IOException) {
             logger.log(Level.ERROR, "An I/O error occurred: ${e.message}", e)
+        } catch (e: IllegalArgumentException) {
+            logger.log(Level.ERROR, "Invalid argument: ${e.message}", e)
         } catch (e: Exception) {
             logger.log(Level.ERROR, "An unexpected error occurred: ${e.message}", e)
         }
@@ -41,10 +47,6 @@ class ComputerEmulator {
     private fun getPathToBinaryFile(): String {
         println("Path to binary file: ")
         val pathToBinaryFile = readlnOrNull() ?: throw IOException("No path provided")
-        if (pathToBinaryFile.lowercase() == "q") {
-            logger.log(Level.INFO, "User chose to quit")
-            throw IOException("User opted to quit")
-        }
         return pathToBinaryFile
     }
 

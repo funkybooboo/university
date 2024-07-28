@@ -23,6 +23,6 @@ class SetA(
         logger.log(Level.INFO, "Middle nibble: $middleNibble")
         logger.log(Level.INFO, "Low nibble: $lowNibble")
         logger.log(Level.INFO, "Combined address: $address (0x${address.toString(16).uppercase()})")
-        logger.log(Level.INFO, "Writing address to A register: ${addressBytes.joinToString(prefix = "0x", separator = " ", transform = { it.toUByte().toString(16).uppercase() })}")
+        logger.log(Level.INFO, "Writing address to A register: ${addressBytes.joinToString(prefix = "0x", separator = "", transform = { it.toUByte().toString(16).uppercase() })}")
     }
 }

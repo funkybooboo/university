@@ -11,19 +11,19 @@ import com.natestott.emulator.logger.Logger.Level
 class SkipEqual(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
-    private var shouldSkip = false
+    var shouldSkip = false
 
-    private lateinit var rx: R
-    private lateinit var ry: R
+    lateinit var rx: R
+    lateinit var ry: R
 
-    override fun processNibbles() {
+    public override fun processNibbles() {
         val rxIndex = nibbles[0].toInt()
         val ryIndex = nibbles[1].toInt()
         rx = r[rxIndex]
         ry = r[ryIndex]
     }
 
-    override fun performOperation() {
+    public override fun performOperation() {
         val rxValue = rx.read()[0].toInt()
         val ryValue = ry.read()[0].toInt()
 
@@ -33,7 +33,7 @@ class SkipEqual(
         logger.log(Level.INFO, "Comparison result: ${if (shouldSkip) "Equal (will skip)" else "Not Equal (will not skip)"}")
     }
 
-    override fun incrementProgramCounter() {
+    public override fun incrementProgramCounter() {
         val currentPC = byteArrayToInt(p.read())
         val offset = if (shouldSkip) 4 else 2
         val newPC = currentPC + offset

@@ -13,7 +13,7 @@ class Screen {
         const val BUFFER_HEIGHT = 8
     }
 
-    private val buffer: ByteArray = ByteArray(BUFFER_WIDTH * BUFFER_HEIGHT)
+    val buffer: ByteArray = ByteArray(BUFFER_WIDTH * BUFFER_HEIGHT)
 
     private fun display() {
         logger.log(Level.INFO, "Displaying the screen buffer:")

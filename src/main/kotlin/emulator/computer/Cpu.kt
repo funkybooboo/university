@@ -15,14 +15,14 @@ object PauseTimerManager {
 }
 
 class Cpu(
-    private val instructionSpeed: Long = 2L,
-    private val timerSpeed: Long = 16L
+    val instructionSpeed: Long = 2L,
+    val timerSpeed: Long = 16L
 ) {
     private val executor = Executors.newSingleThreadScheduledExecutor()
     private val instructionFactory = InstructionFactory()
     private var rom: Rom? = null
 
-    private val cpuRunnable = Runnable {
+    val cpuRunnable = Runnable {
         try {
             val bytes = readNextInstructionBytes()
             require(bytes.size == 2) { "ByteArray must contain exactly 2 bytes." }
@@ -50,7 +50,7 @@ class Cpu(
         }
     }
 
-    private val timerRunnable = Runnable {
+    val timerRunnable = Runnable {
         try {
             if (PauseTimerManager.pauseTimer.get()) {
                 logger.log(Level.INFO, "Timer task paused")

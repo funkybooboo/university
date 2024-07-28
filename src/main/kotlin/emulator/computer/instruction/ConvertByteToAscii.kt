@@ -7,10 +7,10 @@ class ConvertByteToAscii(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
 
-    private lateinit var rx: R
-    private lateinit var ry: R
+    lateinit var rx: R
+    lateinit var ry: R
 
-    override fun processNibbles() {
+    public override fun processNibbles() {
         val rxIndex = nibbles[0].toInt()
         val ryIndex = nibbles[1].toInt()
 
@@ -18,7 +18,7 @@ class ConvertByteToAscii(
         ry = r[ryIndex]
     }
 
-    override fun performOperation() {
+    public override fun performOperation() {
         val value = rx.read()[0].toInt()
 
         require(value <= 0xF) {"Value in rX is out of range (0-F)."}

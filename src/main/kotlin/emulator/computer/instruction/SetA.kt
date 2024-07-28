@@ -8,9 +8,9 @@ import com.natestott.emulator.logger.Logger.Level
 class SetA(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
-    private lateinit var addressBytes: ByteArray
+    lateinit var addressBytes: ByteArray
 
-    override fun processNibbles() {
+    public override fun processNibbles() {
         val highNibble = nibbles[0].toInt()
         val middleNibble = nibbles[1].toInt()
         val lowNibble = nibbles[2].toInt()
@@ -19,7 +19,7 @@ class SetA(
         addressBytes = intToByteArray(address)
     }
 
-    override fun performOperation() {
+    public override fun performOperation() {
         a.write(addressBytes)
 
         logger.log(Level.INFO, "Performing SetA Operation:")

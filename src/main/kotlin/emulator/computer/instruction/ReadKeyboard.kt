@@ -10,14 +10,14 @@ class ReadKeyboard(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
 
-    private lateinit var rx: R
+    lateinit var rx: R
 
-    override fun processNibbles() {
+    public override fun processNibbles() {
         val rxIndex = nibbles[0].toInt()
         rx = r[rxIndex]
     }
 
-    override fun performOperation() {
+    public override fun performOperation() {
         PauseTimerManager.pauseTimer.set(true)
 
         println("Enter up to 2 hexadecimal digits (0-F): ")

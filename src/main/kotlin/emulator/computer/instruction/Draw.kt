@@ -8,18 +8,18 @@ class Draw(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
 
-    private lateinit var rx: R
-    private var row: Byte = 0
-    private var col: Byte = 0
+    lateinit var rx: R
+    var row: Byte = 0
+    var col: Byte = 0
 
-    override fun processNibbles() {
+    public override fun processNibbles() {
         val rxIndex = nibbles[0].toInt()
         rx = r[rxIndex]
         row = nibbles[1]
         col = nibbles[2]
     }
 
-    override fun performOperation() {
+    public override fun performOperation() {
         val asciiValue = rx.read()[0].toInt()
 
         if (asciiValue > 0x7F) {

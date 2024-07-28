@@ -10,16 +10,16 @@ class SetT(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
 
-    private var value: Byte = 0
+    var value: Byte = 0
 
-    override fun processNibbles() {
+    public override fun processNibbles() {
         val highNibble = nibbles[0]
         val lowNibble = nibbles[1]
 
         value = combineNibblesToByte(highNibble, lowNibble)
     }
 
-    override fun performOperation() {
+    public override fun performOperation() {
         PauseTimerManager.pauseTimer.set(true)
 
         t.write(byteArrayOf(value))

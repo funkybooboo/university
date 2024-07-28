@@ -13,16 +13,14 @@ import com.natestott.emulator.logger.Logger.Level
 class ConvertToBaseTen(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
-    private lateinit var rx: R
+    lateinit var rx: R
 
-    override fun processNibbles() {
+    public override fun processNibbles() {
         val rxIndex = nibbles[0].toInt()
         rx = r[rxIndex]
     }
 
-    override fun performOperation() {
-
-
+    public override fun performOperation() {
         val address = byteArrayToInt(a.read())
 
         val value = rx.read()[0].toInt()

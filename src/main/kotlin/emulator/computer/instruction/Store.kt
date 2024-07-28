@@ -10,10 +10,10 @@ class Store(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
 
-    private lateinit var rx: R
-    private var byte: Byte = 0
+    lateinit var rx: R
+    var byte: Byte = 0
 
-    override fun processNibbles() {
+    public override fun processNibbles() {
         val rxIndex = nibbles[0].toInt()
         rx = r[rxIndex]
 
@@ -23,7 +23,7 @@ class Store(
         byte = combineNibblesToByte(highNibble, lowNibble)
     }
 
-    override fun performOperation() {
+    public override fun performOperation() {
         logger.log(Level.INFO, "Performing Store Operation:")
         logger.log(Level.INFO, "Combined byte: ${byte.toUByte()}")
 

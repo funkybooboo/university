@@ -4,6 +4,7 @@ import com.natestott.emulator.computer.byteArrayToInt
 import com.natestott.emulator.computer.intToByteArray
 import com.natestott.emulator.computer.memory.register.RManager.r
 import com.natestott.emulator.computer.memory.register.PManager.p
+import com.natestott.emulator.computer.memory.register.R
 import com.natestott.emulator.logger.LoggerManager.logger
 import com.natestott.emulator.logger.Logger.Level
 
@@ -12,17 +13,23 @@ class SkipEqual(
 ) : Instruction(nibbles) {
     private var shouldSkip = false
 
-    override fun performOperation() {
+    private lateinit var rx: R
+    private lateinit var ry: R
+
+    override fun processNibbles() {
         val rxIndex = nibbles[0].toInt()
         val ryIndex = nibbles[1].toInt()
+        rx = r[rxIndex]
+        ry = r[ryIndex]
+    }
 
-        val rxValue = r[rxIndex].read()[0].toInt()
-        val ryValue = r[ryIndex].read()[0].toInt()
+    override fun performOperation() {
+        val rxValue = rx.read()[0].toInt()
+        val ryValue = ry.read()[0].toInt()
 
         shouldSkip = (rxValue == ryValue)
 
         logger.log(Level.INFO, "Performing SkipEqual Operation:")
-        logger.log(Level.INFO, "Comparing R$rxIndex ($rxValue) and R$ryIndex ($ryValue)")
         logger.log(Level.INFO, "Comparison result: ${if (shouldSkip) "Equal (will skip)" else "Not Equal (will not skip)"}")
     }
 

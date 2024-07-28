@@ -6,18 +6,22 @@ import com.natestott.emulator.computer.memory.register.MManager.m
 import com.natestott.emulator.computer.memory.contiguous.RamManager.ram
 import com.natestott.emulator.computer.memory.contiguous.RomManager
 import com.natestott.emulator.computer.memory.register.AManager.a
+import com.natestott.emulator.computer.memory.register.R
 import com.natestott.emulator.logger.LoggerManager.logger
 import com.natestott.emulator.logger.Logger.Level
 
 class Read(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
-    override fun performOperation() {
+
+    private lateinit var rx: R
+
+    override fun processNibbles() {
         val rxIndex = nibbles[0].toInt()
-        val rx = r[rxIndex]
+        rx = r[rxIndex]
+    }
 
-        logger.log(Level.INFO, "Executing Read instruction for register R$rxIndex")
-
+    override fun performOperation() {
         val mByteArray = m.read()
         val isUsingROM = mByteArray[0].toInt() != 0
 
@@ -38,6 +42,5 @@ class Read(
 
         rx.write(byteArrayOf(value))
 
-        logger.log(Level.INFO, "Value written to R$rxIndex: ${value.toInt()} (0x${value.toUByte().toString(16).uppercase()})")
     }
 }

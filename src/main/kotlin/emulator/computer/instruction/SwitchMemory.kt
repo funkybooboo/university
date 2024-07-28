@@ -7,6 +7,11 @@ import com.natestott.emulator.logger.Logger.Level
 class SwitchMemory(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
+
+    override fun processNibbles() {
+        // Nothing to process.
+    }
+
     override fun performOperation() {
         val currentMValue = m.read()[0].toInt()
         val newMValue = if (currentMValue == 0) {

@@ -16,6 +16,7 @@ abstract class Instruction(
 
     fun execute() {
         logger.log(Level.INFO, "Executing instruction with nibbles: ${nibbles.joinToString(", ")}")
+        processNibbles()
         performOperation()
         incrementProgramCounter()
     }
@@ -27,5 +28,6 @@ abstract class Instruction(
         logger.log(Level.INFO, "Program Counter incremented from $currentPC to $newPC")
     }
 
+    protected abstract fun processNibbles()
     protected abstract fun performOperation()
 }

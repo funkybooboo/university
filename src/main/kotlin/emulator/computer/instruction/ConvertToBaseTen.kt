@@ -6,15 +6,22 @@ import com.natestott.emulator.computer.memory.contiguous.RomManager
 import com.natestott.emulator.computer.memory.register.RManager.r
 import com.natestott.emulator.computer.memory.register.AManager.a
 import com.natestott.emulator.computer.memory.register.MManager.m
+import com.natestott.emulator.computer.memory.register.R
 import com.natestott.emulator.logger.LoggerManager.logger
 import com.natestott.emulator.logger.Logger.Level
 
 class ConvertToBaseTen(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
-    override fun performOperation() {
+    private lateinit var rx: R
+
+    override fun processNibbles() {
         val rxIndex = nibbles[0].toInt()
-        val rx = r[rxIndex]
+        rx = r[rxIndex]
+    }
+
+    override fun performOperation() {
+
 
         val address = byteArrayToInt(a.read())
 

@@ -18,7 +18,7 @@ class ReadKeyboard(
 
         val byte = parseHexInput(input)
 
-        rx.write(ByteArray(1) { byte })
+        rx.write(byteArrayOf(byte))
 
         logger.log(Level.INFO, "Input received: $input")
         logger.log(Level.INFO, "Parsed byte value: ${byte.toInt()} (0x${byte.toUByte().toString(16).uppercase()})")

@@ -10,7 +10,6 @@ import com.natestott.emulator.logger.Logger.Level
 class SkipEqual(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
-
     private var shouldSkip = false
 
     override fun performOperation() {

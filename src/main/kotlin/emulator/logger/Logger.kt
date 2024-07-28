@@ -9,7 +9,7 @@ object LoggerManager {
 
     init {
         val consoleLogger = ConsoleLogger()
-        logger.registerLogger(consoleLogger)
+        // logger.registerLogger(consoleLogger)
     }
 }
 

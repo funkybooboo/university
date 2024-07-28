@@ -2,12 +2,17 @@ package com.natestott.emulator.computer
 
 import com.natestott.emulator.computer.instruction.InstructionFactory
 import com.natestott.emulator.computer.memory.contiguous.Rom
-import com.natestott.emulator.computer.memory.register.PManager
+import com.natestott.emulator.computer.memory.register.PManager.p
 import com.natestott.emulator.computer.memory.register.TManager.t
 import com.natestott.emulator.logger.LoggerManager.logger
 import com.natestott.emulator.logger.Logger.Level
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicBoolean
+
+object PauseTimerManager {
+    val pauseTimer = AtomicBoolean(false)
+}
 
 class Cpu(
     private val instructionSpeed: Long = 2L,
@@ -47,6 +52,11 @@ class Cpu(
 
     private val timerRunnable = Runnable {
         try {
+            if (PauseTimerManager.pauseTimer.get()) {
+                logger.log(Level.INFO, "Timer task paused")
+                return@Runnable
+            }
+
             val currentT = t.read()[0].toInt()
             if (currentT > 0) {
                 t.write(byteArrayOf((currentT - 1).toByte()))
@@ -87,8 +97,7 @@ class Cpu(
 
     private fun readNextInstructionBytes(): ByteArray {
         return try {
-            val p = PManager.p.read()
-            val pc = byteArrayToInt(p)
+            val pc = byteArrayToInt(p.read())
             val byte1 = rom?.read(pc) ?: 0
             val byte2 = rom?.read(pc + 1) ?: 0
             byteArrayOf(byte1, byte2)

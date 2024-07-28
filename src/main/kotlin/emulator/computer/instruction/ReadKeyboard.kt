@@ -1,5 +1,6 @@
 package com.natestott.emulator.computer.instruction
 
+import com.natestott.emulator.computer.PauseTimerManager
 import com.natestott.emulator.computer.memory.register.RManager.r
 import com.natestott.emulator.logger.LoggerManager.logger
 import com.natestott.emulator.logger.Logger.Level
@@ -8,6 +9,8 @@ class ReadKeyboard(
     nibbles: ByteArray
 ) : Instruction(nibbles) {
     override fun performOperation() {
+        PauseTimerManager.pauseTimer.set(true)
+
         val rxIndex = nibbles[0].toInt()
         val rx = r[rxIndex]
 
@@ -23,6 +26,8 @@ class ReadKeyboard(
         logger.log(Level.INFO, "Input received: $input")
         logger.log(Level.INFO, "Parsed byte value: ${byte.toInt()} (0x${byte.toUByte().toString(16).uppercase()})")
         logger.log(Level.INFO, "Written to R$rxIndex register: ${byte.toInt()} (0x${byte.toUByte().toString(16).uppercase()})")
+
+        PauseTimerManager.pauseTimer.set(false)
     }
 
     private fun parseHexInput(input: String): Byte {

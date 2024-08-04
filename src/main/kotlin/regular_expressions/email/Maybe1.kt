@@ -1,6 +1,6 @@
-package com.natestott.regular_expressions.email
+package regular_expressions.email
 
-import com.natestott.regular_expressions.State
+import regular_expressions.State
 
 class Maybe1: State {
     override fun next(char: String): State {

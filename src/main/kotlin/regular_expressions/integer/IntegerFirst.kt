@@ -1,7 +1,7 @@
-package com.natestott.regular_expressions.integer
+package regular_expressions.integer
 
-import com.natestott.regular_expressions.Invalid
-import com.natestott.regular_expressions.State
+import regular_expressions.Invalid
+import regular_expressions.State
 
 class IntegerFirst: State {
     override fun next(char: String): State {

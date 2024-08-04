@@ -1,6 +1,6 @@
-package com.natestott.regular_expressions.floating
+package regular_expressions.floating
 
-import com.natestott.regular_expressions.State
+import regular_expressions.State
 
 class Maybe2: State {
     override fun next(char: String): State {

@@ -1,6 +1,6 @@
-package com.natestott.regular_expressions
+package regular_expressions
 
-import com.natestott.regular_expressions.integer.Valid
+import regular_expressions.integer.Valid
 
 open class Verifier{
     open fun verify(sequence: String, first: State): Boolean {

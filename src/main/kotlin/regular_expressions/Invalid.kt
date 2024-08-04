@@ -1,4 +1,4 @@
-package com.natestott.regular_expressions
+package regular_expressions
 
 class Invalid: State {
     override fun next(char: String): State {

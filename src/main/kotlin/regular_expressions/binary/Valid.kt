@@ -1,6 +1,6 @@
-package com.natestott.regular_expressions.binary
+package regular_expressions.binary
 
-import com.natestott.regular_expressions.State
+import regular_expressions.State
 
 class Valid: State {
     override fun next(char: String): State {

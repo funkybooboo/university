@@ -1,10 +1,11 @@
 package com.natestott.regular_expressions
 
-import com.natestott.regular_expressions.binary.BinaryFirst
-import com.natestott.regular_expressions.email.EmailFirst
-import com.natestott.regular_expressions.floating.FloatFirst
-import com.natestott.regular_expressions.integer.IntegerFirst
+import regular_expressions.binary.BinaryFirst
+import regular_expressions.email.EmailFirst
+import regular_expressions.floating.FloatFirst
+import regular_expressions.integer.IntegerFirst
 import com.natestott.regular_expressions.password.PasswordFirst
+import regular_expressions.State
 
 class FirstStateFactory {
     private val firstStates = mapOf(

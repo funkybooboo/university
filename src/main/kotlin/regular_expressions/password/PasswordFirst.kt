@@ -1,9 +1,11 @@
-package com.natestott.regular_expressions.password
+package regular_expressions.password
 
+import regular_expressions.Invalid
 import regular_expressions.State
 
 class PasswordFirst: State {
     override fun next(char: String): State {
-        TODO("Not yet implemented")
+        if (char == " ") return Invalid()
+        return Maybe1()
     }
 }

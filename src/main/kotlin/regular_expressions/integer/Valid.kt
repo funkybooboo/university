@@ -1,5 +1,6 @@
 package com.natestott.regular_expressions.integer
 
+import com.natestott.regular_expressions.Invalid
 import com.natestott.regular_expressions.State
 
 class Valid: State {

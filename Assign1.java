@@ -16,7 +16,9 @@ public class Assign1 {
             switch (command) {
                 case "-fib":
                     n = getN(args, i);
-                    if (n == null) return;
+                    if (n == null) {
+                        return;
+                    }
                     if (n < 0 || n > 40) {
                         System.out.println("Fibonacci valid range is [0, 40]");
                         break;
@@ -25,7 +27,9 @@ public class Assign1 {
                     break;
                 case "-fac":
                     n = getN(args, i);
-                    if (n == null) return;
+                    if (n == null) {
+                        return;
+                    }
                     if (n < 0 || n > 2147483647) {
                         System.out.println("Factorial valid range is [0, 2147483647]");
                         break;
@@ -69,8 +73,12 @@ public class Assign1 {
     }
 
     private static int fibonacci(int n) {
-        if (n == 0) return 0;
-        if (n == 1) return 1;
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
         int[] fib = new int[n + 1];
         fib[0] = 0;
         fib[1] = 1;
@@ -92,7 +100,9 @@ public class Assign1 {
         BigDecimal e = BigDecimal.ZERO;
         BigDecimal divisor = BigDecimal.ONE;
         for (int i = 0; i <= n; i++) {
-            if (i > 0) divisor = divisor.multiply(BigDecimal.valueOf(i));
+            if (i > 0) {
+                divisor = divisor.multiply(BigDecimal.valueOf(i));
+            }
             e = e.add(BigDecimal.ONE.divide(divisor, 16, RoundingMode.FLOOR));
         }
         return e;

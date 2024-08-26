@@ -19,7 +19,7 @@ public class Assign1 {
                     if (n == null) return;
                     if (n < 0 || n > 40) {
                         System.out.println("Fibonacci valid range is [0, 40]");
-                        return;
+                        break;
                     }
                     System.out.println("Fibonacci of " + n + " is " + fibonacci(Math.toIntExact(n)));
                     break;
@@ -28,7 +28,7 @@ public class Assign1 {
                     if (n == null) return;
                     if (n < 0 || n > 2147483647) {
                         System.out.println("Factorial valid range is [0, 2147483647]");
-                        return;
+                        break;
                     }
                     System.out.println("Factorial of " + n + " is " + factorial(Math.toIntExact(n)));
                     break;
@@ -36,8 +36,8 @@ public class Assign1 {
                     n = getN(args, i);
                     if (n == null) return;
                     if (n < 1 || n > 2147483647) {
-                        System.out.println("E valid range is [0, 2147483647]");
-                        return;
+                        System.out.println("E valid range is [1, 2147483647]");
+                        break;
                     }
                     System.out.println("Value of e using " + n + " iterations is " + e(Math.toIntExact(n)));
                     break;
@@ -88,12 +88,12 @@ public class Assign1 {
         return result;
     }
 
-    private static BigDecimal e(int n) {
-        BigDecimal e = BigDecimal.ONE;
-        BigDecimal factorial = BigDecimal.ONE;
-        for (int i = 1; i <= n; i++) {
-            factorial = factorial.multiply(BigDecimal.valueOf(i));
-            e = e.add(BigDecimal.ONE.divide(factorial, 16, RoundingMode.DOWN));
+    public static BigDecimal e(int n) {
+        BigDecimal e = BigDecimal.ZERO;
+        BigDecimal divisor = BigDecimal.ONE;
+        for (int i = 0; i <= n; i++) {
+            if (i > 0) divisor = divisor.multiply(BigDecimal.valueOf(i));
+            e = e.add(BigDecimal.ONE.divide(divisor, 16, RoundingMode.FLOOR));
         }
         return e;
     }

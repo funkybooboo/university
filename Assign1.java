@@ -2,8 +2,22 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 
+/**
+ * This class provides methods to compute Fibonacci numbers, factorials,
+ * and the value of Euler's number 'e' based on command-line arguments.
+ *
+ * Usage:
+ *  java Assign1 -fib [n]
+ *  java Assign1 -fac [n]
+ *  java Assign1 -e [n]
+ */
 public class Assign1 {
 
+    /**
+     * Main method to process command-line arguments and perform calculations.
+     *
+     * @param args Command-line arguments where a number should follow each command.
+     */
     public static void main(String[] args) {
         System.out.println();
         if (args.length == 0 || args.length % 2 != 0) {
@@ -52,6 +66,13 @@ public class Assign1 {
         }
     }
 
+    /**
+     * Parses the number argument following the command.
+     *
+     * @param args The command-line arguments.
+     * @param i The index of the command in the arguments array.
+     * @return The parsed number or null if parsing fails.
+     */
     private static Long getN(String[] args, int i) {
         try {
             return Long.parseLong(args[i + 1]);
@@ -61,10 +82,18 @@ public class Assign1 {
         }
     }
 
+    /**
+     * Prints a message for an invalid command-line argument.
+     *
+     * @param arg The invalid argument.
+     */
     private static void printInvalidLineArgumentMessage(String arg) {
         System.out.println("Unknown command line argument: " + arg);
     }
 
+    /**
+     * Prints the help message for the program.
+     */
     private static void printHelpMessage() {
         System.out.println("--- Assign 1 Help ---");
         System.out.println("  -fib [n] : Compute the Fibonacci of [n]; valid range [0, 40]");
@@ -72,6 +101,12 @@ public class Assign1 {
         System.out.println("  -e   [n] : Compute the value of 'e' using [n] iterations; valid range [1, 2147483647]");
     }
 
+    /**
+     * Computes the Fibonacci number for a given non-negative integer.
+     *
+     * @param n The index of the Fibonacci sequence (non-negative).
+     * @return The Fibonacci number at index n.
+     */
     private static int fibonacci(int n) {
         if (n == 0) {
             return 0;
@@ -88,6 +123,12 @@ public class Assign1 {
         return fib[n];
     }
 
+    /**
+     * Computes the factorial of a given non-negative integer.
+     *
+     * @param n The non-negative integer to compute the factorial of.
+     * @return The factorial of the integer n.
+     */
     private static BigInteger factorial(int n) {
         BigInteger result = BigInteger.ONE;
         for (int i = 2; i <= n; i++) {
@@ -96,6 +137,12 @@ public class Assign1 {
         return result;
     }
 
+    /**
+     * Computes the value of Euler's number 'e' using a specified number of iterations.
+     *
+     * @param n The number of iterations to use in the calculation (must be >= 1).
+     * @return The value of 'e' calculated to 16 decimal places.
+     */
     public static BigDecimal e(int n) {
         BigDecimal e = BigDecimal.ZERO;
         BigDecimal divisor = BigDecimal.ONE;

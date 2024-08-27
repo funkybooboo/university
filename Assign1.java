@@ -13,6 +13,13 @@ import java.math.RoundingMode;
  */
 public class Assign1 {
 
+    private static final long fibMin = 0;
+    private static final long fibMax = 40;
+    private static final long facMin = 0;
+    private static final long facMax = Integer.MAX_VALUE;
+    private static final long eMin = 1;
+    private static final long eMax = Integer.MAX_VALUE;
+
     /**
      * Main method to process command-line arguments and perform calculations.
      *
@@ -33,8 +40,8 @@ public class Assign1 {
                     if (n == null) {
                         return;
                     }
-                    if (n < 0 || n > 40) {
-                        System.out.println("Fibonacci valid range is [0, 40]");
+                    if (n < fibMin || n > fibMax) {
+                        System.out.println("Fibonacci valid range is [" + fibMin + ", " + fibMax + "]");
                         break;
                     }
                     System.out.println("Fibonacci of " + n + " is " + fibonacci(Math.toIntExact(n)));
@@ -44,8 +51,8 @@ public class Assign1 {
                     if (n == null) {
                         return;
                     }
-                    if (n < 0 || n > 2147483647) {
-                        System.out.println("Factorial valid range is [0, 2147483647]");
+                    if (n < facMin || n > facMax) {
+                        System.out.println("Factorial valid range is [" + facMin + ", " + facMax + "]");
                         break;
                     }
                     System.out.println("Factorial of " + n + " is " + factorial(Math.toIntExact(n)));
@@ -53,8 +60,8 @@ public class Assign1 {
                 case "-e":
                     n = getN(args, i);
                     if (n == null) return;
-                    if (n < 1 || n > 2147483647) {
-                        System.out.println("E valid range is [1, 2147483647]");
+                    if (n < eMin || n > eMax) {
+                        System.out.println("E valid range is [" + eMin + ", " + eMax + "]");
                         break;
                     }
                     System.out.println("Value of e using " + n + " iterations is " + e(Math.toIntExact(n)));
@@ -96,9 +103,9 @@ public class Assign1 {
      */
     private static void printHelpMessage() {
         System.out.println("--- Assign 1 Help ---");
-        System.out.println("  -fib [n] : Compute the Fibonacci of [n]; valid range [0, 40]");
-        System.out.println("  -fac [n] : Compute the Factorial of [n]; valid range [0, 2147483647]");
-        System.out.println("  -e   [n] : Compute the value of 'e' using [n] iterations; valid range [1, 2147483647]");
+        System.out.println("  -fib [n] : Compute the Fibonacci of [n]; valid range [" + fibMin + ", " + fibMax + "]");
+        System.out.println("  -fac [n] : Compute the Factorial of [n]; valid range [" + facMin + ", " + facMax + "]");
+        System.out.println("  -e   [n] : Compute the value of 'e' using [n] iterations; valid range [" + eMin + ", " + eMax + "]");
     }
 
     /**

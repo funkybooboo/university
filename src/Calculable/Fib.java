@@ -5,7 +5,7 @@ public class Fib implements Calculable<Integer> {
     public static final long fibMax = 40;
 
     @Override
-    public boolean bounds(long n) {
+    public boolean isOutOfBounds(long n) {
         return n < fibMin || n > fibMax;
     }
 

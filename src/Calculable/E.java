@@ -8,7 +8,7 @@ public class E implements Calculable<BigDecimal> {
     public static final long eMax = Integer.MAX_VALUE;
 
     @Override
-    public boolean bounds(long n) {
+    public boolean isOutOfBounds(long n) {
         return n < eMin || n > eMax;
     }
 

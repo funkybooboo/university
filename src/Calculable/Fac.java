@@ -7,7 +7,7 @@ public class Fac implements Calculable<BigInteger> {
     public static final long facMax = Integer.MAX_VALUE;
 
     @Override
-    public boolean bounds(long n) {
+    public boolean isOutOfBounds(long n) {
         return n < facMin || n > facMax;
     }
 

@@ -1,7 +1,7 @@
 package Calculable;
 
 public interface Calculable<T> {
-    boolean bounds(long n);
+    boolean isOutOfBounds(long n);
 
     T calculate(long n);
 

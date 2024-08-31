@@ -31,11 +31,11 @@ public class Assn2 {
                 break;
             }
 
-            if (calculable.bounds(n)) {
-                calculable.printAnswer(n, calculable.calculate(n));
+            if (calculable.isOutOfBounds(n)) {
+                calculable.printRange();
             }
             else {
-                calculable.printRange();
+                calculable.printAnswer(n, calculable.calculate(n));
             }
         }
     }

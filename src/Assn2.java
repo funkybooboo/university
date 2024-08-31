@@ -18,13 +18,19 @@ public class Assn2 {
         }
 
         for (int i = 0; i < args.length; i += 2) {
-            String command = args[i];
-            Long n = getNOrPrintUnknown(args, i);
-            if (n == null) {
-                return;
+            String flag = args[i];
+            Calculable<?> calculable = factory.getCalculable(flag);
+            if (calculable == null) {
+                Help.printUnknown(flag);
+                break;
             }
 
-            Calculable<?> calculable = factory.createCalculable(command);
+            Long n = getN(args, i);
+            if (n == null) {
+                Help.printUnknown(args[i + 1]);
+                break;
+            }
+
             if (calculable.bounds(n)) {
                 calculable.printAnswer(n, calculable.calculate(n));
             }
@@ -41,11 +47,10 @@ public class Assn2 {
      * @param i The index of the command in the arguments array.
      * @return The parsed number or null if parsing fails.
      */
-    private static Long getNOrPrintUnknown(String[] args, int i) {
+    private static Long getN(String[] args, int i) {
         try {
             return Long.parseLong(args[i + 1]);
         } catch (NumberFormatException ex) {
-            Help.printUnknown(args[i + 1]);
             return null;
         }
     }

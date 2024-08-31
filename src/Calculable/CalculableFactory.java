@@ -14,10 +14,10 @@ public class CalculableFactory {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> Calculable<T> createCalculable(String flag) {
+    public <T> Calculable<T> getCalculable(String flag) {
         Calculable<?> calculable = map.get(flag);
         if (calculable == null) {
-            throw new IllegalArgumentException("Unknown command line argument: " + flag);
+            return null;
         }
         return (Calculable<T>) calculable;
     }

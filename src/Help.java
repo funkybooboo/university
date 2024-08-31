@@ -1,27 +1,42 @@
-import static Calculable.E.eMax;
-import static Calculable.E.eMin;
-import static Calculable.Fac.facMax;
-import static Calculable.Fac.facMin;
-import static Calculable.Fib.fibMax;
-import static Calculable.Fib.fibMin;
+import calculable.*;
+import java.util.Collection;
 
+/**
+ * The {@code Help} class provides utility methods for displaying help messages
+ * and valid ranges for command-line arguments.
+ * It helps users by providing information on unknown arguments and usage details for supported commands.
+ *
+ * @author Nate Stott
+ */
 public class Help {
+
     /**
-     * Prints a message for an invalid command-line argument.
+     * Prints an error message indicating an unknown command-line argument.
+     * <p>
+     * This method is used to inform users when an argument provided to the
+     * command-line application is not recognized.
+     * </p>
      *
-     * @param flag The invalid argument.
+     * @param flag The unknown command-line argument.
      */
     public static void printUnknown(String flag) {
         System.out.println("Unknown command line argument: " + flag);
     }
 
     /**
-     * Prints the help message for the program.
+     * Prints the help message for the program, including usage information
+     * for all supported commands.
+     * <p>
+     * This method retrieves a collection of all {@code Calculable} instances
+     * from the {@code CalculableFactory} and prints their usage messages, which
+     * describe how to use each command.
+     * </p>
      */
     public static void printUsage() {
-        System.out.println("--- Assign 1 Help ---");
-        System.out.println("  -fib [n] : Compute the Fibonacci of [n]; valid range [" + fibMin + ", " + fibMax + "]");
-        System.out.println("  -fac [n] : Compute the Factorial of [n]; valid range [" + facMin + ", " + facMax + "]");
-        System.out.println("  -e   [n] : Compute the value of 'e' using [n] iterations; valid range [" + eMin + ", " + eMax + "]");
+        System.out.println("--- Assign 2 Help ---");
+        Collection<Calculable<?>> collection = CalculableFactory.getCalculablesAll();
+        for (Calculable<?> calculable : collection) {
+            System.out.println(calculable.getUsageMessage());
+        }
     }
 }

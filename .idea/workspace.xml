@@ -5,11 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b6e62169-c51b-4108-9e9c-aad98d6f3194" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/calculable/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Assn2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Assn2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Calculable/Calculable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Calculable/Calculable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Calculable/E.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Calculable/E.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Calculable/Fac.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Calculable/Fac.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Calculable/Fib.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Calculable/Fib.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Calculable/Calculable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/calculable/Calculable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Calculable/CalculableFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/calculable/CalculableFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Calculable/E.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/calculable/E.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Calculable/Fac.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/calculable/Fac.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Calculable/Fib.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/calculable/Fib.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Help.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Help.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +146,7 @@
       <updated>1725073324197</updated>
       <workItem from="1725073325331" duration="5659000" />
       <workItem from="1725079124786" duration="3336000" />
-      <workItem from="1725138637237" duration="1007000" />
+      <workItem from="1725138637237" duration="4120000" />
     </task>
     <servers />
   </component>

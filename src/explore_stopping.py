@@ -8,6 +8,9 @@ for i in range(1, len_candidates):
     solution_found_count[str(i)] = 0
     optimal_solution_found_count[str(i)] = 0
 
+candidates = []
+optimal_candidate = 0
+
 for experiment in range(1000):
     candidates = random.sample(range(0,1000), len_candidates)
     optimal_candidate = max(candidates)

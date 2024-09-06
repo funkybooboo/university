@@ -28,7 +28,7 @@ for _ in range(number_of_experiments):
             if candidate > max(candidates[0:i]):
                 solution_found_count[str(i)] += 1
                 if candidate == optimal_candidate:
-                    optimal_solution_found_count[str(i)] += 1 / number_of_candidates # this division is bad
+                    optimal_solution_found_count[str(i)] += 1
                 break
 
 print(candidates)

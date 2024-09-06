@@ -1,46 +1,48 @@
 import random
 import matplotlib.pyplot as plt
-# TODO import numpy as np
 
 # Part 1 - Brute force
-# TODO make part 1 better
 
-# Constants
 number_of_candidates = 50
 number_of_experiments = 1000
 
-solution_found_count = {}
+position_was_optimal_count = {}
 optimal_solution_found_count = {}
 
 # This just creates a zero dictionary
 for i in range(1, number_of_candidates + 1):
-    solution_found_count[str(i)] = 0
+    position_was_optimal_count[str(i)] = 0
     optimal_solution_found_count[str(i)] = 0
 
-candidates = []
-optimal_candidate = 0
 for _ in range(number_of_experiments):
-    candidates = random.sample(range(0, 1000), number_of_candidates)
+    candidates = random.sample(range(1000), number_of_candidates)
     optimal_candidate = max(candidates)
+    print("---------")
+    print(optimal_candidate)
+    print(candidates)
+    print("---------")
 
+    # skip the start because you're not going stop on the first person
     for i in range(1, number_of_candidates + 1):
+        # exclude the end person because that's not an optimal stopping (you went threw the whole thing)
         for candidate in candidates[i:-1]:
+            # if they are better than what we have seen so far
             if candidate > max(candidates[0:i]):
-                solution_found_count[str(i)] += 1
+                # number of times that position was best threw all the experiments at any point in time
+                position_was_optimal_count[str(i)] += 1
                 if candidate == optimal_candidate:
-                    optimal_solution_found_count[str(i)] += 1 / number_of_candidates # this division is bad
+                    # record that we have found /the optimal/ solution
+                    optimal_solution_found_count[str(i)] += 1
                 break
 
-print(candidates)
-print(optimal_candidate)
+positions, times_optimal = zip(*optimal_solution_found_count.items())
 
-x, y = zip(*optimal_solution_found_count.items())
+print("---------")
+print(positions)
+print(times_optimal)
+print("---------")
 
-print(x)
-print(y)
-print(optimal_solution_found_count)
-
-plt.plot(x, y)
+plt.plot(positions, times_optimal)
 plt.show()
 
 # Part 2 - Relax Distribution

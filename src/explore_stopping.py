@@ -14,12 +14,13 @@ for i in range(1, number_of_candidates + 1):
     position_was_optimal_count[str(i)] = 0
     optimal_solution_found_count[str(i)] = 0
 
-for _ in range(number_of_experiments):
+for experiment in range(number_of_experiments):
     candidates = random.sample(range(1000), number_of_candidates)
     optimal_candidate = max(candidates)
     print("---------")
-    print(optimal_candidate)
-    print(candidates)
+    print(f"experiment {experiment}")
+    print(f"optimal_candidate: {optimal_candidate}")
+    print(f"candidates: {candidates}")
     print("---------")
 
     # skip the start because you're not going stop on the first person
@@ -32,14 +33,15 @@ for _ in range(number_of_experiments):
                 position_was_optimal_count[str(i)] += 1
                 if candidate == optimal_candidate:
                     # record that we have found /the optimal/ solution
-                    optimal_solution_found_count[str(i)] += 1
+                    optimal_solution_found_count[str(i)] += 1 / number_of_experiments
                 break
 
 positions, times_optimal = zip(*optimal_solution_found_count.items())
 
 print("---------")
-print(positions)
-print(times_optimal)
+print("final results")
+print(f"positions: {positions}")
+print(f"times_optimal: {times_optimal}")
 print("---------")
 
 plt.plot(positions, times_optimal)

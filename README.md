@@ -16,7 +16,7 @@
 
 1. install [poetry](https://python-poetry.org/docs/) on your machine
     1. prob just run this `pipx install poetry`
-2. navigate to our project in the termanal
-2. `poetry shell`
-3. `poetry install`
-4. `python3 explore_stopping.py`
+2. navigate to our project in the terminal
+3. `poetry shell`
+4. `poetry install`
+5. `python3 explore_stopping.py`

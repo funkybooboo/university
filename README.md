@@ -16,11 +16,12 @@ the first 37% of candidates, and then accept the next best candidate after that.
 However, this strategy still only finds the optimal candidate about
 37% percent of the time. Which isn't _comforting_. But it's the best we can do.
 
-A side note, it's kind of cool that we get the same percentage for the
+A side note, it's kind of cool that, with this brute-force solution, we get 37% for the
 likelihood of finding the optimal candidate, as for the amount of candidates 
-to go through before making a choice. We're not totally sure why that is.
+to go through before making a choice.
 
 ### Part Two
+
 ### Part Three
 
 ## Instructions to Run

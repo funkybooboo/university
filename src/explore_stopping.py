@@ -1,53 +1,106 @@
 import random
 import matplotlib.pyplot as plt
-# TODO import numpy as np
 
-# Part 1 - Brute force
-# TODO make part 1 better
+def main():
+    run_and_plot_experiments_with_uniform_distribution()
 
-# Constants
-number_of_candidates = 50
-number_of_experiments = 1000
+# Part 1
+def run_and_plot_experiments_with_uniform_distribution():
+    NUMBER_OF_CANDIDATES = 50
+    NUMBER_OF_EXPERIMENTS = 1000
 
-solution_found_count = {}
-optimal_solution_found_count = {}
+    position_was_optimal_count = {str(i): 0 for i in range(1, NUMBER_OF_CANDIDATES + 1)}
+    optimal_solution_found_count = {str(i): 0 for i in range(1, NUMBER_OF_CANDIDATES + 1)}
 
-# This just creates a zero dictionary
-for i in range(1, number_of_candidates + 1):
-    solution_found_count[str(i)] = 0
-    optimal_solution_found_count[str(i)] = 0
+    for _ in range(NUMBER_OF_EXPERIMENTS):
+        candidates = random.sample(range(1000), NUMBER_OF_CANDIDATES)
+        run_experiment(candidates, optimal_solution_found_count, position_was_optimal_count, NUMBER_OF_CANDIDATES, NUMBER_OF_EXPERIMENTS)
 
-candidates = []
-optimal_candidate = 0
-for _ in range(number_of_experiments):
-    candidates = random.sample(range(0, 1000), number_of_candidates)
+    plot(position_was_optimal_count, optimal_solution_found_count)
+# End Part 1
+
+# Part 2
+def run_and_plot_experiments_with_normal_distribution(alpha, beta):
+    NUMBER_OF_CANDIDATES = 50
+    NUMBER_OF_EXPERIMENTS = 1000
+
+    # homepage.divms.uiowa.edu/~mbognar/applets/beta.html
+    # play around with the distribution
+    pass
+# End Part 2
+
+# Part 3
+def run_and_plot_experiments_with_uniform_distribution_and_penalty(penalty):
+    NUMBER_OF_CANDIDATES = 50
+    NUMBER_OF_EXPERIMENTS = 1000
+
+    pass
+
+def run_and_plot_experiments_with_normal_distribution_and_penalty(alpha, beta, penalty):
+    NUMBER_OF_CANDIDATES = 50
+    NUMBER_OF_EXPERIMENTS = 1000
+
+    # what happens to the optimal stop if you have to pay to check
+    pass
+# End Part 3
+
+# Test
+def run_and_plot_experiment_with_csv(csv_path):
+    NUMBER_OF_CANDIDATES = 1000
+    NUMBER_OF_EXPERIMENTS = 1
+    position_was_optimal_count = {str(i): 0 for i in range(1, NUMBER_OF_CANDIDATES + 1)}
+    optimal_solution_found_count = {str(i): 0 for i in range(1, NUMBER_OF_CANDIDATES + 1)}
+
+    with open(csv_path) as csv_file:
+        candidates = csv_file.readlines()
+    run_experiment(candidates, optimal_solution_found_count, position_was_optimal_count, NUMBER_OF_CANDIDATES, NUMBER_OF_EXPERIMENTS)
+
+    plot(position_was_optimal_count, optimal_solution_found_count)
+# End Test
+
+# Helper Functions
+def run_experiment(candidates, optimal_solution_found_count, position_was_optimal_count, NUMBER_OF_CANDIDATES, NUMBER_OF_EXPERIMENTS):
     optimal_candidate = max(candidates)
-
-    for i in range(1, number_of_candidates + 1):
+    # skip the start because you're not going stop on the first person
+    for i in range(1, NUMBER_OF_CANDIDATES + 1):
+        # exclude the end person because that's not an optimal stopping (you went threw the whole thing)
         for candidate in candidates[i:-1]:
+            # if they are better than what we have seen so far
             if candidate > max(candidates[0:i]):
-                solution_found_count[str(i)] += 1
+                # number of times that position was best threw all the experiments at any point in time
+                position_was_optimal_count[str(i)] += 1 / NUMBER_OF_EXPERIMENTS
                 if candidate == optimal_candidate:
-                    optimal_solution_found_count[str(i)] += 1
+                    # record that we have found /the optimal/ solution
+                    optimal_solution_found_count[str(i)] += 1 / NUMBER_OF_EXPERIMENTS
                 break
 
-print(candidates)
-print(optimal_candidate)
+def plot(position_was_optimal_count, optimal_solution_found_count):
+    positions, times_optimal = zip(*optimal_solution_found_count.items())
+    print("---------")
+    print("final results")
+    print(f"positions: {positions}")
+    print(f"times_optimal: {times_optimal}")
+    print("---------")
 
-x, y = zip(*optimal_solution_found_count.items())
+    plt.plot(positions, times_optimal, label="Optimal solution")
+    plt.xlabel('Positions')
+    plt.ylabel('Percent of optimal discovered')
+    plt.grid(True)
 
-print(x)
-print(y)
-print(optimal_solution_found_count)
+    max_y = max(times_optimal)
+    max_x = times_optimal.index(max_y)
+    print(f"{max_y} --- {max_x} out of  {len(positions)}")
 
-plt.plot(x, y)
-plt.show()
+    max_y = max(times_optimal)
+    max_y_x_position = times_optimal.index(max_y)
 
-# Part 2 - Relax Distribution
+    plt.annotate(f'Max Optimal: ({max_y_x_position}, {max_y})',
+                 xy=(max_y_x_position, max_y),
+                 xytext=(max_y_x_position + 0.5, max_y),
+                 arrowprops=dict(facecolor='black', arrowstyle='->'))
 
-# homepage.divms.uiowa.edu/~mbognar/applets/beta.html
-# play around with the distribution
+    plt.show()
+# End Helper Functions
 
-# Part 3 - Investment Decisions
-
-# what happens to the optimal stop if you have to pay to check
+if __name__ == "__main__":
+    main()

@@ -54,9 +54,9 @@ What was shocking to us was the extent to which the optimal stop was shifted to 
 
 ## Instructions to Run
 
-1. install [poetry](https://python-poetry.org/docs/) on your machine
-    1. prob just run this `pipx install poetry`
-2. navigate to our project in the terminal
-3. `poetry shell`
-4. `poetry install`
-5. `python3 explore_stopping.py`
+- Dependencies
+  - matplotlib
+  - numpy
+- Run
+  - navigate to project
+  - python3 file-name.py

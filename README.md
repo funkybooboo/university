@@ -8,6 +8,7 @@
 
 ## Optimal Stopping Results
 ### Part One
+
 Our algorithm (meaning Dr. Harper's algorithm, thank you Dr. Harper) 
 consistently found the most optimal candidates 
 after searching around 37% of the candidate pool. The best strategy 
@@ -33,9 +34,23 @@ as there are roughly the same number of candidates between distributions that sh
 
 ### Part Three
 
-Using penalties on a **uniform distribution**, the optimal stopping position is shifted to the left by 30% (from position 20 to position 13), but still lies on or around 37%. Something we found interesting about this was that if you pick a candidate using this strategy, your chance of finding the optimal candidate goes down a little bit (roughly 5%), but you cut the time it takes to find a candidate in half.  If you're short on time, this strategy looks pretty good.
+Using penalties on a **uniform distribution**, 
+the optimal stopping position is shifted to the left by 30% (from position 20 to position 13), 
+but still lies on or around 37%. 
+Something we found interesting about this was that if you pick a candidate using this strategy, 
+your chance of finding the optimal candidate goes down a little bit (roughly 5%), 
+but you cut the time it takes to find a candidate in half.  
+If you're short on time, this strategy looks pretty good.
 
-Using penalties on a **normal distribution**, our graph showed that the optimal time to stop interviewing and start choosing was after candidate two. This has around a 37% chance of success (assuming sample size of 50 candidates). We were initially very surprised by these results, but they made sense after we thought about it. In a normal distribution, the vast majority of candidates will have the same (or roughly the same) qualifications. With a penalty being administered after each additional interview, you very quickly reach a point where the chance of finding an exceptionally good candidate is outweighed by the time (penalty) it takes to find that candidate. The best strategy is to get a rough benchmark of the candidates and then pick quickly. What was shocking to us was the extent to which the optimal stop was shifted to the left. 
+Using penalties on a **normal distribution**, 
+our graph showed that the optimal time to stop interviewing and start choosing was after candidate two. 
+This has around a 37% chance of success (assuming sample size of 50 candidates). 
+We were initially very surprised by these results, but they made sense after we thought about it. 
+In a normal distribution, the vast majority of candidates will have the same (or roughly the same) qualifications. 
+With a penalty being administered after each additional interview, 
+you very quickly reach a point where the chance of finding an exceptionally good candidate is outweighed by the time (penalty) it takes to find that candidate. 
+The best strategy is to get a rough benchmark of the candidates and then pick quickly. 
+What was shocking to us was the extent to which the optimal stop was shifted to the left. 
 
 ## Instructions to Run
 

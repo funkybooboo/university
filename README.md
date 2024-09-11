@@ -22,6 +22,15 @@ to go through before making a choice.
 
 ### Part Two
 
+The optimal stopping point in a group of candidates with scores following a 
+skewed beta distribution and in a group of candidates with scores following a normal distribution is very similar. 
+The Beta(2,7) skewed distribution had a 35-41% chance of finding the optimal candidate after 
+typically between 15-22 candidate evaluations. The normal distribution had a 37-41% chance of finding 
+the optimal candidate after typically between 15-23 candidate evaluations. 
+This demonstrates that the distribution shape does not strongly influence the optimal stopping point as long 
+as there are roughly the same number of candidates between distributions that share a score.
+
+
 ### Part Three
 
 ## Instructions to Run

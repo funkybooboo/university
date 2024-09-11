@@ -8,6 +8,16 @@ from typing import Dict, List, Tuple, Callable, Optional
 NUMBER_OF_CANDIDATES: int = 50
 NUMBER_OF_EXPERIMENTS: int = 1000
 
+def generate_normal_samples(mean, std_dev, low, high, num_samples):
+    samples = []
+    while len(samples) < num_samples:
+        # Generate a batch of samples
+        batch = np.random.normal(mean, std_dev, num_samples * 2)
+        # Filter samples to be within the desired range
+        filtered_batch = batch[(batch >= low) & (batch <= high)]
+        # Append the filtered samples to the list
+        samples.extend(filtered_batch)
+    return np.array(samples[:num_samples])
 
 def main() -> None:
     """
@@ -45,14 +55,28 @@ def main() -> None:
         params={"alpha": 2, "beta": 7}
     )
 
-    # Part 3: Investment Decisions
-    # Add functions for investment decisions if needed
+    # Part 3: Uniform Distribution
+    run_and_plot_experiments_with_distribution(
+        distribution="uniform",
+        generator=lambda: random.sample(range(1000), NUMBER_OF_CANDIDATES),
+        params={},
+        penalty=1
+    )
+
+    # Part 3: Normal Distribution
+    run_and_plot_experiments_with_distribution(
+        distribution="normal",
+        generator=lambda: generate_normal_samples(50, 10, 0, 99, NUMBER_OF_CANDIDATES).tolist(),
+        params={"mean": 50, "stddev": 10},
+        penalty=1
+    )
 
 
 def run_and_plot_experiments_with_distribution(
         distribution: str,
         generator: Callable[[], List[float]],
-        params: Dict[str, float]
+        params: Dict[str, float],
+        penalty: int = 0
 ) -> None:
     """
     Runs and plots experiments for a given distribution.
@@ -66,7 +90,7 @@ def run_and_plot_experiments_with_distribution(
 
     for _ in range(NUMBER_OF_EXPERIMENTS):
         candidates = generator()
-        run_experiment(candidates, optimal_solution_found_count, NUMBER_OF_CANDIDATES, NUMBER_OF_EXPERIMENTS)
+        run_experiment(candidates, optimal_solution_found_count, NUMBER_OF_CANDIDATES, NUMBER_OF_EXPERIMENTS, penalty)
 
     plot(f"{distribution.capitalize()} Distribution", optimal_solution_found_count, params)
 
@@ -98,7 +122,8 @@ def run_experiment(
         candidates: List[float],
         optimal_solution_found_count: Dict[str, float],
         number_of_candidates: int,
-        number_of_experiments: int
+        number_of_experiments: int,
+        penalty: int = 0
 ) -> None:
     """
     Simulates the experiment of stopping at various positions and checks if the optimal solution is found.
@@ -109,6 +134,9 @@ def run_experiment(
     - NUMBER_OF_CANDIDATES: Total number of candidates.
     - NUMBER_OF_EXPERIMENTS: Total number of experiments to run.
     """
+    for i in range(len(candidates)):
+        candidates[i] -= (i + 1) * penalty
+
     optimal_candidate: float = max(candidates)
     for i in range(1, number_of_candidates):
         max_seen: float = max(candidates[:i])

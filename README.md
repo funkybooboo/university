@@ -33,6 +33,8 @@ as there are roughly the same number of candidates between distributions that sh
 
 ### Part Three
 
+For the normal distribution in part three, our graph showed that the optimal time to stop interviewing and start choosing was after candidate two, with around a 37% chance of success (assuming sample size of 50 candidats). We were initially very surprised by these results, but they made sense after we thought about it. In a normal distribution, the vast majority of candidates will have the same (or roughly the same) qualifications. With a penalty being administered after each additional interview, you very quickly reach a point where the chance of finding an exceptionally good candidate is outweighed by the time (penalty) it takes to find that candidate. The best strategy is to get a rough benchmark of the candidates and then pick quickly. What was shocking to us was the extent to which the left 
+
 ## Instructions to Run
 
 1. install [poetry](https://python-poetry.org/docs/) on your machine

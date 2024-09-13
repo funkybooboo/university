@@ -34,13 +34,7 @@ as there are roughly the same number of candidates between distributions that sh
 
 ### Part Three
 
-Using penalties on a **uniform distribution**, 
-the optimal stopping position is shifted to the left by 30% (from position 20 to position 13), 
-but still lies on or around 37%. 
-Something we found interesting about this was that if you pick a candidate using this strategy, 
-your chance of finding the optimal candidate goes down a little bit (roughly 5%), 
-but you cut the time it takes to find a candidate in half.  
-If you're short on time, this strategy looks pretty good.
+Using penalties on a **uniform distribution**, the optimal stopping position is shifted to the left by 30% (from position 20 to position 13), but still lies on or around 37%. Something we found interesting about this was that if you pick a candidate using this strategy, your chance of finding the optimal candidate goes down a little bit (roughly 5%), but you cut the time it takes to find a candidate in half. If you're short on time, this strategy looks pretty good.
 
 Using penalties on a **normal distribution**, 
 our graph showed that the optimal time to stop interviewing and start choosing was after candidate two. 

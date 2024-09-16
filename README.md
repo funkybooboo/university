@@ -7,6 +7,24 @@
 - Madison Patch
 
 ## Optimal Stopping Results
+Coordinates represent the following:
+x = the optimal stopping point (by number of candidates)
+y = the decimal percent of the likelihood of finding the best candidate
+
+| vanilla Uniform | Normal | Skewed Beta | Uniform (Penalty) | Normal (Penalty) |
+|--------------|--------------|--------------|-------------|-------------|
+| ( 20, 0.37)  | ( 16, 0.41)  | ( 17, 0.34)  | ( 9, 0.34)  | ( 3, 0.40)  |
+| ( 17, 0.39)  | ( 20, 0.37)  | ( 21, 0.38)  | ( 8, 0.32)  | ( 3, 0.35)  |
+| ( 20, 0.38)  | ( 16, 0.42)  | ( 22, 0.38)  | ( 10, 0.31) | ( 2, 0.38)  |
+| ( 21, 0.39)  | ( 19, 0.37)  | ( 15, 0.38)  | ( 8, 0.33)  | ( 3, 0.38)  |
+| ( 16, 0.37)  | ( 17, 0.40)  | ( 18, 0.41)  | ( 10, 0.35) | ( 3, 0.37)  |
+| ( 19, 0.39)  | ( 18, 0.36)  | ( 23, 0.38)  | ( 12, 0.33) | ( 2, 0.38)  |
+| ( 19, 0.41)  | ( 22, 0.40)  | ( 18, 0.39)  | ( 9, 0.34)  | ( 2, 0.39)  |
+| ( 22, 0.40)  | ( 16, 0.37)  | ( 16, 0.38)  | ( 11, 0.34) | ( 2, 0.36)  |
+| ( 18, 0.39)  | ( 22, 0.39)  | ( 17, 0.38)  | ( 10, 0.34) | ( 2, 0.40)  |
+| ( 19, 0.37)  | ( 19, 0.36)  | ( 17, 0.37)  | ( 9, 0.31)  | ( 2, 0.39)  |
+
+
 ### Part One
 
 Our algorithm (meaning Dr. Harper's algorithm, thank you Dr. Harper) 

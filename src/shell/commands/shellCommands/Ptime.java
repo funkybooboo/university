@@ -4,6 +4,7 @@ import shell.commands.Command;
 import shell.commands.Result;
 
 public class Ptime implements Command {
+    public static String name = "ptime";
     private static double cumulativeTime = 0.0;
 
     public static void updateCumulativeTime(double time) {
@@ -12,7 +13,7 @@ public class Ptime implements Command {
 
     @Override
     public Result execute(String[] arguments, String previousOutput) {
-        String message = String.format("Cumulative time spent: %.4f seconds%n", cumulativeTime);
+        String message = String.format("Total time in child processes: %.4f seconds%n", cumulativeTime);
         return new Result(message, true);
     }
 }

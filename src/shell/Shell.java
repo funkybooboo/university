@@ -2,7 +2,6 @@ package shell;
 
 import shell.commands.*;
 import shell.commands.shellCommands.History;
-import shell.commands.shellCommands.Ptime;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -24,8 +23,7 @@ public class Shell {
     }
 
     private void execute(String input) {
-        boolean successfulExecution = true;
-        long startTime = System.nanoTime();
+        History.addCommand(input);
 
         LinkedList<String> stack = getStack(input);
 
@@ -46,7 +44,6 @@ public class Shell {
 
             if (!result.isSuccess()) {
                 System.out.println(result.getOutput());
-                successfulExecution = false;
                 break;
             }
 
@@ -55,18 +52,11 @@ public class Shell {
             }
 
             if (stack.isEmpty()) {
-                System.out.println(result.getOutput());
+                System.out.print(result.getOutput());
             }
             else {
                 previousOutput = result.getOutput();
             }
-        }
-
-        long endTime = System.nanoTime();
-        double elapsedTime = (endTime - startTime) / 1_000_000_000.0; // Convert to seconds
-        Ptime.updateCumulativeTime(elapsedTime);
-        if (successfulExecution) {
-            History.addCommand(input);
         }
     }
 

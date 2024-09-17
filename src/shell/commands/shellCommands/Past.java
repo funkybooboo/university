@@ -1,6 +1,5 @@
 package shell.commands.shellCommands;
 
-import shell.Shell;
 import shell.commands.Command;
 import shell.commands.Result;
 

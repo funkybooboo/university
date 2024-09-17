@@ -27,7 +27,7 @@ public class History implements Command {
         }
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < commandHistory.size(); i++) {
-            stringBuilder.append((i + 1)).append(": ").append(commandHistory.get(i)).append("\n");
+            stringBuilder.append((i + 1)).append(" : ").append(commandHistory.get(i)).append("\n");
         }
         return new Result(stringBuilder.toString(), true);
     }

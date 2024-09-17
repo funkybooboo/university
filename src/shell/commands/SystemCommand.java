@@ -18,6 +18,7 @@ public class SystemCommand implements Command {
     @Override
     public Result execute(String[] arguments, String previousOutput) {
         long startTime = System.nanoTime();
+        int exitCode;
 
         ProcessBuilder processBuilder;
         if (arguments.length > 0) {
@@ -54,25 +55,23 @@ public class SystemCommand implements Command {
                 }
             }
 
-            int exitCode = process.waitFor();
-            if (exitCode != 0) {
-                String errorMessage = !errorOutput.isEmpty() ? errorOutput.toString() : "command failed with exit code " + exitCode;
-                long endTime = System.nanoTime();
-                double elapsedTime = (endTime - startTime) / 1_000_000_000.0; // Convert to seconds
-                Ptime.updateCumulativeTime(elapsedTime);
-                return new Result(errorMessage, false);
-            }
+            exitCode = process.waitFor();
 
         } catch (IOException e) {
             return new Result("nash: "+commandName+": invalid command", false);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // Restore interrupted status
-            return new Result("Process was interrupted: " + e.getMessage(), false);
+            return new Result("nash: process was interrupted: " + e.getMessage(), false);
         } finally {
             long endTime = System.nanoTime();
             double elapsedTime = (endTime - startTime) / 1_000_000_000.0; // Convert to seconds
             Ptime.updateCumulativeTime(elapsedTime);
         }
+        if (exitCode != 0) {
+            String errorMessage = !errorOutput.isEmpty() ? errorOutput.toString() : "nash: "+commandName+": failed with exit code " + exitCode;
+            return new Result(errorMessage, false);
+        }
+
         return new Result(output.toString(), true);
     }
 }

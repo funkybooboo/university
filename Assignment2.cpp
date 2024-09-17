@@ -123,8 +123,8 @@ std::vector<DistributionPair> generateNormalDistribution(const std::uint32_t how
     std::normal_distribution<double> distribution(mean, stdev); // Define the normal distribution
 
     // Define the range for bins based on mean and standard deviation
-    const auto min = static_cast<std::uint32_t>(mean - 4 * stdev);
-    const auto max = static_cast<std::uint32_t>(mean + 4 * stdev - 1);
+    const auto min = static_cast<std::uint32_t>(std::floor(mean - 4 * stdev));
+    const auto max = static_cast<std::uint32_t>(std::ceil(mean + 4 * stdev - 1));
     auto bins = initializeBins(min, max, numberBins); // Initialize bins
     countValues(bins, distribution, engine, howMany); // Count values in bins
 
@@ -149,7 +149,7 @@ std::vector<DistributionPair> generatePoissonDistribution(const std::uint32_t ho
 
     // Define the range for bins based on the number of bins
     constexpr std::uint32_t min = 0;
-    const std::uint32_t max = numberBins - 1;
+    const auto max = static_cast<std::uint32_t>(numberBins - 1);
     auto bins = initializeBins(min, max, numberBins); // Initialize bins
     countValues(bins, distribution, engine, howMany); // Count values in bins
 

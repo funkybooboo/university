@@ -45,7 +45,6 @@ public class List implements Command {
         return new Result(output.toString(), true);
     }
 
-
     private String getPermissions(File file) {
         return String.valueOf(file.isDirectory() ? 'd' : '-') +
                 // Check read permission

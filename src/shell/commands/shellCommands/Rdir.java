@@ -1,13 +1,16 @@
-package shell.commands;
+package shell.commands.shellCommands;
+
+import shell.commands.Command;
+import shell.commands.Result;
 
 import java.io.File;
 
 public class Rdir implements Command {
-    static String name = "rdir";
+    public static String name = "rdir";
     // When the command 'rdir test' is given, if the folder 'test' exists, it is removed.
     // If the directory didn't exist, an error messages is displayed.
     @Override
-    public Result execute(String[] arguments) {
+    public Result execute(String[] arguments, String previousOutput) {
         if (arguments.length == 0) {
             return new Result("nash: rdir: missing operand", false);
         }

@@ -1,10 +1,13 @@
-package shell.commands;
+package shell.commands.shellCommands;
+
+import shell.commands.Command;
+import shell.commands.Result;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class History implements Command {
-    static String name = "history";
+    public static String name = "history";
     private static final List<String> commandHistory = new ArrayList<>();
 
     public static String getCommand(int index) {
@@ -18,7 +21,7 @@ public class History implements Command {
     // The shell should keep a history of the previous shell.commands entered, with no maximum hard-coded history length.
     // If the user enters the command 'history', the shell should provide a listing of the complete command shell history.
     @Override
-    public Result execute(String[] arguments) {
+    public Result execute(String[] arguments, String previousOutput) {
         if (arguments.length > 0) {
             return new Result("nash: history: too many args for history command", false);
         }

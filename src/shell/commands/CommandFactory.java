@@ -1,5 +1,7 @@
 package shell.commands;
 
+import shell.commands.shellCommands.*;
+
 import java.util.HashMap;
 import java.util.Map;
 

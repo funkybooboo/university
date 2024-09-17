@@ -1,13 +1,16 @@
-package shell.commands;
+package shell.commands.shellCommands;
+
+import shell.commands.Command;
+import shell.commands.Result;
 
 import java.io.File;
 
 public class Mdir implements Command {
-    static String name = "mdir";
+    public static String name = "mdir";
     // When the command 'mdir test' is given, a new subdirectory called 'test' should be created.
     // If the directory already exists or the name already exists as a file, an appropriate error message is displayed.
     @Override
-    public Result execute(String[] arguments) {
+    public Result execute(String[] arguments, String previousOutput) {
         if (arguments.length == 0) {
             return new Result("nash: mdir: missing operand", false);
         }

@@ -1,48 +1,67 @@
 package shell;
 
 import shell.commands.*;
+import shell.commands.shellCommands.History;
+import shell.commands.shellCommands.Ptime;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Shell {
-    private static final CommandFactory commandFactory = new CommandFactory();
+    private final CommandFactory commandFactory = new CommandFactory();
 
-    public static void run() {
+    public void run() {
         Scanner scanner = new Scanner(System.in);
         while (true) { // the exit command will exit the program
             String currentDirectoryPath = System.getProperty("user.dir");
             System.out.print("[" + currentDirectoryPath + "]: ");
             String userInput = scanner.nextLine();
-            Shell.execute(userInput);
+            execute(userInput);
         }
     }
 
-    public static void execute(String input) {
+    public void execute(String input) {
 
         String[] commandSegments = input.split("\\|");
         boolean successfulExecution = true;
         long startTime = System.nanoTime();
 
-        for (String commandSegment : commandSegments) {
+        //LinkedList<String> stack = new LinkedList<>();
+
+        // TODO fix displayed path
+
+        String previousOutput = null;
+
+        for (int i = 0; i < commandSegments.length; i++) {
+            String commandSegment = commandSegments[i].trim();
             String[] commandParts = splitCommand(commandSegment);
 
             String commandName = commandParts[0];
             String[] commandArguments = Arrays.copyOfRange(commandParts, 1, commandParts.length);
 
             Command command = commandFactory.createCommand(commandName);
-            Result result = command.execute(commandArguments);
+            Result result = command.execute(commandArguments, previousOutput);
 
             if (!result.isSuccess()) {
-                System.out.println(result.getOutput());
+                System.err.println(result.getOutput());
                 successfulExecution = false;
                 break;
             }
 
-            // TODO how to feed output to the next command as input
+            // TODO dont pipe ^
+            if (result.isCommand()) {
+                execute(result.getOutput());
+            }
 
+            if (i == commandSegments.length - 1 && !result.getOutput().isEmpty()) {
+                System.out.println(result.getOutput());
+            }
+            else {
+                previousOutput = result.getOutput();
+            }
         }
 
         long endTime = System.nanoTime();
@@ -57,7 +76,7 @@ public class Shell {
      * Split the user command by spaces, but preserving them when inside double-quotes.
      * Code Adapted from: <a href="https://stackoverflow.com/questions/366202/regex-for-splitting-a-string-using-space-when-not-surrounded-by-single-or-double">link</a>
      */
-    private static String[] splitCommand(String command) {
+    private String[] splitCommand(String command) {
         java.util.List<String> matchList = new java.util.ArrayList<>();
 
         Pattern regex = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'");

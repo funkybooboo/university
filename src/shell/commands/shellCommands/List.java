@@ -1,11 +1,14 @@
-package shell.commands;
+package shell.commands.shellCommands;
+
+import shell.commands.Command;
+import shell.commands.Result;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class List implements Command {
-    static String name = "list";
+    public static String name = "list";
     // - The first four characters indicate: directory, user can read, user can write, user can execute.
     //  Use the external 'ls -l' command on Linux for examples of the output.
     //  Your shell only needs to display these details for the current user.
@@ -13,7 +16,7 @@ public class List implements Command {
     // - The next field is the date of last modification for the file; follow the example formatting.
     // - The last field is the name of the file.
     @Override
-    public Result execute(String[] arguments) {
+    public Result execute(String[] arguments, String previousOutput) {
         // Determine the starting directory
         String start = (arguments.length == 0) ? "." : arguments[0];
 

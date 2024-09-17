@@ -3,6 +3,8 @@ package shell.commands;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 public class SystemCommand implements Command {
     private final String commandName;
@@ -12,15 +14,25 @@ public class SystemCommand implements Command {
     }
 
     @Override
-    public Result execute(String[] arguments) {
-        ProcessBuilder processBuilder = new ProcessBuilder();
-        processBuilder.command(commandName, String.join(" ", arguments));
+    public Result execute(String[] arguments, String previousOutput) {
+        ProcessBuilder processBuilder;
+        if (arguments.length > 0) {
+            processBuilder = new ProcessBuilder(commandName, String.join(" ", arguments));
+        } else {
+            processBuilder = new ProcessBuilder(commandName);
+        }
 
         StringBuilder output = new StringBuilder();
         StringBuilder errorOutput = new StringBuilder();
 
         try {
             Process process = processBuilder.start();
+
+            if (previousOutput != null) {
+                try (OutputStream out = process.getOutputStream()) {
+                    out.write(previousOutput.getBytes(StandardCharsets.UTF_8));
+                }
+            }
 
             // Read standard output
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {

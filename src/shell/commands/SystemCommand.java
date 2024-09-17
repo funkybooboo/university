@@ -57,7 +57,7 @@ public class SystemCommand implements Command {
             }
 
         } catch (IOException e) {
-            return new Result("I/O error occurred: " + e.getMessage(), false);
+            return new Result("nash: "+commandName+": invalid command", false);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // Restore interrupted status
             return new Result("Process was interrupted: " + e.getMessage(), false);
@@ -65,5 +65,4 @@ public class SystemCommand implements Command {
 
         return new Result(output.toString(), true);
     }
-
 }

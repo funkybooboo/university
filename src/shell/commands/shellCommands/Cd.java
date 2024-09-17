@@ -7,8 +7,7 @@ import java.io.File;
 
 public class Cd implements Command {
     public static String name = "cd";
-    // If the user enters the command "cd" without any parameters, the shell should change the working directory to the user's home folder.
-    // The shell should verify the directory the user attempts to change to exists, reporting an error if it isn't.
+
     @Override
     public Result execute(String[] arguments, String previousOutput) {
         if (arguments.length > 1) {
@@ -23,7 +22,11 @@ public class Cd implements Command {
         }
 
         if (targetDirectory.exists() && targetDirectory.isDirectory()) {
-            System.setProperty("user.dir", targetDirectory.getAbsolutePath());
+            try {
+                System.setProperty("user.dir", targetDirectory.getAbsolutePath());
+            } catch (SecurityException e) {
+                return new Result("nash: cd: permission denied", false);
+            }
             return new Result();
         } else {
             String errorMessage = (arguments.length == 0)
@@ -32,5 +35,4 @@ public class Cd implements Command {
             return new Result(errorMessage, false);
         }
     }
-
 }

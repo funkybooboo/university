@@ -23,20 +23,19 @@ public class Shell {
         }
     }
 
-    public void execute(String input) {
-
-        String[] commandSegments = input.split("\\|");
+    private void execute(String input) {
         boolean successfulExecution = true;
         long startTime = System.nanoTime();
 
-        //LinkedList<String> stack = new LinkedList<>();
-
-        // TODO fix displayed path
+        LinkedList<String> stack = getStack(input);
 
         String previousOutput = null;
 
-        for (int i = 0; i < commandSegments.length; i++) {
-            String commandSegment = commandSegments[i].trim();
+        // TODO still need to implement &
+        // TODO still need to fix pwd display
+
+        while (!stack.isEmpty()) {
+            String commandSegment = stack.poll();
             String[] commandParts = splitCommand(commandSegment);
 
             String commandName = commandParts[0];
@@ -46,17 +45,16 @@ public class Shell {
             Result result = command.execute(commandArguments, previousOutput);
 
             if (!result.isSuccess()) {
-                System.err.println(result.getOutput());
+                System.out.println(result.getOutput());
                 successfulExecution = false;
                 break;
             }
 
-            // TODO dont pipe ^
             if (result.isCommand()) {
-                execute(result.getOutput());
+                stack.addAll(0, getStack(result.getOutput()));
             }
 
-            if (i == commandSegments.length - 1 && !result.getOutput().isEmpty()) {
+            if (stack.isEmpty()) {
                 System.out.println(result.getOutput());
             }
             else {
@@ -70,6 +68,15 @@ public class Shell {
         if (successfulExecution) {
             History.addCommand(input);
         }
+    }
+
+    private static LinkedList<String> getStack(String input) {
+        String[] commandSegments = input.split("\\|");
+        LinkedList<String> stack = new LinkedList<>();
+        for (String commandSegment : commandSegments) {
+            stack.add(commandSegment.trim());
+        }
+        return stack;
     }
 
     /**

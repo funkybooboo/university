@@ -26,6 +26,7 @@ public class History implements Command {
             return new Result("nash: history: too many args for history command", false);
         }
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("-- Command History --").append("\n");
         for (int i = 0; i < commandHistory.size(); i++) {
             stringBuilder.append((i + 1)).append(" : ").append(commandHistory.get(i)).append("\n");
         }

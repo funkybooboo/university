@@ -29,8 +29,12 @@ public class Shell {
 
         String previousOutput = null;
 
-        // TODO still need to implement &
-        // TODO still need to fix pwd display
+        // TODO implement & (dont wait for the process to finish)
+        //  question: what happens if used in |
+        // TODO fix the path displayed on the prompt
+        // TODO fix file operations (cd, rdir, mdir, list)
+        // TODO fix system processes (use child processes)
+        // TODO fix pipe (use child processes)
 
         while (!stack.isEmpty()) {
             String commandSegment = stack.poll();

@@ -59,7 +59,7 @@ public class List implements Command {
     }
 
     private String getModificationDate(File file) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd yyyy hh:mm");
         Date lastModified = new Date(file.lastModified());
         return dateFormat.format(lastModified);
     }

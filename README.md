@@ -4,7 +4,7 @@
 - Chandler Justice
 - Kaiden McMillen
 - Nate Stott
-McMillen 
+ 
 ## Reflection:
 
 ### Part 1

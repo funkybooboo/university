@@ -1,9 +1,20 @@
 import numpy as np
-from typing import List
+from typing import List, Callable
 
 
-def get_probabilities(drift: float = 0) -> List[float]:
-    base_probs: List[float] = [
+def get_average_rewards(
+        algorithm: Callable[[], np.ndarray], num_runs: int
+) -> np.ndarray:
+    all_rewards: np.ndarray = np.zeros((num_runs, 10000))
+
+    for run in range(num_runs):
+        all_rewards[run] = algorithm()
+
+    return np.mean(all_rewards, axis=0)
+
+
+def get_choices(drift: float = 0) -> List[float]:
+    base_choices: List[float] = [
         np.random.normal(0, 5),
         np.random.normal(-0.5, 12),
         np.random.normal(2, 3.9),
@@ -26,6 +37,5 @@ def get_probabilities(drift: float = 0) -> List[float]:
         np.random.normal(-1, 6),
         np.random.normal(-4.5, 8),
     ]
-    # Optional drift can be applied to reward probabilities
-    probs: List[float] = [p + drift for p in base_probs]
-    return probs
+    choices: List[float] = [p + drift for p in base_choices]
+    return choices

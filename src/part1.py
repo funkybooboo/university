@@ -4,7 +4,7 @@ from typing import List, Callable
 
 
 num_steps: int = 10000
-num_runs: int = 5
+num_runs: int = 100
 
 
 def main() -> None:
@@ -67,35 +67,27 @@ def get_probabilities(drift: float = 0) -> List[float]:
     return probs
 
 
-def epsilon_greedy_algorithm(epsilon: float) -> np.ndarray:
-    rewards = []
-    action_reward_histories = []
+def epsilon_greedy_algorithm(
+        epsilon: float, num_actions: int = 21
+) -> np.ndarray:
+    Q: np.ndarray = np.zeros(num_actions)
+    N: np.ndarray = np.zeros(num_actions)
+    rewards: List[float] = []
 
-    # Do every action once
-    for reward in get_probabilities():
-        rewards.append(reward)
-        action_reward_histories.append([reward])
+    for step in range(num_steps):
+        action: int = int(
+            np.random.randint(num_actions)
+            if np.random.rand() < epsilon
+            else np.argmax(Q)
+        )
+        probabilities: List[float] = get_probabilities()
+        reward: float = np.random.normal(probabilities[action], 1)
 
-    for step in range(num_steps - len(rewards)):
-        probabilities = get_probabilities()
-        if np.random.rand() < epsilon:
-            # Exploit
-            best_average_reward = float('-inf')
-            reward_index = 0
-            for action_index in range(len(action_reward_histories)):
-                action_reward_history = action_reward_histories[action_index]
-                average_reward = sum(action_reward_history) / len(action_reward_history)
-                if average_reward > best_average_reward:
-                    best_average_reward = average_reward
-                    reward_index = action_index
-        else:
-            # Explore
-            reward_index = np.random.choice(len(probabilities))
-        reward = probabilities[reward_index]
-        action_reward_histories[reward_index].append(reward)
+        N[action] += 1
+        Q[action] += (reward - Q[action]) / N[action]
         rewards.append(reward)
 
-    return np.array(rewards)
+    return np.cumsum(rewards) / (np.arange(num_steps) + 1)
 
 
 if __name__ == "__main__":

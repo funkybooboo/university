@@ -12,22 +12,30 @@ def main() -> None:
 
     # Different epsilon values for the Epsilon-Greedy algorithm
     epsilon_values: List[float] = [0.01, 0.05, 0.1, 0.4]
+
+    # Epsilon-Greedy Results
     for epsilon in epsilon_values:
         average_rewards: np.ndarray = get_average_rewards(
-            lambda: epsilon_greedy_algorithm(epsilon)
+            lambda: moving_epsilon_greedy_algorithm(epsilon)
         )
         plt.plot(average_rewards, label=f'Epsilon-Greedy, Epsilon = {epsilon}')
 
-    # Run Thompson Sampling and plot its results
+    # Thompson Sampling Results without restart
     average_rewards: np.ndarray = get_average_rewards(
-        lambda: thompson_sampling_algorithm()
+        lambda: moving_thompson_sampling_algorithm(restart=False)
     )
-    plt.plot(average_rewards, label='Thompson Sampling', linestyle='--')
+    plt.plot(average_rewards, label='Thompson Sampling (No Restart)', linestyle='--')
+
+    # Thompson Sampling Results with restart
+    average_rewards: np.ndarray = get_average_rewards(
+        lambda: moving_thompson_sampling_algorithm(restart=True)
+    )
+    plt.plot(average_rewards, label='Thompson Sampling (Restart)', linestyle=':')
 
     # Plot configuration
     plt.xlabel('Steps')
     plt.ylabel('Average Reward')
-    plt.title('Best Convergence Results of Epsilon-Greedy and Thompson Sampling')
+    plt.title('Moving Bandits: Epsilon-Greedy vs. Thompson Sampling')
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -43,8 +51,9 @@ def get_average_rewards(algorithm: Callable[[], np.ndarray]) -> np.ndarray:
     average_rewards: np.ndarray = np.mean(all_rewards, axis=0)
     return average_rewards
 
-def get_probabilities() -> List[float]:
-    probs: List[float] = [
+def get_probabilities(step: int) -> List[float]:
+    # Initial mean probabilities
+    base_probs: List[float] = [
         np.random.normal(0, 5),
         np.random.normal(-0.5, 12),
         np.random.normal(2, 3.9),
@@ -67,20 +76,35 @@ def get_probabilities() -> List[float]:
         np.random.normal(-1, 6),
         np.random.normal(-4.5, 8),
     ]
-    return probs
 
-def epsilon_greedy_algorithm(epsilon: float) -> np.ndarray:
-    action_averages: np.ndarray = np.array(get_probabilities())  # Initialize action averages
+    # Apply drifting
+    drifting_probs: List[float] = [p - 0.001 * step for p in base_probs]
+
+    # Sudden shifts at step 3000
+    if step >= 3000:
+        drifting_probs[0] += 7
+        drifting_probs[2] += 3
+        drifting_probs[7] += 1
+        if drifting_probs[7] > base_probs[7] + 3 * np.std(base_probs):  # Sudden shift condition
+            return [
+                50 if i == 7 else np.random.normal(p, 1)
+                for i, p in enumerate(drifting_probs)
+            ]
+        drifting_probs[18] += 2
+
+    return drifting_probs
+
+def moving_epsilon_greedy_algorithm(epsilon: float) -> np.ndarray:
+    action_averages: np.ndarray = np.zeros(num_actions)  # Initialize action averages
     action_count: np.ndarray = np.ones(num_actions)  # Initialize action counts
     rewards: List[float] = []  # Store rewards for each step
 
     for step in range(num_steps):
-        # Choose an action based on epsilon-greedy strategy
+        probabilities: List[float] = get_probabilities(step)  # Get current probabilities
         action: int = int(
             np.random.randint(num_actions) if np.random.rand() < epsilon
             else np.argmax(action_averages)
         )
-        probabilities: List[float] = get_probabilities()  # Get current probabilities
         reward: float = np.random.normal(probabilities[action], 1)  # Simulate reward
 
         # Update action counts and averages
@@ -90,21 +114,22 @@ def epsilon_greedy_algorithm(epsilon: float) -> np.ndarray:
 
     return np.cumsum(rewards) / (np.arange(num_steps) + 1)  # Return cumulative average rewards
 
-def thompson_sampling_algorithm() -> np.ndarray:
-    # Initialize success and failure counts for each action
-    successes: np.ndarray = np.ones(num_actions)  # Alpha in Beta distribution
-    failures: np.ndarray = np.ones(num_actions)  # Beta in Beta distribution
+def moving_thompson_sampling_algorithm(restart: bool) -> np.ndarray:
+    successes: np.ndarray = np.ones(num_actions)  # Initialize success counts for each action
+    failures: np.ndarray = np.ones(num_actions)  # Initialize failure counts for each action
     rewards: List[float] = []  # Store rewards for each step
 
     for step in range(num_steps):
-        # Sample from the Beta distribution for each action
-        sampled_values: np.ndarray = np.random.beta(successes, failures)
-        # Select the action with the highest sampled value
-        action: int = int(np.argmax(sampled_values))
+        # Restart success and failure counts if specified
+        if restart and step == 3000:
+            successes = np.ones(num_actions)
+            failures = np.ones(num_actions)
 
-        # Get current probabilities and simulate reward
-        probabilities: List[float] = get_probabilities()  # Get the true probabilities
-        reward: float = np.random.normal(probabilities[action], 1)  # Use normal distribution
+        sampled_values: np.ndarray = np.random.beta(successes, failures)  # Sample from Beta distribution
+        action: int = int(np.argmax(sampled_values))  # Select action with highest sampled value
+
+        probabilities: List[float] = get_probabilities(step)  # Get current probabilities
+        reward: float = np.random.normal(probabilities[action], 1)  # Simulate reward
 
         # Update success and failure counts based on the received reward
         if reward > 0:  # Assume reward is non-negative

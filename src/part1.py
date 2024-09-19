@@ -5,6 +5,7 @@ from typing import List, Callable
 
 num_steps: int = 10000
 num_runs: int = 100
+num_actions: int = 21
 
 
 def main() -> None:
@@ -16,6 +17,11 @@ def main() -> None:
             lambda: epsilon_greedy_algorithm(epsilon)
         )
         plt.plot(average_rewards, label=f'Epsilon-Greedy, Epsilon = {epsilon}')
+
+    average_rewards: np.ndarray = get_average_rewards(
+        lambda: thompson_sampling_algorithm()
+    )
+    plt.plot(average_rewards, label='Thompson Sampling', linestyle='--')
 
     plt.xlabel('Steps')
     plt.ylabel('Average Reward')
@@ -67,11 +73,9 @@ def get_probabilities(drift: float = 0) -> List[float]:
     return probs
 
 
-def epsilon_greedy_algorithm(
-        epsilon: float, num_actions: int = 21
-) -> np.ndarray:
-    Q: np.ndarray = np.zeros(num_actions)
-    N: np.ndarray = np.zeros(num_actions)
+def epsilon_greedy_algorithm(epsilon: float) -> np.ndarray:
+    Q: np.ndarray = np.array(get_probabilities())
+    N: np.ndarray = np.ones(num_actions)
     rewards: List[float] = []
 
     for step in range(num_steps):
@@ -85,6 +89,35 @@ def epsilon_greedy_algorithm(
 
         N[action] += 1
         Q[action] += (reward - Q[action]) / N[action]
+        rewards.append(reward)
+
+    return np.cumsum(rewards) / (np.arange(num_steps) + 1)
+
+
+def thompson_sampling_algorithm() -> np.ndarray:
+    # Initialize success and failure counts for each arm
+    successes = np.ones(num_actions)  # Alpha in Beta distribution
+    failures = np.ones(num_actions)   # Beta in Beta distribution
+    rewards: List[float] = []
+
+    for step in range(num_steps):
+        # Sample from the Beta distribution for each arm
+        sampled_values = np.random.beta(successes, failures)
+
+        # Select the action with the highest sampled value
+        action = int(np.argmax(sampled_values))
+
+        # Simulate reward from the probability distribution
+        probabilities = get_probabilities()  # Get the true probabilities
+        reward = np.random.normal(probabilities[action], 1)  # Use normal distribution
+
+        # Update the counts based on the reward received
+        if reward > 0:  # Assume reward is non-negative
+            successes[action] += 1
+        else:
+            failures[action] += 1
+
+        # Store the reward
         rewards.append(reward)
 
     return np.cumsum(rewards) / (np.arange(num_steps) + 1)

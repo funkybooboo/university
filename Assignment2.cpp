@@ -70,6 +70,16 @@ void countValues(std::vector<DistributionPair> &bins, Distribution &distribution
     for (std::uint32_t i = 0; i < howMany; ++i)
     {
         const auto value = static_cast<std::uint32_t>(distribution(engine)); // Generate a value
+        if (value <= bins[0].minValue)
+        {
+            ++bins[0].count;
+            continue;
+        }
+        if (value >= bins[bins.size() - 1].maxValue)
+        {
+            ++bins[bins.size() - 1].count;
+            continue;
+        }
         for (auto &dp : bins)
         {
             // Increment the count for the bin that contains the value
@@ -97,7 +107,7 @@ std::vector<DistributionPair> generateUniformDistribution(const std::uint32_t ho
 {
     std::random_device rd; // Obtain a random number from hardware
     std::default_random_engine engine(rd()); // Seed the engine
-    std::uniform_int_distribution<std::uint32_t> distribution(min, max); // Define the uniform distribution
+    std::uniform_int_distribution distribution(min, max); // Define the uniform distribution
 
     auto bins = initializeBins(min, max, numberBins); // Initialize bins
     countValues(bins, distribution, engine, howMany); // Count values in bins
@@ -120,7 +130,7 @@ std::vector<DistributionPair> generateNormalDistribution(const std::uint32_t how
 {
     std::random_device rd; // Obtain a random number from hardware
     std::default_random_engine engine(rd()); // Seed the engine
-    std::normal_distribution<double> distribution(mean, stdev); // Define the normal distribution
+    std::normal_distribution distribution(mean, stdev); // Define the normal distribution
 
     // Define the range for bins based on mean and standard deviation
     const auto min = static_cast<std::uint32_t>(std::floor(mean - 4 * stdev));
@@ -145,7 +155,7 @@ std::vector<DistributionPair> generatePoissonDistribution(const std::uint32_t ho
 {
     std::random_device rd; // Obtain a random number from hardware
     std::default_random_engine engine(rd()); // Seed the engine
-    std::poisson_distribution<std::uint32_t> distribution(howOften); // Define the Poisson distribution
+    std::poisson_distribution distribution(howOften); // Define the Poisson distribution
 
     // Define the range for bins based on the number of bins
     constexpr std::uint32_t min = 0;

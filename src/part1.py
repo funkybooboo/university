@@ -74,21 +74,21 @@ def get_probabilities(drift: float = 0) -> List[float]:
 
 
 def epsilon_greedy_algorithm(epsilon: float) -> np.ndarray:
-    Q: np.ndarray = np.array(get_probabilities())
-    N: np.ndarray = np.ones(num_actions)
+    action_averages: np.ndarray = np.array(get_probabilities())
+    action_count: np.ndarray = np.ones(num_actions)
     rewards: List[float] = []
 
     for step in range(num_steps):
         action: int = int(
             np.random.randint(num_actions)
             if np.random.rand() < epsilon
-            else np.argmax(Q)
+            else np.argmax(action_averages)
         )
         probabilities: List[float] = get_probabilities()
         reward: float = np.random.normal(probabilities[action], 1)
 
-        N[action] += 1
-        Q[action] += (reward - Q[action]) / N[action]
+        action_count[action] += 1
+        action_averages[action] += (reward - action_averages[action]) / action_count[action]
         rewards.append(reward)
 
     return np.cumsum(rewards) / (np.arange(num_steps) + 1)

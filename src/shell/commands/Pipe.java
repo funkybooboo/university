@@ -2,46 +2,64 @@ package shell.commands;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.IOException;
 
 public class Pipe {
     public static void execute(LinkedList<String[]> commandStack) {
+        if (commandStack.isEmpty()) {
+            return;
+        }
 
-        String[] commandParts1 = commandStack.getFirst();
-        String[] commandParts2 = commandStack.get(1);
+        ProcessBuilder[] processBuilders = new ProcessBuilder[commandStack.size()];
 
-        ProcessBuilder processBuilder1 = getProcessBuilder(commandParts1);
-        ProcessBuilder processBuilder2 = getProcessBuilder(commandParts2);
+        // Prepare all process builders
+        int index = 0;
+        while (!commandStack.isEmpty()) {
+            String[] commandParts = commandStack.poll();
+            processBuilders[index++] = getProcessBuilder(commandParts);
+        }
 
-        // Use the parent process's I/O channels
-        processBuilder1.redirectInput(ProcessBuilder.Redirect.INHERIT);
-        processBuilder2.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        Process[] processes = new Process[processBuilders.length];
 
         try {
-            Process process1 = processBuilder1.start();
-            Process process2 = processBuilder2.start();
+            // Start the first process
+            processes[0] = processBuilders[0].start();
 
-            // this might feel backwards, but it is our program's input and output
-            // thus process1's output is our input and our output is p2's input
-            java.io.InputStream in = process1.getInputStream();
-            java.io.OutputStream out = process2.getOutputStream();
+            // Connect processes in a chain
+            for (int i = 1; i < processBuilders.length; i++) {
+                // Start the next process
+                processes[i] = processBuilders[i].start();
 
-            // Read the data from process1 and feed to p2.
-            int data;
-            while ((data = in.read()) != -1) {
-                out.write(data);
+                // Pipe output from the previous process to the next
+                final int j = i; // Capture the index for use in the thread
+                new Thread(() -> {
+                    try (InputStream in = processes[j - 1].getInputStream();
+                         OutputStream out = processes[j].getOutputStream()) {
+
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+                        while ((bytesRead = in.read(buffer)) != -1) {
+                            out.write(buffer, 0, bytesRead);
+                        }
+                        out.flush();
+                    } catch (IOException e) {
+                        System.err.println("nash: pipe: error while piping data: " + e.getMessage());
+                    }
+                }).start();
             }
 
-            // if we don't do this p2 won't know when we're done
-            out.flush();
-            out.close();
-
-            process1.waitFor();
-            process2.waitFor();
+            // Wait for all processes to complete
+            for (Process process : processes) {
+                process.waitFor();
+            }
+        } catch (IOException ex) {
+            System.err.println("nash: I/O error: " + ex.getMessage());
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt(); // Restore interrupted status
+            System.err.println("nash: execution interrupted: " + ex.getMessage());
         }
-        catch (Exception ex) {
-            System.err.println("nash: unexpected error");
-        }
-
     }
 
     private static ProcessBuilder getProcessBuilder(String[] commandParts) {

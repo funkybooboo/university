@@ -36,5 +36,4 @@ public class Mdir implements Command {
 
         return new Result(output.toString(), success);
     }
-
 }

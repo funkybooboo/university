@@ -39,5 +39,4 @@ public class Rdir implements Command {
 
         return new Result(output.toString(), success);
     }
-
 }

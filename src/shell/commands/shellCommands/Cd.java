@@ -3,7 +3,8 @@ package shell.commands.shellCommands;
 import shell.commands.Command;
 import shell.commands.Result;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Cd implements Command {
     public static String name = "cd";
@@ -14,25 +15,27 @@ public class Cd implements Command {
             return new Result("nash: cd: too many arguments", false);
         }
 
-        File targetDirectory;
+        String currentDirectoryPath = System.getProperty("user.dir");
+        Path targetDirectoryPath;
+
         if (arguments.length == 0) {
-            targetDirectory = new File(System.getProperty("user.home"));
+            targetDirectoryPath = Paths.get(System.getProperty("user.home"));
         } else {
-            targetDirectory = new File(arguments[0]);
+            targetDirectoryPath = Paths.get(arguments[0]);
+            if (!targetDirectoryPath.isAbsolute()) {
+                targetDirectoryPath = Paths.get(currentDirectoryPath, targetDirectoryPath.toString());
+            }
         }
 
-        if (targetDirectory.exists() && targetDirectory.isDirectory()) {
-            try {
-                System.setProperty("user.dir", targetDirectory.getAbsolutePath());
-            } catch (SecurityException e) {
-                return new Result("nash: cd: permission denied", false);
-            }
-            return new Result();
-        } else {
-            String errorMessage = (arguments.length == 0)
-                    ? "nash: cd: home directory does not exist"
-                    : "nash: cd: the directory does not exist or is not a directory";
-            return new Result(errorMessage, false);
+        if (!targetDirectoryPath.toFile().exists()) {
+            return new Result("nash: cd: the directory does not exist", false);
         }
+
+        if (!targetDirectoryPath.toFile().isDirectory()) {
+            return new Result("nash: cd: the directory is not a directory", false);
+        }
+
+        System.setProperty("user.dir", targetDirectoryPath.toString());
+        return new Result();
     }
 }

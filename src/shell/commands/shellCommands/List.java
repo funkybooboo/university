@@ -25,7 +25,7 @@ public class List implements Command {
 
         // Check if the directory exists and is actually a directory
         if (!directory.exists() || !directory.isDirectory()) {
-            return new Result("nash: list: No such file or directory", false);
+            return new Result("nash: list: no such file or directory", false);
         }
 
         // List all files and directories in the directory

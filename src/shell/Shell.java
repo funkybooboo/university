@@ -14,7 +14,7 @@ public class Shell {
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
-        while (true) { // the exit command will exit the program
+        while (true) { // the exit command will end the program
             String currentDirectoryPath = System.getProperty("user.dir");
             System.out.print("[" + currentDirectoryPath + "]: ");
             String userInput = scanner.nextLine();
@@ -31,8 +31,7 @@ public class Shell {
 
         // TODO implement & (dont wait for the process to finish)
         //  question: what happens if used in |
-        // TODO fix the path displayed on the prompt
-        // TODO fix file operations (cd, rdir, mdir, list)
+        // TODO fix the path displayed on the prompt (cd)
         // TODO fix system processes (use child processes)
         // TODO fix pipe (use child processes)
 

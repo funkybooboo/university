@@ -30,7 +30,6 @@ public class Shell {
         // TODO implement & (dont wait for the process to finish)
         //  question: what happens if used in |
         // TODO fix the path displayed on the prompt (cd)
-        // TODO fix system processes (use child processes)
         // TODO fix pipe (use child processes)
 
         if (commandStack.size() == 1) {
@@ -42,9 +41,8 @@ public class Shell {
             Command command = commandFactory.createCommand(commandName);
             command.execute(commandArguments);
         }
-        if (commandStack.size() > 1) {
-            PipeCommand pipeCommand = new PipeCommand(commandStack);
-
+        else if (commandStack.size() > 1) {
+            Pipe.execute(commandStack);
         }
     }
 

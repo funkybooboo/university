@@ -1,7 +1,6 @@
 package shell.commands.shellCommands;
 
 import shell.commands.Command;
-import shell.commands.Result;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,9 +9,10 @@ public class Cd implements Command {
     public static String name = "cd";
 
     @Override
-    public Result execute(String[] arguments, String previousOutput) {
+    public void execute(String[] arguments) {
         if (arguments.length > 1) {
-            return new Result("nash: cd: too many arguments", false);
+            System.err.println("nash: cd: too many arguments");
+            return;
         }
 
         String currentDirectoryPath = System.getProperty("user.dir");
@@ -28,14 +28,15 @@ public class Cd implements Command {
         }
 
         if (!targetDirectoryPath.toFile().exists()) {
-            return new Result("nash: cd: the directory does not exist", false);
+            System.err.println("nash: cd: the directory does not exist");
+            return;
         }
 
         if (!targetDirectoryPath.toFile().isDirectory()) {
-            return new Result("nash: cd: the directory is not a directory", false);
+            System.err.println("nash: cd: the directory is not a directory");
+            return;
         }
 
         System.setProperty("user.dir", targetDirectoryPath.toString());
-        return new Result();
     }
 }

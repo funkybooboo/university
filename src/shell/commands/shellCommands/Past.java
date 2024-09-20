@@ -1,7 +1,6 @@
 package shell.commands.shellCommands;
 
 import shell.commands.Command;
-import shell.commands.Result;
 
 public class Past implements Command {
     public static String name = "^";
@@ -10,9 +9,10 @@ public class Past implements Command {
     // If the user then selects that command to be executed from history, the command it refers to should be executed,
     // for as deep as the history execution chain indicates.
     @Override
-    public Result execute(String[] arguments, String previousOutput) {
+    public void execute(String[] arguments) {
         if (arguments.length != 1) {
-            return new Result("nash: ^: too many args for ^ command", false);
+            System.err.println("nash: ^: too many args for ^ command");
+            return;
         }
 
         try {
@@ -20,14 +20,12 @@ public class Past implements Command {
             String input = History.getCommand(index);
 
             if (input == null) {
-                return new Result("nash: ^: no such command in history", false);
+                System.err.println("nash: ^: no such command in history");
             }
-
-            return new Result(input, true, true);
         } catch (NumberFormatException e) {
-            return new Result("nash: ^: invalid index format", false);
+            System.err.println("nash: ^: invalid index format");
         } catch (Exception e) {
-            return new Result("nash: ^: unexpected error", false);
+            System.err.println("nash: ^: unexpected error");
         }
     }
 }

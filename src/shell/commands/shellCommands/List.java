@@ -1,7 +1,6 @@
 package shell.commands.shellCommands;
 
 import shell.commands.Command;
-import shell.commands.Result;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -16,7 +15,7 @@ public class List implements Command {
     // - The next field is the date of last modification for the file; follow the example formatting.
     // - The last field is the name of the file.
     @Override
-    public Result execute(String[] arguments, String previousOutput) {
+    public void execute(String[] arguments) {
         // Determine the starting directory
         String start = (arguments.length == 0) ? "." : arguments[0];
 
@@ -25,13 +24,15 @@ public class List implements Command {
 
         // Check if the directory exists and is actually a directory
         if (!directory.exists() || !directory.isDirectory()) {
-            return new Result("nash: list: no such file or directory", false);
+            System.err.println("nash: list: no such file or directory");
+            return;
         }
 
         // List all files and directories in the directory
         File[] files = directory.listFiles();
         if (files == null) {
-            return new Result("nash: list: unable to access the directory", false);
+            System.err.println("nash: list: unable to access the directory");
+            return;
         }
 
         // Prepare output
@@ -43,9 +44,7 @@ public class List implements Command {
             String name = file.getName();
             output.append(String.format("%s %s %s %s%n", permissions, size, modificationDate, name));
         }
-
-        // Return result with the directory listing
-        return new Result(output.toString(), true);
+        System.out.println(output);
     }
 
     private String getPermissions(File file) {

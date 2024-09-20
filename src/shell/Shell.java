@@ -25,9 +25,7 @@ public class Shell {
     private void execute(String input) {
         History.addCommand(input);
 
-        LinkedList<String> stack = getStack(input);
-
-        String previousOutput = null;
+        LinkedList<String[]> commandStack = getCommandStack(input);
 
         // TODO implement & (dont wait for the process to finish)
         //  question: what happens if used in |
@@ -35,41 +33,29 @@ public class Shell {
         // TODO fix system processes (use child processes)
         // TODO fix pipe (use child processes)
 
-        while (!stack.isEmpty()) {
-            String commandSegment = stack.poll();
-            String[] commandParts = splitCommand(commandSegment);
+        if (commandStack.size() == 1) {
+            String[] commandParts = commandStack.poll();
 
             String commandName = commandParts[0];
             String[] commandArguments = Arrays.copyOfRange(commandParts, 1, commandParts.length);
 
             Command command = commandFactory.createCommand(commandName);
-            Result result = command.execute(commandArguments, previousOutput);
+            command.execute(commandArguments);
+        }
+        if (commandStack.size() > 1) {
+            PipeCommand pipeCommand = new PipeCommand(commandStack);
 
-            if (!result.isSuccess()) {
-                System.out.println(result.getOutput());
-                break;
-            }
-
-            if (result.isCommand()) {
-                stack.addAll(0, getStack(result.getOutput()));
-            }
-
-            if (stack.isEmpty()) {
-                System.out.print(result.getOutput());
-            }
-            else {
-                previousOutput = result.getOutput();
-            }
         }
     }
 
-    private static LinkedList<String> getStack(String input) {
+    private LinkedList<String[]> getCommandStack(String input) {
         String[] commandSegments = input.split("\\|");
-        LinkedList<String> stack = new LinkedList<>();
+        LinkedList<String[]> commandStack = new LinkedList<>();
         for (String commandSegment : commandSegments) {
-            stack.add(commandSegment.trim());
+            String[] commandParts = splitCommand(commandSegment.trim());
+            commandStack.add(commandParts);
         }
-        return stack;
+        return commandStack;
     }
 
     /**

@@ -1,7 +1,6 @@
 package shell.commands.shellCommands;
 
 import shell.commands.Command;
-import shell.commands.Result;
 
 import java.io.File;
 
@@ -10,13 +9,11 @@ public class Rdir implements Command {
     // When the command 'rdir test' is given, if the folder 'test' exists, it is removed.
     // If the directory didn't exist, an error messages is displayed.
     @Override
-    public Result execute(String[] arguments, String previousOutput) {
+    public void execute(String[] arguments) {
         if (arguments.length == 0) {
-            return new Result("nash: rdir: missing operand", false);
+            System.err.println("nash: rdir: missing operand");
+            return;
         }
-
-        StringBuilder output = new StringBuilder();
-        boolean success = true;
 
         for (String directoryName : arguments) {
             File dir = new File(directoryName);
@@ -24,19 +21,14 @@ public class Rdir implements Command {
             if (dir.exists()) {
                 if (dir.isDirectory()) {
                     if (!dir.delete()) {
-                        output.append("nash: rdir: failed to remove directory ").append(directoryName).append("\n");
-                        success = false;
+                        System.err.println("nash: rdir: failed to remove directory: "+directoryName);
                     }
                 } else {
-                    output.append("nash: rdir: ").append(directoryName).append(" is not a directory\n");
-                    success = false;
+                    System.err.println("nash: rdir: "+directoryName+" is not a directory");
                 }
             } else {
-                output.append("nash: rdir: directory ").append(directoryName).append(" does not exist\n");
-                success = false;
+                System.err.println("nash: rdir: directory "+directoryName+" does not exist");
             }
         }
-
-        return new Result(output.toString(), success);
     }
 }

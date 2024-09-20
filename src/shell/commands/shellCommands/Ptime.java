@@ -1,7 +1,6 @@
 package shell.commands.shellCommands;
 
 import shell.commands.Command;
-import shell.commands.Result;
 
 public class Ptime implements Command {
     public static String name = "ptime";
@@ -12,8 +11,12 @@ public class Ptime implements Command {
     }
 
     @Override
-    public Result execute(String[] arguments, String previousOutput) {
+    public void execute(String[] arguments) {
+        if (arguments.length > 0) {
+            System.err.println("nash: ptime: too many arguments\n");
+            return;
+        }
         String message = String.format("Total time in child processes: %.4f seconds%n", cumulativeTime);
-        return new Result(message, true);
+        System.out.println(message);
     }
 }

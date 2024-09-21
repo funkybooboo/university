@@ -25,7 +25,9 @@ public class Shell {
     }
 
     private void execute(String input) {
-        if (checkMiddle(input)) return;
+        if (checkMiddle(input)) {
+            return;
+        }
 
         LinkedList<String[]> commandStack;
         try {

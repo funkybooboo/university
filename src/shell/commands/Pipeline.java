@@ -25,48 +25,10 @@ public class Pipeline {
             return;
         }
 
-        ProcessBuilder[] processBuilders = new ProcessBuilder[commandStack.size()];
-
-        // Prepare all process builders
-        int index = 0;
-        while (!commandStack.isEmpty()) {
-            String[] commandParts = commandStack.poll();
-            processBuilders[index++] = getProcessBuilder(commandParts);
-        }
-
-        Process[] processes = new Process[processBuilders.length];
+        ProcessBuilder[] processBuilders = getProcessBuilders(commandStack);
 
         try {
-            // Start the first process
-            processes[0] = processBuilders[0].start();
-
-            // Connect processes in a chain
-            for (int i = 1; i < processBuilders.length; i++) {
-                // Start the next process
-                processes[i] = processBuilders[i].start();
-
-                // Pipe output from the previous process to the next
-                final int j = i; // Capture the index for use in the thread
-                new Thread(() -> {
-                    try (InputStream in = processes[j - 1].getInputStream();
-                         OutputStream out = processes[j].getOutputStream()) {
-
-                        byte[] buffer = new byte[1024];
-                        int bytesRead;
-                        while ((bytesRead = in.read(buffer)) != -1) {
-                            out.write(buffer, 0, bytesRead);
-                        }
-                        out.flush();
-                    } catch (IOException e) {
-                        System.err.println("nash: pipe: error while piping data: " + e.getMessage());
-                    }
-                }).start();
-            }
-
-            // Wait for all processes to complete
-            for (Process process : processes) {
-                process.waitFor();
-            }
+            runProcesses(processBuilders);
         } catch (IOException ex) {
             System.err.println("nash: I/O error: " + ex.getMessage());
         } catch (InterruptedException ex) {
@@ -78,6 +40,52 @@ public class Pipeline {
             double elapsedTime = (endTime - startTime) / 1_000_000_000.0; // Convert to seconds
             Ptime.updateCumulativeTime(elapsedTime);
         }
+    }
+
+    private static void runProcesses(ProcessBuilder[] processBuilders) throws IOException, InterruptedException {
+        Process[] processes = new Process[processBuilders.length];
+        // Start the first process
+        processes[0] = processBuilders[0].start();
+
+        // Connect processes in a chain
+        for (int i = 1; i < processBuilders.length; i++) {
+            // Start the next process
+            processes[i] = processBuilders[i].start();
+
+            // Pipe output from the previous process to the next
+            final int j = i; // Capture the index for use in the thread
+            new Thread(() -> {
+                try (InputStream in = processes[j - 1].getInputStream();
+                     OutputStream out = processes[j].getOutputStream()) {
+
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = in.read(buffer)) != -1) {
+                        out.write(buffer, 0, bytesRead);
+                    }
+                    out.flush();
+                } catch (IOException e) {
+                    System.err.println("nash: pipe: error while piping data: " + e.getMessage());
+                }
+            }).start();
+        }
+
+        // Wait for all processes to complete
+        for (Process process : processes) {
+            process.waitFor();
+        }
+    }
+
+    private static ProcessBuilder[] getProcessBuilders(LinkedList<String[]> commandStack) {
+        ProcessBuilder[] processBuilders = new ProcessBuilder[commandStack.size()];
+
+        // Prepare all process builders
+        int index = 0;
+        while (!commandStack.isEmpty()) {
+            String[] commandParts = commandStack.poll();
+            processBuilders[index++] = getProcessBuilder(commandParts);
+        }
+        return processBuilders;
     }
 
     private static ProcessBuilder getProcessBuilder(String[] commandParts) {

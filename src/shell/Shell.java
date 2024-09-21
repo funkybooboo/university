@@ -25,6 +25,7 @@ public class Shell {
 
     private void execute(String input) {
         if (checkMiddle(input)) {
+            System.err.println("nash: error: background command in the middle of a pipeline");
             return;
         }
 
@@ -77,12 +78,7 @@ public class Shell {
         String regex = "\\|\\s*.*?&\\s*.*?\\|";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
-        boolean isMiddle = matcher.find();
-        if (isMiddle) {
-            System.err.println("nash: error background command in the middle of a pipeline");
-            return true;
-        }
-        return false;
+        return matcher.find();
     }
 
     private boolean checkBackground(String input) {

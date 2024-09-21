@@ -42,8 +42,6 @@ public class Shell {
 
         History.addCommand(getInput(commandStack));
 
-        // TODO fix the path displayed on the prompt (cd)
-
         boolean isBackground = checkBackground(input);
 
         if (commandStack.size() == 1) {

@@ -10,6 +10,9 @@ public class Cd implements Command {
 
     @Override
     public void execute(String[] arguments) {
+
+        // TODO fix the path displayed on the prompt (cd)
+
         if (arguments.length > 1) {
             System.err.println("nash: cd: too many arguments");
             return;

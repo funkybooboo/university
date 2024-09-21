@@ -1,11 +1,13 @@
 package shell;
 
-import shell.commands.*;
+import shell.commands.Past;
 import shell.commands.shellCommands.History;
+import shell.commands.Command;
+import shell.commands.CommandFactory;
+import shell.commands.Pipeline;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Scanner;
+
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,35 +25,101 @@ public class Shell {
     }
 
     private void execute(String input) {
-        History.addCommand(input);
+        if (checkMiddle(input)) return;
 
-        LinkedList<String[]> commandStack = getCommandStack(input);
+        LinkedList<String[]> commandStack;
+        try {
+            commandStack = getCommandStack(input);
+        }
+        catch (Exception ex) {
+            String m = ex.getMessage();
+            if (m == null || m.isEmpty()) {
+                return;
+            }
+            System.err.println(m);
+            return;
+        }
 
-        // TODO implement & (dont wait for the process to finish)
-        //  question: what happens if used in |
+        History.addCommand(getInput(commandStack));
+
         // TODO fix the path displayed on the prompt (cd)
-        // TODO fix pipe (use child processes)
+
+        boolean isBackground = checkIsBackground(input);
 
         if (commandStack.size() == 1) {
-            String[] commandParts = commandStack.poll();
-
-            String commandName = commandParts[0];
-            String[] commandArguments = Arrays.copyOfRange(commandParts, 1, commandParts.length);
-
-            Command command = commandFactory.createCommand(commandName);
-            command.execute(commandArguments);
+            runCommand(commandStack.poll(), isBackground);
         }
         else if (commandStack.size() > 1) {
-            Pipe.execute(commandStack);
+            Pipeline.execute(commandStack, isBackground);
         }
     }
 
-    private LinkedList<String[]> getCommandStack(String input) {
+    private static boolean checkMiddle(String input) {
+        String regex = "\\|\\s*.*?&\\s*.*?\\|";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        boolean isMiddle = matcher.find();
+        if (isMiddle) {
+            System.err.println("nash: error background command in the middle of a pipeline");
+            return true;
+        }
+        return false;
+    }
+
+    private void runCommand(String[] commandParts, boolean isBackground) {
+        String commandName = commandParts[0];
+        String[] commandArguments = Arrays.copyOfRange(commandParts, 1, commandParts.length);
+
+        Command command = commandFactory.createCommand(commandName);
+
+        if (isBackground) {
+            // Run the command in a new thread (background)
+            new Thread(() -> command.execute(commandArguments)).start();
+        } else {
+            // Run the command in the foreground
+            command.execute(commandArguments);
+        }
+    }
+
+    private static boolean checkIsBackground(String input) {
+        String regex = "\\s*\\((\\s*[^()]*?(\\s*\\|\\s*[^()]*?)+\\s*)\\)\\s*&\\s*|\\s*[^()]+\\s*&\\s*";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        return matcher.find();
+    }
+
+    private String getInput(LinkedList<String[]> commandStack) {
+        StringBuilder input = new StringBuilder();
+        for (int i = 0; i < commandStack.size(); i++) {
+            String[] commandParts = commandStack.get(i);
+            input.append(String.join(" ", commandParts));
+            if (i < commandStack.size()-1) {
+                input.append(" | ");
+            }
+        }
+        return input.toString();
+    }
+
+    private LinkedList<String[]> getCommandStack(String input) throws Exception {
         String[] commandSegments = input.split("\\|");
         LinkedList<String[]> commandStack = new LinkedList<>();
         for (String commandSegment : commandSegments) {
+            if (commandSegment.trim().isEmpty()) {
+                throw new Exception("nash: expected a command, but found a pipe");
+            }
             String[] commandParts = splitCommand(commandSegment.trim());
-            commandStack.add(commandParts);
+            String commandName = commandParts[0];
+            String[] commandArguments = Arrays.copyOfRange(commandParts, 1, commandParts.length);
+            if (Objects.equals(commandName, Past.name)) {
+                String otherInput = Past.execute(commandArguments);
+                if (otherInput == null) {
+                    throw new Exception();
+                }
+                commandStack.addAll(getCommandStack(otherInput));
+            }
+            else {
+                commandStack.add(commandParts);
+            }
         }
         return commandStack;
     }
@@ -61,7 +129,7 @@ public class Shell {
      * Code Adapted from: <a href="https://stackoverflow.com/questions/366202/regex-for-splitting-a-string-using-space-when-not-surrounded-by-single-or-double">link</a>
      */
     private String[] splitCommand(String command) {
-        java.util.List<String> matchList = new java.util.ArrayList<>();
+        List<String> matchList = new ArrayList<>();
 
         Pattern regex = Pattern.compile("[^\\s\"']+|\"([^\"]*)\"|'([^']*)'");
         Matcher regexMatcher = regex.matcher(command);

@@ -14,7 +14,6 @@ public class CommandFactory {
         commandMap.put(Exit.name, Exit.class);
         commandMap.put(List.name, List.class);
         commandMap.put(Mdir.name, Mdir.class);
-        commandMap.put(Past.name, Past.class);
         commandMap.put(Ptime.name, Ptime.class);
         commandMap.put(Rdir.name, Rdir.class);
         commandMap.put(History.name, History.class);

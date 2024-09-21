@@ -1,13 +1,27 @@
 package shell.commands;
 
+import shell.commands.shellCommands.Ptime;
+
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;
 
-public class Pipe {
-    public static void execute(LinkedList<String[]> commandStack) {
+public class Pipeline {
+    public static void execute(LinkedList<String[]> commandStack, boolean isBackground) {
+        if (isBackground) {
+            // Run the command in a new thread (background)
+            new Thread(() -> executeHelper(commandStack)).start();
+        } else {
+            // Run the command in the foreground
+            executeHelper(commandStack);
+        }
+    }
+
+    private static void executeHelper(LinkedList<String[]> commandStack) {
+        long startTime = System.nanoTime();
+
         if (commandStack.isEmpty()) {
             return;
         }
@@ -59,6 +73,11 @@ public class Pipe {
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt(); // Restore interrupted status
             System.err.println("nash: execution interrupted: " + ex.getMessage());
+        }
+        finally {
+            long endTime = System.nanoTime();
+            double elapsedTime = (endTime - startTime) / 1_000_000_000.0; // Convert to seconds
+            Ptime.updateCumulativeTime(elapsedTime);
         }
     }
 

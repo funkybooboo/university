@@ -30,10 +30,10 @@ public class Pipeline {
         try {
             runProcesses(processBuilders);
         } catch (IOException ex) {
-            System.err.println("nash: I/O error: " + ex.getMessage());
+            System.err.println("nash: pipe: i/o exception: " + ex.getMessage());
         } catch (InterruptedException ex) {
             Thread.currentThread().interrupt(); // Restore interrupted status
-            System.err.println("nash: execution interrupted: " + ex.getMessage());
+            System.err.println("nash: pipe: execution interrupted: " + ex.getMessage());
         }
         finally {
             long endTime = System.nanoTime();
@@ -44,31 +44,33 @@ public class Pipeline {
 
     private static void runProcesses(ProcessBuilder[] processBuilders) throws IOException, InterruptedException {
         Process[] processes = new Process[processBuilders.length];
+
         // Start the first process
-        processes[0] = processBuilders[0].start();
+        ProcessBuilder firstProcessBuilder = processBuilders[0];
+        firstProcessBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+        processes[0] = firstProcessBuilder.start();
 
         // Connect processes in a chain
         for (int i = 1; i < processBuilders.length; i++) {
-            // Start the next process
             processes[i] = processBuilders[i].start();
 
             // Pipe output from the previous process to the next
-            final int j = i; // Capture the index for use in the thread
-            new Thread(() -> {
-                try (InputStream in = processes[j - 1].getInputStream();
-                     OutputStream out = processes[j].getOutputStream()) {
-
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = in.read(buffer)) != -1) {
-                        out.write(buffer, 0, bytesRead);
-                    }
-                    out.flush();
-                } catch (IOException e) {
-                    System.err.println("nash: pipe: error while piping data: " + e.getMessage());
+            try (InputStream in = processes[i - 1].getInputStream();
+                 OutputStream out = processes[i].getOutputStream()) {
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, bytesRead);
                 }
-            }).start();
+                out.flush();
+            } catch (IOException e) {
+                System.err.println("nash: pipe: error while piping data: " + e.getMessage());
+            }
         }
+
+        // Redirect the last process's output to the terminal
+        ProcessBuilder lastProcessBuilder = processBuilders[processBuilders.length - 1];
+        lastProcessBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
         // Wait for all processes to complete
         for (Process process : processes) {

@@ -2,8 +2,7 @@ package shell.commands;
 
 import shell.commands.shellCommands.Ptime;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.*;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.IOException;
@@ -84,9 +83,11 @@ public class Pipeline {
     private static ProcessBuilder getProcessBuilder(String[] commandParts) {
         String commandName = commandParts[0];
         String[] arguments = Arrays.copyOfRange(commandParts, 1, commandParts.length);
-        if (arguments.length > 0) {
-            return new ProcessBuilder(commandName, String.join(" ", arguments));
-        }
-        return new ProcessBuilder(commandName);
+
+        List<String> commandList = new ArrayList<>();
+        commandList.add(commandName);
+        Collections.addAll(commandList, arguments);
+
+        return new ProcessBuilder(commandList);
     }
 }

@@ -1,9 +1,13 @@
 package shell.commands;
 
+
 import shell.commands.shellCommands.Ptime;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class SystemCommand implements Command {
     private final String commandName;
@@ -16,12 +20,11 @@ public class SystemCommand implements Command {
     public void execute(String[] arguments) {
         long startTime = System.nanoTime();
 
-        ProcessBuilder processBuilder;
-        if (arguments.length > 0) {
-            processBuilder = new ProcessBuilder(commandName, String.join(" ", arguments));
-        } else {
-            processBuilder = new ProcessBuilder(commandName);
-        }
+        List<String> commandList = new ArrayList<>();
+        commandList.add(commandName);
+        Collections.addAll(commandList, arguments);
+
+        ProcessBuilder processBuilder = new ProcessBuilder(commandList);
 
         processBuilder.directory(new File(System.getProperty("user.dir")));
 

@@ -1,10 +1,8 @@
 package shell.commands.shellCommands;
 
-import shell.commands.Command;
-
 import java.io.File;
 
-public class Rdir implements Command {
+public class Rdir implements ShellCommand {
     public static String name = "rdir";
     // When the command 'rdir test' is given, if the folder 'test' exists, it is removed.
     // If the directory didn't exist, an error messages is displayed.

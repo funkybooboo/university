@@ -1,8 +1,6 @@
 package shell.commands.shellCommands;
 
-import shell.commands.Command;
-
-public class Ptime implements Command {
+public class Ptime implements ShellCommand {
     public static String name = "ptime";
     private static double cumulativeTime = 0.0;
 

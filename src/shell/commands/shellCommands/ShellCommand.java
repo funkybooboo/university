@@ -1,6 +1,6 @@
-package shell.commands;
+package shell.commands.shellCommands;
 
-public interface Command {
+public interface ShellCommand {
     String name = "command";
     void execute(String[] arguments);
 }

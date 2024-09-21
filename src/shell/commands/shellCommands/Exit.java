@@ -1,8 +1,6 @@
 package shell.commands.shellCommands;
 
-import shell.commands.Command;
-
-public class Exit implements Command {
+public class Exit implements ShellCommand {
     public static String name = "exit";
     // The command 'exit' is used to terminate your shell program, when entered, your shell program should end.
     @Override

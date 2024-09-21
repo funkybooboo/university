@@ -1,9 +1,10 @@
 package shell;
 
-import shell.commands.Past;
+import shell.commands.shellCommands.Past;
+import shell.commands.SystemCommand;
 import shell.commands.shellCommands.History;
-import shell.commands.Command;
-import shell.commands.CommandFactory;
+import shell.commands.shellCommands.ShellCommand;
+import shell.commands.shellCommands.ShellCommandFactory;
 import shell.commands.Pipeline;
 
 
@@ -12,7 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Shell {
-    private final CommandFactory commandFactory = new CommandFactory();
+    private final ShellCommandFactory shellCommandFactory = new ShellCommandFactory();
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
@@ -58,14 +59,16 @@ public class Shell {
         String commandName = commandParts[0];
         String[] commandArguments = Arrays.copyOfRange(commandParts, 1, commandParts.length);
 
-        Command command = commandFactory.createCommand(commandName);
-
-        if (isBackground) {
-            // Run the command in a new thread (background)
-            new Thread(() -> command.execute(commandArguments)).start();
-        } else {
-            // Run the command in the foreground
-            command.execute(commandArguments);
+        ShellCommand shellCommand = shellCommandFactory.createCommand(commandName);
+        if (shellCommand == null) {
+            SystemCommand.execute(commandName, commandArguments, isBackground);
+        }
+        else {
+            if (isBackground) {
+                new Thread(() -> shellCommand.execute(commandArguments)).start();
+            } else {
+                shellCommand.execute(commandArguments);
+            }
         }
     }
 

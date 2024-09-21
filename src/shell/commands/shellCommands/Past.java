@@ -1,6 +1,4 @@
-package shell.commands;
-
-import shell.commands.shellCommands.History;
+package shell.commands.shellCommands;
 
 public class Past {
     public static String name = "^";

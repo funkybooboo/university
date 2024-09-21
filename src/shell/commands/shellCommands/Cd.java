@@ -1,11 +1,9 @@
 package shell.commands.shellCommands;
 
-import shell.commands.Command;
-
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class Cd implements Command {
+public class Cd implements ShellCommand {
     public static String name = "cd";
 
     @Override

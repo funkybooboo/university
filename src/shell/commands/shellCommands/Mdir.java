@@ -1,10 +1,8 @@
 package shell.commands.shellCommands;
 
-import shell.commands.Command;
-
 import java.io.File;
 
-public class Mdir implements Command {
+public class Mdir implements ShellCommand {
     public static String name = "mdir";
     // When the command 'mdir test' is given, a new subdirectory called 'test' should be created.
     // If the directory already exists or the name already exists as a file, an appropriate error message is displayed.

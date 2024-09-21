@@ -1,19 +1,17 @@
 package shell;
 
+import shell.commands.Command;
 import shell.commands.shellCommands.Past;
-import shell.commands.SystemCommand;
 import shell.commands.shellCommands.History;
-import shell.commands.shellCommands.ShellCommand;
-import shell.commands.shellCommands.ShellCommandFactory;
+import shell.commands.CommandFactory;
 import shell.commands.Pipeline;
-
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Shell {
-    private final ShellCommandFactory shellCommandFactory = new ShellCommandFactory();
+    private final CommandFactory commandFactory = new CommandFactory();
 
     public void run() {
         Scanner scanner = new Scanner(System.in);
@@ -28,6 +26,12 @@ public class Shell {
     private void execute(String input) {
         if (checkMiddle(input)) {
             return;
+        }
+
+        boolean isBackground = checkBackground(input);
+
+        if (isBackground) {
+            input = input.replaceAll("\\s*&\\s*|\\s*\\(.*?\\)\\s*&\\s*", "").trim();
         }
 
         LinkedList<String[]> commandStack;
@@ -45,31 +49,28 @@ public class Shell {
 
         History.addCommand(getInput(commandStack));
 
-        boolean isBackground = checkBackground(input);
-
-        if (commandStack.size() == 1) {
-            runCommand(commandStack.poll(), isBackground);
-        }
-        else if (commandStack.size() > 1) {
-            Pipeline.execute(commandStack, isBackground);
+        if (isBackground) {
+            new Thread(() -> runCommand(commandStack)).start();
+        } else {
+            runCommand(commandStack);
         }
     }
 
-    private void runCommand(String[] commandParts, boolean isBackground) {
+    private void runCommand(LinkedList<String[]> commandStack) {
+        if (commandStack.size() == 1) {
+            runSingleCommand(commandStack.poll());
+        } else if (commandStack.size() > 1) {
+            Pipeline.execute(commandStack);
+        }
+    }
+
+    private void runSingleCommand(String[] commandParts) {
         String commandName = commandParts[0];
         String[] commandArguments = Arrays.copyOfRange(commandParts, 1, commandParts.length);
 
-        ShellCommand shellCommand = shellCommandFactory.createCommand(commandName);
-        if (shellCommand == null) {
-            SystemCommand.execute(commandName, commandArguments, isBackground);
-        }
-        else {
-            if (isBackground) {
-                new Thread(() -> shellCommand.execute(commandArguments)).start();
-            } else {
-                shellCommand.execute(commandArguments);
-            }
-        }
+        Command command = commandFactory.createCommand(commandName);
+
+        command.execute(commandArguments);
     }
 
     private boolean checkMiddle(String input) {

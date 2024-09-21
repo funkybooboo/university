@@ -1,13 +1,15 @@
-package shell.commands.shellCommands;
+package shell.commands;
+
+import shell.commands.shellCommands.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ShellCommandFactory {
+public class CommandFactory {
 
-    private final Map<String, Class<? extends ShellCommand>> commandMap = new HashMap<>();
+    private final Map<String, Class<? extends Command>> commandMap = new HashMap<>();
 
-    public ShellCommandFactory() {
+    public CommandFactory() {
         commandMap.put(Cd.name, Cd.class);
         commandMap.put(Exit.name, Exit.class);
         commandMap.put(List.name, List.class);
@@ -17,12 +19,12 @@ public class ShellCommandFactory {
         commandMap.put(History.name, History.class);
     }
 
-    public ShellCommand createCommand(String commandName) {
-        Class<? extends ShellCommand> commandClass = commandMap.get(commandName.toLowerCase());
+    public Command createCommand(String commandName) {
+        Class<? extends Command> commandClass = commandMap.get(commandName.toLowerCase());
         try {
             return commandClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException("Failed to create command instance", e);
+            return new SystemCommand(commandName);
         }
     }
 }

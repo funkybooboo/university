@@ -1,10 +1,12 @@
 package shell.commands.shellCommands;
 
+import shell.commands.Command;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class List implements ShellCommand {
+public class List implements Command {
     public static String name = "list";
     // - The first four characters indicate: directory, user can read, user can write, user can execute.
     //  Use the external 'ls -l' command on Linux for examples of the output.

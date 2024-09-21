@@ -1,9 +1,11 @@
 package shell.commands.shellCommands;
 
+import shell.commands.Command;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class History implements ShellCommand {
+public class History implements Command {
     public static String name = "history";
     private static final List<String> commandHistory = new ArrayList<>();
 

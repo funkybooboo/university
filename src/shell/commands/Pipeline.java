@@ -8,7 +8,7 @@ import java.io.OutputStream;
 import java.io.IOException;
 
 public class Pipeline {
-    public static void execute(LinkedList<String[]> commandStack, boolean isBackground) {
+    public static void execute(LinkedList<String[]> commandStack) {
         long startTime = System.nanoTime();
 
         if (commandStack.isEmpty()) {
@@ -18,7 +18,7 @@ public class Pipeline {
         ProcessBuilder[] processBuilders = getProcessBuilders(commandStack);
 
         try {
-            executeHelper(processBuilders, isBackground);
+            executeHelper(processBuilders);
         } catch (IOException ex) {
             System.err.println("nash: pipe: i/o exception: " + ex.getMessage());
         } catch (InterruptedException ex) {
@@ -32,7 +32,7 @@ public class Pipeline {
         }
     }
 
-    private static void executeHelper(ProcessBuilder[] processBuilders, boolean isBackground) throws IOException, InterruptedException {
+    private static void executeHelper(ProcessBuilder[] processBuilders) throws IOException, InterruptedException {
         Process[] processes = new Process[processBuilders.length];
 
         // Start the first process
@@ -63,10 +63,8 @@ public class Pipeline {
         lastProcessBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
         // Wait for all processes to complete
-        if (!isBackground) {
-            for (Process process : processes) {
-                process.waitFor();
-            }
+        for (Process process : processes) {
+            process.waitFor();
         }
     }
 

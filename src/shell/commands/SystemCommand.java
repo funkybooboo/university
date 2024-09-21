@@ -9,8 +9,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SystemCommand {
-    public static void execute(String commandName, String[] arguments, boolean isBackground) {
+public class SystemCommand implements Command {
+    private final String commandName;
+
+    public SystemCommand(String commandName) {
+        this.commandName = commandName;
+    }
+
+    public void execute(String[] arguments) {
         long startTime = System.nanoTime();
 
         List<String> commandList = new ArrayList<>();
@@ -26,9 +32,7 @@ public class SystemCommand {
 
         try {
             Process process = processBuilder.start();
-            if (!isBackground) {
-                process.waitFor();
-            }
+            process.waitFor();
         }
         catch (IOException ex) {
             System.err.println("nash: "+commandName+": invalid command");

@@ -44,7 +44,7 @@ public class Shell {
 
         // TODO fix the path displayed on the prompt (cd)
 
-        boolean isBackground = checkIsBackground(input);
+        boolean isBackground = checkBackground(input);
 
         if (commandStack.size() == 1) {
             runCommand(commandStack.poll(), isBackground);
@@ -52,18 +52,6 @@ public class Shell {
         else if (commandStack.size() > 1) {
             Pipeline.execute(commandStack, isBackground);
         }
-    }
-
-    private static boolean checkMiddle(String input) {
-        String regex = "\\|\\s*.*?&\\s*.*?\\|";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
-        boolean isMiddle = matcher.find();
-        if (isMiddle) {
-            System.err.println("nash: error background command in the middle of a pipeline");
-            return true;
-        }
-        return false;
     }
 
     private void runCommand(String[] commandParts, boolean isBackground) {
@@ -81,7 +69,19 @@ public class Shell {
         }
     }
 
-    private static boolean checkIsBackground(String input) {
+    private static boolean checkMiddle(String input) {
+        String regex = "\\|\\s*.*?&\\s*.*?\\|";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+        boolean isMiddle = matcher.find();
+        if (isMiddle) {
+            System.err.println("nash: error background command in the middle of a pipeline");
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean checkBackground(String input) {
         String regex = "\\s*\\((\\s*[^()]*?(\\s*\\|\\s*[^()]*?)+\\s*)\\)\\s*&\\s*|\\s*[^()]+\\s*&\\s*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);

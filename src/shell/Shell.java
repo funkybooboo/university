@@ -69,7 +69,7 @@ public class Shell {
         }
     }
 
-    private static boolean checkMiddle(String input) {
+    private boolean checkMiddle(String input) {
         String regex = "\\|\\s*.*?&\\s*.*?\\|";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
@@ -81,7 +81,7 @@ public class Shell {
         return false;
     }
 
-    private static boolean checkBackground(String input) {
+    private boolean checkBackground(String input) {
         String regex = "\\s*\\((\\s*[^()]*?(\\s*\\|\\s*[^()]*?)+\\s*)\\)\\s*&\\s*|\\s*[^()]+\\s*&\\s*";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);

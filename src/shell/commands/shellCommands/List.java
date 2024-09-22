@@ -16,6 +16,10 @@ public class List implements Command {
     // - The last field is the name of the file.
     @Override
     public void execute(String[] arguments) {
+        if (arguments.length > 1) {
+            System.err.println("nash: list: invalid number of arguments");
+            return;
+        }
         // Determine the starting directory
         String start = (arguments.length == 0) ? "." : arguments[0];
 

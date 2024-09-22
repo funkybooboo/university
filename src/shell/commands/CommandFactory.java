@@ -17,10 +17,11 @@ public class CommandFactory {
         commandMap.put(Ptime.name, Ptime.class);
         commandMap.put(Rdir.name, Rdir.class);
         commandMap.put(History.name, History.class);
+        commandMap.put(Clear.name, Clear.class);
     }
 
     public Command createCommand(String commandName) {
-        Class<? extends Command> commandClass = commandMap.get(commandName.toLowerCase());
+        Class<? extends Command> commandClass = commandMap.get(commandName);
         try {
             return commandClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {

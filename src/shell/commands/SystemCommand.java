@@ -27,6 +27,7 @@ public class SystemCommand implements Command {
 
         processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
         processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
 
         long startTime = System.nanoTime();
 

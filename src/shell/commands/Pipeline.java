@@ -2,6 +2,7 @@ package shell.commands;
 
 import shell.commands.shellCommands.Ptime;
 
+import java.io.File;
 import java.util.*;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,7 +19,7 @@ public class Pipeline {
         long startTime = System.nanoTime();
 
         try {
-            executeHelper(processBuilders);
+            execute(processBuilders);
         } catch (IOException ex) {
             System.err.println("nash: pipe: i/o exception: " + ex.getMessage());
         } catch (InterruptedException ex) {
@@ -32,7 +33,7 @@ public class Pipeline {
         }
     }
 
-    private static void executeHelper(ProcessBuilder[] processBuilders) throws IOException, InterruptedException {
+    private static void execute(ProcessBuilder[] processBuilders) throws IOException, InterruptedException {
         Process[] processes = new Process[processBuilders.length];
 
         // TODO make work with shell commands
@@ -92,6 +93,10 @@ public class Pipeline {
         commandList.add(commandName);
         Collections.addAll(commandList, arguments);
 
-        return new ProcessBuilder(commandList);
+        ProcessBuilder processBuilder = new ProcessBuilder(commandList);
+        processBuilder.directory(new File(System.getProperty("user.dir")));
+        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
+
+        return processBuilder;
     }
 }

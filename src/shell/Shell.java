@@ -24,15 +24,15 @@ public class Shell {
     }
 
     private void execute(String input) {
-        if (checkMiddle(input)) {
-            System.err.println("nash: error: background command in the middle of a pipeline");
+        if (checkInvalidBackground(input)) {
+            System.err.println("nash: error: invalid use of &");
             return;
         }
 
         boolean isBackground = checkBackground(input);
 
         if (isBackground) {
-            input = input.replaceAll("\\s*&\\s*|\\s*\\(.*?\\)\\s*&\\s*", "").trim();
+            input = input.replaceAll("^\\s*\\(\\s*|\\s*\\)\\s*|\\s*&\\s*$", "").trim();
         }
 
         LinkedList<String[]> commandStack;
@@ -52,7 +52,8 @@ public class Shell {
 
         if (isBackground) {
             new Thread(() -> runCommand(commandStack)).start();
-        } else {
+        }
+        else {
             runCommand(commandStack);
         }
     }
@@ -74,8 +75,8 @@ public class Shell {
         command.execute(commandArguments);
     }
 
-    private boolean checkMiddle(String input) {
-        String regex = "\\|\\s*.*?&\\s*.*?\\|";
+    private boolean checkInvalidBackground(String input) {
+        String regex = "(^|\\s)(&|\\|\\s*&|&\\s*\\|)(\\s|$)(?!\\s*$)";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
         return matcher.find();

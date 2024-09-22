@@ -17,8 +17,6 @@ public class SystemCommand implements Command {
     }
 
     public void execute(String[] arguments) {
-        long startTime = System.nanoTime();
-
         List<String> commandList = new ArrayList<>();
         commandList.add(commandName);
         Collections.addAll(commandList, arguments);
@@ -29,6 +27,8 @@ public class SystemCommand implements Command {
 
         processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
         processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+
+        long startTime = System.nanoTime();
 
         try {
             Process process = processBuilder.start();

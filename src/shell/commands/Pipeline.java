@@ -9,13 +9,13 @@ import java.io.IOException;
 
 public class Pipeline {
     public static void execute(LinkedList<String[]> commandStack) {
-        long startTime = System.nanoTime();
-
-        if (commandStack.isEmpty()) {
+        if (commandStack.isEmpty() || commandStack.size() < 2) {
             return;
         }
 
         ProcessBuilder[] processBuilders = getProcessBuilders(commandStack);
+
+        long startTime = System.nanoTime();
 
         try {
             executeHelper(processBuilders);
@@ -35,9 +35,17 @@ public class Pipeline {
     private static void executeHelper(ProcessBuilder[] processBuilders) throws IOException, InterruptedException {
         Process[] processes = new Process[processBuilders.length];
 
-        // Start the first process
+        // TODO make work with shell commands
+
+        // Redirect the first process's input
         ProcessBuilder firstProcessBuilder = processBuilders[0];
         firstProcessBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+
+        // Redirect the last process's output to the terminal
+        ProcessBuilder lastProcessBuilder = processBuilders[processBuilders.length - 1];
+        lastProcessBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+
+        // Start the first process
         processes[0] = firstProcessBuilder.start();
 
         // Connect processes in a chain
@@ -57,10 +65,6 @@ public class Pipeline {
                 System.err.println("nash: pipe: error while piping data: " + e.getMessage());
             }
         }
-
-        // Redirect the last process's output to the terminal
-        ProcessBuilder lastProcessBuilder = processBuilders[processBuilders.length - 1];
-        lastProcessBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
 
         // Wait for all processes to complete
         for (Process process : processes) {

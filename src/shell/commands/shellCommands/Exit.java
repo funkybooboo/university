@@ -2,24 +2,38 @@ package shell.commands.shellCommands;
 
 import shell.commands.Command;
 
-public class Exit implements Command {
-    public static String name = "exit";
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+public class Exit extends Command {
+    public static final String NAME = "exit";
+
+    public Exit(String[] commandParts) {
+        super(commandParts);
+    }
+
+    public String getName() {
+        return NAME;
+    }
+
     // The command 'exit' is used to terminate your shell program, when entered, your shell program should end.
     @Override
-    public void execute(String[] arguments) {
-        if (arguments.length == 0) {
+    public OutputStream execute(InputStream inputStream) throws Exception {
+        if (commandParts.length == 1) {
             System.exit(0);
         }
-        if (arguments.length == 1) {
+        if (commandParts.length == 2) {
             try {
-                System.exit(Integer.parseInt(arguments[0]));
+                System.exit(Integer.parseInt(commandParts[1]));
             }
             catch (Exception e) {
-                System.err.println("nash: exit: invalid exit code");
+                throw new Exception("nash: exit: invalid exit code");
             }
         }
         else {
-            System.err.println("nash: exit: too many arguments");
+            throw new Exception("nash: exit: too many arguments");
         }
+        return new ByteArrayOutputStream();
     }
 }

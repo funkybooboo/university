@@ -2,12 +2,24 @@ package shell.commands.shellCommands;
 
 import shell.commands.Command;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class List implements Command {
-    public static String name = "list";
+public class List extends Command {
+    public static final String NAME = "list";
+
+    public List(String[] commandParts) {
+        super(commandParts);
+    }
+
+    public String getName() {
+        return NAME;
+    }
+
     // - The first four characters indicate: directory, user can read, user can write, user can execute.
     //  Use the external 'ls -l' command on Linux for examples of the output.
     //  Your shell only needs to display these details for the current user.
@@ -15,40 +27,37 @@ public class List implements Command {
     // - The next field is the date of last modification for the file; follow the example formatting.
     // - The last field is the name of the file.
     @Override
-    public void execute(String[] arguments) {
-        if (arguments.length > 1) {
-            System.err.println("nash: list: invalid number of arguments");
-            return;
+    public OutputStream execute(InputStream inputStream) throws Exception {
+        if (commandParts.length > 2) {
+            throw new Exception("nash: list: invalid number of arguments");
         }
         // Determine the starting directory
-        String start = (arguments.length == 0) ? "." : arguments[0];
+        String start = (commandParts.length == 1) ? "." : commandParts[1];
 
         // Get the directory
         File directory = new File(start);
 
         // Check if the directory exists and is actually a directory
         if (!directory.exists() || !directory.isDirectory()) {
-            System.err.println("nash: list: no such file or directory");
-            return;
+            throw new Exception("nash: list: no such file or directory");
         }
 
         // List all files and directories in the directory
         File[] files = directory.listFiles();
         if (files == null) {
-            System.err.println("nash: list: unable to access the directory");
-            return;
+            throw new Exception("nash: list: unable to access the directory");
         }
 
         // Prepare output
-        StringBuilder output = new StringBuilder();
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
         for (File file : files) {
             String permissions = getPermissions(file);
             String size = String.format("%10d", file.length());
             String modificationDate = getModificationDate(file);
             String name = file.getName();
-            output.append(String.format("%s %s %s %s%n", permissions, size, modificationDate, name));
+            output.write(String.format("%s %s %s %s%n", permissions, size, modificationDate, name).getBytes());
         }
-        System.out.println(output);
+        return output;
     }
 
     private String getPermissions(File file) {

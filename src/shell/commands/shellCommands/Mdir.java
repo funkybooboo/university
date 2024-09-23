@@ -2,31 +2,44 @@ package shell.commands.shellCommands;
 
 import shell.commands.Command;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
 
-public class Mdir implements Command {
-    public static String name = "mdir";
+public class Mdir extends Command {
+    public static final String NAME = "mdir";
+
+    public Mdir(String[] commandParts) {
+        super(commandParts);
+    }
+
+    public String getName() {
+        return NAME;
+    }
+
     // When the command 'mdir test' is given, a new subdirectory called 'test' should be created.
     // If the directory already exists or the name already exists as a file, an appropriate error message is displayed.
     @Override
-    public void execute(String[] arguments) {
-        if (arguments.length == 0) {
-            System.err.println("nash: mdir: missing operand");
-            return;
+    public OutputStream execute(InputStream inputStream) throws Exception {
+        if (commandParts.length == 1) {
+            throw new Exception("nash: mdir: missing operand");
         }
 
-        for (String directoryName : arguments) {
+        for (String directoryName : Arrays.copyOfRange(commandParts, 1, commandParts.length-1)) {
             File dir = new File(directoryName);
             if (dir.exists()) {
                 if (dir.isDirectory()) {
-                    System.err.println("nash: mdir: "+directoryName+" directory already exists");
+                    throw new Exception("nash: mdir: "+directoryName+" directory already exists");
                 } else {
-                    System.err.println("nash: mdir: "+directoryName+" file already exists");
+                    throw new Exception("nash: mdir: "+directoryName+" file already exists");
                 }
             }
             else if (!dir.mkdir()) {
-                System.err.println("nash: mdir: failed to create directory: "+directoryName);
+                throw new Exception("nash: mdir: failed to create directory: "+directoryName);
             }
         }
+        return new ByteArrayOutputStream();
     }
 }

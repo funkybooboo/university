@@ -1,18 +1,20 @@
 package shell;
 
-import shell.commands.Command;
 import shell.commands.shellCommands.Past;
 import shell.commands.shellCommands.History;
-import shell.commands.CommandFactory;
 import shell.commands.Pipeline;
 import sun.misc.Signal;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Shell {
-    private final CommandFactory commandFactory = new CommandFactory();
+
+    Pipeline pipeline = new Pipeline();
 
     public void run() {
         // Handle control-c
@@ -50,29 +52,37 @@ public class Shell {
             History.addCommand(getUserCommand(commandStack));
 
             if (isBackground) {
-                new Thread(() -> executeAllCommands(commandStack)).start();
+                executeInBackground(commandStack);
             } else {
-                executeAllCommands(commandStack);
+                printOutputStream(pipeline.execute(commandStack));
             }
         } catch (Exception ex) {
-            System.err.println(Optional
-                    .ofNullable(ex.getMessage())
-                    .orElse("")
-            );
+            handleException(ex);
         }
     }
 
-    private void executeAllCommands(LinkedList<String[]> commandStack) {
-        if (commandStack.size() == 1) {
-            executeCommand(commandStack.poll());
-        } else {
-            Pipeline.execute(commandStack);
-        }
+    private void executeInBackground(LinkedList<String[]> commandStack) {
+        new Thread(() -> {
+            try {
+                printOutputStream(pipeline.execute(commandStack));
+            } catch (Exception ex) {
+                handleException(ex);
+            }
+        }).start();
     }
 
-    private void executeCommand(String[] commandParts) {
-        Command command = commandFactory.createCommand(commandParts[0]);
-        command.execute(Arrays.copyOfRange(commandParts, 1, commandParts.length));
+    public static void printOutputStream(OutputStream outputStream) throws IOException {
+        if (!(outputStream instanceof ByteArrayOutputStream byteArrayOutputStream)) {
+            throw new IllegalArgumentException("OutputStream must be an instance of ByteArrayOutputStream");
+        }
+        System.out.println(byteArrayOutputStream);
+    }
+
+    private void handleException(Exception ex) {
+        System.err.println(Optional
+                .ofNullable(ex.getMessage())
+                .orElse("")
+        );
     }
 
     private boolean isInvalid(String userCommand) {
@@ -107,7 +117,7 @@ public class Shell {
             String segment = commandSegment.trim();
             if (segment.isEmpty()) throw new Exception("nash: expected a command, but found a pipe");
             String[] commandParts = splitCommand(segment);
-            if (Objects.equals(commandParts[0], Past.name)) {
+            if (Objects.equals(commandParts[0], Past.NAME)) {
                 String pastUserCommand = Past.execute(Arrays.copyOfRange(commandParts, 1, commandParts.length));
                 if (pastUserCommand == null) throw new Exception();
                 commandStack.addAll(getCommandStack(pastUserCommand));

@@ -2,33 +2,46 @@ package shell.commands.shellCommands;
 
 import shell.commands.Command;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Arrays;
 
-public class Rdir implements Command {
-    public static String name = "rdir";
+public class Rdir extends Command {
+    public static final String NAME = "rdir";
+
+    public Rdir(String[] commandParts) {
+        super(commandParts);
+    }
+
+    public String getName() {
+        return NAME;
+    }
+
     // When the command 'rdir test' is given, if the folder 'test' exists, it is removed.
     // If the directory didn't exist, an error messages is displayed.
     @Override
-    public void execute(String[] arguments) {
-        if (arguments.length == 0) {
-            System.err.println("nash: rdir: missing operand");
-            return;
+    public OutputStream execute(InputStream inputStream) throws Exception {
+        if (commandParts.length == 1) {
+            throw new Exception("nash: rdir: missing operand");
         }
 
-        for (String directoryName : arguments) {
+        for (String directoryName : Arrays.copyOfRange(commandParts, 1, commandParts.length-1)) {
             File dir = new File(directoryName);
 
             if (dir.exists()) {
                 if (dir.isDirectory()) {
                     if (!dir.delete()) {
-                        System.err.println("nash: rdir: failed to remove directory: "+directoryName);
+                        throw new Exception("nash: rdir: failed to remove directory: "+directoryName);
                     }
                 } else {
-                    System.err.println("nash: rdir: "+directoryName+" is not a directory");
+                    throw new Exception("nash: rdir: "+directoryName+" is not a directory");
                 }
             } else {
-                System.err.println("nash: rdir: directory "+directoryName+" does not exist");
+                throw new Exception("nash: rdir: directory "+directoryName+" does not exist");
             }
         }
+        return new ByteArrayOutputStream();
     }
 }

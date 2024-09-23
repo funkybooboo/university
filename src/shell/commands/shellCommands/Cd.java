@@ -2,44 +2,54 @@ package shell.commands.shellCommands;
 
 import shell.commands.Command;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class Cd implements Command {
-    public static String name = "cd";
+public class Cd extends Command {
+    public static final String NAME = "cd";
+
+    public Cd(String[] commandParts) {
+        super(commandParts);
+    }
+
+    public String getName() {
+        return NAME;
+    }
 
     @Override
-    public void execute(String[] arguments) {
+    public OutputStream execute(InputStream inputStream) throws Exception {
 
         // TODO fix the path displayed on the prompt (cd)
 
-        if (arguments.length > 1) {
-            System.err.println("nash: cd: too many arguments");
-            return;
+        if (commandParts.length > 2) {
+            throw new Exception("nash: cd: too many arguments");
         }
 
         String currentDirectoryPath = System.getProperty("user.dir");
         Path targetDirectoryPath;
 
-        if (arguments.length == 0) {
+        if (commandParts.length == 1) {
             targetDirectoryPath = Paths.get(System.getProperty("user.home"));
         } else {
-            targetDirectoryPath = Paths.get(arguments[0]);
+            targetDirectoryPath = Paths.get(commandParts[1]);
             if (!targetDirectoryPath.isAbsolute()) {
                 targetDirectoryPath = Paths.get(currentDirectoryPath, targetDirectoryPath.toString());
             }
         }
 
         if (!targetDirectoryPath.toFile().exists()) {
-            System.err.println("nash: cd: the directory does not exist");
-            return;
+            throw new Exception("nash: cd: the directory does not exist");
         }
 
         if (!targetDirectoryPath.toFile().isDirectory()) {
-            System.err.println("nash: cd: the directory is not a directory");
-            return;
+            throw new Exception("nash: cd: the directory is not a directory");
         }
 
         System.setProperty("user.dir", targetDirectoryPath.toString());
+
+        return new ByteArrayOutputStream();
     }
 }

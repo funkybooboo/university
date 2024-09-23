@@ -1,7 +1,7 @@
 package shell.commands.shellCommands;
 
 public class Past {
-    public static String name = "^";
+    public static final String NAME = "^";
     // If the user enters the command '^ 10', for example, the 10th command in the history buffer should be executed (a 1 based index);
     // there is a space between the ^ character and the number.  This command also goes into the history.
     // If the user then selects that command to be executed from history, the command it refers to should be executed,

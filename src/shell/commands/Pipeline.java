@@ -1,102 +1,62 @@
 package shell.commands;
 
-import shell.commands.shellCommands.Ptime;
-
-import java.io.File;
+import java.io.*;
 import java.util.*;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.IOException;
 
 public class Pipeline {
-    public static void execute(LinkedList<String[]> commandStack) {
-        if (commandStack.isEmpty() || commandStack.size() < 2) {
-            return;
+    private final CommandFactory commandFactory = new CommandFactory();
+
+    public OutputStream execute(LinkedList<String[]> commandStack) throws Exception {
+        if (commandStack.isEmpty()) {
+            return new ByteArrayOutputStream();
         }
 
-        ProcessBuilder[] processBuilders = getProcessBuilders(commandStack);
+        Command[] commands = getCommands(commandStack);
 
-        long startTime = System.nanoTime();
-
-        try {
-            execute(processBuilders);
-        } catch (IOException ex) {
-            System.err.println("nash: pipe: i/o exception: " + ex.getMessage());
-        } catch (InterruptedException ex) {
-            Thread.currentThread().interrupt(); // Restore interrupted status
-            System.err.println("nash: pipe: execution interrupted: " + ex.getMessage());
-        }
-        finally {
-            long endTime = System.nanoTime();
-            double elapsedTime = (endTime - startTime) / 1_000_000_000.0; // Convert to seconds
-            Ptime.updateCumulativeTime(elapsedTime);
-        }
+        return execute(commands);
     }
 
-    private static void execute(ProcessBuilder[] processBuilders) throws IOException, InterruptedException {
-        Process[] processes = new Process[processBuilders.length];
+    private OutputStream execute(Command[] commands) throws Exception {
 
-        // TODO make work with shell commands
+        OutputStream[] outputStreams = new OutputStream[commands.length];
 
-        // Redirect the first process's input
-        ProcessBuilder firstProcessBuilder = processBuilders[0];
-        firstProcessBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+        Command firstCommand = commands[0];
+        outputStreams[0] = firstCommand.execute(new ByteArrayInputStream(new byte[0]));
 
-        // Redirect the last process's output to the terminal
-        ProcessBuilder lastProcessBuilder = processBuilders[processBuilders.length - 1];
-        lastProcessBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        for (int i = 1; i < commands.length; i++) {
+            outputStreams[i] = commands[i].execute(outputStreamToInputStream(outputStreams[i-1]));
 
-        // Start the first process
-        processes[0] = firstProcessBuilder.start();
-
-        // Connect processes in a chain
-        for (int i = 1; i < processBuilders.length; i++) {
-            processes[i] = processBuilders[i].start();
-
-            // Pipe output from the previous process to the next
-            try (InputStream in = processes[i - 1].getInputStream();
-                 OutputStream out = processes[i].getOutputStream()) {
+            try (InputStream in = outputStreamToInputStream(outputStreams[i - 1]);
+                 OutputStream out = outputStreams[i]) {
                 byte[] buffer = new byte[1024];
                 int bytesRead;
                 while ((bytesRead = in.read(buffer)) != -1) {
                     out.write(buffer, 0, bytesRead);
                 }
                 out.flush();
-            } catch (IOException e) {
-                System.err.println("nash: pipe: error while piping data: " + e.getMessage());
+            } catch (IOException ex) {
+                throw new Exception("nash: pipe: error while piping data", ex);
             }
         }
-
-        // Wait for all processes to complete
-        for (Process process : processes) {
-            process.waitFor();
-        }
+        return outputStreams[outputStreams.length-1];
     }
 
-    private static ProcessBuilder[] getProcessBuilders(LinkedList<String[]> commandStack) {
-        ProcessBuilder[] processBuilders = new ProcessBuilder[commandStack.size()];
+    private InputStream outputStreamToInputStream(OutputStream outputStream) throws IOException {
+        // TODO is this bad? prob
+        if (!(outputStream instanceof ByteArrayOutputStream byteArrayOutputStream)) {
+            throw new IllegalArgumentException("nash: pipeline: OutputStream must be an instance of ByteArrayOutputStream");
+        }
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        return new ByteArrayInputStream(byteArray);
+    }
 
-        // Prepare all process builders
+    private Command[] getCommands(LinkedList<String[]> commandStack) {
+        Command[] commands = new Command[commandStack.size()];
+
         int index = 0;
         while (!commandStack.isEmpty()) {
-            String[] commandParts = commandStack.poll();
-            processBuilders[index++] = getProcessBuilder(commandParts);
+            commands[index++] = commandFactory.createCommand(commandStack.poll());
         }
-        return processBuilders;
-    }
-
-    private static ProcessBuilder getProcessBuilder(String[] commandParts) {
-        String commandName = commandParts[0];
-        String[] arguments = Arrays.copyOfRange(commandParts, 1, commandParts.length);
-
-        List<String> commandList = new ArrayList<>();
-        commandList.add(commandName);
-        Collections.addAll(commandList, arguments);
-
-        ProcessBuilder processBuilder = new ProcessBuilder(commandList);
-        processBuilder.directory(new File(System.getProperty("user.dir")));
-        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
-
-        return processBuilder;
+        return commands;
     }
 }

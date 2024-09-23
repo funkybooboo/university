@@ -31,29 +31,41 @@ public class Shell {
                     System.err.println("nash: error: invalid use of &");
                     continue;
                 }
-                execute(userCommand);
+
+                boolean isBackground = isBackground(userCommand);
+                userCommand = filterUserCommand(userCommand, isBackground);
+                LinkedList<String[]> commandStack = null;
+                try {
+                    commandStack = getCommandStack(userCommand);
+                } catch (Exception ex) {
+                    handleException(ex);
+                }
+                if (commandStack == null) {
+                    return;
+                }
+
+                History.addCommand(getUserCommand(commandStack));
+                if (isBackground) {
+                    executeInBackground(commandStack);
+                } else {
+                    executeInForeground(commandStack);
+                }
+
             }
         }
     }
 
-    private void execute(String userCommand) {
-        boolean isBackground = isBackground(userCommand);
-        userCommand = filterUserCommand(userCommand, isBackground);
+    private void executeInForeground(LinkedList<String[]> commandStack) {
+        execute(commandStack);
+    }
 
-        LinkedList<String[]> commandStack;
+    private void executeInBackground(LinkedList<String[]> commandStack) {
+        new Thread(() -> execute(commandStack)).start();
+    }
+
+    private void execute(LinkedList<String[]> commandStack) {
         try {
-            commandStack = getCommandStack(userCommand);
-            if (commandStack == null) {
-                return;
-            }
-
-            History.addCommand(getUserCommand(commandStack));
-
-            if (isBackground) {
-                executeInBackground(commandStack);
-            } else {
-                printOutputStream(pipeline.execute(commandStack));
-            }
+            printOutputStream(pipeline.execute(commandStack));
         } catch (Exception ex) {
             handleException(ex);
         }
@@ -64,16 +76,6 @@ public class Shell {
             userCommand = userCommand.replaceAll("^\\s*\\(\\s*|\\s*\\)\\s*|\\s*&\\s*$", "").trim();
         }
         return userCommand;
-    }
-
-    private void executeInBackground(LinkedList<String[]> commandStack) {
-        new Thread(() -> {
-            try {
-                printOutputStream(pipeline.execute(commandStack));
-            } catch (Exception ex) {
-                handleException(ex);
-            }
-        }).start();
     }
 
     public void printOutputStream(OutputStream outputStream) throws IOException {

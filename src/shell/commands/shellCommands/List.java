@@ -16,10 +16,6 @@ public class List extends Command {
         super(commandParts);
     }
 
-    public String getName() {
-        return NAME;
-    }
-
     // - The first four characters indicate: directory, user can read, user can write, user can execute.
     //  Use the external 'ls -l' command on Linux for examples of the output.
     //  Your shell only needs to display these details for the current user.
@@ -29,7 +25,7 @@ public class List extends Command {
     @Override
     public OutputStream execute(InputStream inputStream) throws Exception {
         if (commandParts.length > 2) {
-            throw new Exception("nash: list: invalid number of arguments");
+            throw new Exception("nash: "+NAME+": invalid number of arguments");
         }
         // Determine the starting directory
         String start = (commandParts.length == 1) ? "." : commandParts[1];
@@ -39,13 +35,13 @@ public class List extends Command {
 
         // Check if the directory exists and is actually a directory
         if (!directory.exists() || !directory.isDirectory()) {
-            throw new Exception("nash: list: no such file or directory");
+            throw new Exception("nash: "+NAME+": no such file or directory");
         }
 
         // List all files and directories in the directory
         File[] files = directory.listFiles();
         if (files == null) {
-            throw new Exception("nash: list: unable to access the directory");
+            throw new Exception("nash: "+NAME+": unable to access the directory");
         }
 
         // Prepare output

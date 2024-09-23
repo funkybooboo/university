@@ -13,14 +13,10 @@ public class Clear extends Command {
         super(commandParts);
     }
 
-    public String getName() {
-        return NAME;
-    }
-
     @Override
     public OutputStream execute(InputStream inputStream) throws Exception {
         if (commandParts.length > 1) {
-            throw new Exception("nash: clear: invalid number of arguments");
+            throw new Exception("nash: "+NAME+": invalid number of arguments");
         }
 
         String os = System.getProperty("os.name").toLowerCase();
@@ -34,7 +30,7 @@ public class Clear extends Command {
                 System.out.print("\033[1;1H"); // Move cursor to top left
             }
         } catch (Exception e) {
-            throw new Exception("nash: clear: error clearing screen: " + e.getMessage());
+            throw new Exception("nash: "+NAME+": error clearing screen: " + e.getMessage());
         }
         return new ByteArrayOutputStream();
     }

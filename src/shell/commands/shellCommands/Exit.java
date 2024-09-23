@@ -13,10 +13,6 @@ public class Exit extends Command {
         super(commandParts);
     }
 
-    public String getName() {
-        return NAME;
-    }
-
     // The command 'exit' is used to terminate your shell program, when entered, your shell program should end.
     @Override
     public OutputStream execute(InputStream inputStream) throws Exception {
@@ -28,11 +24,11 @@ public class Exit extends Command {
                 System.exit(Integer.parseInt(commandParts[1]));
             }
             catch (Exception e) {
-                throw new Exception("nash: exit: invalid exit code");
+                throw new Exception("nash: "+NAME+": invalid exit code");
             }
         }
         else {
-            throw new Exception("nash: exit: too many arguments");
+            throw new Exception("nash: "+NAME+": too many arguments");
         }
         return new ByteArrayOutputStream();
     }

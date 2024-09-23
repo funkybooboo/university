@@ -11,7 +11,5 @@ public abstract class Command {
         this.commandParts = commandParts;
     }
 
-    protected abstract String getName();
-
     public abstract OutputStream execute(InputStream inputStream) throws Exception;
 }

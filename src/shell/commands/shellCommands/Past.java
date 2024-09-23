@@ -8,7 +8,7 @@ public class Past {
     // for as deep as the history execution chain indicates.
     public static String execute(String[] arguments) {
         if (arguments.length != 1) {
-            System.err.println("nash: ^: too many args for ^ command");
+            System.err.println("nash: "+NAME+": too many args for ^ command");
             return null;
         }
 
@@ -17,15 +17,15 @@ public class Past {
             String input = History.getCommand(index);
 
             if (input == null) {
-                System.err.println("nash: ^: no such command in history");
+                System.err.println("nash: "+NAME+": no such command in history");
             }
 
             return input;
 
         } catch (NumberFormatException e) {
-            System.err.println("nash: ^: invalid index format");
+            System.err.println("nash: "+NAME+": invalid index format");
         } catch (Exception e) {
-            System.err.println("nash: ^: unexpected error");
+            System.err.println("nash: "+NAME+": unexpected error");
         }
         return null;
     }

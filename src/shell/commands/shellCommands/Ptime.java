@@ -14,10 +14,6 @@ public class Ptime extends Command {
         super(commandParts);
     }
 
-    public String getName() {
-        return NAME;
-    }
-
     public static void updateCumulativeTime(double time) {
         cumulativeTime += time;
     }
@@ -25,7 +21,7 @@ public class Ptime extends Command {
     @Override
     public OutputStream execute(InputStream inputStream) throws Exception {
         if (commandParts.length > 1) {
-            throw new Exception("nash: ptime: too many arguments\n");
+            throw new Exception("nash: "+NAME+": too many arguments\n");
         }
         String message = String.format("Total time in child processes: %.4f seconds%n", cumulativeTime);
         ByteArrayOutputStream output = new ByteArrayOutputStream();

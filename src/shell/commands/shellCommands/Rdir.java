@@ -15,16 +15,12 @@ public class Rdir extends Command {
         super(commandParts);
     }
 
-    public String getName() {
-        return NAME;
-    }
-
     // When the command 'rdir test' is given, if the folder 'test' exists, it is removed.
     // If the directory didn't exist, an error messages is displayed.
     @Override
     public OutputStream execute(InputStream inputStream) throws Exception {
         if (commandParts.length == 1) {
-            throw new Exception("nash: rdir: missing operand");
+            throw new Exception("nash: "+NAME+": missing operand");
         }
 
         for (String directoryName : Arrays.copyOfRange(commandParts, 1, commandParts.length-1)) {
@@ -33,13 +29,13 @@ public class Rdir extends Command {
             if (dir.exists()) {
                 if (dir.isDirectory()) {
                     if (!dir.delete()) {
-                        throw new Exception("nash: rdir: failed to remove directory: "+directoryName);
+                        throw new Exception("nash: "+NAME+": failed to remove directory: "+directoryName);
                     }
                 } else {
-                    throw new Exception("nash: rdir: "+directoryName+" is not a directory");
+                    throw new Exception("nash: "+NAME+": "+directoryName+" is not a directory");
                 }
             } else {
-                throw new Exception("nash: rdir: directory "+directoryName+" does not exist");
+                throw new Exception("nash: "+NAME+": directory "+directoryName+" does not exist");
             }
         }
         return new ByteArrayOutputStream();

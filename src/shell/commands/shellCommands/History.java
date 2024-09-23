@@ -16,10 +16,6 @@ public class History extends Command {
         super(commandParts);
     }
 
-    public String getName() {
-        return NAME;
-    }
-
     public static String getCommand(int index) {
         return commandHistory.get(index);
     }
@@ -33,7 +29,7 @@ public class History extends Command {
     @Override
     public OutputStream execute(InputStream inputStream) throws Exception {
         if (commandParts.length > 1) {
-            throw new Exception("nash: history: too many args for history command");
+            throw new Exception("nash: "+NAME+": too many args for history command");
         }
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         output.write("-- Command History --\n".getBytes());

@@ -64,9 +64,9 @@ public class SystemCommand extends Command {
 
             return output;
         } catch (IOException ex) {
-            throw new Exception("nash: " + getName() + ": invalid command", ex);
+            throw new Exception("nash: "+getName()+": invalid command", ex);
         } catch (Exception ex) {
-            throw new Exception("nash: " + getName() + ": unexpected error", ex);
+            throw new Exception("nash: "+getName()+": unexpected error", ex);
         } finally {
             long endTime = System.nanoTime();
             double elapsedTime = (endTime - startTime) / 1_000_000_000.0; // Convert to seconds

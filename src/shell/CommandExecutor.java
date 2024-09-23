@@ -9,13 +9,22 @@ import java.util.LinkedList;
 import java.util.Optional;
 
 public class CommandExecutor {
+
     private final Pipeline pipeline = new Pipeline();
+
+    public void execute(LinkedList<String[]> commandStack, boolean isBackground) {
+        if (isBackground) {
+            executeInBackground(commandStack);
+        } else {
+            executeInForeground(commandStack);
+        }
+    }
 
     public void executeInForeground(LinkedList<String[]> commandStack) {
         execute(commandStack);
     }
 
-    public void executeInBackground(LinkedList<String[]> commandStack) {
+    private void executeInBackground(LinkedList<String[]> commandStack) {
         new Thread(() -> execute(commandStack)).start();
     }
 

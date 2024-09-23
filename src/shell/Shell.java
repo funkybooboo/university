@@ -21,8 +21,8 @@ public class Shell {
 
                 boolean isBackground = commandParser.isBackground(userCommand);
                 userCommand = commandParser.filterUserCommand(userCommand, isBackground);
-                LinkedList<String[]> commandStack = null;
 
+                LinkedList<String[]> commandStack = null;
                 try {
                     commandStack = commandParser.getCommandStack(userCommand);
                 } catch (Exception ex) {
@@ -32,11 +32,8 @@ public class Shell {
                 if (commandStack == null) return;
 
                 History.addCommand(commandParser.getUserCommand(commandStack));
-                if (isBackground) {
-                    commandExecutor.executeInBackground(commandStack);
-                } else {
-                    commandExecutor.executeInForeground(commandStack);
-                }
+
+                commandExecutor.execute(commandStack, isBackground);
             }
         }
     }

@@ -13,6 +13,18 @@ public class Shell {
     public void run() {
         signalHandler.setup();
 
+        System.out.println("Welcome to the custom shell: ");
+        System.out.println("""
+                                 _    \s
+                                | |   \s
+                 _ __   __ _ ___| |__ \s
+                | '_ \\ / _` / __| '_ \\\s
+                | | | | (_| \\__ \\ | | |
+                |_| |_|\\__,_|___/_| |_|
+                                      \s
+                                      \s
+                """);
+
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 System.out.print("[" + System.getProperty("user.dir") + "]: ");

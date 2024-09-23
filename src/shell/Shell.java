@@ -38,9 +38,7 @@ public class Shell {
 
     private void execute(String userCommand) {
         boolean isBackground = isBackground(userCommand);
-        if (isBackground) {
-            userCommand = userCommand.replaceAll("^\\s*\\(\\s*|\\s*\\)\\s*|\\s*&\\s*$", "").trim();
-        }
+        userCommand = filterUserCommand(userCommand, isBackground);
 
         LinkedList<String[]> commandStack;
         try {
@@ -61,6 +59,13 @@ public class Shell {
         }
     }
 
+    private String filterUserCommand(String userCommand, boolean isBackground) {
+        if (isBackground) {
+            userCommand = userCommand.replaceAll("^\\s*\\(\\s*|\\s*\\)\\s*|\\s*&\\s*$", "").trim();
+        }
+        return userCommand;
+    }
+
     private void executeInBackground(LinkedList<String[]> commandStack) {
         new Thread(() -> {
             try {
@@ -71,11 +76,15 @@ public class Shell {
         }).start();
     }
 
-    public static void printOutputStream(OutputStream outputStream) throws IOException {
-        if (!(outputStream instanceof ByteArrayOutputStream byteArrayOutputStream)) {
-            throw new IllegalArgumentException("OutputStream must be an instance of ByteArrayOutputStream");
+    public void printOutputStream(OutputStream outputStream) throws IOException {
+        String output;
+        if (outputStream instanceof ByteArrayOutputStream byteArrayOutputStream) {
+            output = byteArrayOutputStream.toString();
         }
-        System.out.println(byteArrayOutputStream);
+        else {
+            throw new IOException("nash: need to implement OutputSteam subtype output");
+        }
+        System.out.print(output);
     }
 
     private void handleException(Exception ex) {

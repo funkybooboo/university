@@ -23,8 +23,8 @@ public class CommandFactory {
     public Command createCommand(String[] commandParts) {
         Class<? extends Command> commandClass = commandMap.get(commandParts[0]);
         try {
-            return commandClass.getDeclaredConstructor().newInstance();
-        } catch (Exception e) {
+            return commandClass.getDeclaredConstructor(String[].class).newInstance((Object) commandParts);
+        } catch (Exception ex) {
             return new SystemCommand(commandParts);
         }
     }

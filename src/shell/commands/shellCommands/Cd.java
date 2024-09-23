@@ -17,9 +17,6 @@ public class Cd extends Command {
 
     @Override
     public OutputStream execute(InputStream inputStream) throws Exception {
-
-        // TODO fix the path displayed on the prompt (cd)
-
         if (commandParts.length > 2) {
             throw new Exception("nash: "+NAME+": too many arguments");
         }
@@ -29,7 +26,8 @@ public class Cd extends Command {
 
         if (commandParts.length == 1) {
             targetDirectoryPath = Paths.get(System.getProperty("user.home"));
-        } else {
+        }
+        else {
             targetDirectoryPath = Paths.get(commandParts[1]);
             if (!targetDirectoryPath.isAbsolute()) {
                 targetDirectoryPath = Paths.get(currentDirectoryPath, targetDirectoryPath.toString());

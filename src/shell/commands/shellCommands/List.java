@@ -16,32 +16,33 @@ public class List extends Command {
         super(commandParts);
     }
 
-    // - The first four characters indicate: directory, user can read, user can write, user can execute.
-    //  Use the external 'ls -l' command on Linux for examples of the output.
-    //  Your shell only needs to display these details for the current user.
-    // - The next 10 characters contains the size of the file in bytes, right justified (no commas).
-    // - The next field is the date of last modification for the file; follow the example formatting.
-    // - The last field is the name of the file.
     @Override
     public OutputStream execute(InputStream inputStream) throws Exception {
         if (commandParts.length > 2) {
-            throw new Exception("nash: "+NAME+": invalid number of arguments");
+            throw new Exception("nash: " + NAME + ": invalid number of arguments");
         }
+
         // Determine the starting directory
         String start = (commandParts.length == 1) ? "." : commandParts[1];
 
-        // Get the directory
-        File directory = new File(start);
+        // Create a File object for the directory
+        File targetDirectoryPath = new File(start);
+
+        // Check if the path is relative
+        if (!targetDirectoryPath.isAbsolute()) {
+            String currentDirectoryPath = System.getProperty("user.dir");
+            targetDirectoryPath = new File(currentDirectoryPath, start);
+        }
 
         // Check if the directory exists and is actually a directory
-        if (!directory.exists() || !directory.isDirectory()) {
-            throw new Exception("nash: "+NAME+": no such file or directory");
+        if (!targetDirectoryPath.exists() || !targetDirectoryPath.isDirectory()) {
+            throw new Exception("nash: " + NAME + ": no such file or directory");
         }
 
         // List all files and directories in the directory
-        File[] files = directory.listFiles();
+        File[] files = targetDirectoryPath.listFiles();
         if (files == null) {
-            throw new Exception("nash: "+NAME+": unable to access the directory");
+            throw new Exception("nash: " + NAME + ": unable to access the directory");
         }
 
         // Prepare output
@@ -58,11 +59,8 @@ public class List extends Command {
 
     private String getPermissions(File file) {
         return String.valueOf(file.isDirectory() ? 'd' : '-') +
-                // Check read permission
                 (file.canRead() ? 'r' : '-') +
-                // Check write permission
                 (file.canWrite() ? 'w' : '-') +
-                // Check execute permission
                 (file.canExecute() ? 'x' : '-');
     }
 

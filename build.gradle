@@ -3,6 +3,8 @@ plugins {
     id 'application'
 }
 
+sourceCompatibility = '21'
+
 sourceSets {
     main {
         java {
@@ -11,16 +13,18 @@ sourceSets {
     }
 }
 
-run {
-    standardInput = System.in
+application {
+    mainClassName = 'Main' // Set the main class for the application
 }
 
-mainClassName = 'Main'
+run {
+    standardInput = System.in // Allow standard input for the application
+}
 
 jar {
     manifest {
-        attributes 'Main-Class': 'Main'
+        attributes 'Main-Class': 'Main' // Specify the main class in the JAR manifest
     }
 }
 
-archivesBaseName = 'Main'
+archivesBaseName = 'Main' // Set the base name for the archive

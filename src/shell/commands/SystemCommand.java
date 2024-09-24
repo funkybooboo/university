@@ -23,6 +23,9 @@ public class SystemCommand extends Command {
 
         ProcessBuilder processBuilder = new ProcessBuilder(commandList);
         processBuilder.directory(new File(System.getProperty("user.dir")));
+        processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+        processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
 
         long startTime = System.nanoTime();
 

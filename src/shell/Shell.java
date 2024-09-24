@@ -13,7 +13,7 @@ public class Shell {
     public void run() {
         signalHandler.setup();
 
-        System.out.println("Welcome to the custom shell: ");
+        System.out.println("Welcome to the shell: ");
         System.out.println("""
                                  _    \s
                                 | |   \s

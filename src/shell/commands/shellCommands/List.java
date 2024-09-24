@@ -24,14 +24,15 @@ public class List extends Command {
 
         // Determine the starting directory
         String start = (commandParts.length == 1) ? "." : commandParts[1];
+        File targetDirectoryPath;
 
-        // Create a File object for the directory
-        File targetDirectoryPath = new File(start);
-
-        // Check if the path is relative
-        if (!targetDirectoryPath.isAbsolute()) {
+        // Resolve the path
+        if (!new File(start).isAbsolute()) {
             String currentDirectoryPath = System.getProperty("user.dir");
-            targetDirectoryPath = new File(currentDirectoryPath, start);
+            targetDirectoryPath = new File(currentDirectoryPath, start).getCanonicalFile();
+        }
+        else {
+            targetDirectoryPath = new File(start).getCanonicalFile();
         }
 
         // Check if the directory exists and is actually a directory

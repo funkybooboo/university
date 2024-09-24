@@ -24,13 +24,17 @@ public class Mdir extends Command {
         String currentDirectoryPath = System.getProperty("user.dir");
 
         for (String directoryName : Arrays.copyOfRange(commandParts, 1, commandParts.length)) {
-            File targetDirectoryPath = new File(directoryName);
+            File targetDirectoryPath;
 
             // Handle relative paths
-            if (!targetDirectoryPath.isAbsolute()) {
-                targetDirectoryPath = new File(currentDirectoryPath, directoryName);
+            if (new File(directoryName).isAbsolute()) {
+                targetDirectoryPath = new File(directoryName).getCanonicalFile();
+            }
+            else {
+                targetDirectoryPath = new File(currentDirectoryPath, directoryName).getCanonicalFile();
             }
 
+            // Check if the directory or file already exists
             if (targetDirectoryPath.exists()) {
                 if (targetDirectoryPath.isDirectory()) {
                     throw new Exception("nash: " + NAME + ": " + directoryName + " directory already exists");
@@ -39,7 +43,9 @@ public class Mdir extends Command {
                     throw new Exception("nash: " + NAME + ": " + directoryName + " file already exists");
                 }
             }
-            else if (!targetDirectoryPath.mkdir()) {
+
+            // Attempt to create the directory
+            if (!targetDirectoryPath.mkdir()) {
                 throw new Exception("nash: " + NAME + ": failed to create directory: " + directoryName);
             }
         }

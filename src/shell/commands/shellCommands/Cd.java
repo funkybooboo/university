@@ -18,7 +18,7 @@ public class Cd extends Command {
     @Override
     public OutputStream execute(InputStream inputStream) throws Exception {
         if (commandParts.length > 2) {
-            throw new Exception("nash: "+NAME+": too many arguments");
+            throw new Exception("nash: " + NAME + ": too many arguments");
         }
 
         String currentDirectoryPath = System.getProperty("user.dir");
@@ -30,16 +30,16 @@ public class Cd extends Command {
         else {
             targetDirectoryPath = Paths.get(commandParts[1]);
             if (!targetDirectoryPath.isAbsolute()) {
-                targetDirectoryPath = Paths.get(currentDirectoryPath, targetDirectoryPath.toString());
+                targetDirectoryPath = Paths.get(currentDirectoryPath).resolve(targetDirectoryPath).normalize();
             }
         }
 
         if (!targetDirectoryPath.toFile().exists()) {
-            throw new Exception("nash: "+NAME+": the directory does not exist");
+            throw new Exception("nash: " + NAME + ": the directory does not exist");
         }
 
         if (!targetDirectoryPath.toFile().isDirectory()) {
-            throw new Exception("nash: "+NAME+": the directory is not a directory");
+            throw new Exception("nash: " + NAME + ": the directory is not a directory");
         }
 
         System.setProperty("user.dir", targetDirectoryPath.toString());

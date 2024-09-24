@@ -20,9 +20,7 @@ public class SystemCommand extends Command {
     public OutputStream execute(InputStream inputStream, int commandIndex, int commandsLength) throws Exception {
         List<String> commandList = new ArrayList<>();
         Collections.addAll(commandList, commandParts);
-
-        // TODO something is broken
-
+        
         ProcessBuilder processBuilder = new ProcessBuilder(commandList);
         processBuilder.directory(new File(System.getProperty("user.dir")));
         processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);

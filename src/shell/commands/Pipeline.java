@@ -16,10 +16,10 @@ public class Pipeline {
         OutputStream[] outputStreams = new OutputStream[commands.length];
 
         Command firstCommand = commands[0];
-        outputStreams[0] = firstCommand.execute(new ByteArrayInputStream(new byte[0]));
+        outputStreams[0] = firstCommand.execute(new ByteArrayInputStream(new byte[0]), 0, commands.length);
 
         for (int i = 1; i < commands.length; i++) {
-            outputStreams[i] = commands[i].execute(outputStreamToInputStream(outputStreams[i-1]));
+            outputStreams[i] = commands[i].execute(outputStreamToInputStream(outputStreams[i-1]), i, commands.length);
         }
 
         return outputStreams[outputStreams.length-1];

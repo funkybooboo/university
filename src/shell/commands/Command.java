@@ -11,5 +11,5 @@ public abstract class Command {
         this.commandParts = commandParts;
     }
 
-    public abstract OutputStream execute(InputStream inputStream) throws Exception;
+    public abstract OutputStream execute(InputStream inputStream, int commandIndex, int commandsLength) throws Exception;
 }

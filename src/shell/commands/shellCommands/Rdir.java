@@ -17,7 +17,7 @@ public class Rdir extends Command {
     }
 
     @Override
-    public OutputStream execute(InputStream inputStream) throws Exception {
+    public OutputStream execute(InputStream inputStream, int commandIndex, int commandsLength) throws Exception {
         if (commandParts.length == 1) {
             throw new Exception("nash: " + NAME + ": missing operand");
         }

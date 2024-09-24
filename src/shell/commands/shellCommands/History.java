@@ -27,7 +27,7 @@ public class History extends Command {
     // The shell should keep a history of the previous shell.commands entered, with no maximum hard-coded history length.
     // If the user enters the command 'history', the shell should provide a listing of the complete command shell history.
     @Override
-    public OutputStream execute(InputStream inputStream) throws Exception {
+    public OutputStream execute(InputStream inputStream, int commandIndex, int commandsLength) throws Exception {
         if (commandParts.length > 1) {
             throw new Exception("nash: "+NAME+": too many args for history command");
         }

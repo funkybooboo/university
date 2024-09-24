@@ -17,15 +17,21 @@ public class SystemCommand extends Command {
         return commandParts[0];
     }
 
-    public OutputStream execute(InputStream inputStream) throws Exception {
+    public OutputStream execute(InputStream inputStream, int commandIndex, int commandsLength) throws Exception {
         List<String> commandList = new ArrayList<>();
         Collections.addAll(commandList, commandParts);
 
+        // TODO something is broken
+
         ProcessBuilder processBuilder = new ProcessBuilder(commandList);
         processBuilder.directory(new File(System.getProperty("user.dir")));
-        processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
-        processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         processBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
+        if (commandIndex == 0) {
+            processBuilder.redirectInput(ProcessBuilder.Redirect.INHERIT);
+        }
+        if (commandIndex == commandsLength - 1) {
+            processBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        }
 
         long startTime = System.nanoTime();
 

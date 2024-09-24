@@ -15,7 +15,7 @@ public class Exit extends Command {
 
     // The command 'exit' is used to terminate your shell program, when entered, your shell program should end.
     @Override
-    public OutputStream execute(InputStream inputStream) throws Exception {
+    public OutputStream execute(InputStream inputStream, int commandIndex, int commandsLength) throws Exception {
         if (commandParts.length == 1) {
             System.exit(0);
         }

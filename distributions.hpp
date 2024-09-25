@@ -36,8 +36,8 @@ public:
  *
  * @return A vector of DistributionPair objects representing the distribution of values in the bins.
  */
-std::vector<DistributionPair> generateUniformDistribution(std::uint32_t howMany, std::uint32_t min,
-                                                          std::uint32_t max, std::uint8_t numberBins);
+std::vector<DistributionPair> generateUniformDistribution(std::uint32_t howMany, std::uint32_t min, std::uint32_t max,
+                                                          std::uint8_t numberBins);
 
 /**
  * Generates a normal distribution of values and counts the occurrences in each bin.
@@ -49,8 +49,8 @@ std::vector<DistributionPair> generateUniformDistribution(std::uint32_t howMany,
  *
  * @return A vector of DistributionPair objects representing the distribution of values in the bins.
  */
-std::vector<DistributionPair> generateNormalDistribution(std::uint32_t howMany, float mean,
-                                                         float stdev, std::uint8_t numberBins);
+std::vector<DistributionPair> generateNormalDistribution(std::uint32_t howMany, float mean, float stdev,
+                                                         std::uint8_t numberBins);
 
 /**
  * Generates a Poisson distribution of values and counts the occurrences in each bin.

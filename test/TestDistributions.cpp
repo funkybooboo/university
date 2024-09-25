@@ -1,11 +1,10 @@
 #include "../src/distributions.hpp"
 
 #include <numeric>
+#include <cstdint>
 #include <vector>
 #include "gtest/gtest.h"
 
-
-class DistributionPair;
 int main(int argc, char* argv[])
 {
     testing::InitGoogleTest(&argc, argv);

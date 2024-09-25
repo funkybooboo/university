@@ -5,7 +5,7 @@ import shell.Shell;
  *
  * @author Nate Stott
  */
-public class Assign3 {
+public class Main {
 
     /**
      * The main method is the entry point of the program.

@@ -14,7 +14,7 @@ sourceSets {
 }
 
 application {
-    mainClassName = 'Assign3' // Set the main class for the application
+    mainClassName = 'Main' // Set the main class for the application
 }
 
 run {
@@ -23,8 +23,8 @@ run {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'Assign3' // Specify the main class in the JAR manifest
+        attributes 'Main-Class': 'Main' // Specify the main class in the JAR manifest
     }
 }
 
-archivesBaseName = 'Assign3' // Set the base name for the archive
+archivesBaseName = 'Main' // Set the base name for the archive

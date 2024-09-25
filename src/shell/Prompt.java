@@ -1,19 +1,13 @@
 package shell;
 
-import java.io.IOException;
-import java.net.InetAddress;
 import java.util.Scanner;
 
 public class Prompt {
-
-    public String getUserCommand() throws IOException {
-        String username = System.getProperty("user.name");
-        String hostname = InetAddress.getLocalHost().getHostName();
-        String currentDir = System.getProperty("user.dir");
-        String prompt = String.format("%s@%s:%s$ ", username, hostname, currentDir);
+    private final Scanner scanner = new Scanner(System.in);
+    public String getUserCommand() {
+        String currentDirPath = System.getProperty("user.dir");
+        String prompt = String.format("[%s]: ", currentDirPath);
         System.out.print(prompt);
-        try (Scanner scanner = new Scanner(System.in)) {
-            return scanner.nextLine();
-        }
+        return scanner.nextLine();
     }
 }

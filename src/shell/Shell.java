@@ -24,14 +24,7 @@ public class Shell {
                 """);
 
         while (true) { // control-c and exit will end this loop
-            String userCommand;
-            try {
-                userCommand = prompt.getUserCommand();
-            }
-            catch (Exception ex) {
-                commandExecutor.handleException(ex);
-                continue;
-            }
+            String userCommand = prompt.getUserCommand();
 
             if (userCommand.isEmpty()) {
                 continue;

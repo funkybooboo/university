@@ -1,4 +1,4 @@
-#include "../src/distributions.hpp"
+#include "distributions.hpp"
 
 #include <numeric>
 #include <cstdint>

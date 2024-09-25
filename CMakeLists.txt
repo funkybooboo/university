@@ -1,26 +1,19 @@
 cmake_minimum_required(VERSION 3.12)
 
 set(PROJECT RandDistributions)
-set(TEST_PROJECT UnitTestRunner)
+set(UNIT_TEST_RUNNER UnitTestRunner)
 
 project(${PROJECT})
 
 set(HEADER_FILES src/distributions.hpp)
 set(SOURCE_FILES src/distributions.cpp)
-set(UNIT_TEST_FILES src/TestDistributions.cpp)
+set(UNIT_TEST_FILES test/TestDistributions.cpp)
 
 add_executable(${PROJECT} ${HEADER_FILES} ${SOURCE_FILES} src/main.cpp)
-add_executable(${TEST_PROJECT} ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES})
+add_executable(${UNIT_TEST_RUNNER} ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES})
 
 set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD 20)
-
-include(FetchContent)
-FetchContent_Declare(
-        googletest
-        GIT_REPOSITORY https://github.com/google/googletest.git
-        GIT_TAG v1.15.0
-)
-FetchContent_MakeAvailable(googletest)
+set_property(TARGET ${UNIT_TEST_RUNNER} PROPERTY CXX_STANDARD 20)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(${PROJECT} PRIVATE /W4 /permissive-)
@@ -30,8 +23,17 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(${PROJECT} PRIVATE -Wall -Wextra -pedantic)
 endif ()
 
-find_program(CLANG_FORMAT "clang-format")
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.15.0
+)
+FetchContent_MakeAvailable(googletest)
 
+target_link_libraries(${UNIT_TEST_RUNNER} gtest_main)
+
+find_program(CLANG_FORMAT "clang-format")
 if (CLANG_FORMAT)
     unset(SOURCE_FILES_PATHS)
     foreach(SOURCE_FILE ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES} src/main.cpp)

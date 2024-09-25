@@ -3,12 +3,12 @@ package shell;
 import shell.commands.shellCommands.History;
 
 import java.util.LinkedList;
-import java.util.Scanner;
 
 public class Shell {
     private final CommandParser commandParser = new CommandParser();
     private final CommandExecutor commandExecutor = new CommandExecutor();
     private final SignalHandler signalHandler = new SignalHandler();
+    private final Prompt prompt = new Prompt();
 
     public void run() {
         signalHandler.setup();
@@ -21,32 +21,43 @@ public class Shell {
                 | '_ \\ / _` / __| '_ \\\s
                 | | | | (_| \\__ \\ | | |
                 |_| |_|\\__,_|___/_| |_|
-                                      \s
-                                      \s
                 """);
 
-        try (Scanner scanner = new Scanner(System.in)) {
-            while (true) {
-                System.out.print("[" + System.getProperty("user.dir") + "]: ");
-                String userCommand = scanner.nextLine().trim();
-                if (userCommand.isEmpty()) continue;
-
-                boolean isBackground = commandParser.isBackground(userCommand);
-                userCommand = commandParser.filterUserCommand(userCommand, isBackground);
-
-                LinkedList<String[]> commandStack = null;
-                try {
-                    commandStack = commandParser.getCommandStack(userCommand);
-                } catch (Exception ex) {
-                    commandExecutor.handleException(ex);
-                }
-
-                if (commandStack == null) return;
-
-                History.addCommand(commandParser.getUserCommand(commandStack));
-
-                commandExecutor.execute(commandStack, isBackground);
+        while (true) { // control-c and exit will end this loop
+            String userCommand;
+            try {
+                userCommand = prompt.getUserCommand();
             }
+            catch (Exception ex) {
+                commandExecutor.handleException(ex);
+                continue;
+            }
+
+            if (userCommand.isEmpty()) {
+                continue;
+            }
+
+            boolean isBackground = commandParser.isBackground(userCommand);
+            userCommand = commandParser.filterUserCommand(userCommand, isBackground);
+
+            LinkedList<String[]> commandStack;
+            try {
+                commandStack = commandParser.getCommandStack(userCommand);
+            }
+            catch (Exception ex) {
+                commandExecutor.handleException(ex);
+                continue;
+            }
+
+            if (commandStack == null) {
+                continue;
+            }
+
+            // Store command in history
+            History.addCommand(userCommand);
+
+            // Execute the command and print output
+            commandExecutor.execute(commandStack, isBackground);
         }
     }
 }

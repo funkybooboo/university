@@ -24,6 +24,10 @@ public class History extends Command {
         commandHistory.add(command);
     }
 
+    public static int size() {
+        return commandHistory.size();
+    }
+
     // The shell should keep a history of the previous shell.commands entered, with no maximum hard-coded history length.
     // If the user enters the command 'history', the shell should provide a listing of the complete command shell history.
     @Override

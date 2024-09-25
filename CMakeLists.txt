@@ -1,14 +1,26 @@
 cmake_minimum_required(VERSION 3.12)
 
 set(PROJECT RandDistributions)
+set(TEST_PROJECT UnitTestRunner)
 
 project(${PROJECT})
 
-set(SOURCE_FILES Assignment2.cpp)
+set(HEADER_FILES src/distributions.hpp)
+set(SOURCE_FILES src/distributions.cpp)
+set(UNIT_TEST_FILES src/TestDistributions.cpp)
 
-add_executable(${PROJECT} ${SOURCE_FILES})
+add_executable(${PROJECT} ${HEADER_FILES} ${SOURCE_FILES} src/main.cpp)
+add_executable(${TEST_PROJECT} ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES})
 
 set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD 20)
+
+include(FetchContent)
+FetchContent_Declare(
+        googletest
+        GIT_REPOSITORY https://github.com/google/googletest.git
+        GIT_TAG v1.15.0
+)
+FetchContent_MakeAvailable(googletest)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(${PROJECT} PRIVATE /W4 /permissive-)
@@ -22,7 +34,7 @@ find_program(CLANG_FORMAT "clang-format")
 
 if (CLANG_FORMAT)
     unset(SOURCE_FILES_PATHS)
-    foreach (SOURCE_FILE ${SOURCE_FILES})
+    foreach(SOURCE_FILE ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES} src/main.cpp)
         get_source_file_property(WHERE ${SOURCE_FILES} LOCATION)
         set(SOURCE_FILES_PATHS ${SOURCE_FILES_PATHS} ${WHERE})
     endforeach ()

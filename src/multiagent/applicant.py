@@ -1,4 +1,4 @@
-from multiagent.person import Person
+from src.multiagent.person import Person
 
 
 class Applicant(Person):

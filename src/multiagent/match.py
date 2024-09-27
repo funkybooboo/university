@@ -16,8 +16,8 @@ If a match is unacceptable, it is not listed in the preferences.
 """
 
 
-from multiagent.employer import Employer
-from multiagent.applicant import Applicant
+from src.multiagent.employer import Employer
+from src.multiagent.applicant import Applicant
 
 
 def do_matching(employers_file_path, applicants_file_path, verbose=False):

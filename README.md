@@ -15,6 +15,9 @@ A modern firmware interface that replaces the traditional BIOS. UEFI provides a 
 
 ### GUID: Globally Unique Identifier
 
+### GPT: The GUID Partition Table
+A modern partitioning scheme that supports larger disks (over 2 TB) and allows up to 128 partitions without needing an extended partition. It offers redundancy by storing multiple copies of partition data and includes CRC protection to detect corruption. GPT is part of the UEFI standard and is widely supported by modern operating systems, making it the preferred choice for new drives.
+
 ### CIA
 - **Confidentiality**: Ensures that information is only accessible to authorized individuals through measures like encryption, access controls, and authentication.
 - **Integrity**: Ensures data is accurate, authentic, and reliable, protecting against unauthorized modifications. Techniques such as checksums, hashing, and digital signatures are commonly used.

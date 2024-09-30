@@ -82,30 +82,30 @@ def goodness_of_fit(data, fits):
 
 def main():
     for file_path, stock_name in zip(FILE_PATHS, STOCK_NAMES):
-        prices = load_data(file_path)
+        data = load_data(file_path)
 
-        if prices is None or prices.empty:
+        if data is None or data.empty:
             continue
 
-        # Normalize prices and filter out exact 0 or 1
-        normalized_prices = normalize_data(prices)
-        normalized_prices = normalized_prices[(normalized_prices > 0) & (normalized_prices < 1)]
+        # Normalize data and filter out exact 0 or 1
+        normalized_data = normalize_data(data)
+        normalized_data = normalized_data[(normalized_data > 0) & (normalized_data < 1)]
 
-        # Determine the number of bins based on the normalized prices
-        number_of_bins = determine_number_of_bins(normalized_prices)
+        # Determine the number of bins based on the normalized data
+        number_of_bins = determine_number_of_bins(normalized_data)
 
-        # Plot the histogram of normalized prices with dynamic bins
-        plot_prices(normalized_prices, stock_name, number_of_bins)
+        # Plot the histogram of normalized data with dynamic bins
+        plot_prices(normalized_data, stock_name, number_of_bins)
 
-        # Fit distributions to normalized prices
-        fits = fit_distributions(normalized_prices)
+        # Fit distributions to normalized data
+        fits = fit_distributions(normalized_data)
 
         # Plot fitted distributions
-        plot_fitted_distributions(normalized_prices, fits)
+        plot_fitted_distributions(normalized_data, fits)
         plt.show()
 
         # Perform goodness-of-fit tests
-        ks_results = goodness_of_fit(normalized_prices, fits)
+        ks_results = goodness_of_fit(normalized_data, fits)
 
         # Identify the best fitting distribution based on the highest p-value
         best_fit = max(ks_results.values(), key=lambda x: x.pvalue)

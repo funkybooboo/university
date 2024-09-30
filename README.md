@@ -1,9 +1,20 @@
 # CS3100 Exam 1 Study Guide
 
-## Accranimes
-    - DMA: Direct memory access
-    - SMP: Symmetric Multiprocessing
-    - MBR: Master boot record
+## Acronyms
+### DMA: Direct Memory Access
+A feature that allows hardware devices to access the main system memory independently of the CPU, enhancing system performance during data transfers.
+
+### SMP: Symmetric Multiprocessing
+An architecture where two or more identical processors share the same main memory, allowing them to work on tasks simultaneously for improved performance and reliability.
+
+### MBR: Master Boot Record
+A boot sector located at the beginning of a storage device that contains the partition table and boot loader code, crucial for starting the operating system.
+
+### CIA
+- **Confidentiality**: Ensures that information is only accessible to authorized individuals through measures like encryption, access controls, and authentication.
+- **Integrity**: Ensures data is accurate, authentic, and reliable, protecting against unauthorized modifications. Techniques such as checksums, hashing, and digital signatures are commonly used.
+- **Availability**: Ensures that information and resources are accessible to authorized users when needed, utilizing measures like redundancy, failover systems, and regular maintenance to prevent downtime.
+
 
 ## Chapter 1
 ### What are Operating Systems (1.1)

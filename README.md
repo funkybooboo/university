@@ -10,6 +10,9 @@ An architecture where two or more identical processors share the same main memor
 ### MBR: Master Boot Record
 A boot sector located at the beginning of a storage device that contains the partition table and boot loader code, crucial for starting the operating system.
 
+### UEFI: Unified Extensible Firmware Interface
+A modern firmware interface that replaces the traditional BIOS. UEFI provides a more flexible pre-boot environment, allowing for faster boot times, larger disk support (over 2 TB), and enhanced security features like Secure Boot. It includes a graphical interface, supports booting from various file systems, and allows for greater customization and management of system settings.
+
 ### CIA
 - **Confidentiality**: Ensures that information is only accessible to authorized individuals through measures like encryption, access controls, and authentication.
 - **Integrity**: Ensures data is accurate, authentic, and reliable, protecting against unauthorized modifications. Techniques such as checksums, hashing, and digital signatures are commonly used.

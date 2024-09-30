@@ -1,5 +1,7 @@
 # CS3100 Exam 1 Study Guide
 
+## Due: Wednesday, 10/09/2024
+
 ## Accranimes
     - DMA: Direct memory access
     - SMP: Symmetric Multiprocessing

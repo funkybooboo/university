@@ -2,7 +2,7 @@
 
 ## Due: Wednesday, 10/09/2024
 
-## Accranimes
+## Acronyms
     - DMA: Direct memory access
     - SMP: Symmetric Multiprocessing
     - MBR: Master boot record

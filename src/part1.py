@@ -17,6 +17,52 @@ COLORS = {
     'beta': 'green'
 }
 
+def main():
+    for file_path, stock_name in zip(FILE_PATHS, STOCK_NAMES):
+        data = load_data(file_path)
+
+        if data is None or data.empty:
+            continue
+
+        # Normalize data and filter out exact 0 or 1
+        normalized_data = normalize_data(data)
+        normalized_data = normalized_data[(normalized_data > 0) & (normalized_data < 1)]
+
+        # Determine the number of bins based on the normalized data
+        number_of_bins = determine_number_of_bins(normalized_data)
+
+        # Plot the histogram of normalized data with dynamic bins
+        plot_prices(normalized_data, stock_name, number_of_bins)
+
+        # Fit distributions to normalized data
+        fits = fit_distributions(normalized_data)
+
+        # Plot fitted distributions
+        plot_fitted_distributions(normalized_data, fits)
+        plt.show()
+
+        # Perform goodness-of-fit tests
+        ks_results = goodness_of_fit(normalized_data, fits)
+
+        # Identify the best fitting distribution based on the highest p-value
+        best_fit = max(ks_results.values(), key=lambda x: x.pvalue)
+        best_distribution = [dist for dist, result in ks_results.items() if result == best_fit][0]
+
+        # Print results
+        print(f'Stock Name: {stock_name}')
+        for dist, result in ks_results.items():
+            stat = result.statistic
+            p_val = result.pvalue
+            print(f'\t{dist.capitalize()} Fit: Statistic={stat:.4f}, p-value={p_val:.4f}')
+
+            if dist != best_distribution:
+                diff_stat = stat - best_fit.statistic
+                diff_p_val = p_val - best_fit.pvalue
+                print(f'\t\tDifference from Best Fit: Statistic Diff={diff_stat:.4f}, p-value Diff={diff_p_val:.4f}')
+            else:
+                print('\t\tBest Fit')
+        print()
+
 def load_data(file_path):
     """Load stock data from a CSV file and return the 'value' column."""
     try:
@@ -79,52 +125,6 @@ def goodness_of_fit(data, fits):
     for dist, params in fits.items():
         results[dist] = ss.kstest(data, dist, args=params)
     return results
-
-def main():
-    for file_path, stock_name in zip(FILE_PATHS, STOCK_NAMES):
-        data = load_data(file_path)
-
-        if data is None or data.empty:
-            continue
-
-        # Normalize data and filter out exact 0 or 1
-        normalized_data = normalize_data(data)
-        normalized_data = normalized_data[(normalized_data > 0) & (normalized_data < 1)]
-
-        # Determine the number of bins based on the normalized data
-        number_of_bins = determine_number_of_bins(normalized_data)
-
-        # Plot the histogram of normalized data with dynamic bins
-        plot_prices(normalized_data, stock_name, number_of_bins)
-
-        # Fit distributions to normalized data
-        fits = fit_distributions(normalized_data)
-
-        # Plot fitted distributions
-        plot_fitted_distributions(normalized_data, fits)
-        plt.show()
-
-        # Perform goodness-of-fit tests
-        ks_results = goodness_of_fit(normalized_data, fits)
-
-        # Identify the best fitting distribution based on the highest p-value
-        best_fit = max(ks_results.values(), key=lambda x: x.pvalue)
-        best_distribution = [dist for dist, result in ks_results.items() if result == best_fit][0]
-
-        # Print results
-        print(f'Stock Name: {stock_name}')
-        for dist, result in ks_results.items():
-            stat = result.statistic
-            p_val = result.pvalue
-            print(f'\t{dist.capitalize()} Fit: Statistic={stat:.4f}, p-value={p_val:.4f}')
-
-            if dist != best_distribution:
-                diff_stat = stat - best_fit.statistic
-                diff_p_val = p_val - best_fit.pvalue
-                print(f'\t\tDifference from Best Fit: Statistic Diff={diff_stat:.4f}, p-value Diff={diff_p_val:.4f}')
-            else:
-                print('\t\tBest Fit')
-        print()
 
 if __name__ == '__main__':
     main()

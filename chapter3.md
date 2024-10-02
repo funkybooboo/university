@@ -97,7 +97,7 @@
     - **Description**: Processes that require more CPU time and perform computations more than waiting for I/O.
     - **Scheduling Focus**: These processes should be managed to ensure they have sufficient CPU time for effective
       execution.
-
+      
 #### Additional Resources
 
 - [What is a Process? Video Explanation](https://www.youtube.com/watch?v=vLwMl9qK4T8)

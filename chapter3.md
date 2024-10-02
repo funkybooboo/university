@@ -60,12 +60,113 @@
 
 ![Process State Life Cycle](images/chapter3/process_states.jpg)
 
+##### Odd States to know about
+
+1. **Orphan Process**:
+    - **Definition**: A child process whose parent has terminated without waiting for it.
+    - **Impact**: The orphan process is adopted by the init process (PID 1) to ensure it can continue execution.
+
+2. **Zombie Process**:
+    - **Definition**: A child process that has completed execution but still has an entry in the process table because
+      its parent has not yet read its exit status.
+    - **Impact**: Occupies resources (like PID) until the parent calls wait() to retrieve its exit status.
+
+#### Process Management
+
+##### Process Creation
+
+- **fork()**:
+    - **Function**: Creates a new process by duplicating the calling process.
+    - **Outcome**: The new process (child) is an exact copy of the parent process, except for the returned PID.
+
+##### Process Replacement
+
+- **EXEC**:
+    - **Function**: Replaces the current process image with a new process image.
+    - **Outcome**: The calling process is transformed into a new process, losing its previous execution context.
+
+#### Process Types
+
+1. **I/O Bound**:
+    - **Description**: Processes that spend more time waiting for I/O operations (like disk or network) than using the
+      CPU.
+    - **Scheduling Focus**: Should prioritize these processes to minimize wait time and improve overall system
+      responsiveness.
+
+2. **CPU Bound**:
+    - **Description**: Processes that require more CPU time and perform computations more than waiting for I/O.
+    - **Scheduling Focus**: These processes should be managed to ensure they have sufficient CPU time for effective
+      execution.
+      
 #### Additional Resources
 
 - [What is a Process? Video Explanation](https://www.youtube.com/watch?v=vLwMl9qK4T8)
 - [What is a Process? Video Explanation](https://www.youtube.com/watch?v=LAnWQFQmgvI)
 
 ### Process Scheduling (3.2)
+
+#### Scheduling Queues
+
+In the Process State Lifecycle, multiple types of schedulers manage different queues to optimize process execution.
+Here's an overview of the key scheduling queues:
+
+1. **Job Queue**
+    - **Description:** This queue contains all processes in the system that are waiting to be loaded into memory for
+      execution. It holds jobs that await admission to the ready queue.
+    - **Scheduler:** Long-term Scheduler (Job Scheduler)
+    - **Function:** The long-term scheduler determines which processes from the job queue are moved into memory,
+      transitioning them to the ready queue. It manages the overall degree of multiprogramming, ensuring efficient use
+      of system resources.
+
+2. **Ready Queue**
+    - **Description:** This queue holds all processes that are currently in memory and ready to execute but are waiting
+      for CPU time. These processes are fully prepared to run and only need CPU availability.
+    - **Scheduler:** Short-term Scheduler (CPU Scheduler)
+    - **Function:** The short-term scheduler selects one of the processes from the ready queue to execute on the CPU.
+      This scheduler operates frequently and makes rapid decisions to maximize CPU utilization and ensure efficient
+      process management.
+
+3. **Device Queue**
+    - **Description:** This queue contains processes that are waiting for I/O operations to complete. When a process
+      requests an I/O operation, it is moved from the ready queue to the device queue until the operation is finished.
+    - **Scheduler:** While there isn't a specific medium-term scheduler for device queues, their management involves the
+      short-term scheduler in conjunction with the I/O management subsystem.
+    - **Function:** The scheduler facilitates the transition of processes between the ready queue and device queues,
+      ensuring that processes can return to the ready queue once their I/O operations are complete.
+
+![Process Scheduling Queues Image](images/chapter3/process_scheduling_queues.jpg)
+
+#### Context Switch
+
+A context switch involves saving the state of the currently executing process (Process 1) and loading the state of the
+next process to be executed (Process 2). This includes transferring register values and program counter information to
+the process control block (PCB) in RAM. When Process 1 resumes, it continues execution as if uninterrupted.
+
+While necessary for multitasking, context switching is resource-intensive, often consuming thousands of CPU cycles.
+Efficient management of context switches is crucial for maintaining optimal system performance.
+
+#### Context Switch Triggers
+
+Context switches are triggered by several events, including:
+
+1. **Process Scheduling:** When the short-term scheduler selects a new process to run, a context switch occurs to load
+   the new process into the CPU.
+
+2. **I/O Requests:** If a running process requests an I/O operation, it is moved to the device queue, triggering a
+   context switch to allow another process in the ready queue to execute.
+
+3. **Process Termination:** When a process completes its execution, a context switch occurs to load another process from
+   the ready queue.
+
+4. **Time Slices Expiration:** In time-sharing systems, if a process's allocated time slice expires, a context switch is
+   triggered to ensure fair CPU time distribution among processes.
+
+5. **Inter-process Communication (IPC):** When processes communicate or synchronize, a context switch may occur if one
+   process must yield control to allow another to proceed.
+
+#### Additional Resources
+
+- [What is Process Scheduling? Video Explanation](https://www.youtube.com/watch?v=2h3eWaPx8SA)
 
 ### Operations on Processes (3.3)
 

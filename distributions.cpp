@@ -44,7 +44,7 @@ std::vector<DistributionPair> initializeBins(const std::uint32_t min, const std:
  * @param howMany The number of values to generate and count.
  */
 template <typename Distribution>
-void countValues(std::vector<DistributionPair> &bins, Distribution &distribution, std::default_random_engine &engine,
+void countValues(std::vector<DistributionPair>& bins, Distribution& distribution, std::default_random_engine& engine,
                  const std::uint32_t howMany)
 {
     for (std::uint32_t i = 0; i < howMany; ++i)
@@ -60,7 +60,7 @@ void countValues(std::vector<DistributionPair> &bins, Distribution &distribution
             ++bins[bins.size() - 1].count;
             continue;
         }
-        for (auto &dp : bins)
+        for (auto& dp : bins)
         {
             // Increment the count for the bin that contains the value
             if (value >= dp.minValue && value <= dp.maxValue)
@@ -75,8 +75,8 @@ void countValues(std::vector<DistributionPair> &bins, Distribution &distribution
 std::vector<DistributionPair> generateUniformDistribution(const std::uint32_t howMany, const std::uint32_t min,
                                                           const std::uint32_t max, const std::uint8_t numberBins)
 {
-    std::random_device rd; // Obtain a random number from hardware
-    std::default_random_engine engine(rd()); // Seed the engine
+    std::random_device rd;                                // Obtain a random number from hardware
+    std::default_random_engine engine(rd());              // Seed the engine
     std::uniform_int_distribution distribution(min, max); // Define the uniform distribution
 
     auto bins = initializeBins(min, max, numberBins); // Initialize bins
@@ -88,8 +88,8 @@ std::vector<DistributionPair> generateUniformDistribution(const std::uint32_t ho
 std::vector<DistributionPair> generateNormalDistribution(const std::uint32_t howMany, const float mean,
                                                          const float stdev, const std::uint8_t numberBins)
 {
-    std::random_device rd; // Obtain a random number from hardware
-    std::default_random_engine engine(rd()); // Seed the engine
+    std::random_device rd;                              // Obtain a random number from hardware
+    std::default_random_engine engine(rd());            // Seed the engine
     std::normal_distribution distribution(mean, stdev); // Define the normal distribution
 
     // Define the range for bins based on mean and standard deviation
@@ -104,8 +104,8 @@ std::vector<DistributionPair> generateNormalDistribution(const std::uint32_t how
 std::vector<DistributionPair> generatePoissonDistribution(const std::uint32_t howMany, const std::uint8_t howOften,
                                                           const std::uint8_t numberBins)
 {
-    std::random_device rd; // Obtain a random number from hardware
-    std::default_random_engine engine(rd()); // Seed the engine
+    std::random_device rd;                            // Obtain a random number from hardware
+    std::default_random_engine engine(rd());          // Seed the engine
     std::poisson_distribution distribution(howOften); // Define the Poisson distribution
 
     // Define the range for bins based on the number of bins
@@ -117,14 +117,14 @@ std::vector<DistributionPair> generatePoissonDistribution(const std::uint32_t ho
     return bins;
 }
 
-void plotDistribution(const std::string &title, const std::vector<DistributionPair> &distribution,
+void plotDistribution(const std::string& title, const std::vector<DistributionPair>& distribution,
                       const std::uint8_t maxPlotLineSize)
 {
     std::cout << title << std::endl;
 
     // Find the maximum count for scaling the plot
     std::uint32_t maxCount = 0;
-    for (const auto &dp : distribution)
+    for (const auto& dp : distribution)
     {
         if (dp.count > maxCount)
         {
@@ -133,7 +133,7 @@ void plotDistribution(const std::string &title, const std::vector<DistributionPa
     }
 
     // Print each bin's distribution
-    for (const auto &dp : distribution)
+    for (const auto& dp : distribution)
     {
         std::cout << std::format("[{:>3},{:>4}] : ", dp.minValue, dp.maxValue);
 

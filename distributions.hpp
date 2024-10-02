@@ -9,10 +9,10 @@
  */
 class DistributionPair
 {
-public:
+  public:
     std::uint32_t minValue; ///< The minimum value of the bin.
     std::uint32_t maxValue; ///< The maximum value of the bin.
-    std::uint32_t count; ///< The count of values falling within this bin.
+    std::uint32_t count;    ///< The count of values falling within this bin.
 
     /**
      * Constructs a DistributionPair with the specified minimum and maximum values.
@@ -71,5 +71,5 @@ std::vector<DistributionPair> generatePoissonDistribution(std::uint32_t howMany,
  * @param distribution A vector of DistributionPair objects representing the distribution of values in the bins.
  * @param maxPlotLineSize The maximum number of plot characters per line.
  */
-void plotDistribution(const std::string &title, const std::vector<DistributionPair> &distribution,
+void plotDistribution(const std::string& title, const std::vector<DistributionPair>& distribution,
                       std::uint8_t maxPlotLineSize);

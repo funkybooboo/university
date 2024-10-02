@@ -1,11 +1,11 @@
 #include "distributions.hpp"
 
+#include "gtest/gtest.h"
 #include <cstdint>
 #include <numeric>
 #include <vector>
-#include "gtest/gtest.h"
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     testing::InitGoogleTest(&argc, argv);
 
@@ -51,7 +51,7 @@ Bins generatePoissonBins(std::uint32_t howOften, const std::uint8_t numberBins)
     return results;
 }
 
-void checkBins(const Bins &expected, const Bins &actual)
+void checkBins(const Bins& expected, const Bins& actual)
 {
     ASSERT_EQ(expected.size(), actual.size()) << "Wrong number of bins";
     for (auto i = 0u; i < expected.size(); i++)
@@ -61,9 +61,12 @@ void checkBins(const Bins &expected, const Bins &actual)
     }
 }
 
-void checkTotal(const std::uint32_t expected, const Bins &bins)
+void checkTotal(const std::uint32_t expected, const Bins& bins)
 {
-    const auto add_counts = [](const std::uint32_t total, const DistributionPair &bin) { return total + bin.count; };
+    const auto add_counts = [](const std::uint32_t total, const DistributionPair& bin)
+    {
+        return total + bin.count;
+    };
     const auto actual = std::accumulate(bins.cbegin(), bins.cend(), 0u, add_counts);
     EXPECT_EQ(expected, actual) << "Wrong number of elements across all bins";
 }

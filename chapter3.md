@@ -154,9 +154,6 @@ Context switches are triggered by several events, including:
 
 - [What is Process Scheduling? Video Explanation](https://www.youtube.com/watch?v=2h3eWaPx8SA)
 
-Certainly! Here’s the revised overview of operations on processes, now including the associated system calls for each
-operation:
-
 ### Operations on Processes (3.3)
 
 #### Process Management

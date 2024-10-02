@@ -34,7 +34,7 @@ def main() -> None:
     print(f"Estimated cost of the option: ${np.average(option_payoffs):.2f}")
 
 @njit
-def calculate_call_option_payoff(strike_price: float, final_stock_price: float) -> float:
+def calculate_european_call_option_payoff(strike_price: float, final_stock_price: float) -> float:
     return max(final_stock_price - strike_price, 0)
 
 @njit(parallel=True)
@@ -62,7 +62,7 @@ def calculate_option_pricing(
     for i in prange(price_paths.shape[0]):
         final_price: float = float(price_paths[i, -1])
         final_prices[i] = final_price
-        option_payoffs[i] = calculate_call_option_payoff(strike_price, final_price) / (1 + risk_free_rate)
+        option_payoffs[i] = calculate_european_call_option_payoff(strike_price, final_price) / (1 + risk_free_rate)
 
     return final_prices, option_payoffs
 

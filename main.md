@@ -14,7 +14,7 @@
 - [Chapter 1](chapter1.md)
     - [What are Operating Systems (1.1)](chapter1.md#what-are-operating-systems-11)
     - [Computer System Organization (1.2)](chapter1.md#computer-system-organization-121)
-    - [Storage Structures (1.2)](chapter1.md#storage-structures-122)
+    - [Storage Structures (1.2)](chapter1.md#storage-stuctures-122)
     - [Interrupts (1.2)](chapter1.md#interrupts-123)
     - [Computer System Architecture (1.3)](chapter1.md#computer-system-architecture-13)
     - [Operating System Operations (1.4)](chapter1.md#operating-system-operations-14)

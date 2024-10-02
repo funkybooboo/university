@@ -71,20 +71,6 @@
       its parent has not yet read its exit status.
     - **Impact**: Occupies resources (like PID) until the parent calls wait() to retrieve its exit status.
 
-#### Process Management
-
-##### Process Creation
-
-- **fork()**:
-    - **Function**: Creates a new process by duplicating the calling process.
-    - **Outcome**: The new process (child) is an exact copy of the parent process, except for the returned PID.
-
-##### Process Replacement
-
-- **EXEC**:
-    - **Function**: Replaces the current process image with a new process image.
-    - **Outcome**: The calling process is transformed into a new process, losing its previous execution context.
-
 #### Process Types
 
 1. **I/O Bound**:
@@ -97,7 +83,7 @@
     - **Description**: Processes that require more CPU time and perform computations more than waiting for I/O.
     - **Scheduling Focus**: These processes should be managed to ensure they have sufficient CPU time for effective
       execution.
-      
+
 #### Additional Resources
 
 - [What is a Process? Video Explanation](https://www.youtube.com/watch?v=vLwMl9qK4T8)
@@ -168,7 +154,67 @@ Context switches are triggered by several events, including:
 
 - [What is Process Scheduling? Video Explanation](https://www.youtube.com/watch?v=2h3eWaPx8SA)
 
+Certainly! Here’s the revised overview of operations on processes, now including the associated system calls for each
+operation:
+
 ### Operations on Processes (3.3)
+
+#### Process Management
+
+##### 1. Process Creation
+
+- **System Call**: `fork()`
+    - **Function**: Creates a new process by duplicating the calling process.
+    - **Outcome**: The new process (child) is an exact copy of the parent process, with a unique Process ID (PID). The
+      return value in the parent is the PID of the child, while the child receives a return value of 0.
+
+##### 2. Process Replacement
+
+- **System Call**: `exec()`
+    - **Function**: Replaces the current process image with a new process image.
+    - **Outcome**: The calling process is transformed into a new process, losing its previous execution context (code,
+      data, and stack). It starts execution from the entry point of the new program. Variants include `execl()`,
+      `execv()`, `execle()`, `execve()`, etc.
+
+##### 3. Process Termination
+
+- **System Call**: `exit()`
+    - **Function**: Terminates the calling process and returns a status code to the operating system.
+    - **Outcome**: The process releases all its resources and informs its parent process of its termination status.
+
+- **System Call**: `wait()`
+    - **Function**: Allows a parent process to wait for its child processes to finish execution.
+    - **Outcome**: The parent can retrieve the exit status of the terminated child.
+
+##### 4. Process Synchronization
+
+- **System Calls**:
+    - `sem_wait()` and `sem_post()` (for semaphores)
+    - `pthread_mutex_lock()` and `pthread_mutex_unlock()` (for mutexes in POSIX threads)
+    - **Function**: Tools used to control access to shared resources and prevent race conditions.
+    - **Outcome**: Ensures that multiple processes can operate safely on shared data without conflicting.
+
+##### 5. Process Prioritization
+
+- **System Call**: `nice()`
+    - **Function**: Changes the priority of a process.
+    - **Outcome**: A higher nice value indicates a lower priority, affecting the order of CPU allocation.
+
+##### 6. Process Resource Management
+
+- **System Call**: `setrlimit()`
+    - **Function**: Sets resource limits for a process (e.g., CPU time, memory usage).
+    - **Outcome**: Ensures efficient use of resources and helps prevent overconsumption.
+
+##### 7. Process Monitoring
+
+- **System Calls**:
+    - `getpid()`: Returns the process ID of the calling process.
+    - `getppid()`: Returns the parent process ID.
+    - **Note**: While `ps()` is not a direct system call, it is a common command used to monitor processes in Unix-like
+      systems.
+    - **Outcome**: Administrators can observe active processes, CPU usage, memory consumption, and detect potential
+      issues in real-time.
 
 ### Interprocess Communication (3.4)
 

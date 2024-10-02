@@ -9,10 +9,10 @@
  */
 class DistributionPair
 {
-public:
+  public:
     std::uint32_t minValue; ///< The minimum value of the bin.
     std::uint32_t maxValue; ///< The maximum value of the bin.
-    std::uint32_t count; ///< The count of values falling within this bin.
+    std::uint32_t count;    ///< The count of values falling within this bin.
 
     /**
      * Constructs a DistributionPair with the specified minimum and maximum values.
@@ -64,7 +64,7 @@ std::vector<DistributionPair> initializeBins(const std::uint32_t min, const std:
  * @param howMany The number of values to generate and count.
  */
 template <typename Distribution>
-void countValues(std::vector<DistributionPair> &bins, Distribution &distribution, std::default_random_engine &engine,
+void countValues(std::vector<DistributionPair>& bins, Distribution& distribution, std::default_random_engine& engine,
                  const std::uint32_t howMany)
 {
     for (std::uint32_t i = 0; i < howMany; ++i)
@@ -80,7 +80,7 @@ void countValues(std::vector<DistributionPair> &bins, Distribution &distribution
             ++bins[bins.size() - 1].count;
             continue;
         }
-        for (auto &dp : bins)
+        for (auto& dp : bins)
         {
             // Increment the count for the bin that contains the value
             if (value >= dp.minValue && value <= dp.maxValue)
@@ -105,8 +105,8 @@ void countValues(std::vector<DistributionPair> &bins, Distribution &distribution
 std::vector<DistributionPair> generateUniformDistribution(const std::uint32_t howMany, const std::uint32_t min,
                                                           const std::uint32_t max, const std::uint8_t numberBins)
 {
-    std::random_device rd; // Obtain a random number from hardware
-    std::default_random_engine engine(rd()); // Seed the engine
+    std::random_device rd;                                // Obtain a random number from hardware
+    std::default_random_engine engine(rd());              // Seed the engine
     std::uniform_int_distribution distribution(min, max); // Define the uniform distribution
 
     auto bins = initializeBins(min, max, numberBins); // Initialize bins
@@ -128,8 +128,8 @@ std::vector<DistributionPair> generateUniformDistribution(const std::uint32_t ho
 std::vector<DistributionPair> generateNormalDistribution(const std::uint32_t howMany, const float mean,
                                                          const float stdev, const std::uint8_t numberBins)
 {
-    std::random_device rd; // Obtain a random number from hardware
-    std::default_random_engine engine(rd()); // Seed the engine
+    std::random_device rd;                              // Obtain a random number from hardware
+    std::default_random_engine engine(rd());            // Seed the engine
     std::normal_distribution distribution(mean, stdev); // Define the normal distribution
 
     // Define the range for bins based on mean and standard deviation
@@ -153,8 +153,8 @@ std::vector<DistributionPair> generateNormalDistribution(const std::uint32_t how
 std::vector<DistributionPair> generatePoissonDistribution(const std::uint32_t howMany, const std::uint8_t howOften,
                                                           const std::uint8_t numberBins)
 {
-    std::random_device rd; // Obtain a random number from hardware
-    std::default_random_engine engine(rd()); // Seed the engine
+    std::random_device rd;                            // Obtain a random number from hardware
+    std::default_random_engine engine(rd());          // Seed the engine
     std::poisson_distribution distribution(howOften); // Define the Poisson distribution
 
     // Define the range for bins based on the number of bins
@@ -173,14 +173,14 @@ std::vector<DistributionPair> generatePoissonDistribution(const std::uint32_t ho
  * @param distribution A vector of DistributionPair objects representing the distribution of values in the bins.
  * @param maxPlotLineSize The maximum number of plot characters per line.
  */
-void plotDistribution(const std::string &title, const std::vector<DistributionPair> &distribution,
+void plotDistribution(const std::string& title, const std::vector<DistributionPair>& distribution,
                       const std::uint8_t maxPlotLineSize)
 {
     std::cout << title << std::endl;
 
     // Find the maximum count for scaling the plot
     std::uint32_t maxCount = 0;
-    for (const auto &dp : distribution)
+    for (const auto& dp : distribution)
     {
         if (dp.count > maxCount)
         {
@@ -189,7 +189,7 @@ void plotDistribution(const std::string &title, const std::vector<DistributionPa
     }
 
     // Print each bin's distribution
-    for (const auto &dp : distribution)
+    for (const auto& dp : distribution)
     {
         std::cout << std::format("[{:>3},{:>4}] : ", dp.minValue, dp.maxValue);
 
@@ -240,32 +240,34 @@ namespace testing::detail
     using Bins = std::vector<std::pair<std::uint32_t, std::uint32_t>>;
     using DistFunc = std::function<std::vector<DistributionPair>()>;
 
-#define CS3460_ASSERT_EQ(expected, actual, message)                                                                    \
-    if (expected != actual)                                                                                            \
-    {                                                                                                                  \
-        fail(message, "[ Expected", expected, "but got", actual, "]");                                                 \
-        return;                                                                                                        \
+#define CS3460_ASSERT_EQ(expected, actual, message)                    \
+    if (expected != actual)                                            \
+    {                                                                  \
+        fail(message, "[ Expected", expected, "but got", actual, "]"); \
+        return;                                                        \
     }
 
-#define CS3460_CASE(x)                                                                                                 \
-    [] { return x; };                                                                                                  \
+#define CS3460_CASE(x) \
+    [] {               \
+        return x;      \
+    };                 \
     std::cout << " Case " << #x << "\n";
 
     template <typename Message>
-    void failInternal(const Message &message)
+    void failInternal(const Message& message)
     {
         std::cout << message << " ";
     }
 
     template <typename Message, typename... Messages>
-    void failInternal(const Message &message, const Messages &...messages)
+    void failInternal(const Message& message, const Messages&... messages)
     {
         failInternal(message);
         failInternal(messages...);
     }
 
     template <typename... Messages>
-    void fail(const Messages &...messages)
+    void fail(const Messages&... messages)
     {
         std::cout << "  Assertion failed: ";
         failInternal(messages...);
@@ -281,7 +283,7 @@ namespace testing::detail
         Bins results(numberBins);
         for (std::uint8_t bin = 0u; bin < numberBins; bin++)
         {
-            results[bin] = {minBin, maxBin};
+            results[bin] = { minBin, maxBin };
             minBin = maxBin + 1;
             maxBin = minBin + binRange;
         }
@@ -289,7 +291,7 @@ namespace testing::detail
         return results;
     }
 
-    void returnsTheExpectedBins(const DistFunc &func, const Bins &bins)
+    void returnsTheExpectedBins(const DistFunc& func, const Bins& bins)
     {
         const auto result = func();
         CS3460_ASSERT_EQ(bins.size(), result.size(), "Wrong number of bins");
@@ -300,10 +302,13 @@ namespace testing::detail
         }
     }
 
-    void hasTheCorrectTotalAcrossAllBins(const DistFunc &func, const std::uint32_t howMany)
+    void hasTheCorrectTotalAcrossAllBins(const DistFunc& func, const std::uint32_t howMany)
     {
         const auto result = func();
-        const auto add_counts = [](std::uint32_t total, const DistributionPair &bin) { return total + bin.count; };
+        const auto add_counts = [](std::uint32_t total, const DistributionPair& bin)
+        {
+            return total + bin.count;
+        };
         CS3460_ASSERT_EQ(howMany, std::accumulate(result.cbegin(), result.cend(), 0u, add_counts),
                          "Wrong number of elements across all bins");
     }

@@ -3,7 +3,7 @@
 ## Team
 - Ann Marie
 - Briton Ellis
-- Madison Thompson
+- Madison Patch
 - Nate Stott
 
 ## Discussion

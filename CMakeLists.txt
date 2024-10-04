@@ -17,10 +17,11 @@ set_property(TARGET ${UNIT_TEST_RUNNER} PROPERTY CXX_STANDARD 20)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(${PROJECT} PRIVATE /W4 /permissive-)
+    set_target_properties(ArrayPerformance PROPERTIES LINK_FLAGS "/STACK:10000000")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_compile_options(${PROJECT} PRIVATE -Wall -Wextra -pedantic)
+    target_compile_options(${PROJECT} PRIVATE -Wall -Wextra -pedantic -Wl,--stack,10000000 -O3)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(${PROJECT} PRIVATE -Wall -Wextra -pedantic)
+    target_compile_options(${PROJECT} PRIVATE -Wall -Wextra -pedantic -Wl,--stack,10000000 -O3)
 endif ()
 
 include(FetchContent)

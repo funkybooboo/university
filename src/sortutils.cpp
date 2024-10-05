@@ -81,8 +81,7 @@ void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, cons
             [](int* data)
             {
                 std::ranges::sort(data, data + HOW_MANY_ELEMENTS);
-            }
-        );
+            });
     }
 
     std::cout << "\nParallel\n";
@@ -94,8 +93,7 @@ void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, cons
             [](int* data)
             {
                 std::sort(std::execution::par, data, data + HOW_MANY_ELEMENTS);
-            }
-        );
+            });
     }
 }
 
@@ -115,8 +113,7 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, cons
             [](SourceArray& data)
             {
                 std::ranges::sort(data);
-            }
-        );
+            });
     }
 
     std::cout << "\nParallel\n";
@@ -128,8 +125,7 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, cons
             [](SourceArray& data)
             {
                 std::sort(std::execution::par, data.begin(), data.end());
-            }
-        );
+            });
     }
 }
 
@@ -156,8 +152,7 @@ void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, con
             [](std::vector<int>& data)
             {
                 std::ranges::sort(data);
-            }
-        );
+            });
     }
 
     std::cout << "\nParallel\n";
@@ -169,7 +164,6 @@ void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, con
             [](std::vector<int>& data)
             {
                 std::sort(std::execution::par, data.begin(), data.end());
-            }
-        );
+            });
     }
 }

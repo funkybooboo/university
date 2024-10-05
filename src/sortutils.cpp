@@ -6,13 +6,22 @@
 #include <execution>
 #include <iostream>
 #include <string>
+#include <vector>
 
 void initializeRawArrayFromStdArray(const SourceArray& source, int dest[])
 {
-    for (size_t i = 0; i < source.size(); ++i)
+    if (!dest)
     {
-        dest[i] = source[i];
+        throw std::invalid_argument("Destination array cannot be null.");
     }
+
+    // Ensure the destination can hold the data (assuming you know the size of dest)
+    if (source.size() > HOW_MANY_ELEMENTS)
+    {
+        throw std::out_of_range("Source array size exceeds destination array capacity.");
+    }
+
+    std::ranges::copy(source, dest);
 }
 
 void organPipeStdArray(SourceArray& data)
@@ -57,59 +66,72 @@ void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, cons
 {
     std::cout << " --- Raw Array Performance ---\n\n";
 
-    int randomArray[HOW_MANY_ELEMENTS];
-    int sortedArray[HOW_MANY_ELEMENTS];
-    int reversedArray[HOW_MANY_ELEMENTS];
-    int organPipeArray[HOW_MANY_ELEMENTS];
-    int rotatedArray[HOW_MANY_ELEMENTS];
-
-    initializeRawArrayFromStdArray(random, randomArray);
-    initializeRawArrayFromStdArray(sorted, sortedArray);
-    initializeRawArrayFromStdArray(reversed, reversedArray);
-    initializeRawArrayFromStdArray(organPipe, organPipeArray);
-    initializeRawArrayFromStdArray(rotated, rotatedArray);
-
     const char* labels[] = { "Random", "Sorted", "Reversed", "Organ Pipe", "Rotated" };
-    int* rawArrays[] = { randomArray, sortedArray, reversedArray, organPipeArray, rotatedArray };
+    const SourceArray* arrays[] = { &random, &sorted, &reversed, &organPipe, &rotated };
 
     std::cout << "Sequential\n";
     for (size_t i = 0; i < 5; ++i)
     {
+        // Allocate a single raw array dynamically
+        const auto rawArray = new int[HOW_MANY_ELEMENTS];
+
+        // Initialize the raw array from the current SourceArray
+        initializeRawArrayFromStdArray(*arrays[i], rawArray);
+
+        // Measure the sort time using sequential sort
         measureSortTime(
             labels[i],
-            rawArrays[i],
+            rawArray,
             [](int* data)
             {
                 std::ranges::sort(data, data + HOW_MANY_ELEMENTS);
             });
+
+        // Clean up the dynamically allocated array
+        delete[] rawArray;
     }
 
     std::cout << "\nParallel\n";
     for (size_t i = 0; i < 5; ++i)
     {
+        // Allocate a single raw array dynamically
+        const auto rawArray = new int[HOW_MANY_ELEMENTS];
+
+        // Initialize the raw array from the current SourceArray
+        initializeRawArrayFromStdArray(*arrays[i], rawArray);
+
+        // Measure the sort time using parallel sort
         measureSortTime(
             labels[i],
-            rawArrays[i],
+            rawArray,
             [](int* data)
             {
                 std::sort(std::execution::par, data, data + HOW_MANY_ELEMENTS);
             });
+
+        // Clean up the dynamically allocated array
+        delete[] rawArray;
     }
+    std::cout << std::endl;
 }
 
 void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, const SourceArray& reversed, const SourceArray& organPipe, const SourceArray& rotated)
 {
     std::cout << " --- std::array Performance ---\n\n";
 
-    const SourceArray arrays[] = { random, sorted, reversed, organPipe, rotated };
+    // Store the SourceArrays in a dynamic container
+    const SourceArray* arrays[] = { &random, &sorted, &reversed, &organPipe, &rotated };
     const std::string labels[] = { "Random", "Sorted", "Reversed", "Organ Pipe", "Rotated" };
 
     std::cout << "Sequential\n";
     for (size_t i = 0; i < 5; ++i)
     {
+        // Create a copy of the current SourceArray
+        const SourceArray dataCopy = *arrays[i];
+
         measureSortTime(
             labels[i],
-            arrays[i],
+            dataCopy,
             [](SourceArray& data)
             {
                 std::ranges::sort(data);
@@ -119,36 +141,35 @@ void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, cons
     std::cout << "\nParallel\n";
     for (size_t i = 0; i < 5; ++i)
     {
+        // Create a copy of the current SourceArray
+        const SourceArray dataCopy = *arrays[i];
+
         measureSortTime(
             labels[i],
-            arrays[i],
+            dataCopy,
             [](SourceArray& data)
             {
                 std::sort(std::execution::par, data.begin(), data.end());
             });
     }
+    std::cout << std::endl;
 }
 
 void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, const SourceArray& reversed, const SourceArray& organPipe, const SourceArray& rotated)
 {
     std::cout << " --- std::vector Performance ---\n\n";
 
-    const std::vector vectors = {
-        std::vector(random.begin(), random.end()),
-        std::vector(sorted.begin(), sorted.end()),
-        std::vector(reversed.begin(), reversed.end()),
-        std::vector(organPipe.begin(), organPipe.end()),
-        std::vector(rotated.begin(), rotated.end())
-    };
-
+    const SourceArray* arrays[] = { &random, &sorted, &reversed, &organPipe, &rotated };
     const std::string labels[] = { "Random", "Sorted", "Reversed", "Organ Pipe", "Rotated" };
 
     std::cout << "Sequential\n";
-    for (size_t i = 0; i < vectors.size(); ++i)
+    for (size_t i = 0; i < 5; ++i)
     {
+        const std::vector dataCopy(arrays[i]->begin(), arrays[i]->end());
+
         measureSortTime(
             labels[i],
-            vectors[i],
+            dataCopy,
             [](std::vector<int>& data)
             {
                 std::ranges::sort(data);
@@ -156,14 +177,17 @@ void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, con
     }
 
     std::cout << "\nParallel\n";
-    for (size_t i = 0; i < vectors.size(); ++i)
+    for (size_t i = 0; i < 5; ++i)
     {
+        const std::vector dataCopy(arrays[i]->begin(), arrays[i]->end());
+
         measureSortTime(
             labels[i],
-            vectors[i],
+            dataCopy,
             [](std::vector<int>& data)
             {
                 std::sort(std::execution::par, data.begin(), data.end());
             });
     }
+    std::cout << std::endl;
 }

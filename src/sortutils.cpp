@@ -90,7 +90,7 @@ void measureSortTime(
     Collection& data,
     auto& sort)
 {
-    std::chrono::milliseconds totalDuration = {}; // Total duration for multiple sort operations
+    std::chrono::microseconds totalDuration = {}; // Total duration for multiple sort operations
     for (std::uint8_t i = 0; i < HOW_MANY_TIMES; i++)
     {
         auto dataCopy = data;                                // Create a deep copy of the data
@@ -107,12 +107,12 @@ void measureSortTime(
 
         const auto end = std::chrono::steady_clock::now();                                        // End timer
         const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // Calculate duration
-        totalDuration += std::chrono::duration_cast<std::chrono::milliseconds>(duration);         // Accumulate total duration
+        totalDuration += duration;                                                                // Accumulate total duration
     }
 
     // Print out the sorting time
     std::cout << "        " << std::left << std::setw(15) << label + " Time" << " : "
-              << std::setw(3) << totalDuration.count() << " ms\n";
+              << std::setw(3) << std::chrono::duration_cast<std::chrono::milliseconds>(totalDuration).count() << " ms\n";
 }
 
 /**

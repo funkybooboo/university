@@ -135,17 +135,16 @@ void evaluateCollection(
     const SourceArray& organPipe,
     const SourceArray& rotated,
     const std::string& type,
-    auto prepareAndMeasureSortTime,
-    auto sequentialSort,
-    auto parallelSort)
+    auto& prepareAndMeasureSortTime,
+    auto& sequentialSort,
+    auto& parallelSort)
 {
     std::cout << " --- " + type + " Performance ---\n\n";
 
-    // Labels for the different types of collections
+    // Labels for the different types of data orderings
     const char* labels[] = { "Random", "Sorted", "Reversed", "Organ Pipe", "Rotated" };
     const SourceArray* arrays[] = { &random, &sorted, &reversed, &organPipe, &rotated };
 
-    // Lambda to evaluate sorting for each collection type
     auto evaluateSorting = [&](auto sort)
     {
         for (size_t i = 0; i < 5; ++i)
@@ -186,25 +185,27 @@ void evaluateRawArray(
     const SourceArray& organPipe,
     const SourceArray& rotated)
 {
-    // Prepare and measure sorting time for raw arrays
-    auto prepareAndMeasureSortTime = [](const SourceArray& source, const char* label, auto& sort)
-    {
-        auto rawArray = new int[HOW_MANY_ELEMENTS];       // Allocate raw array
-        initializeRawArrayFromStdArray(source, rawArray); // Initialize from standard array
-        measureSortTime(label, rawArray, sort);           // Measure sorting time
-        delete[] rawArray;                                // Free allocated memory
-    };
-
     // Sequential sorting function for raw arrays
     auto sequentialSort = [](int* data)
     {
         std::sort(std::execution::seq, data, data + HOW_MANY_ELEMENTS);
+        // TODO std::sort(std::execution::seq, std::begin(data), std::end(data));
     };
 
     // Parallel sorting function for raw arrays
     auto parallelSort = [](int* data)
     {
         std::sort(std::execution::par, data, data + HOW_MANY_ELEMENTS);
+        // TODO std::sort(std::execution::par, std::begin(data), std::end(data));
+    };
+
+    // Prepare and measure sorting time for raw arrays
+    auto prepareAndMeasureSortTime = [](const SourceArray& data, const char* label, auto& sort)
+    {
+        auto dataCopy = new int[HOW_MANY_ELEMENTS];       // Allocate raw array
+        initializeRawArrayFromStdArray(data, dataCopy); // Initialize from standard array
+        measureSortTime(label, dataCopy, sort);           // Measure sorting time
+        delete[] dataCopy;                                // Free allocated memory
     };
 
     // Evaluate the performance of raw arrays
@@ -227,12 +228,6 @@ void evaluateStdArray(
     const SourceArray& organPipe,
     const SourceArray& rotated)
 {
-    // Prepare and measure sorting time for standard arrays
-    auto prepareAndMeasureSortTime = [](const SourceArray& source, const std::string& label, auto& sort)
-    {
-        measureSortTime(label, source, sort);
-    };
-
     // Sequential sorting function for standard arrays
     auto sequentialSort = [](SourceArray& data)
     {
@@ -243,6 +238,12 @@ void evaluateStdArray(
     auto parallelSort = [](SourceArray& data)
     {
         std::sort(std::execution::par, data.begin(), data.end());
+    };
+
+    // Prepare and measure sorting time for standard arrays
+    auto prepareAndMeasureSortTime = [](const SourceArray& data, const std::string& label, auto& sort)
+    {
+        measureSortTime(label, data, sort);
     };
 
     // Evaluate the performance of standard arrays
@@ -265,13 +266,6 @@ void evaluateStdVector(
     const SourceArray& organPipe,
     const SourceArray& rotated)
 {
-    // Prepare and measure sorting time for standard vectors
-    auto prepareAndMeasureSortTime = [](const SourceArray& source, const std::string& label, auto& sort)
-    {
-        std::vector dataCopy(source.begin(), source.end()); // Create a copy of the data
-        measureSortTime(label, dataCopy, sort);             // Measure sorting time
-    };
-
     // Sequential sorting function for standard vectors
     auto sequentialSort = [](std::vector<int>& data)
     {
@@ -282,6 +276,13 @@ void evaluateStdVector(
     auto parallelSort = [](std::vector<int>& data)
     {
         std::sort(std::execution::par, data.begin(), data.end());
+    };
+
+    // Prepare and measure sorting time for standard vectors
+    auto prepareAndMeasureSortTime = [](const SourceArray& data, const std::string& label, auto& sort)
+    {
+        std::vector dataCopy(data.begin(), data.end()); // Create a copy of the data
+        measureSortTime(label, dataCopy, sort);             // Measure sorting time
     };
 
     // Evaluate the performance of standard vectors

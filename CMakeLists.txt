@@ -35,12 +35,6 @@ FetchContent_MakeAvailable(googletest)
 
 target_link_libraries(${UNIT_TEST_RUNNER} gtest_main)
 
-find_program(TBB "tbb")
-if (TBB_FOUND)
-    message("TBB Found")
-    target_link_libraries(ParallelAlgorithms TBB::tbb)
-endif()
-
 find_program(CLANG_FORMAT "clang-format")
 if (CLANG_FORMAT)
     unset(SOURCE_FILES_PATHS)

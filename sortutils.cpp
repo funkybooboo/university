@@ -7,10 +7,10 @@
 #include <execution>
 #include <functional>
 #include <iostream>
+#include <ranges>
+#include <stdexcept>
 #include <string>
 #include <vector>
-#include <stdexcept>
-#include <ranges>
 
 /**
  * Initializes a raw array from a standard array.
@@ -28,12 +28,10 @@ void initializeRawArrayFromStdArray(const SourceArray& source, int dest[])
         throw std::invalid_argument("Destination array cannot be null.");
     }
 
-    if (source.size() != HOW_MANY_ELEMENTS)
+    for (std::size_t i = 0; i < HOW_MANY_ELEMENTS; ++i)
     {
-        throw std::out_of_range("Source array size exceeds destination array capacity.");
+        dest[i] = source[i];
     }
-
-    std::ranges::copy(source.begin(), source.end(), dest); // Copy elements from source to destination
 }
 
 /**
@@ -45,26 +43,27 @@ void initializeRawArrayFromStdArray(const SourceArray& source, int dest[])
  */
 void organPipeStdArray(SourceArray& data)
 {
-    const std::size_t n = data.size();
-    SourceArray organPipe; // Create an array of the same size
+    const std::size_t n = HOW_MANY_ELEMENTS; // Fixed size from the constant
+    SourceArray organPipe;                   // Create an array of the same size
 
     // Copy the first half of the array
     const std::size_t half = n / 2;
-    std::copy_n(data.begin(), half, organPipe.begin());
-
-    // If the array has an odd size, copy the middle element
-    if (n % 2 != 0)
+    for (std::size_t i = 0; i < half; ++i)
     {
-        organPipe[half] = data[half];
+        organPipe[i] = data[i];
     }
 
     // Copy the first half in reverse order to the second half
-    std::copy_n(organPipe.begin(), half, organPipe.end() - half);
+    for (std::size_t i = 0; i < half; ++i)
+    {
+        organPipe[n - 1 - i] = organPipe[i];
+    }
 
-    // Reverse the second half to maintain the organ pipe structure
-    std::reverse(organPipe.begin() + half + (n % 2), organPipe.end());
-
-    data = organPipe; // Update the original array with the organ pipe structure
+    // Update the original array with the organ pipe structure
+    for (std::size_t i = 0; i < n; ++i)
+    {
+        data[i] = organPipe[i];
+    }
 }
 
 /**

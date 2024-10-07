@@ -198,7 +198,7 @@ void evaluateRawArray(
     // Sequential sorting function for raw arrays
     auto sequentialSort = [](int* data)
     {
-        std::ranges::sort(data, data + HOW_MANY_ELEMENTS);
+        std::sort(std::execution::seq, data, data + HOW_MANY_ELEMENTS);
     };
 
     // Parallel sorting function for raw arrays
@@ -236,7 +236,7 @@ void evaluateStdArray(
     // Sequential sorting function for standard arrays
     auto sequentialSort = [](SourceArray& data)
     {
-        std::ranges::sort(data);
+        std::sort(std::execution::seq, data.begin(), data.end());
     };
 
     // Parallel sorting function for standard arrays
@@ -275,7 +275,7 @@ void evaluateStdVector(
     // Sequential sorting function for standard vectors
     auto sequentialSort = [](std::vector<int>& data)
     {
-        std::ranges::sort(data);
+        std::sort(std::execution::seq, data.begin(), data.end());
     };
 
     // Parallel sorting function for standard vectors

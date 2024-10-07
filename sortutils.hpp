@@ -1,7 +1,7 @@
 #pragma once
 
-#include <cstdint>
 #include <array>
+#include <cstdint>
 
 constexpr std::size_t HOW_MANY_ELEMENTS = 250000;
 constexpr std::uint8_t HOW_MANY_TIMES = 25;

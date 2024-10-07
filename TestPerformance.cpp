@@ -1,9 +1,8 @@
 #include "sortutils.hpp"
 
-#include <gtest/gtest.h>
 #include <algorithm>
+#include <gtest/gtest.h>
 #include <random>
-#include <functional>
 
 constexpr auto MIN_VALUE = -10'000'000;
 constexpr auto MAX_VALUE = 10'000'000;
@@ -21,7 +20,9 @@ SourceArray generateRandomArray()
 
     SourceArray array;
     std::generate(array.begin(), array.end(), [&]
-                  { return dist(engine); });
+                  {
+                      return dist(engine);
+                  });
     return array;
 }
 

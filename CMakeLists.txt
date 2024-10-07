@@ -5,11 +5,11 @@ set(UNIT_TEST_RUNNER UnitTestRunner)
 
 project(${PROJECT})
 
-set(HEADER_FILES src/sortutils.hpp)
-set(SOURCE_FILES src/sortutils.cpp)
-set(UNIT_TEST_FILES src/TestPerformance.cpp)
+set(HEADER_FILES sortutils.hpp)
+set(SOURCE_FILES sortutils.cpp)
+set(UNIT_TEST_FILES TestPerformance.cpp)
 
-add_executable(${PROJECT} ${HEADER_FILES} ${SOURCE_FILES} src/main.cpp)
+add_executable(${PROJECT} ${HEADER_FILES} ${SOURCE_FILES} main.cpp)
 add_executable(${UNIT_TEST_RUNNER} ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES})
 
 set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD 20)
@@ -35,11 +35,11 @@ FetchContent_MakeAvailable(googletest)
 
 target_link_libraries(${UNIT_TEST_RUNNER} gtest_main)
 
-#find_program(TBB)
-#if (TBB_FOUND)
-#    message("TBB Found")
-#    target_link_libraries(ParallelAlgorithms TBB::tbb)
-#endif()
+find_program(TBB "tbb")
+if (TBB_FOUND)
+    message("TBB Found")
+    target_link_libraries(ParallelAlgorithms TBB::tbb)
+endif()
 
 find_program(CLANG_FORMAT "clang-format")
 if (CLANG_FORMAT)

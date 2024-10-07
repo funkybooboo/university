@@ -4,13 +4,14 @@
 #include <array>
 #include <random>
 
-
-SourceArray getRandomData(const int min = -10000000, const int max = 10000000) {
+SourceArray getRandomData(const int min = -10000000, const int max = 10000000)
+{
     SourceArray data;
     std::random_device rd;
     std::default_random_engine engine(rd());
     std::uniform_int_distribution distribution(min, max);
-    for (std::size_t i = 0; i < HOW_MANY_ELEMENTS; i++) {
+    for (std::size_t i = 0; i < HOW_MANY_ELEMENTS; i++)
+    {
         data[i] = distribution(engine);
     }
     return data;

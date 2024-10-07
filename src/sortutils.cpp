@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <array>
 #include <chrono>
+#include <cstring>
 #include <execution>
 #include <iostream>
 #include <string>
@@ -80,22 +81,31 @@ void organPipeStdArray(
  * Measures the time taken to sort a collection using the provided sorting function.
  *
  * @param label The label for the sorting operation, used in output.
- * @param data The collection to be sorted.
+ * @param data The Collection to be sorted.
+ * @param copy
+ * @param cleanup
  * @param sort The sorting function to use.
- * @note This function performs multiple trials to average the sorting time.
+ * @note This function performs multiple trials to get the sorting time.
  */
-template <typename Collection>
+template <typename Collection,
+          typename CopyFunction,
+          typename SortFunction,
+          typename CleanupFunction = std::function<void(Collection&)>>
 void measureSortTime(
     const std::string& label,
     Collection& data,
-    auto& sort)
+    CopyFunction copy,
+    SortFunction sort,
+    CleanupFunction cleanup = [](Collection& data)
+    {
+    })
 {
     std::chrono::microseconds totalDuration = {}; // Total duration for multiple sort operations
     for (std::uint8_t i = 0; i < HOW_MANY_TIMES; i++)
     {
-        auto dataCopy = data;                                // Create a deep copy of the data
-        const auto start = std::chrono::steady_clock::now(); // Start timer
+        auto dataCopy = copy(data);
 
+        const auto start = std::chrono::steady_clock::now(); // Start timer
         try
         {
             sort(dataCopy); // Sort the copied data
@@ -104,10 +114,11 @@ void measureSortTime(
         {
             std::cerr << "Error sorting " << label << ": " << e.what() << '\n';
         }
-
         const auto end = std::chrono::steady_clock::now();                                        // End timer
         const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // Calculate duration
         totalDuration += duration;                                                                // Accumulate total duration
+
+        cleanup(dataCopy);
     }
 
     // Print out the sorting time
@@ -145,7 +156,7 @@ void evaluateCollection(
     const char* labels[] = { "Random", "Sorted", "Reversed", "Organ Pipe", "Rotated" };
     const SourceArray* arrays[] = { &random, &sorted, &reversed, &organPipe, &rotated };
 
-    auto evaluateSorting = [&](auto sort)
+    auto evaluateSorting = [&](auto& sort)
     {
         for (size_t i = 0; i < 5; ++i)
         {
@@ -185,28 +196,38 @@ void evaluateRawArray(
     const SourceArray& organPipe,
     const SourceArray& rotated)
 {
+    auto copy = [](const int* data)
+    {
+        const auto dataCopy = new int[HOW_MANY_ELEMENTS];             // Create a deep copy of the data
+        std::memcpy(dataCopy, data, HOW_MANY_ELEMENTS * sizeof(int)); // Copy the entire array
+        return dataCopy;
+    };
+
+    auto cleanup = [](const int* data)
+    {
+        delete[] data;
+        data = nullptr;
+    };
+
     // Sequential sorting function for raw arrays
     auto sequentialSort = [](int* data)
     {
         std::sort(std::execution::seq, data, data + HOW_MANY_ELEMENTS);
-        // TODO std::sort(std::execution::seq, std::begin(data), std::end(data));
     };
 
     // Parallel sorting function for raw arrays
     auto parallelSort = [](int* data)
     {
         std::sort(std::execution::par, data, data + HOW_MANY_ELEMENTS);
-        // TODO std::sort(std::execution::par, std::begin(data), std::end(data));
     };
 
     // Prepare and measure sorting time for raw arrays
-    auto prepareAndMeasureSortTime = [](const SourceArray& data, const char* label, auto& sort)
+    auto prepareAndMeasureSortTime = [copy, cleanup](const SourceArray& data, const char* label, auto& sort)
     {
-        auto dataCopy = new int[HOW_MANY_ELEMENTS];     // Allocate raw array
-        initializeRawArrayFromStdArray(data, dataCopy); // Initialize from standard array
-        measureSortTime(label, dataCopy, sort);         // Measure sorting time
-        delete[] dataCopy;                              // Free allocated memory
-        dataCopy = nullptr;
+        auto dataCopy = new int[HOW_MANY_ELEMENTS];            // Allocate raw array
+        initializeRawArrayFromStdArray(data, dataCopy);        // Initialize from standard array
+        measureSortTime(label, dataCopy, copy, sort, cleanup); // Measure sorting time
+        cleanup(dataCopy);
     };
 
     // Evaluate the performance of raw arrays
@@ -229,6 +250,11 @@ void evaluateStdArray(
     const SourceArray& organPipe,
     const SourceArray& rotated)
 {
+    auto copy = [](const SourceArray& data)
+    {
+        return data;
+    };
+
     // Sequential sorting function for standard arrays
     auto sequentialSort = [](SourceArray& data)
     {
@@ -242,9 +268,9 @@ void evaluateStdArray(
     };
 
     // Prepare and measure sorting time for standard arrays
-    auto prepareAndMeasureSortTime = [](const SourceArray& data, const std::string& label, auto& sort)
+    auto prepareAndMeasureSortTime = [copy](const SourceArray& data, const std::string& label, auto& sort)
     {
-        measureSortTime(label, data, sort);
+        measureSortTime(label, data, copy, sort);
     };
 
     // Evaluate the performance of standard arrays
@@ -267,6 +293,11 @@ void evaluateStdVector(
     const SourceArray& organPipe,
     const SourceArray& rotated)
 {
+    auto copy = [](std::vector<int>& data)
+    {
+        return data;
+    };
+
     // Sequential sorting function for standard vectors
     auto sequentialSort = [](std::vector<int>& data)
     {
@@ -280,10 +311,10 @@ void evaluateStdVector(
     };
 
     // Prepare and measure sorting time for standard vectors
-    auto prepareAndMeasureSortTime = [](const SourceArray& data, const std::string& label, auto& sort)
+    auto prepareAndMeasureSortTime = [copy](const SourceArray& data, const std::string& label, auto& sort)
     {
         std::vector dataCopy(data.begin(), data.end()); // Create a copy of the data
-        measureSortTime(label, dataCopy, sort);         // Measure sorting time
+        measureSortTime(label, dataCopy, copy, sort);   // Measure sorting time
     };
 
     // Evaluate the performance of standard vectors

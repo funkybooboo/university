@@ -124,9 +124,9 @@ void measureSortTime(
  * @param organPipe A collection arranged in organ pipe order.
  * @param rotated A collection that has been rotated.
  * @param type The type of the collection (e.g., "Raw Array", "std::array").
- * @param prepareAndMeasureSortTime A function to set up and sort the collection.
  * @param sequentialSort The sorting function for sequential sorting.
  * @param parallelSort The sorting function for parallel sorting.
+ * @param prepareAndMeasureSortTime A function to set up and sort the collection.
  */
 void evaluateCollection(
     const SourceArray& random,
@@ -135,9 +135,9 @@ void evaluateCollection(
     const SourceArray& organPipe,
     const SourceArray& rotated,
     const std::string& type,
-    auto& prepareAndMeasureSortTime,
     auto& sequentialSort,
-    auto& parallelSort)
+    auto& parallelSort,
+    auto& prepareAndMeasureSortTime)
 {
     std::cout << " --- " + type + " Performance ---\n\n";
 
@@ -202,14 +202,15 @@ void evaluateRawArray(
     // Prepare and measure sorting time for raw arrays
     auto prepareAndMeasureSortTime = [](const SourceArray& data, const char* label, auto& sort)
     {
-        auto dataCopy = new int[HOW_MANY_ELEMENTS];       // Allocate raw array
+        auto dataCopy = new int[HOW_MANY_ELEMENTS];     // Allocate raw array
         initializeRawArrayFromStdArray(data, dataCopy); // Initialize from standard array
-        measureSortTime(label, dataCopy, sort);           // Measure sorting time
-        delete[] dataCopy;                                // Free allocated memory
+        measureSortTime(label, dataCopy, sort);         // Measure sorting time
+        delete[] dataCopy;                              // Free allocated memory
+        dataCopy = nullptr;
     };
 
     // Evaluate the performance of raw arrays
-    evaluateCollection(random, sorted, reversed, organPipe, rotated, "Raw Array", prepareAndMeasureSortTime, sequentialSort, parallelSort);
+    evaluateCollection(random, sorted, reversed, organPipe, rotated, "Raw Array", sequentialSort, parallelSort, prepareAndMeasureSortTime);
 }
 
 /**
@@ -247,7 +248,7 @@ void evaluateStdArray(
     };
 
     // Evaluate the performance of standard arrays
-    evaluateCollection(random, sorted, reversed, organPipe, rotated, "std::array", prepareAndMeasureSortTime, sequentialSort, parallelSort);
+    evaluateCollection(random, sorted, reversed, organPipe, rotated, "std::array", sequentialSort, parallelSort, prepareAndMeasureSortTime);
 }
 
 /**
@@ -282,9 +283,9 @@ void evaluateStdVector(
     auto prepareAndMeasureSortTime = [](const SourceArray& data, const std::string& label, auto& sort)
     {
         std::vector dataCopy(data.begin(), data.end()); // Create a copy of the data
-        measureSortTime(label, dataCopy, sort);             // Measure sorting time
+        measureSortTime(label, dataCopy, sort);         // Measure sorting time
     };
 
     // Evaluate the performance of standard vectors
-    evaluateCollection(random, sorted, reversed, organPipe, rotated, "std::vector", prepareAndMeasureSortTime, sequentialSort, parallelSort);
+    evaluateCollection(random, sorted, reversed, organPipe, rotated, "std::vector", sequentialSort, parallelSort, prepareAndMeasureSortTime);
 }

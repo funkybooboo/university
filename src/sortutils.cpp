@@ -18,9 +18,7 @@
  * @throws std::out_of_range if the size of the source array exceeds the capacity of the destination array.
  * @note HOW_MANY_ELEMENTS represents the expected number of elements to copy.
  */
-void initializeRawArrayFromStdArray(
-    const SourceArray& source,
-    int dest[])
+void initializeRawArrayFromStdArray(const SourceArray& source, int dest[])
 {
     if (dest == nullptr)
     {
@@ -46,15 +44,14 @@ void initializeRawArrayFromStdArray(
  * Rearranges the elements of a standard array into an organ pipe structure.
  *
  * @param data The standard array to be rearranged.
- * @note An organ pipe structure typically arranges elements such that the
+ * @note An organ pipe structure arranges elements so that the
  *       largest and smallest elements are at the ends, with a symmetrical pattern.
  */
-void organPipeStdArray(
-    SourceArray& data)
+void organPipeStdArray(SourceArray& data)
 {
     const std::size_t n = data.size();
-    const std::size_t half = n / 2; // Calculate half the size of the array
-    SourceArray organPipeArray = {};
+    const std::size_t half = n / 2;  // Calculate half the size of the array
+    SourceArray organPipeArray = {}; // Create an array to hold the organ pipe structure
 
     // Copy the first half of the array
     for (std::size_t i = 0; i < half; ++i)
@@ -82,28 +79,21 @@ void organPipeStdArray(
  *
  * @param label The label for the sorting operation, used in output.
  * @param data The Collection to be sorted.
- * @param copy
- * @param cleanup
+ * @param copy Function to copy the data.
  * @param sort The sorting function to use.
+ * @param cleanup Function to clean up after sorting.
  * @note This function performs multiple trials to get the sorting time.
  */
-template <typename Collection,
-          typename CopyFunction,
-          typename SortFunction,
-          typename CleanupFunction = std::function<void(Collection&)>>
-void measureSortTime(
-    const std::string& label,
-    Collection& data,
-    CopyFunction copy,
-    SortFunction sort,
-    CleanupFunction cleanup = [](Collection& data)
-    {
-    })
+template <typename Collection, typename CopyFunction, typename SortFunction, typename CleanupFunction = std::function<void(Collection&)>>
+void measureSortTime(const std::string& label, Collection& data, CopyFunction copy, SortFunction sort, CleanupFunction cleanup = [](Collection&)
+                                                                                                       {
+                                                                                                       })
 {
     std::chrono::microseconds totalDuration = {}; // Total duration for multiple sort operations
+
     for (std::uint8_t i = 0; i < HOW_MANY_TIMES; i++)
     {
-        auto dataCopy = copy(data);
+        auto dataCopy = copy(data); // Create a copy of the data
 
         const auto start = std::chrono::steady_clock::now(); // Start timer
         try
@@ -118,7 +108,7 @@ void measureSortTime(
         const auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // Calculate duration
         totalDuration += duration;                                                                // Accumulate total duration
 
-        cleanup(dataCopy);
+        cleanup(dataCopy); // Clean up the copied data
     }
 
     // Print out the sorting time
@@ -139,16 +129,9 @@ void measureSortTime(
  * @param parallelSort The sorting function for parallel sorting.
  * @param prepareAndMeasureSortTime A function to set up and sort the collection.
  */
-void evaluateCollection(
-    const SourceArray& random,
-    const SourceArray& sorted,
-    const SourceArray& reversed,
-    const SourceArray& organPipe,
-    const SourceArray& rotated,
-    const std::string& type,
-    auto& sequentialSort,
-    auto& parallelSort,
-    auto& prepareAndMeasureSortTime)
+void evaluateCollection(const SourceArray& random, const SourceArray& sorted, const SourceArray& reversed,
+                        const SourceArray& organPipe, const SourceArray& rotated, const std::string& type,
+                        auto& sequentialSort, auto& parallelSort, auto& prepareAndMeasureSortTime)
 {
     std::cout << " --- " + type + " Performance ---\n\n";
 
@@ -189,49 +172,52 @@ void evaluateCollection(
  * @param organPipe The organ pipe ordered raw array.
  * @param rotated The rotated raw array.
  */
-void evaluateRawArray(
-    const SourceArray& random,
-    const SourceArray& sorted,
-    const SourceArray& reversed,
-    const SourceArray& organPipe,
-    const SourceArray& rotated)
+void evaluateRawArray(const SourceArray& random, const SourceArray& sorted, const SourceArray& reversed,
+                      const SourceArray& organPipe, const SourceArray& rotated)
 {
-    auto copy = [](const int* data)
+    try
     {
-        const auto dataCopy = new int[HOW_MANY_ELEMENTS];             // Create a deep copy of the data
-        std::memcpy(dataCopy, data, HOW_MANY_ELEMENTS * sizeof(int)); // Copy the entire array
-        return dataCopy;
-    };
+        auto copy = [](const int* data)
+        {
+            const auto dataCopy = new int[HOW_MANY_ELEMENTS];
+            std::memcpy(dataCopy, data, HOW_MANY_ELEMENTS * sizeof(int));
+            return dataCopy;
+        };
 
-    auto cleanup = [](const int* data)
+        // Sequential sorting function for raw arrays
+        auto sequentialSort = [](int* data)
+        {
+            std::sort(std::execution::seq, data, data + HOW_MANY_ELEMENTS);
+        };
+
+        // Parallel sorting function for raw arrays
+        auto parallelSort = [](int* data)
+        {
+            std::sort(std::execution::par, data, data + HOW_MANY_ELEMENTS);
+        };
+
+        auto cleanup = [](const int* data)
+        {
+            delete[] data; // Clean up allocated memory
+            data = nullptr;
+        };
+
+        // Prepare and measure sorting time for raw arrays
+        auto prepareAndMeasureSortTime = [copy, cleanup](const SourceArray& data, const char* label, auto& sort)
+        {
+            auto dataCopy = new int[HOW_MANY_ELEMENTS];            // Allocate raw array
+            initializeRawArrayFromStdArray(data, dataCopy);        // Initialize from standard array
+            measureSortTime(label, dataCopy, copy, sort, cleanup); // Measure sorting time
+            cleanup(dataCopy);                                     // Clean up
+        };
+
+        // Evaluate the performance of raw arrays
+        evaluateCollection(random, sorted, reversed, organPipe, rotated, "Raw Array", sequentialSort, parallelSort, prepareAndMeasureSortTime);
+    }
+    catch (const std::exception& e)
     {
-        delete[] data;
-        data = nullptr;
-    };
-
-    // Sequential sorting function for raw arrays
-    auto sequentialSort = [](int* data)
-    {
-        std::sort(std::execution::seq, data, data + HOW_MANY_ELEMENTS);
-    };
-
-    // Parallel sorting function for raw arrays
-    auto parallelSort = [](int* data)
-    {
-        std::sort(std::execution::par, data, data + HOW_MANY_ELEMENTS);
-    };
-
-    // Prepare and measure sorting time for raw arrays
-    auto prepareAndMeasureSortTime = [copy, cleanup](const SourceArray& data, const char* label, auto& sort)
-    {
-        auto dataCopy = new int[HOW_MANY_ELEMENTS];            // Allocate raw array
-        initializeRawArrayFromStdArray(data, dataCopy);        // Initialize from standard array
-        measureSortTime(label, dataCopy, copy, sort, cleanup); // Measure sorting time
-        cleanup(dataCopy);
-    };
-
-    // Evaluate the performance of raw arrays
-    evaluateCollection(random, sorted, reversed, organPipe, rotated, "Raw Array", sequentialSort, parallelSort, prepareAndMeasureSortTime);
+        std::cerr << "Error evaluating raw array performance: " << e.what() << '\n';
+    }
 }
 
 /**
@@ -243,38 +229,41 @@ void evaluateRawArray(
  * @param organPipe The organ pipe ordered standard array.
  * @param rotated The rotated standard array.
  */
-void evaluateStdArray(
-    const SourceArray& random,
-    const SourceArray& sorted,
-    const SourceArray& reversed,
-    const SourceArray& organPipe,
-    const SourceArray& rotated)
+void evaluateStdArray(const SourceArray& random, const SourceArray& sorted, const SourceArray& reversed,
+                      const SourceArray& organPipe, const SourceArray& rotated)
 {
-    auto copy = [](const SourceArray& data)
+    try
     {
-        return data;
-    };
+        auto copy = [](const SourceArray& data)
+        {
+            return data; // Return copy of the array
+        };
 
-    // Sequential sorting function for standard arrays
-    auto sequentialSort = [](SourceArray& data)
+        // Sequential sorting function for standard arrays
+        auto sequentialSort = [](SourceArray& data)
+        {
+            std::sort(std::execution::seq, data.begin(), data.end());
+        };
+
+        // Parallel sorting function for standard arrays
+        auto parallelSort = [](SourceArray& data)
+        {
+            std::sort(std::execution::par, data.begin(), data.end());
+        };
+
+        // Prepare and measure sorting time for standard arrays
+        auto prepareAndMeasureSortTime = [copy](const SourceArray& data, const std::string& label, auto& sort)
+        {
+            measureSortTime(label, data, copy, sort);
+        };
+
+        // Evaluate the performance of standard arrays
+        evaluateCollection(random, sorted, reversed, organPipe, rotated, "std::array", sequentialSort, parallelSort, prepareAndMeasureSortTime);
+    }
+    catch (const std::exception& e)
     {
-        std::sort(std::execution::seq, data.begin(), data.end());
-    };
-
-    // Parallel sorting function for standard arrays
-    auto parallelSort = [](SourceArray& data)
-    {
-        std::sort(std::execution::par, data.begin(), data.end());
-    };
-
-    // Prepare and measure sorting time for standard arrays
-    auto prepareAndMeasureSortTime = [copy](const SourceArray& data, const std::string& label, auto& sort)
-    {
-        measureSortTime(label, data, copy, sort);
-    };
-
-    // Evaluate the performance of standard arrays
-    evaluateCollection(random, sorted, reversed, organPipe, rotated, "std::array", sequentialSort, parallelSort, prepareAndMeasureSortTime);
+        std::cerr << "Error evaluating std::array performance: " << e.what() << '\n';
+    }
 }
 
 /**
@@ -286,37 +275,40 @@ void evaluateStdArray(
  * @param organPipe The organ pipe ordered standard vector.
  * @param rotated The rotated standard vector.
  */
-void evaluateStdVector(
-    const SourceArray& random,
-    const SourceArray& sorted,
-    const SourceArray& reversed,
-    const SourceArray& organPipe,
-    const SourceArray& rotated)
+void evaluateStdVector(const SourceArray& random, const SourceArray& sorted, const SourceArray& reversed,
+                       const SourceArray& organPipe, const SourceArray& rotated)
 {
-    auto copy = [](std::vector<int>& data)
+    try
     {
-        return data;
-    };
+        auto copy = [](const std::vector<int>& data)
+        {
+            return data; // Return copy of the vector
+        };
 
-    // Sequential sorting function for standard vectors
-    auto sequentialSort = [](std::vector<int>& data)
+        // Sequential sorting function for standard vectors
+        auto sequentialSort = [](std::vector<int>& data)
+        {
+            std::sort(std::execution::seq, data.begin(), data.end());
+        };
+
+        // Parallel sorting function for standard vectors
+        auto parallelSort = [](std::vector<int>& data)
+        {
+            std::sort(std::execution::par, data.begin(), data.end());
+        };
+
+        // Prepare and measure sorting time for standard vectors
+        auto prepareAndMeasureSortTime = [copy](const SourceArray& data, const std::string& label, auto& sort)
+        {
+            std::vector dataCopy(data.begin(), data.end()); // Create a copy of the data
+            measureSortTime(label, dataCopy, copy, sort);   // Measure sorting time
+        };
+
+        // Evaluate the performance of standard vectors
+        evaluateCollection(random, sorted, reversed, organPipe, rotated, "std::vector", sequentialSort, parallelSort, prepareAndMeasureSortTime);
+    }
+    catch (const std::exception& e)
     {
-        std::sort(std::execution::seq, data.begin(), data.end());
-    };
-
-    // Parallel sorting function for standard vectors
-    auto parallelSort = [](std::vector<int>& data)
-    {
-        std::sort(std::execution::par, data.begin(), data.end());
-    };
-
-    // Prepare and measure sorting time for standard vectors
-    auto prepareAndMeasureSortTime = [copy](const SourceArray& data, const std::string& label, auto& sort)
-    {
-        std::vector dataCopy(data.begin(), data.end()); // Create a copy of the data
-        measureSortTime(label, dataCopy, copy, sort);   // Measure sorting time
-    };
-
-    // Evaluate the performance of standard vectors
-    evaluateCollection(random, sorted, reversed, organPipe, rotated, "std::vector", sequentialSort, parallelSort, prepareAndMeasureSortTime);
+        std::cerr << "Error evaluating std::vector performance: " << e.what() << '\n';
+    }
 }

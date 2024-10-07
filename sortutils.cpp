@@ -9,6 +9,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdexcept>
+#include <ranges>
 
 /**
  * Initializes a raw array from a standard array.
@@ -31,14 +33,7 @@ void initializeRawArrayFromStdArray(const SourceArray& source, int dest[])
         throw std::out_of_range("Source array size exceeds destination array capacity.");
     }
 
-    try
-    {
-        std::ranges::copy(source, dest); // Copy elements from source to destination
-    }
-    catch (const std::exception& e)
-    {
-        throw std::runtime_error("Copy operation failed: " + std::string(e.what()));
-    }
+    std::ranges::copy(source.begin(), source.end(), dest); // Copy elements from source to destination
 }
 
 /**
@@ -51,28 +46,25 @@ void initializeRawArrayFromStdArray(const SourceArray& source, int dest[])
 void organPipeStdArray(SourceArray& data)
 {
     const std::size_t n = data.size();
-    const std::size_t half = n / 2;  // Calculate half the size of the array
-    SourceArray organPipeArray = {}; // Create an array to hold the organ pipe structure
+    SourceArray organPipe; // Create an array of the same size
 
     // Copy the first half of the array
-    for (std::size_t i = 0; i < half; ++i)
-    {
-        organPipeArray[i] = data[i];
-    }
+    const std::size_t half = n / 2;
+    std::copy_n(data.begin(), half, organPipe.begin());
 
     // If the array has an odd size, copy the middle element
     if (n % 2 != 0)
     {
-        organPipeArray[half] = data[half];
+        organPipe[half] = data[half];
     }
 
     // Copy the first half in reverse order to the second half
-    for (std::size_t i = 0; i < half; ++i)
-    {
-        organPipeArray[n - 1 - i] = organPipeArray[i];
-    }
+    std::copy_n(organPipe.begin(), half, organPipe.end() - half);
 
-    data = organPipeArray; // Update the original array with the organ pipe structure
+    // Reverse the second half to maintain the organ pipe structure
+    std::reverse(organPipe.begin() + half + (n % 2), organPipe.end());
+
+    data = organPipe; // Update the original array with the organ pipe structure
 }
 
 /**

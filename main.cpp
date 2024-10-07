@@ -4,7 +4,7 @@
 #include <array>
 #include <random>
 
-SourceArray getRandomData(const int min = -10000000, const int max = 10000000)
+SourceArray getRandomData(const int min = -10'000'000, const int max = 10'000'000)
 {
     SourceArray data;
     std::random_device rd;

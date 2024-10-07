@@ -3,6 +3,7 @@
 #include <gtest/gtest.h>
 #include <algorithm>
 #include <random>
+#include <functional>
 
 constexpr auto MIN_VALUE = -10'000'000;
 constexpr auto MAX_VALUE = 10'000'000;

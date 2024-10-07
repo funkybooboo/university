@@ -5,6 +5,7 @@
 #include <chrono>
 #include <cstring>
 #include <execution>
+#include <functional>
 #include <iostream>
 #include <string>
 #include <vector>

@@ -2,8 +2,8 @@
 
 ## Authors
 
-- Rylei Mendrum
+- Rylei Mindrum
 - Nate Stott
-- Skyler Oakason
+- Skyler Oakeson
 
 Start in ![Main](main.md)

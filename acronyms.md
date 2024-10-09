@@ -31,6 +31,14 @@ extended partition. It offers redundancy by storing multiple copies of partition
 detect corruption. GPT is part of the UEFI standard and is widely supported by modern operating systems, making it the
 preferred choice for new drives.
 
+### ISR: Interrupt Service Routine
+
+An Interrupt Service Routine (ISR) is a special block of code in embedded systems or operating systems that executes in
+response to an interrupt signal. When a hardware device needs attention, it sends an interrupt to the CPU, which pauses
+its current tasks to execute the ISR associated with that interrupt. This allows the system to handle events like input
+from peripherals or timer expirations efficiently. After the ISR completes its task, control returns to the interrupted
+process, ensuring that critical operations are managed promptly without significant delay.
+
 ### CIA
 
 - **Confidentiality**: Ensures that information is only accessible to authorized individuals through measures like

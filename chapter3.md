@@ -215,6 +215,42 @@ Context switches are triggered by several events, including:
 
 ### Interprocess Communication (3.4)
 
+#### Types of processes
+
+Process execuring concurrently in the operating system may be either `independent processes` or `cooperating prcoesses`.
+
+- Independent processes
+    - They cannot affect or be affected by the other processes execurting in the system.
+- Cooperating processes
+    - They can affect or be affected by the other processes executing in the system.
+
+Any proceess that shares data with other processes in a cooperating process.
+
+#### Why allow process cooperation
+
+- Information sharing
+    - Several users may be interested in a single file. All users should be able to open that file at the same time.
+- Computation speedup
+    - We can split up a task into smaller tasks and complete it with many processes
+- Modularity
+    - Different parts of the system may need to work together to acheve a single goal
+
+#### How interprocess communication works
+
+There are two fundamental models of interprocess communication:
+
+- Shared Memory
+    - A region of memory that is shared by cooperating processes is established.
+    - Processes can then exchange information by reading and writing data to the shared region.
+- Message passing
+    - Communication tkaes place by means of messages exchanged between the cooperating processes.
+
+![Interprocess Communication](images/chapter3/interprocess_communication.png)
+
+#### Helpful video
+
+[Interprocess Communication](https://www.youtube.com/watch?v=dJuYKfR8vec)
+
 ### Shared Memory Systems (3.5)
 
 ### Message Passing Systems (3.6)

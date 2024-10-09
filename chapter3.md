@@ -261,4 +261,68 @@ For further learning, check out this [Interprocess Communication video](https://
 
 ### Shared Memory Systems (3.5)
 
+#### Overview of Shared Memory
+
+Shared memory is a method of interprocess communication that allows processes to communicate by establishing a shared
+memory region. This memory typically resides in the address space of the process that creates it. Other processes can
+attach this shared memory to their own address spaces for communication.
+
+**Key Points:**
+
+- The operating system generally prevents one process from accessing another's memory.
+- For shared memory communication, processes must agree to bypass this restriction.
+
+#### Producer-Consumer Model
+
+The Producer-Consumer model is a synchronization pattern where one process (the producer) generates data, while another
+process (the consumer) consumes it.
+
+**Example:**
+In a typical scenario, a compiler produces assembly code consumed by an assembler, which in turn produces object modules
+consumed by a loader.
+
+**Goal:**
+To ensure the producer and consumer operate concurrently, allowing the consumer to consume only what has been produced
+without attempting to consume nonexistent data.
+
+![Shared Memory](images/chapter3/shared_memory.png)
+
+#### Buffer Types
+
+To facilitate this model, a buffer acts as shared memory where data can be temporarily stored.
+
+1. **Unbounded Buffer:**
+    - **Producer:** Can produce items without waiting, as there is unlimited space.
+    - **Consumer:** Must wait if the buffer is empty but can consume whenever items are available.
+
+   ![Unbounded Buffer](images/chapter3/unbounded_buffer.png)
+
+2. **Bounded Buffer:**
+    - **Non-Overwriting Bounded Buffer:**
+        - **Producer:** Must wait if the buffer is full, preventing new data from being added until there is space.
+        - **Consumer:** Must wait if the buffer is empty, ensuring that no data is consumed until it is available.
+        - **Key Feature:** Items cannot be overwritten until they have been consumed, maintaining data integrity.
+
+   ![Bounded Buffer](images/chapter3/bounded_buffer.png)
+
+    - **Overwriting Bounded Buffer:**
+        - **Producer:** Can overwrite the oldest data if the buffer is full, allowing continuous production without
+          waiting.
+        - **Consumer:** Must wait if the buffer is empty, ensuring that data is consumed as it becomes available.
+        - **Key Feature:** Allows for flexible usage of buffer space, but risks losing unconsumed data if not managed
+          carefully.
+
+   ![Bounded Buffer](images/chapter3/circular-buffer-animation.gif)
+
+#### Synchronization
+
+To effectively implement the Producer-Consumer model, synchronization is necessary to ensure:
+
+- The consumer does not attempt to consume an item that hasn't been produced yet.
+- The processes operate in harmony without conflicting over shared resources.
+
+#### Helpful Resource
+
+For a deeper understanding, check out this [Shared Memory Systems video](https://www.youtube.com/watch?v=uHtzOFwgD74).
+
 ### Message Passing Systems (3.6)

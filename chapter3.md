@@ -215,41 +215,49 @@ Context switches are triggered by several events, including:
 
 ### Interprocess Communication (3.4)
 
-#### Types of processes
+#### Types of Processes
 
-Process execuring concurrently in the operating system may be either `independent processes` or `cooperating prcoesses`.
+Processes executing concurrently in an operating system can be categorized as either **independent processes** or *
+*cooperating processes**:
 
-- Independent processes
-    - They cannot affect or be affected by the other processes execurting in the system.
-- Cooperating processes
-    - They can affect or be affected by the other processes executing in the system.
+- **Independent Processes**:
+  These processes do not share data; they operate independently and cannot affect or be affected by one another.
 
-Any proceess that shares data with other processes in a cooperating process.
+- **Cooperating Processes**:
+  These processes can share data and resources, allowing them to affect and be affected by one another.
 
-#### Why allow process cooperation
+#### Reasons for IPC
 
-- Information sharing
-    - Several users may be interested in a single file. All users should be able to open that file at the same time.
-- Computation speedup
-    - We can split up a task into smaller tasks and complete it with many processes
-- Modularity
-    - Different parts of the system may need to work together to acheve a single goal
+1. **Information Sharing**:
+   Allows multiple users or processes to access shared resources, such as files, simultaneously.
 
-#### How interprocess communication works
+2. **Speedup**:
+   Enables the division of tasks into smaller parts, which can be executed concurrently by multiple processes, improving
+   overall efficiency.
 
-There are two fundamental models of interprocess communication:
+3. **Modularity**:
+   Promotes organization within the system, facilitating easier maintenance and collaboration among different system
+   components.
 
-- Shared Memory
-    - A region of memory that is shared by cooperating processes is established.
-    - Processes can then exchange information by reading and writing data to the shared region.
-- Message passing
-    - Communication tkaes place by means of messages exchanged between the cooperating processes.
+#### Methods of IPC
+
+IPC can be achieved through two fundamental models:
+
+1. **Shared Memory**:
+    - Description: A designated region of memory is shared among cooperating processes.
+    - Use Case: This method allows for efficient, high-speed data exchange by enabling processes to read and write data
+      directly to the shared memory space.
+
+2. **Message Passing**:
+    - Description: Processes communicate by sending messages to one another, rather than accessing shared memory.
+    - Use Case: This approach is particularly useful for processes that do not share memory, allowing for communication
+      through well-defined messages.
 
 ![Interprocess Communication](images/chapter3/interprocess_communication.png)
 
-#### Helpful video
+#### Helpful Resource
 
-[Interprocess Communication](https://www.youtube.com/watch?v=dJuYKfR8vec)
+For further learning, check out this [Interprocess Communication video](https://www.youtube.com/watch?v=dJuYKfR8vec).
 
 ### Shared Memory Systems (3.5)
 

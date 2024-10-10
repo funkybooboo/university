@@ -1,34 +1,38 @@
 package org.natestott.digitCalculator;
 
 /**
- * Prints the nth number of pi followed by the next 8 numbers in base 10.
+ * Prints the nth number of pi in base 10.
  * This program is based on Bellard's work.
- * @author feltocraig
+ * <p>
+ * Original Author: feltocraig
+ * Modified by: Nate Stott
+ *
+ * <p>This class implements the DigitCalculator interface and computes
+ * specific decimal digits of Pi based on Bellard's formula.</p>
  */
-
 public class Bpp implements DigitCalculator {
 	/**
 	 * Runs the program
 	 * @param args
 	 */
 	public static void main(String args[]) {
-		int NUM = 13;
+		long NUM = 13;
 
 		long duration = System.currentTimeMillis();
 
 		Bpp bpp = new Bpp();
-		System.out.println("Decimal digits of pi at position " + NUM + ": " + bpp.getDecimal(NUM) + "\n");
+		System.out.println("Decimal digits of pi at position " + NUM + ": " + bpp.getDigit(NUM) + "\n");
 
 		duration = System.currentTimeMillis() - duration;
 		System.out.println("> " + duration + " ms");
 	}
 
 	/**
-	 * Returns the nth digit of pi followed by the next 8 numbers
+	 * Returns the nth digit of pi
 	 * @param n - nth number of pi to return
 	 * @return returns an integer value containing 8 digits after n
 	 */
-	public int getDecimal(long n) {
+	public int getDigit(long n) {
 		long av, a, vmax, N, num, den, k, kq, kq2, t, v, s, i;
 		double sum;
 

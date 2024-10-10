@@ -10,12 +10,35 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
+/**
+ * The PiComputer class implements the NumberComputer interface and provides
+ * functionality to compute the digits of Pi using a multi-threaded approach.
+ * It utilizes a task queue to distribute work among available processor cores,
+ * leveraging the Bpp digit calculation method.
+ *
+ * <p>This class is part of the org.natestott.numberComputer package.</p>
+ *
+ * @author Nate Stott
+ */
 public class PiComputer implements NumberComputer {
 
+    /**
+     * Computes the first 1000 digits of Pi and prints them.
+     * This method is a convenience method that calls
+     * {@link #computeNumberAndPrint(int)} with a default of 1000 digits.
+     */
     public void computeNumberAndPrint() {
         computeNumberAndPrint(1000);
     }
 
+    /**
+     * Computes the specified number of digits of Pi and prints the result.
+     *
+     * <p>This method initializes a task queue, distributes tasks across
+     * multiple threads, and collects the computed digits into a result table.</p>
+     *
+     * @param num_digits The number of digits of Pi to compute.
+     */
     public void computeNumberAndPrint(final int num_digits) {
         TaskQueue taskQueue = new TaskQueue();
         ResultTable resultTable = new ResultTable();
@@ -59,13 +82,22 @@ public class PiComputer implements NumberComputer {
             piDigits.append(results.get(task));
         }
 
-        System.out.println("\n"+piDigits);
+        System.out.println("\n" + piDigits);
         System.out.println("Pi Computation took " + elapsedTime + " ms");
 
-        // uncomment if you'd like to check if the digits are valid
+        // Uncomment if you'd like to check if the digits are valid
         // test(piDigits.toString(), num_digits);
     }
 
+    /**
+     * Tests the computed digits of Pi against a known file of Pi digits.
+     *
+     * <p>This method compares the computed digits to the digits stored
+     * in a file and reports any differences.</p>
+     *
+     * @param piDigits  The computed digits of Pi as a String.
+     * @param num_digits The number of digits that were computed.
+     */
     private void test(String piDigits, int num_digits) {
         File file = new File("src/main/java/org/natestott/numberComputer/pi.txt");
         StringBuilder piFromFile = new StringBuilder();
@@ -81,17 +113,15 @@ public class PiComputer implements NumberComputer {
         }
 
         if (piFromFile.length() == num_digits + 2 && piDigits.length() == num_digits + 2) {
-            System.out.println("valid length");
-        }
-        else {
-            System.out.println("invalid length");
+            System.out.println("Valid length");
+        } else {
+            System.out.println("Invalid length");
         }
 
         if (piFromFile.toString().equals(piDigits)) {
-            System.out.println("The input matches the first 1000 digits of pi.");
-        }
-        else {
-            System.out.println("The input does not match the first 1000 digits of pi.");
+            System.out.println("The input matches the first " + num_digits + " digits of Pi.");
+        } else {
+            System.out.println("The input does not match the first " + num_digits + " digits of Pi.");
             for (int i = 0; i < Math.min(piFromFile.length(), piDigits.length()); i++) {
                 if (piFromFile.charAt(i) != piDigits.charAt(i)) {
                     System.out.println("Difference at index " + i + ": file='" + piFromFile.charAt(i) + "', input='" + piDigits.charAt(i) + "'");

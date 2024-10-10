@@ -62,25 +62,29 @@ public class PiComputer implements NumberComputer {
         System.out.println("\n"+piDigits);
         System.out.println("Pi Computation took " + elapsedTime + " ms");
 
-        //test(piDigits.toString());
+        // uncomment if you'd like to check if the digits are valid
+        // test(piDigits.toString(), num_digits);
     }
 
-    private void test(String piDigits) {
+    private void test(String piDigits, int num_digits) {
         File file = new File("src/main/java/org/natestott/numberComputer/pi.txt");
         StringBuilder piFromFile = new StringBuilder();
 
         try (Scanner scanner = new Scanner(file)) {
             if (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                piFromFile.append(line, 0, Math.min(1002, line.length()));
+                piFromFile.append(line, 0, Math.min(num_digits + 2, line.length()));
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found: " + e.getMessage());
             return;
         }
 
-        if (piFromFile.length() == 1002 && piDigits.length() == 1002) {
-            System.out.println("same length");
+        if (piFromFile.length() == num_digits + 2 && piDigits.length() == num_digits + 2) {
+            System.out.println("valid length");
+        }
+        else {
+            System.out.println("invalid length");
         }
 
         if (piFromFile.toString().equals(piDigits)) {

@@ -8,8 +8,6 @@ import org.natestott.numberComputer.PiComputer;
  * It initializes the NumberComputer implementation for computing Pi
  * and triggers the computation.
  *
- * <p>This class is part of the org.natestott package.</p>
- *
  * @author Nate Stott
  */
 public class Main {

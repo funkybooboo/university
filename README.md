@@ -6,6 +6,16 @@
 - Madison Patch
 - Nate Stott
 
+## Dependencies
+
+* python = "^3.10"
+* pandas = "^2.2.3"
+* matplotlib = "^3.9.2"
+* scipy = "^1.14.1"
+* seaborn = "^0.13.2"
+
+file name: `main.py`
+
 ## Discussion
 
 ### Part 1: Fitting Stock Data to Distributions

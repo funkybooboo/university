@@ -1,9 +1,9 @@
-package org.natestott.numberComputer;
+package org.natestott;
 
 import java.util.HashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
-class ResultTable {
+public class ResultTable {
     private final HashMap<Long, Integer> results = new HashMap<>();
     private final ReentrantLock lock = new ReentrantLock();
 

@@ -1,8 +1,8 @@
-package org.natestott.numberComputer;
+package org.natestott;
 
 import org.natestott.digitCalculator.DigitCalculator;
 
-class DigitWorker extends Thread {
+public class DigitWorker extends Thread {
     private final TaskQueue taskQueue;
     private final ResultTable resultTable;
     private final DigitCalculator digitCalculator;

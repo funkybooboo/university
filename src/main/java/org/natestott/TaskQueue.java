@@ -1,9 +1,9 @@
-package org.natestott.numberComputer;
+package org.natestott;
 
 import java.util.LinkedList;
 import java.util.concurrent.locks.ReentrantLock;
 
-class TaskQueue {
+public class TaskQueue {
     private final LinkedList<Long> queue = new LinkedList<>();
     private final ReentrantLock lock = new ReentrantLock();
 

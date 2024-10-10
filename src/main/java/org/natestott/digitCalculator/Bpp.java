@@ -8,6 +8,22 @@ package org.natestott.digitCalculator;
 
 public class Bpp implements DigitCalculator {
 	/**
+	 * Runs the program
+	 * @param args
+	 */
+	public static void main(String args[]) {
+		int NUM = 13;
+
+		long duration = System.currentTimeMillis();
+
+		Bpp bpp = new Bpp();
+		System.out.println("Decimal digits of pi at position " + NUM + ": " + bpp.getDecimal(NUM) + "\n");
+
+		duration = System.currentTimeMillis() - duration;
+		System.out.println("> " + duration + " ms");
+	}
+
+	/**
 	 * Returns the nth digit of pi followed by the next 8 numbers
 	 * @param n - nth number of pi to return
 	 * @return returns an integer value containing 8 digits after n
@@ -77,11 +93,20 @@ public class Bpp implements DigitCalculator {
 			s = mulMod(s, t, av);
 			sum = (sum + (double) s / (double) av) % 1;
 		}
-		return (int) (sum * 1e9); // 1e9 is 9 decimal places
+		return getDigit((int) (sum * 1e9)); // 1e9 is 9 decimal places
+	}
+
+	private int getDigit(int digits) {
+		String s = String.valueOf(digits); // Convert the integer to a string
+		if (s.length() == 9) {
+			char firstChar = s.charAt(0); // Get the first character
+			return Character.getNumericValue(firstChar); // Convert it to an integer
+		}
+		return 0; // Return 0 if the length is not 9
 	}
 
 	private long mulMod(long a, long b, long m) {
-		return (long) (a * b) % m;
+		return (a * b) % m;
 	}
 
 	private long modInverse(long a, long n) {

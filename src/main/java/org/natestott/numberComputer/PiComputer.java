@@ -1,12 +1,14 @@
 package org.natestott.numberComputer;
 
+import org.natestott.DigitWorker;
+import org.natestott.ResultTable;
+import org.natestott.TaskQueue;
 import org.natestott.digitCalculator.Bpp;
 import org.natestott.digitCalculator.DigitCalculator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class PiComputer implements NumberComputer {
 
@@ -20,8 +22,8 @@ public class PiComputer implements NumberComputer {
         DigitCalculator digitCalculator = new Bpp();
         List<Long> tasks = new ArrayList<>();
 
-        for (long i = 0; i < num_digits; i++) {
-            tasks.add(i);
+        for (long task = 1; task <= num_digits; task++) {
+            tasks.add(task);
         }
         Collections.shuffle(tasks); // Randomize the task order
         for (Long task : tasks) {
@@ -53,11 +55,44 @@ public class PiComputer implements NumberComputer {
         // Collect results and sort them
         HashMap<Long, Integer> results = resultTable.getResults();
         StringBuilder piDigits = new StringBuilder("3.");
-        for (long i = 0; i < num_digits; i++) {
-            piDigits.append(results.get(i));
+        for (long task = 1; task <= num_digits; task++) {
+            piDigits.append(results.get(task));
         }
 
         System.out.println("\n"+piDigits);
         System.out.println("Pi Computation took " + elapsedTime + " ms");
+
+        //test(piDigits.toString());
+    }
+
+    private void test(String piDigits) {
+        File file = new File("src/main/java/org/natestott/numberComputer/pi.txt");
+        StringBuilder piFromFile = new StringBuilder();
+
+        try (Scanner scanner = new Scanner(file)) {
+            if (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                piFromFile.append(line, 0, Math.min(1002, line.length()));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: " + e.getMessage());
+            return;
+        }
+
+        if (piFromFile.length() == 1002 && piDigits.length() == 1002) {
+            System.out.println("same length");
+        }
+
+        if (piFromFile.toString().equals(piDigits)) {
+            System.out.println("The input matches the first 1000 digits of pi.");
+        }
+        else {
+            System.out.println("The input does not match the first 1000 digits of pi.");
+            for (int i = 0; i < Math.min(piFromFile.length(), piDigits.length()); i++) {
+                if (piFromFile.charAt(i) != piDigits.charAt(i)) {
+                    System.out.println("Difference at index " + i + ": file='" + piFromFile.charAt(i) + "', input='" + piDigits.charAt(i) + "'");
+                }
+            }
+        }
     }
 }

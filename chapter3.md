@@ -326,3 +326,53 @@ To effectively implement the Producer-Consumer model, synchronization is necessa
 For a deeper understanding, check out this [Shared Memory Systems video](https://www.youtube.com/watch?v=uHtzOFwgD74).
 
 ### Message Passing Systems (3.6)
+
+Message passing is a crucial method for enabling processes to communicate and synchronize actions without sharing the same address space. 
+This approach is particularly advantageous in distributed systems, where processes may operate on different machines connected through a network.
+
+![Message Passing Systems Model](images/chapter3/Message-Passing-Interprocess-Communication-Model.jpg)
+
+#### Key Operations
+
+A message-passing facility typically encompasses the following operations:
+- **Send(message)**: A process generates and transmits a message to another process.
+- **Receive(message)**: A process retrieves a message sent by another process or the system.
+
+#### Communication Requirements
+
+For effective communication between processes \( P \) and \( Q \):
+- A communication link must be established between them.
+- This link can be implemented using various methods, depending on the system architecture.
+
+#### Implementation Methods
+
+1. **Direct vs. Indirect Communication**:
+    - **Direct Communication**: Processes communicate directly by naming each other (e.g., sending a message to a specific process ID).
+    - **Indirect Communication**: Processes send messages to shared mailboxes or queues, allowing for more flexible communication.
+
+2. **Synchronous vs. Asynchronous Communication**:
+    - **Synchronous Communication**: The sender waits until the message is received before continuing its execution. This ensures that both processes are synchronized but may lead to blocking.
+    - **Asynchronous Communication**: The sender proceeds without waiting for the receiver to acknowledge the message, allowing for greater flexibility and non-blocking operations.
+
+3. **Buffering Strategies**:
+    - **Automatic Buffering**: The system automatically handles message storage, allowing the sender and receiver to operate independently.
+    - **Explicit Buffering**: The sender and receiver must manage message buffers explicitly, requiring additional programming overhead.
+
+#### Key Issues in Message Passing
+
+1. **Link Establishment**: How is the communication link created? Is it established dynamically or statically?
+2. **Number of Links**: What is the maximum number of communication links a process can maintain? This may vary based on system design.
+3. **Message Size**: What are the constraints on message size? Systems may impose limits to ensure efficient processing.
+4. **Directionality**: Is the communication one-way (uni-directional) or two-way (bi-directional)? Bi-directional communication allows for more interactive processes.
+5. **Buffering**: Is the message buffered (stored temporarily) or non-buffered (immediate transfer)? Buffering can enhance communication efficiency, especially in asynchronous scenarios.
+6. **Blocking Behavior**: Is the communication blocking (the sender waits for the receiver) or non-blocking (the sender proceeds immediately)? Blocking may simplify synchronization but can hinder performance.
+
+#### Examples of Message Passing
+
+- **Client-Server Models**: In web applications, a client (user's browser) sends requests to a server, which processes the request and sends back a response. This is often implemented using synchronous communication.
+- **Distributed Databases**: Different nodes in a distributed database may use message passing to coordinate transactions, ensuring consistency and data integrity through asynchronous communication.
+- **Real-Time Systems**: In real-time applications like robotics, messages are sent and received between sensors and controllers, often requiring low latency and reliable communication.
+
+#### Helpful Resource
+
+For further insights, check out this [Message Passing Systems video](https://www.youtube.com/watch?v=LuuSXWkDJOo&list=TLPQMTAxMDIwMjRzF3SAPwVBjg&index=1).

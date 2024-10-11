@@ -1,8 +1,15 @@
 {
   "q1": {
     "prompt": "What are the main jobs of an OS?",
-    "distractors": ["Manage resources", "Control programs", "Manage the hardware and give them power", "Schdule tasks"],
-    "answer": ["Manage resources and control programs."]
+    "distractors": [
+      "Manage resources",
+      "Control programs",
+      "Manage the hardware and give them power",
+      "Schdule tasks"
+    ],
+    "answer": [
+      "Manage resources and control programs."
+    ]
   },
   "q2": {
     "prompt": "Order the memory hierarcy from fastest to slowest.",
@@ -10,15 +17,21 @@
       "registers, main memory, cache, non-volitile memory, SDD, HDD, optical disk, magnegtic tape",
       "non-volitile memory, SDD, HDD, optical disk, magnegtic tape, registers, main memory, cache",
       "magnegtic tape, optical disk, HDD, SDD, non-volitile memory, main memory, cache, registers,",
-      "registers, cache, non-volitile memory, HDD, SDD, magnegtic tape, optical disk, main memory"],
-    "answer": ["registers, cache, main memory non-volitile memory, SDD, HDD, optical disk, magnegtic tape"]
+
+      "registers, cache, non-volitile memory, HDD, SDD, magnegtic tape, optical disk, main memory"
+    ],
+    "answer": [
+      "registers, cache, main memory non-volitile memory, SDD, HDD, optical disk, magnegtic tape"
+    ]
   },
   "q3": {
     "prompt": "Which type of multiprocessing has a boss worker relationship?",
     "distractors": [
       "Symmetric Multi-Processing"
-      ],
-    "answer": ["Asymmetric Multi-Processing"]
+    ],
+    "answer": [
+      "Asymmetric Multi-Processing"
+    ]
   },
   "q4": {
     "prompt": "What is the part of an operating system called that runs all the time?",
@@ -28,8 +41,11 @@
       "Scheduler",
       "Interrupt",
       "CPU",
-      "Process Manager"],
-    "answer": ["Kernal"]
+      "Process Manager"
+    ],
+    "answer": [
+      "Kernal"
+    ]
   },
   "q5": {
     "prompt": "Which is NOT a basic component of a Computer System",
@@ -38,7 +54,10 @@
       "CPU",
       "Shared Memory",
       "Common Bus"],
-    "answer": ["Network Adapter"]
+    ],
+    "answer": [
+      "Network Adapter"
+    ]
   },
   "q6": {
     "prompt": "What is the name for the instructions that are executed when a certain event happens such as a keyboard key being pressed?",
@@ -48,21 +67,27 @@
       "Interrupt Vector",
       "Interrupt Signal"
     ],
-    "answer": ["Interrupt Service Routine"]
+    "answer": [
+      "Interrupt Service Routine"
+    ]
   },
   "q7": {
     "prompt": "Memory is considered non-volatile because its data disappears when the power is cut off.",
     "distractors": [
       "True"
     ],
-    "answer": ["False"]
+    "answer": [
+      "False"
+    ]
   },
   "q8": {
     "prompt": "Fault tolerance is one of the key advantages of a multi-processor system over a single- processor system.",
     "distractors": [
       "False"
     ],
-    "answer": ["True"]
+    "answer": [
+      "True"
+    ]
   },
   "q9": {
     "prompt": "Which type of processor configurations makes a shared cache on the CPU possible?",
@@ -72,7 +97,9 @@
       "Multi-chip",
       "Clustered"
     ],
-    "answer": ["Multi-core"]
+    "answer": [
+      "Multi-core"
+    ]
   },
   "q10": {
     "prompt": "What is the main purpose of having DMA?",
@@ -82,7 +109,9 @@
       "Enhance security of data while being transferred",
       "DMA isn't a thing"
     ],
-    "answer": ["Reduce the burden on the CPU for performing I/O"]
+    "answer": [
+      "Reduce the burden on the CPU for performing I/O"
+    ]
   },
   "q11": {
     "prompt": "What is the main purpose of having DMA?",
@@ -92,7 +121,9 @@
       "Enhance security of data while being transferred",
       "DMA isn't a thing"
     ],
-    "answer": ["Reduce the burden on the CPU for performing I/O"]
+    "answer": [
+      "Reduce the burden on the CPU for performing I/O"
+    ]
   },
   "q12": {
     "prompt": "What is the startup process called to get the Operating System running when a computer is turned on?",
@@ -102,7 +133,9 @@
       "Multiprocessing",
       "Multitasking"
     ],
-    "answer": ["Bootstrapping"]
+    "answer": [
+      "Bootstrapping"
+    ]
   },
   "q13": {
     "prompt": "Which of the following is NOT one of the resource management responsibilites of the OS?",
@@ -114,7 +147,9 @@
       "Cache Management",
       "I/O Subsystem Management"
     ],
-    "answer": ["None of the Above"]
+    "answer": [
+      "None of the Above"
+    ]
   },
   "q14": {
     "prompt": "What security term describes ensuring that data is correct, authentic, and reliable?",
@@ -124,14 +159,19 @@
       "Protection",
       "Confidentiality"
     ],
-    "answer": ["Integrity"]
+    "answer": [
+      "Integrity"
+    ]
   },
   "q15": {
     "prompt": "Mounting and Unmounting are part of File System Management.",
     "distractors": [
       "True"
     ],
-    "answer": ["False"]
+
+    "answer": [
+      "False"
+    ]
   },
   "q16": {
     "prompt": "What is the command used in a Linux shell to display the current working directory path?",
@@ -141,8 +181,10 @@
       "cd",
       "echo"
     ],
-    "answer": ["pwd"]
-  },
+    "answer": [
+      "pwd"
+    ]  
+},
   "q17": {
     "prompt": "Which is NOT one of the three main categories of User Interfaces for an OS?",
     "distractors": [
@@ -150,10 +192,97 @@
       "GUI",
       "Touch"
     ],
-    "answer": ["Voice"]
+      "answer": [
+      "Voice"
+    ]
   },
-
-
+  "q18": {
+    "prompt": "What is a system call?",
+    "distractors": [
+      "Another term for interrupt",
+      "The function call stack for a kernel process",
+      "A category of resource allocation techinques",
+      "A command typed in on the command line"
+    ],
+    "answer": [
+      "Interface between a running process and the OS"
+    ]
+  },
+  "q19": {
+    "prompt": "A function call made in a program is always the actual OS system call.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q20": {
+    "prompt": "What OS structure has a lot of communication overhead and therefore is not commonly used, but the model is used in computer networking?",
+    "distractors": [
+      "Modular",
+      "Sysmmetric Highspeed Information Transfer",
+      "Micorkernel",
+      "Monolithic"
+    ],
+    "answer": ["Layered"]
+  },
+  "q21": {
+    "prompt": "What is the name of the type of structure of an OS where the kernel is in a single static binary file and is executed in a single address space?",
+    "distractors": [
+      "Layered",
+      "Microkernel",
+      "Modular",
+      "Angular"
+    ],
+    "answer": ["Monolithic"]
+  },
+  "q22": {
+    "prompt": "A single command such as cp (copy a file), may require a maximum of 4 or 5 actual system calls.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q23": {
+    "prompt": "It is best if mechanisms and policies are combined in the implementation of a omputer system for effciency and speed.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q24": {
+    "prompt": "Using a register to pass data from a user mode process to the OS running in kernel mode is not possible on modern computer systems.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q25": {
+    "prompt": "In prcatice, what is the most commonly used OS structure?",
+    "distractors": [
+      "MicorKernel",
+      "Modular",
+      "Monolithic",
+      "Layered"
+    ],
+    "answer": ["Hybrid"]
+  },
+  "q26": {
+    "prompt": "Which of the following is NOT a category of System services?",
+    "distractors": [
+      "System Status Information",
+      "Program Loading and Execution",
+      "File Manipulation",
+      "Background services"
+    ],
+    "answer": ["Protection"]
+  },
+  "q27": {
+    "prompt": "CPU registers can be used to pass data from a user mode process to the OS running in kernel mode. An advantage is that using registers is very fast, but a drawback is that they are small and few in number.",
+    "distractors": [
+      "False"
+    ],
+    "answer": ["True"]
+  },
   "q28": {
     "prompt": "What is the name of the state where a process must be before moving to the running state?",
     "distractors": ["Waiting", "Queued", "Scheduled", "New"],

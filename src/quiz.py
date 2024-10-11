@@ -43,7 +43,6 @@ def is_integer(s: str) -> bool:
 
 
 def quiz(questions: List[Dict[str, Union[str, List[str]]]]) -> None:
-    answers: List[int] = []
     total_questions: int = len(questions)  # Get the total number of questions
     correct_count: int = 0  # Counter for correct answers
     incorrect_count: int = 0  # Counter for incorrect answers
@@ -78,19 +77,8 @@ def quiz(questions: List[Dict[str, Union[str, List[str]]]]) -> None:
                 total_questions += 1  # Increase the question count
             print(Fore.RESET)
 
-    score: int = sum(answers)  # Calculate score
-    print(f"Your score: {score / len(answers) * 100:.2f}%")
-
-
-def grade_response(answers: List[int], options: List[str], question: Dict[str, Union[str, List[str]]], response: int) -> None:
-    if options[response] in question["answer"]:
-        answers.append(1)
-        print(Fore.GREEN + "\nCorrect!")
-    else:
-        answers.append(0)
-        print(Fore.RED + "\nIncorrect: ", end="")
-        print(f"The correct answer is {question['answer'][0]}")  # Display the first correct answer
-        print(Fore.RESET)
+    score: int = correct_count / total_questions
+    print(f"Your score: {score * 100:.2f}%")
 
 
 def question_prompt(prompt: str, options: List[str]) -> int:

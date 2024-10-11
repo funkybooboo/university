@@ -215,6 +215,164 @@ Context switches are triggered by several events, including:
 
 ### Interprocess Communication (3.4)
 
+#### Types of Processes
+
+Processes executing concurrently in an operating system can be categorized as either **independent processes** or *
+*cooperating processes**:
+
+- **Independent Processes**:
+  These processes do not share data; they operate independently and cannot affect or be affected by one another.
+
+- **Cooperating Processes**:
+  These processes can share data and resources, allowing them to affect and be affected by one another.
+
+#### Reasons for IPC
+
+1. **Information Sharing**:
+   Allows multiple users or processes to access shared resources, such as files, simultaneously.
+
+2. **Speedup**:
+   Enables the division of tasks into smaller parts, which can be executed concurrently by multiple processes, improving
+   overall efficiency.
+
+3. **Modularity**:
+   Promotes organization within the system, facilitating easier maintenance and collaboration among different system
+   components.
+
+#### Methods of IPC
+
+IPC can be achieved through two fundamental models:
+
+1. **Shared Memory**:
+    - Description: A designated region of memory is shared among cooperating processes.
+    - Use Case: This method allows for efficient, high-speed data exchange by enabling processes to read and write data
+      directly to the shared memory space.
+
+2. **Message Passing**:
+    - Description: Processes communicate by sending messages to one another, rather than accessing shared memory.
+    - Use Case: This approach is particularly useful for processes that do not share memory, allowing for communication
+      through well-defined messages.
+
+![Interprocess Communication](images/chapter3/interprocess_communication.png)
+
+#### Helpful Resource
+
+For further learning, check out this [Interprocess Communication video](https://www.youtube.com/watch?v=dJuYKfR8vec).
+
 ### Shared Memory Systems (3.5)
 
+#### Overview of Shared Memory
+
+Shared memory is a method of interprocess communication that allows processes to communicate by establishing a shared
+memory region. This memory typically resides in the address space of the process that creates it. Other processes can
+attach this shared memory to their own address spaces for communication.
+
+**Key Points:**
+
+- The operating system generally prevents one process from accessing another's memory.
+- For shared memory communication, processes must agree to bypass this restriction.
+
+#### Producer-Consumer Model
+
+The Producer-Consumer model is a synchronization pattern where one process (the producer) generates data, while another
+process (the consumer) consumes it.
+
+**Example:**
+In a typical scenario, a compiler produces assembly code consumed by an assembler, which in turn produces object modules
+consumed by a loader.
+
+**Goal:**
+To ensure the producer and consumer operate concurrently, allowing the consumer to consume only what has been produced
+without attempting to consume nonexistent data.
+
+![Shared Memory](images/chapter3/shared_memory.png)
+
+#### Buffer Types
+
+To facilitate this model, a buffer acts as shared memory where data can be temporarily stored.
+
+1. **Unbounded Buffer:**
+    - **Producer:** Can produce items without waiting, as there is unlimited space.
+    - **Consumer:** Must wait if the buffer is empty but can consume whenever items are available.
+
+   ![Unbounded Buffer](images/chapter3/unbounded_buffer.png)
+
+2. **Bounded Buffer:**
+    - **Non-Overwriting Bounded Buffer:**
+        - **Producer:** Must wait if the buffer is full, preventing new data from being added until there is space.
+        - **Consumer:** Must wait if the buffer is empty, ensuring that no data is consumed until it is available.
+        - **Key Feature:** Items cannot be overwritten until they have been consumed, maintaining data integrity.
+
+   ![Bounded Buffer](images/chapter3/bounded_buffer.png)
+
+    - **Overwriting Bounded Buffer:**
+        - **Producer:** Can overwrite the oldest data if the buffer is full, allowing continuous production without
+          waiting.
+        - **Consumer:** Must wait if the buffer is empty, ensuring that data is consumed as it becomes available.
+        - **Key Feature:** Allows for flexible usage of buffer space, but risks losing unconsumed data if not managed
+          carefully.
+
+   ![Bounded Buffer](images/chapter3/circular-buffer-animation.gif)
+
+#### Synchronization
+
+To effectively implement the Producer-Consumer model, synchronization is necessary to ensure:
+
+- The consumer does not attempt to consume an item that hasn't been produced yet.
+- The processes operate in harmony without conflicting over shared resources.
+
+#### Helpful Resource
+
+For a deeper understanding, check out this [Shared Memory Systems video](https://www.youtube.com/watch?v=uHtzOFwgD74).
+
 ### Message Passing Systems (3.6)
+
+Message passing is a crucial method for enabling processes to communicate and synchronize actions without sharing the same address space. 
+This approach is particularly advantageous in distributed systems, where processes may operate on different machines connected through a network.
+
+![Message Passing Systems Model](images/chapter3/Message-Passing-Interprocess-Communication-Model.jpg)
+
+#### Key Operations
+
+A message-passing facility typically encompasses the following operations:
+- **Send(message)**: A process generates and transmits a message to another process.
+- **Receive(message)**: A process retrieves a message sent by another process or the system.
+
+#### Communication Requirements
+
+For effective communication between processes \( P \) and \( Q \):
+- A communication link must be established between them.
+- This link can be implemented using various methods, depending on the system architecture.
+
+#### Implementation Methods
+
+1. **Direct vs. Indirect Communication**:
+    - **Direct Communication**: Processes communicate directly by naming each other (e.g., sending a message to a specific process ID).
+    - **Indirect Communication**: Processes send messages to shared mailboxes or queues, allowing for more flexible communication.
+
+2. **Synchronous vs. Asynchronous Communication**:
+    - **Synchronous Communication**: The sender waits until the message is received before continuing its execution. This ensures that both processes are synchronized but may lead to blocking.
+    - **Asynchronous Communication**: The sender proceeds without waiting for the receiver to acknowledge the message, allowing for greater flexibility and non-blocking operations.
+
+3. **Buffering Strategies**:
+    - **Automatic Buffering**: The system automatically handles message storage, allowing the sender and receiver to operate independently.
+    - **Explicit Buffering**: The sender and receiver must manage message buffers explicitly, requiring additional programming overhead.
+
+#### Key Issues in Message Passing
+
+1. **Link Establishment**: How is the communication link created? Is it established dynamically or statically?
+2. **Number of Links**: What is the maximum number of communication links a process can maintain? This may vary based on system design.
+3. **Message Size**: What are the constraints on message size? Systems may impose limits to ensure efficient processing.
+4. **Directionality**: Is the communication one-way (uni-directional) or two-way (bi-directional)? Bi-directional communication allows for more interactive processes.
+5. **Buffering**: Is the message buffered (stored temporarily) or non-buffered (immediate transfer)? Buffering can enhance communication efficiency, especially in asynchronous scenarios.
+6. **Blocking Behavior**: Is the communication blocking (the sender waits for the receiver) or non-blocking (the sender proceeds immediately)? Blocking may simplify synchronization but can hinder performance.
+
+#### Examples of Message Passing
+
+- **Client-Server Models**: In web applications, a client (user's browser) sends requests to a server, which processes the request and sends back a response. This is often implemented using synchronous communication.
+- **Distributed Databases**: Different nodes in a distributed database may use message passing to coordinate transactions, ensuring consistency and data integrity through asynchronous communication.
+- **Real-Time Systems**: In real-time applications like robotics, messages are sent and received between sensors and controllers, often requiring low latency and reliable communication.
+
+#### Helpful Resource
+
+For further insights, check out this [Message Passing Systems video](https://www.youtube.com/watch?v=LuuSXWkDJOo&list=TLPQMTAxMDIwMjRzF3SAPwVBjg&index=1).

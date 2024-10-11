@@ -1,0 +1,275 @@
+{
+  "q1": {
+    "prompt": "What are the main jobs of an OS?",
+    "distractors": ["Manage resources", "Control programs", "Manage the hardware and give them power", "Schdule tasks"],
+    "answer": ["Manage resources and control programs."]
+  },
+  "q2": {
+    "prompt": "Order the memory hierarcy from fastest to slowest.",
+    "distractors": [
+      "registers, main memory, cache, non-volitile memory, SDD, HDD, optical disk, magnegtic tape",
+      "non-volitile memory, SDD, HDD, optical disk, magnegtic tape, registers, main memory, cache",
+      "magnegtic tape, optical disk, HDD, SDD, non-volitile memory, main memory, cache, registers,",
+      "registers, cache, non-volitile memory, HDD, SDD, magnegtic tape, optical disk, main memory"],
+    "answer": ["registers, cache, main memory non-volitile memory, SDD, HDD, optical disk, magnegtic tape"]
+  },
+  "q3": {
+    "prompt": "Which type of multiprocessing has a boss worker relationship?",
+    "distractors": [
+      "Symmetric Multi-Processing"
+      ],
+    "answer": ["Asymmetric Multi-Processing"]
+  },
+  "q4": {
+    "prompt": "What is the part of an operating system called that runs all the time?",
+    "distractors": [
+      "Microsoft Edge",
+      "Window Manager",
+      "Scheduler",
+      "Interrupt",
+      "CPU",
+      "Process Manager"],
+    "answer": ["Kernal"]
+  },
+  "q5": {
+    "prompt": "Which is NOT a basic component of a Computer System",
+    "distractors": [
+      "Device Controller",
+      "CPU",
+      "Shared Memory",
+      "Common Bus"],
+    "answer": ["Network Adapter"]
+  },
+  "q6": {
+    "prompt": "What is the name for the instructions that are executed when a certain event happens such as a keyboard key being pressed?",
+    "distractors": [
+      "Kernel",
+      "Catch and Dispatch",
+      "Interrupt Vector",
+      "Interrupt Signal"
+    ],
+    "answer": ["Interrupt Service Routine"]
+  },
+  "q7": {
+    "prompt": "Memory is considered non-volatile because its data disappears when the power is cut off.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q8": {
+    "prompt": "Fault tolerance is one of the key advantages of a multi-processor system over a single- processor system.",
+    "distractors": [
+      "False"
+    ],
+    "answer": ["True"]
+  },
+  "q9": {
+    "prompt": "Which type of processor configurations makes a shared cache on the CPU possible?",
+    "distractors": [
+      "Symmetric",
+      "Single Chip",
+      "Multi-chip",
+      "Clustered"
+    ],
+    "answer": ["Multi-core"]
+  },
+  "q10": {
+    "prompt": "What is the main purpose of having DMA?",
+    "distractors": [
+      "Utilize multile CPU's for efficiency.",
+      "Device drivers are abvle to use less cache",
+      "Enhance security of data while being transferred",
+      "DMA isn't a thing"
+    ],
+    "answer": ["Reduce the burden on the CPU for performing I/O"]
+  },
+  "q11": {
+    "prompt": "What is the main purpose of having DMA?",
+    "distractors": [
+      "Utilize multile CPU's for efficiency.",
+      "Device drivers are abvle to use less cache",
+      "Enhance security of data while being transferred",
+      "DMA isn't a thing"
+    ],
+    "answer": ["Reduce the burden on the CPU for performing I/O"]
+  },
+  "q12": {
+    "prompt": "What is the startup process called to get the Operating System running when a computer is turned on?",
+    "distractors": [
+      "Asymmetric Startup",
+      "Interrupt Service Routine",
+      "Multiprocessing",
+      "Multitasking"
+    ],
+    "answer": ["Bootstrapping"]
+  },
+  "q13": {
+    "prompt": "Which of the following is NOT one of the resource management responsibilites of the OS?",
+    "distractors": [
+      "Process Management",
+      "Memory Management",
+      "File System Management",
+      "Mass Storage Management",
+      "Cache Management",
+      "I/O Subsystem Management"
+    ],
+    "answer": ["None of the Above"]
+  },
+  "q14": {
+    "prompt": "What security term describes ensuring that data is correct, authentic, and reliable?",
+    "distractors": [
+      "Safeguard",
+      "Availability",
+      "Protection",
+      "Confidentiality"
+    ],
+    "answer": ["Integrity"]
+  },
+  "q15": {
+    "prompt": "Mounting and Unmounting are part of File System Management.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q16": {
+    "prompt": "What is the command used in a Linux shell to display the current working directory path?",
+    "distractors": [
+      "ls",
+      "PATH",
+      "cd",
+      "echo"
+    ],
+    "answer": ["pwd"]
+  },
+  "q17": {
+    "prompt": "Which is NOT one of the three main categories of User Interfaces for an OS?",
+    "distractors": [
+      "Command Line",
+      "GUI",
+      "Touch"
+    ],
+    "answer": ["Voice"]
+  },
+
+
+  
+
+  
+  "q38": {
+    "prompt": "RMI is an example of what?",
+    "distractors": ["Non-Buffered", "Bounded Buffer", "Shared Memory", "Pipe"],
+    "answer": ["Message Passing"]
+  },
+  "q39": {
+    "prompt": "Data Parallelism focuses on distributing subsets of data across multiple cores, and performing unique operations on each core.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q40": {
+    "prompt": "Threads share process instructions, data, files, and register values, but each thread has its own stack.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q41": {
+    "prompt": "In what case does the Sender always block on the receiver?",
+    "distractors": ["Empty Bounded Capacity Buffer", "Bounded Capacity Buffer", "Unbounded Capacity Buffer"],
+    "answer": ["Zero Capacity Buffer"]
+  },
+  "q42": {
+    "prompt": "______________________ estimates the maximum speedup a program can achieve based on the percentage of a program that must be serial.",
+    "distractors": ["Murphy's Law", "Moore's Law", "Principle of Power", "Law of Diminishing Marginal Returns"],
+    "answer": ["Amdahl's Law"]
+  },
+  "q43": {
+    "prompt": "The Consumer Producer model is outdated because in Today's computing almost all systems are both producers and consumers.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q44": {
+    "prompt": "Which is NOT one of the main benefits of multi-threaded programs?",
+    "distractors": ["Resource Sharing", "Responsiveness", "Scalability", "Economy"],
+    "answer": ["Parallelism"]
+  },
+  "q45": {
+    "prompt": "In what type of communication is never necessary for processes to know about other processes?",
+    "distractors": ["Rendezvous", "Non-Blocking Send", "Direct Communication", "Blocking Send"],
+    "answer": ["Indirect Communication"]
+  },
+  "q46": {
+    "prompt": "Ordinary Pipes are uni-directional",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q47": {
+    "prompt": "In the Shared Memory model, the shared memory must be located within the kernel memory space.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q48": {
+    "prompt": "In a Bounded Buffer model that is implemented as a circular queue, what is an item that is NOT necessary to keep track of?",
+    "distractors": ["Write Location", "Buffer Size", "Read Location"],
+    "answer": ["Number of Producers"]
+  },
+  "q49": {
+    "prompt": "In an Asynchronous thread execution strategy, which of the following is true?",
+    "distractors": ["Children threads wait for the parent thread to give a signal before starting", "The parent creates a child thread then waits for a single child to complete", "The parent creates child threads then chooses one child as the favorite", "Children threads of the main thread create other children threads"],
+    "answer": ["The parent creates child threads then continues execution"]
+  },
+  "q50": {
+    "prompt": "Which Threading approach is similar to a divide and conquer recursion solution?",
+    "distractors": ["Thread Pool", "Google Thread Building Blocks", "Grand Central Dispatch", "OpenMP"],
+    "answer": ["Fork Join"]
+  },
+  "q51": {
+    "prompt": "In the ___________________________ thread model, a system call made by one thread will never block another thread.",
+    "distractors": ["Many-to-One", "Many-to-Many", "Blocker Preventing", "None of the Above"],
+    "answer": ["One-to-One"]
+  },
+  "q52": {
+    "prompt": "PThreads are an implementation of a standard design.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q53": {
+    "prompt": "In practice, the distribution of cpu burst durations is pretty even with the number of short and long cpu bursts being somewhat equal.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q54": {
+    "prompt": "In the __________________________ thread model, kernel threads are not used at all and only user threads are used.",
+    "distractors": ["Many-to-One", "Many-to-Many", "One-to-One", "Singular"],
+    "answer": ["None of the Above"]
+  },
+  "q55": {
+    "prompt": "What is the term describing pushing creation and management of threads to run-time libraries and compilers, instead of requiring a developer to manage it?",
+    "distractors": ["Compiler Threading", "Fork This Threading", "Explicit Threading", "Auto Threading"],
+    "answer": ["Implicit Threading"]
+  },
+  "q56": {
+    "prompt": "Java threads can be created by creating a Runnable object and passing it to a Thread constructor.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q57": {
+    "prompt": "What best describes a CPU burst?",
+    "distractors": ["Total amount of time a process needs to fully execute a program", "CPU time equal to the duration of an OS timer", "Total time spent in the ready queue", "Total time for cpu and I/O processing"],
+    "answer": ["The amount of cpu time a process needs before voluntarily stopping"]
+  },
+  "q58": {
+    "prompt": "What term best describes the time between one process finishing/stopping execution and another one starting?",
+    "distractors": ["Interrupt Latency", "Preemptive", "Context Switch", "Event Latency"],
+    "answer": ["Dispatch Latency"]
+  },
+  "q59": {
+    "prompt": "Which Threading approach is used by the Java Executor service?",
+    "distractors": ["Grand Central Dispatch", "Fork Join", "OpenMP", "Google Thread Building Blocks"],
+    "answer": ["Thread Pool"]
+  },
+  "q60": {
+    "prompt": "What term describes the case where a process is only released from the cpu when it voluntarily does so?",
+    "distractors": ["Non-volatile", "Concurrency", "Volatile", "Preemptive"],
+    "answer": ["Non-preemptive"]
+  }
+}

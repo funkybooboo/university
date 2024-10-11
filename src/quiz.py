@@ -79,7 +79,7 @@ def quiz(questions: List[Dict[str, Union[str, List[str]]]]) -> None:
             print(Fore.RESET)
 
     score: int = sum(answers)  # Calculate score
-    print(f"Your score: {score / len(answers) * 100:.2f}%")
+    print(f"Your score: {score * 100:.2f}%")
 
 
 def grade_response(answers: List[int], options: List[str], question: Dict[str, Union[str, List[str]]], response: int) -> None:

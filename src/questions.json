@@ -154,9 +154,56 @@
   },
 
 
-  
-
-  
+  "q28": {
+    "prompt": "What is the name of the state where a process must be before moving to the running state?",
+    "distractors": ["Waiting", "Queued", "Scheduled", "New"],
+    "answer": ["Ready"]
+  },
+  "q29": {
+    "prompt": "What does UEFI use that is synonymous with the MBR in BIOS?",
+    "distractors": ["Overhead", "Rootkit", "EEPROM", "Firmware Interface"],
+    "answer": ["GUID Partition Table"]
+  },
+  "q30": {
+    "prompt": "The terms program and process mean the same thing.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q31": {
+    "prompt": "What is the name of the system call used to create a new child process?",
+    "distractors": ["new", "split", "exec", "wait"],
+    "answer": ["fork"]
+  },
+  "q32": {
+    "prompt": "Changing processes on the CPU requires overhead cpu cycles to manage the change. What best describes the number of cycles it takes to perform this change?",
+    "distractors": ["10's of cycles", "100's of cycles", "10,000's of cycles"],
+    "answer": ["1,000's of cycles"]
+  },
+  "q33": {
+    "prompt": "The Process Control Block contains information to enable a process to be loaded back to the CPU to begin executing where it left off.",
+    "distractors": ["Overhead", "Kernel Change", "Instruction State Record", "Queue Swap"],
+    "answer": ["Context Switch"]
+  },
+  "q34": {
+    "prompt": "What terms describes the process of changing the process that is running on the CPU?",
+    "distractors": ["Overhead", "Kernel Change", "Instruction State Record", "Queue Swap"],
+    "answer": ["Context Switch"]
+  },
+  "q35": {
+    "prompt": "A process is a program that is in memory and is executing. A Process Control Block is another name for the location of the program in memory.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q36": {
+    "prompt": "A process in memory has a number of different sections. Which sections of the process are dynamic in size? Mark all that apply. You must get all correct to receive full credit.",
+    "distractors": ["data", "text", "No other answers are correct"],
+    "answer": ["Heap", "Stack"]
+  },
+  "q37": {
+    "prompt": "BIOS (Basic Input Output System) is the most common way modern systems execute the system startup process. BIOS can run with a GUI interface and allows for much larger sized hard drives than earlier system startup processes.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
   "q38": {
     "prompt": "RMI is an example of what?",
     "distractors": ["Non-Buffered", "Bounded Buffer", "Shared Memory", "Pipe"],

@@ -55,6 +55,29 @@ Tertiary  ->  ┌     Optical disk
               └     Magnegtic tape
 ```
 ### Interrupts (1.2.3)
+    - The problem
+        - The CPU can do only one thing at a time and all the hardware it is managing is operating asynchronously this creates a probelm.
+        - The CPU is very out numbered by hardware devices.
+    - The solution
+        - Device controllers can send **interrupts** to the CPU telling it something has happened within itself.
+        - Every device has a local buffer that can hold a limited number of bytes until the CPU can respond.
+    - Interrupt Service Routine (ISR): is the implementation of an interrupt
+    - Interrupt Vector: An array of addresses which point to code (ISR) the CPU runs to hanlde hardware requests
+    - The CPU has a physical wire called the Interrupt Request Line (IRL)
+        - The Interrupt Request Line gets checked after **EVERY** instruction.
+        - When the IRL gets signaled, it reads which interrupt is being signaled, transfers control to the intterupt service routine (ISR) **then** the ISR uses a 
+        indexed vector to execute the code for the specific ISR being singaled.
+    - Terms
+        - A device **raises an intterupt**
+        - The CPU **catches and dispatches** to interrrupt handlers
+        - The handler clears the intterrupt when finished and the CPU goes back to executing instructions.
+
+    - OS's are genereally considered **interrupt driven** any interaction with the system creates an interrupt that the OS must respond.
+
+    - The interrupt architcture must save the addres of the instruction being executed when the interrupt occurs so it can return to that execution point.
+
+    - Interrupts are typically disabled when handling another interrupt or some other critcal process.
+
 
 ### Computer System Architecture (1.3)
 - Central Processing Unit (CPU)

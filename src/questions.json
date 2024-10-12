@@ -17,6 +17,7 @@
       "registers, main memory, cache, non-volitile memory, SDD, HDD, optical disk, magnegtic tape",
       "non-volitile memory, SDD, HDD, optical disk, magnegtic tape, registers, main memory, cache",
       "magnegtic tape, optical disk, HDD, SDD, non-volitile memory, main memory, cache, registers,",
+
       "registers, cache, non-volitile memory, HDD, SDD, magnegtic tape, optical disk, main memory"
     ],
     "answer": [
@@ -52,7 +53,7 @@
       "Device Controller",
       "CPU",
       "Shared Memory",
-      "Common Bus"
+      "Common Bus"],
     ],
     "answer": [
       "Network Adapter"
@@ -167,6 +168,7 @@
     "distractors": [
       "True"
     ],
+
     "answer": [
       "False"
     ]
@@ -181,8 +183,8 @@
     ],
     "answer": [
       "pwd"
-    ]
-  },
+    ]  
+},
   "q17": {
     "prompt": "Which is NOT one of the three main categories of User Interfaces for an OS?",
     "distractors": [
@@ -190,7 +192,7 @@
       "GUI",
       "Touch"
     ],
-    "answer": [
+      "answer": [
       "Voice"
     ]
   },
@@ -281,258 +283,169 @@
     ],
     "answer": ["True"]
   },
-
-
-
-
+  "q28": {
+    "prompt": "What is the name of the state where a process must be before moving to the running state?",
+    "distractors": ["Waiting", "Queued", "Scheduled", "New"],
+    "answer": ["Ready"]
+  },
+  "q29": {
+    "prompt": "What does UEFI use that is synonymous with the MBR in BIOS?",
+    "distractors": ["Overhead", "Rootkit", "EEPROM", "Firmware Interface"],
+    "answer": ["GUID Partition Table"]
+  },
+  "q30": {
+    "prompt": "The terms program and process mean the same thing.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q31": {
+    "prompt": "What is the name of the system call used to create a new child process?",
+    "distractors": ["new", "split", "exec", "wait"],
+    "answer": ["fork"]
+  },
+  "q32": {
+    "prompt": "Changing processes on the CPU requires overhead cpu cycles to manage the change. What best describes the number of cycles it takes to perform this change?",
+    "distractors": ["10's of cycles", "100's of cycles", "10,000's of cycles"],
+    "answer": ["1,000's of cycles"]
+  },
+  "q33": {
+    "prompt": "The Process Control Block contains information to enable a process to be loaded back to the CPU to begin executing where it left off.",
+    "distractors": ["Overhead", "Kernel Change", "Instruction State Record", "Queue Swap"],
+    "answer": ["Context Switch"]
+  },
+  "q34": {
+    "prompt": "What terms describes the process of changing the process that is running on the CPU?",
+    "distractors": ["Overhead", "Kernel Change", "Instruction State Record", "Queue Swap"],
+    "answer": ["Context Switch"]
+  },
+  "q35": {
+    "prompt": "A process is a program that is in memory and is executing. A Process Control Block is another name for the location of the program in memory.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q36": {
+    "prompt": "A process in memory has a number of different sections. Which sections of the process are dynamic in size? Mark all that apply. You must get all correct to receive full credit.",
+    "distractors": ["data", "text", "No other answers are correct"],
+    "answer": ["Heap", "Stack"]
+  },
+  "q37": {
+    "prompt": "BIOS (Basic Input Output System) is the most common way modern systems execute the system startup process. BIOS can run with a GUI interface and allows for much larger sized hard drives than earlier system startup processes.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
   "q38": {
     "prompt": "RMI is an example of what?",
-    "distractors": [
-      "Non-Buffered",
-      "Bounded Buffer",
-      "Shared Memory",
-      "Pipe"
-    ],
-    "answer": [
-      "Message Passing"
-    ]
+    "distractors": ["Non-Buffered", "Bounded Buffer", "Shared Memory", "Pipe"],
+    "answer": ["Message Passing"]
   },
   "q39": {
     "prompt": "Data Parallelism focuses on distributing subsets of data across multiple cores, and performing unique operations on each core.",
-    "distractors": [
-      "True"
-    ],
-    "answer": [
-      "False"
-    ]
+    "distractors": ["True"],
+    "answer": ["False"]
   },
   "q40": {
     "prompt": "Threads share process instructions, data, files, and register values, but each thread has its own stack.",
-    "distractors": [
-      "True"
-    ],
-    "answer": [
-      "False"
-    ]
+    "distractors": ["True"],
+    "answer": ["False"]
   },
   "q41": {
     "prompt": "In what case does the Sender always block on the receiver?",
-    "distractors": [
-      "Empty Bounded Capacity Buffer",
-      "Bounded Capacity Buffer",
-      "Unbounded Capacity Buffer"
-    ],
-    "answer": [
-      "Zero Capacity Buffer"
-    ]
+    "distractors": ["Empty Bounded Capacity Buffer", "Bounded Capacity Buffer", "Unbounded Capacity Buffer"],
+    "answer": ["Zero Capacity Buffer"]
   },
   "q42": {
     "prompt": "______________________ estimates the maximum speedup a program can achieve based on the percentage of a program that must be serial.",
-    "distractors": [
-      "Murphy's Law",
-      "Moore's Law",
-      "Principle of Power",
-      "Law of Diminishing Marginal Returns"
-    ],
-    "answer": [
-      "Amdahl's Law"
-    ]
+    "distractors": ["Murphy's Law", "Moore's Law", "Principle of Power", "Law of Diminishing Marginal Returns"],
+    "answer": ["Amdahl's Law"]
   },
   "q43": {
     "prompt": "The Consumer Producer model is outdated because in Today's computing almost all systems are both producers and consumers.",
-    "distractors": [
-      "True"
-    ],
-    "answer": [
-      "False"
-    ]
+    "distractors": ["True"],
+    "answer": ["False"]
   },
   "q44": {
     "prompt": "Which is NOT one of the main benefits of multi-threaded programs?",
-    "distractors": [
-      "Resource Sharing",
-      "Responsiveness",
-      "Scalability",
-      "Economy"
-    ],
-    "answer": [
-      "Parallelism"
-    ]
+    "distractors": ["Resource Sharing", "Responsiveness", "Scalability", "Economy"],
+    "answer": ["Parallelism"]
   },
   "q45": {
     "prompt": "In what type of communication is never necessary for processes to know about other processes?",
-    "distractors": [
-      "Rendezvous",
-      "Non-Blocking Send",
-      "Direct Communication",
-      "Blocking Send"
-    ],
-    "answer": [
-      "Indirect Communication"
-    ]
+    "distractors": ["Rendezvous", "Non-Blocking Send", "Direct Communication", "Blocking Send"],
+    "answer": ["Indirect Communication"]
   },
   "q46": {
     "prompt": "Ordinary Pipes are uni-directional",
-    "distractors": [
-      "False"
-    ],
-    "answer": [
-      "True"
-    ]
+    "distractors": ["False"],
+    "answer": ["True"]
   },
   "q47": {
     "prompt": "In the Shared Memory model, the shared memory must be located within the kernel memory space.",
-    "distractors": [
-      "True"
-    ],
-    "answer": [
-      "False"
-    ]
+    "distractors": ["True"],
+    "answer": ["False"]
   },
   "q48": {
     "prompt": "In a Bounded Buffer model that is implemented as a circular queue, what is an item that is NOT necessary to keep track of?",
-    "distractors": [
-      "Write Location",
-      "Buffer Size",
-      "Read Location"
-    ],
-    "answer": [
-      "Number of Producers"
-    ]
+    "distractors": ["Write Location", "Buffer Size", "Read Location"],
+    "answer": ["Number of Producers"]
   },
   "q49": {
     "prompt": "In an Asynchronous thread execution strategy, which of the following is true?",
-    "distractors": [
-      "Children threads wait for the parent thread to give a signal before starting",
-      "The parent creates a child thread then waits for a single child to complete",
-      "The parent creates child threads then chooses one child as the favorite",
-      "Children threads of the main thread create other children threads"
-    ],
-    "answer": [
-      "The parent creates child threads then continues execution"
-    ]
+    "distractors": ["Children threads wait for the parent thread to give a signal before starting", "The parent creates a child thread then waits for a single child to complete", "The parent creates child threads then chooses one child as the favorite", "Children threads of the main thread create other children threads"],
+    "answer": ["The parent creates child threads then continues execution"]
   },
   "q50": {
     "prompt": "Which Threading approach is similar to a divide and conquer recursion solution?",
-    "distractors": [
-      "Thread Pool",
-      "Google Thread Building Blocks",
-      "Grand Central Dispatch",
-      "OpenMP"
-    ],
-    "answer": [
-      "Fork Join"
-    ]
+    "distractors": ["Thread Pool", "Google Thread Building Blocks", "Grand Central Dispatch", "OpenMP"],
+    "answer": ["Fork Join"]
   },
   "q51": {
     "prompt": "In the ___________________________ thread model, a system call made by one thread will never block another thread.",
-    "distractors": [
-      "Many-to-One",
-      "Many-to-Many",
-      "Blocker Preventing",
-      "None of the Above"
-    ],
-    "answer": [
-      "One-to-One"
-    ]
+    "distractors": ["Many-to-One", "Many-to-Many", "Blocker Preventing", "None of the Above"],
+    "answer": ["One-to-One"]
   },
   "q52": {
     "prompt": "PThreads are an implementation of a standard design.",
-    "distractors": [
-      "True"
-    ],
-    "answer": [
-      "False"
-    ]
+    "distractors": ["True"],
+    "answer": ["False"]
   },
   "q53": {
     "prompt": "In practice, the distribution of cpu burst durations is pretty even with the number of short and long cpu bursts being somewhat equal.",
-    "distractors": [
-      "True"
-    ],
-    "answer": [
-      "False"
-    ]
+    "distractors": ["True"],
+    "answer": ["False"]
   },
   "q54": {
     "prompt": "In the __________________________ thread model, kernel threads are not used at all and only user threads are used.",
-    "distractors": [
-      "Many-to-One",
-      "Many-to-Many",
-      "One-to-One",
-      "Singular"
-    ],
-    "answer": [
-      "None of the Above"
-    ]
+    "distractors": ["Many-to-One", "Many-to-Many", "One-to-One", "Singular"],
+    "answer": ["None of the Above"]
   },
   "q55": {
     "prompt": "What is the term describing pushing creation and management of threads to run-time libraries and compilers, instead of requiring a developer to manage it?",
-    "distractors": [
-      "Compiler Threading",
-      "Fork This Threading",
-      "Explicit Threading",
-      "Auto Threading"
-    ],
-    "answer": [
-      "Implicit Threading"
-    ]
+    "distractors": ["Compiler Threading", "Fork This Threading", "Explicit Threading", "Auto Threading"],
+    "answer": ["Implicit Threading"]
   },
   "q56": {
     "prompt": "Java threads can be created by creating a Runnable object and passing it to a Thread constructor.",
-    "distractors": [
-      "False"
-    ],
-    "answer": [
-      "True"
-    ]
+    "distractors": ["False"],
+    "answer": ["True"]
   },
   "q57": {
     "prompt": "What best describes a CPU burst?",
-    "distractors": [
-      "Total amount of time a process needs to fully execute a program",
-      "CPU time equal to the duration of an OS timer",
-      "Total time spent in the ready queue",
-      "Total time for cpu and I/O processing"
-    ],
-    "answer": [
-      "The amount of cpu time a process needs before voluntarily stopping"
-    ]
+    "distractors": ["Total amount of time a process needs to fully execute a program", "CPU time equal to the duration of an OS timer", "Total time spent in the ready queue", "Total time for cpu and I/O processing"],
+    "answer": ["The amount of cpu time a process needs before voluntarily stopping"]
   },
   "q58": {
     "prompt": "What term best describes the time between one process finishing/stopping execution and another one starting?",
-    "distractors": [
-      "Interrupt Latency",
-      "Preemptive",
-      "Context Switch",
-      "Event Latency"
-    ],
-    "answer": [
-      "Dispatch Latency"
-    ]
+    "distractors": ["Interrupt Latency", "Preemptive", "Context Switch", "Event Latency"],
+    "answer": ["Dispatch Latency"]
   },
   "q59": {
     "prompt": "Which Threading approach is used by the Java Executor service?",
-    "distractors": [
-      "Grand Central Dispatch",
-      "Fork Join",
-      "OpenMP",
-      "Google Thread Building Blocks"
-    ],
-    "answer": [
-      "Thread Pool"
-    ]
+    "distractors": ["Grand Central Dispatch", "Fork Join", "OpenMP", "Google Thread Building Blocks"],
+    "answer": ["Thread Pool"]
   },
   "q60": {
     "prompt": "What term describes the case where a process is only released from the cpu when it voluntarily does so?",
-    "distractors": [
-      "Non-volatile",
-      "Concurrency",
-      "Volatile",
-      "Preemptive"
-    ],
-    "answer": [
-      "Non-preemptive"
-    ]
+    "distractors": ["Non-volatile", "Concurrency", "Volatile", "Preemptive"],
+    "answer": ["Non-preemptive"]
   }
 }

@@ -347,8 +347,32 @@ For effective communication between processes \( P \) and \( Q \):
 #### Implementation Methods
 
 1. **Direct vs. Indirect Communication**:
-    - **Direct Communication**: Processes communicate directly by naming each other (e.g., sending a message to a specific process ID).
-    - **Indirect Communication**: Processes send messages to shared mailboxes or queues, allowing for more flexible communication.
+    - **Direct Communication**: Processes communicate directly by naming each other (e.g., sending a message to a specific process ID). In this system processes need to know about the processes they are communicating with. 
+        - **Properties**
+            - There is exactly one pair of processes, a link is establised between each pair to communicate. Can lead to having an expontial amount of links.
+            - Typically, these links are bi-directional but can also be uni-directional.
+        - **Operations**
+            - ```Send(P, message)```
+            - ```receieve(Q, message)```
+            - Where P and Q are the processes identifying the to/from of the message respectively.
+        - **Major Issue**
+            - Maintenance can be difficult because identifying processes may require hard codeing.
+        
+    - **Indirect Communication**: Processes send messages to shared mailboxes or queues, allowing for more flexible communication. In this system processes don't need to know anything about each other unless they share a mailbox.
+        - **Properties**
+            - A link only needs to be established if they share a mailbox.
+            - Process can only communicate if they share a mailbox.
+            - Multiple links between process pairs because each can connect to the mailbox and grab what's in there.
+            - Both uni and bidirectional
+            - Each process can own a mailbox
+            - Only owner of the mailbox can recieve
+            - Any process can act as a user of the mailbox/send to a mailbox
+        - **Operations**
+            - ```Send(A, message)```
+            - ```receieve(A, message)```
+            - Where A is the mailbox
+        - **Major Issue**
+            - You must decide how a recieve is handled and when.
 
 2. **Synchronous vs. Asynchronous Communication**:
     - **Synchronous Communication**: The sender waits until the message is received before continuing its execution. This ensures that both processes are synchronized but may lead to blocking.

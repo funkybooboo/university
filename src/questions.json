@@ -54,7 +54,6 @@
       "CPU",
       "Shared Memory",
       "Common Bus"],
-    ],
     "answer": [
       "Network Adapter"
     ]

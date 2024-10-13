@@ -110,8 +110,88 @@ Tertiary  ->  ┌     Optical disk
         - Used in high performance computing, high availability, or when needing high fault tolerance.
 
 ### Operating System Operations (1.4)
+- Bootstrapping
+    - When a computer gets turned on this is the starting point, it has to know what to run first.
+    - Stored in EPROM or Erasable Programmable Read Only Memory
+    - Initializes hardware devices Loads the OS into memory and starts it up.
+- Multiprogramming
+    - CPU is much faster than any single device or user so it can't be kept busy at all times without some sort of multiprogramming.
+    - The jobs get organized into Proccess so the CPU can jump between jobs to keep busy
+    - Process
+        - A program in execution
+        - Not necessarily on the CPU, but can be put on
+    - Job scheduling determines what process when
+- Multitasking (Time Sharing)
+    - Extension of multiprogramming
+    - Quickly switch between jobs so user can interact with each jobs
+    - Keyboard input is slow in computer speed, so CPU can jump between jobs but give the user an appearance of instantaneous reaction.
+- Dual-mode and multi-mode Operations
+    - Allows an OS to protect itself and other system components
+    - Two modes
+        - User Modes
+            - Some instructions cannot be executed
+            - Used when user processes are run
+        - Kernel Modes
+            - All instructions can be executed
+            - Used when OS processes are run
+    - Overhead
+        - When an OS system call is made, and interrupt is generated that casuses the CPU to switch to kernel mode, which allows the OS to execute the system call. Once complete the CPU returns to user mode.
+        - Switching modes costs thousands (1000's) of clock cycles
+
+    - CPU Timer
+        - Countdown timer that generates an interrupt when expired
+        - Allows OS to schedule another processes
+        - A single process cannot dominate the system
+        - Called time quantum when talking about scheduling
+        - Makes for preemptive scheduling
+
+### Resource Management (1.5)
+    - OS manages all computing Resources
+    - Process Management
+        - Process Needs: CPU, Memory, I/O, Files, etc.
+    - In a multi-CPU system process can be run at the same time (parrallelism)
+    - OS responsibilities
+        - Create and delete processes
+        - Scheduling and resuming processes
+        - Suspend and resuming processes
+        - Provide process synchronization mechanisms
+        - Provide process communication mechanisms
+    - File System Management
+        - Provide a logical view of data storage
+        - Responsibilities
+            - Mounting and unmounting
+            - Free space Management
+            - storage allocation
+            - Disk scheduling
+            - Partitioning
+            - Protection
+    - Cache Management
+        - Cached data is data that is temporarily stored in a type of memeory for faster access
+        - The OS must dtermine what data to cache and track what is cached
+        - Magnetic disk -> Main Memory -> Cache -> Hardware Register
+    - I/O Subsystem Management
+        - Hides peculiarities of specific hardware devices from the user
+        - Memory Management
+            - Buffering
+            - Caching
+            - Spooling (I/O buffering mixed with other job execution)
+        - Drivers for specific hardware devices
 
 ### Protection and Security (1.6)
+    - Protection
+        - Any mechanism for controlling access to processes or user to OS defined resources (memory, storage, etc)
+    - Security
+        - Defense of the system against internal and external attacks
+    - Security  Triad
+        - Confidentiality
+            - Keeping data private
+        - Integrity
+            - Ensuring data is correct, authentic, and reliable
+            - Data is trustworty
+        - Availability
+            - Data is accessible to authorized users at all authorized times.
+            
+            
 
 ### Computing Environments (1.10)
 

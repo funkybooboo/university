@@ -46,7 +46,7 @@ process, ensuring that critical operations are managed promptly without signific
 - **Integrity**: Ensures data is accurate, authentic, and reliable, protecting against unauthorized modifications.
   Techniques such as checksums, hashing, and digital signatures are commonly used.
 - **Availability**: Ensures that information and resources are accessible to authorized users when needed, utilizing
-  measures like redundancy, failover systems, and regular maintenance to prevent downtime.
+  measures like redundancy, fail over systems, and regular maintenance to prevent downtime.
 
 ### PCB: Process Control Block
 

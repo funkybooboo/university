@@ -982,14 +982,14 @@ for operation. This process is initiated when the computer is powered on or rest
 
 ### **Comparison: BIOS vs. UEFI**
 
-| **Feature**              | **BIOS**                                | **UEFI**                                 |
-|--------------------------|-----------------------------------------|------------------------------------------|
-| **Mode**                 | 16-bit                                  | 32-bit or 64-bit                         |
-| **Boot Method**          | Master Boot Record (MBR)                | GUID Partition Table (GPT)               |
-| **Drive Size Limit**      | Up to 2.1 TB                            | Up to 9.4 ZB                             |
-| **Interface**            | Text-based                              | Graphical, supports mouse                |
-| **Hardware Initialization** | One device at a time                   | Simultaneous device initialization       |
-| **Security**             | Vulnerable to rootkits in MBR           | Secure Boot, checks OS integrity         |
-| **Recovery**             | Limited, single point of failure (MBR)  | Distributed boot info across GPT         |
-| **Boot Speed**           | Slower                                  | Faster, multi-threaded initialization    |
-| **Networking**           | Not available                           | Built-in networking for remote access    |
+| **Feature**                 | **BIOS**                               | **UEFI**                              |
+|-----------------------------|----------------------------------------|---------------------------------------|
+| **Mode**                    | 16-bit                                 | 32-bit or 64-bit                      |
+| **Boot Method**             | Master Boot Record (MBR)               | GUID Partition Table (GPT)            |
+| **Drive Size Limit**        | Up to 2.1 TB                           | Up to 9.4 ZB                          |
+| **Interface**               | Text-based                             | Graphical, supports mouse             |
+| **Hardware Initialization** | One device at a time                   | Simultaneous device initialization    |
+| **Security**                | Vulnerable to rootkits in MBR          | Secure Boot, checks OS integrity      |
+| **Recovery**                | Limited, single point of failure (MBR) | Distributed boot info across GPT      |
+| **Boot Speed**              | Slower                                 | Faster, multi-threaded initialization |
+| **Networking**              | Not available                          | Built-in networking for remote access |

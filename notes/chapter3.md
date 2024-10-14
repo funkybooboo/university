@@ -400,6 +400,133 @@ For effective communication between processes \( P \) and \( Q \):
 
 For further insights, check out this [Message Passing Systems video](https://www.youtube.com/watch?v=LuuSXWkDJOo&list=TLPQMTAxMDIwMjRzF3SAPwVBjg&index=1).
 
-### Types of IPC systems  (3.7)
+### Types of Inter-Process Communication (IPC) Systems (3.7)
+
+This section outlines notable IPC systems, highlighting key mechanisms and examples relevant to our discussion.
+
+#### IPC Systems Overview
+
+1. **POSIX API Shared Memory**
+    - **Description**: Allows multiple processes to access a shared memory segment for high-speed data exchange.
+    - **Example**: Used in applications requiring quick data access, such as video processing or gaming.
+
+2. **Mach Message Passing**
+    - **Description**: A message-based communication system utilized in the Mach microkernel, enabling processes to send and receive messages.
+    - **Example**: Employed in operating systems like macOS for inter-process communication.
+
+3. **Windows Local Procedure Calls (LPC)**
+    - **Description**: Facilitates communication between processes on Windows, allowing for both synchronous and asynchronous calls.
+    - **Example**: Used by system services to communicate with user applications.
 
 
+#### Pipes
+
+Pipes are a fundamental IPC mechanism that allow two processes to communicate through a unidirectional or bidirectional channel.
+
+##### Basic Concept
+
+- **Definition**: A pipe acts as a conduit for communication, enabling one process to send data to another.
+
+##### Types of Pipes
+
+1. **Ordinary Pipes**
+    - **Creation**:
+      ```c
+      int channel[2]; // Array to hold pipe descriptors
+      pipe(channel);  // Creates the pipe
+      ```
+        - Data sent through `channel[1]` can be read from `channel[0]`.
+    - **Characteristics**:
+        - **Unidirectional**: Data flows in one direction.
+        - **Bidirectional**: Requires two pipes if communication is needed in both directions.
+
+2. **Named Pipes (FIFOs)**
+    - **Description**: Unlike ordinary pipes, named pipes can be accessed by multiple processes and are represented as files in the file system.
+    - **Persistence**: They exist until explicitly deleted, making them suitable for long-lived inter-process communication.
+
+##### Communication via Pipes
+
+- **Process Creation**:
+    - Use `fork()` to create a child process.
+    - Both parent and child should close the end of the pipe they do not use.
+    - The pipe closes automatically when all processes using it terminate.
+
+##### Java Limitations
+
+- **OS Piping**: Java does not support OS-level piping between different JVMs, which limits IPC to threads within the same JVM.
+- **Threads**: Piping is feasible between threads since they share the same memory space.
+
+#### Sockets
+
+Sockets are essential for network communication and provide an interface for sending and receiving data across networks.
+
+##### Definition
+
+- **Socket**: An endpoint for communication in a networked environment, enabling data exchange between devices.
+
+##### Structure
+
+- **Components**:
+    - **IP Address**: Identifies the device (e.g., `192.168.1.1`).
+    - **Port Number**: Identifies the specific service (e.g., `80` for HTTP).
+
+##### Usage
+
+- **Protocols**:
+    - **TCP/IP**: Ensures reliable, ordered, and error-checked delivery of data.
+    - **UDP**: Allows faster, connectionless communication, suitable for applications like video streaming and online gaming.
+
+##### Applications
+
+- **Common Use Cases**:
+    - **Distributed Systems**: Facilitates communication in cloud services.
+    - **Security Protocols**: Used in protocols like SSL/TLS for secure data transmission.
+
+![Sockets Image](images/chapter3/sockets.png)
+
+#### Remote Procedure Call (RPC) and Remote Method Invocation (RMI)
+
+Both RPC and RMI are techniques that enable communication between clients and servers, with distinct paradigms.
+
+##### RPC
+
+- **Purpose**: Allows a client to invoke procedures on a remote server as if they were local, using a procedural programming model.
+- **Example**: Common in microservices architecture where services communicate over a network.
+
+##### RMI
+
+- **Java-Specific**: Utilizes Java’s object-oriented features for remote communication.
+- **Use Case**: Suitable for distributed applications needing to call methods on remote objects.
+
+##### RMI Implementation Overview
+
+1. **Create Client and Server Programs**:
+    - **Server**: Implements methods that clients can call remotely.
+    - **Client**: Invokes server methods without executing computations.
+
+2. **Implementation Steps**:
+    - Define an interface extending `java.rmi.Remote` with methods that throw `java.rmi.RemoteException`.
+    - **Server Implementation**:
+        - Implement the interface and its methods.
+        - Bind the server to the RMI registry.
+    - **Client Implementation**:
+        - Connect to the RMI registry and retrieve the server stub.
+
+3. **Startup Commands**:
+    - Start the RMI registry:
+      ```bash
+      $ rmiregistry 5000 &
+      ```
+    - Start the server:
+      ```bash
+      java RMIServer
+      ```
+    - Start the client:
+      ```bash
+      java RMIClient
+      ```
+
+#### Additional Resources
+
+- [Java RMI Documentation](https://www.darwinsys.com/java/rmi/)
+- [Java RMI Simple Server Example](http://blog.neoit.my/java/java-rmi-simple-server-example-using-terminal/)

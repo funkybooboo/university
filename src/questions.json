@@ -53,7 +53,8 @@
       "Device Controller",
       "CPU",
       "Shared Memory",
-      "Common Bus"],
+      "Common Bus"
+    ],
     "answer": [
       "Network Adapter"
     ]

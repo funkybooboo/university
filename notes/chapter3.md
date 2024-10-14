@@ -54,8 +54,7 @@
     - **Waiting**: The process is waiting for an event (e.g., I/O operation) to complete.
 
 - The **Process Scheduler** or **Dispatcher** in the operating system examines all processes in the ready state and
-  decides which process
-  will run on the CPU.
+  decides which process will run on the CPU.
 - A running process may be preempted and moved back to the ready state or may terminate upon completion.
 
 ![Process State Life Cycle](images/chapter3/process_states.jpg)
@@ -400,3 +399,7 @@ For effective communication between processes \( P \) and \( Q \):
 #### Helpful Resource
 
 For further insights, check out this [Message Passing Systems video](https://www.youtube.com/watch?v=LuuSXWkDJOo&list=TLPQMTAxMDIwMjRzF3SAPwVBjg&index=1).
+
+### Types of IPC systems  (3.7)
+
+

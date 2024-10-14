@@ -6,4 +6,4 @@
 - Nate Stott
 - Skyler Oakeson
 
-Start in ![Main](main.md)
+Start in ![Main](notes/main.md)

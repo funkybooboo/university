@@ -1,6 +1,6 @@
-# **Chapter 2: Operating System (OS) Overview**
+## Chapter 2
 
-## **Section 2.1: OS System Services**
+## OS System Services (2.1)
 
 #### **Introduction:**
 The operating system (OS) provides a crucial environment that enables programs to run efficiently while managing the 
@@ -112,7 +112,7 @@ resource allocation, maintain logs and statistics, and ensure the system is prot
 access. These services are essential for the OS to function as the backbone of computing, ensuring both usability and 
 stability for users and system administrators alike.
 
-## **Section 2.2: User and OS Interface**
+## User and OS Interface (2.2)
 
 #### **Introduction:**
 The operating system (OS) provides an interface between the user and the hardware, allowing users to interact with the system through various types of interfaces. The three primary types of user interfaces are the **Command-Line Interface (CLI)**, **Graphical User Interface (GUI)**, and **Touch Interface**. Each type serves a different user demographic and context, ranging from system administrators and power users to everyday consumers on mobile devices.
@@ -200,11 +200,11 @@ The operating system (OS) provides an interface between the user and the hardwar
 
 ### **Comparison of User Interfaces:**
 
-| **Interface Type**    | **Input Method**       | **Best Suited For**                        | **Examples**                                |
-|-----------------------|------------------------|--------------------------------------------|---------------------------------------------|
-| **Command-Line (CLI)** | Text-based commands    | Power users, developers, system admins     | Linux Terminal, PowerShell (Windows)        |
-| **Graphical (GUI)**    | Mouse, keyboard, icons | Everyday users, multimedia applications    | Windows, macOS, GNOME (Linux), KDE          |
-| **Touch Interface**    | Gestures, voice input  | Mobile devices, tablets, voice assistants  | Android, iOS, Windows Tablets, Google Home  |
+| **Interface Type**     | **Input Method**       | **Best Suited For**                       | **Examples**                               |
+|------------------------|------------------------|-------------------------------------------|--------------------------------------------|
+| **Command-Line (CLI)** | Text-based commands    | Power users, developers, system admins    | Linux Terminal, PowerShell (Windows)       |
+| **Graphical (GUI)**    | Mouse, keyboard, icons | Everyday users, multimedia applications   | Windows, macOS, GNOME (Linux), KDE         |
+| **Touch Interface**    | Gestures, voice input  | Mobile devices, tablets, voice assistants | Android, iOS, Windows Tablets, Google Home |
 
 ### **Summary:**
 The operating system provides different types of interfaces to accommodate various user needs and devices. The 
@@ -215,7 +215,7 @@ Each interface plays a crucial role in modern computing environments, catering t
 cases.
 
 ---
-## **Section 2.3: System Calls**
+## System Calls (2.3)
 
 #### **Introduction:**
 System calls provide the essential interface between a running program and the operating system (OS). They are often 
@@ -382,7 +382,7 @@ the Windows API, and tools like `strace` can help visualize the underlying syste
 Understanding system calls is crucial for low-level programming and OS development.
 
 ---
-## **Section 2.4: System Services**
+## System Services (2.4)
 
 #### **Introduction:**
 System services, often referred to as **system programs** or **system utilities**, provide a user-friendly environment 
@@ -494,7 +494,7 @@ multiple calls to offer more sophisticated functionality. Additionally, backgrou
 scenes to handle essential system tasks, ensuring the smooth operation of the OS without direct user input.
 
 ---
-## **Section 2.6: Why Applications are OS-Specific**
+## Why Applications are OS Specific (2.6)
 
 #### **Introduction:**
 Applications are often tied to a specific operating system (OS) and cannot be executed directly on another OS. This is 
@@ -598,7 +598,7 @@ This fundamental distinction between compiled OS-specific applications and porta
 explains why not all software can be run on every operating system without modification.
 
 ---
-## **Section 2.7: OS Design and Implementation**
+## OS Design and Implementation (2.7)
 
 #### **Introduction:**
 Operating System (OS) design is a complex and ongoing challenge. There is no "one-size-fits-all" solution, as different 
@@ -732,7 +732,7 @@ usability and performance, with system goals, such as flexibility and reliabilit
 the underlying mechanisms. Finally, the implementation of the OS has evolved from low-level assembly languages to 
 higher-level languages like C and C++, improving portability, maintainability, and performance.
 
-## **Section 2.8: OS Structure**
+## OS Structure (2.8)
 
 #### **Introduction:**
 The structure of an Operating System (OS) is similar to the structure of any complex program. It involves the 
@@ -884,7 +884,7 @@ how its components interact with each other and how efficiently the system opera
   such as drivers, to be modular.
 
 ---
-## **Section 2.9: Booting an OS**
+## Booting an OS (2.9)
 #### **Boot Process Overview:**
 The boot process involves loading the operating system (OS) from persistent storage (e.g., hard disk, SSD) into the 
 system's memory (RAM), allowing the OS to take control of the machine and initialize the hardware and software necessary 

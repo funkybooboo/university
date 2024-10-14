@@ -1,3 +1,5 @@
+## Chapter 5
+
 ### Maximize CPU Usage (5.1)
 
 #### Goal

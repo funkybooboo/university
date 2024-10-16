@@ -1,6 +1,100 @@
 ## Chapter 4
 
 ### Process vs. Thread (4.1)
+# 4.1
+
+## Section 2.9 - Booting an OS – System Boot (Section 2.9.2)
+
+The boot process is the sequence of operations that the system performs to load the OS and initialize hardware which makes the system functional. It involves different firmware types and mechanisms depending on the hardware and firmware capabilities.
+
+### Basic Input/Output System (BIOS)
+
+- **Definition**: Software stored on a non-volatile memory chip, such as flash memory or EEPROM (Electrically Erasable Programmable Read-Only Memory), located on the motherboard. It’s considered the “traditional” firmware that starts up when the computer is powered on.
+- **Role**: BIOS is responsible for initializing and testing hardware components (like the CPU, memory, and storage devices) and loading the bootloader from the Master Boot Record (MBR) into memory.
+
+#### Steps Involved:
+1. **System Tests**: BIOS performs the Power-On Self Test (POST) to check if hardware components are functioning correctly.
+2. **Loading the Bootloader**: If tests pass, the BIOS locates the bootloader in the MBR of the hard disk and loads it into memory. The MBR is a small, specific section at the beginning of a storage device that contains information about disk partitions and the boot code.
+3. **Loading the OS**: The bootloader takes over and loads the operating system into memory, allowing it to initialize and take control of the system.
+
+#### Limitations:
+- Operates in 16-bit mode, limiting its capabilities and speed.
+- Has a text-based interface, lacking graphical capabilities and mouse support.
+- MBR partitioning has a size limit of up to 2.1 TB for drives.
+- Can only initialize one hardware device at a time, making it slower than modern alternatives.
+- The process is generally multi-step and slow due to these limitations.
+
+#### Security Issues:
+- **Rootkits** (type of malware) can infect the MBR. Since BIOS loads the bootloader from the MBR, a rootkit can execute before the OS starts, allowing it to hide itself from security software.
+
+### UEFI (Unified Extensible Firmware Interface)
+
+- **Definition**: UEFI is the modern replacement for BIOS and is now standard for boot startup. It offers more features and capabilities, enhancing the boot process and system security. It's also pronounced in a non-intuitive way.
+
+#### Features:
+- Operates in **32-bit or 64-bit mode**, allowing it to access and manage more memory space efficiently.
+- Can provide a **GUI**, enabling user interaction with a mouse, improving usability compared to BIOS.
+- Capable of **initializing multiple hardware devices simultaneously**, speeding up the boot process.
+- Has **networking capabilities** for remote troubleshooting, helpful for managing systems that have issues during startup.
+- Supports larger drives (>2.1 TB) for booting due to its use of the **GUID Partition Table (GPT)** instead of MBR.
+- Can **check the OS for validity** before loading, enhancing security by verifying the integrity of the operating system.
+- Essentially acts as a mini operating system with its ability to handle various hardware and software tasks independently.
+
+#### GPT (GUID Partition Table):
+- **GUID** - Globally Unique Identification ensures that every partition has a unique identifier.
+- Unlike MBR, GPT stores boot code in multiple partitions across the drive, improving reliability and recovery options in case of data corruption.
+- If one partition is damaged, others can be used to recover.
+
+## Chapter 3 - Process Concepts
+
+### Section 3.1 - Process Concept
+
+- **A Process**: The entities that run on the CPU. Early computer systems (batch systems) referred to these as jobs, and time-shared systems called them user programs or tasks. Modern systems use the term process to describe these active entities, encompassing both user and kernel-level programs. Though the term job may appear in the context of job scheduling, it essentially refers to processes.
+
+### What is a Process?
+- A process is essentially a program in execution. While a program is **PASSIVE** (stored on disk), a process is **ACTIVE** (running in memory).
+- The process can be in various states but is always considered ready to execute when it’s in memory.
+
+### Process Organization in Memory:
+Processes are structured into different sections in memory:
+- **Text Section**: Contains the executable code of the program.
+- **Data Section**: Stores global variables and resources that the process needs.
+- **Heap**: Dynamically allocated memory for objects or data created during runtime.
+- **Stack Section**: Temporary storage for activation records, such as function call data (local variables and return addresses).
+
+#### Dynamic vs. Static Sections:
+- The **text** and **data** sections have fixed sizes, meaning they don’t change during the process’s lifetime.
+- The **heap** and **stack** sections can grow or shrink dynamically. The operating system manages these regions to ensure they don’t collide with each other.
+
+> **Extra Note (Not in Book)**:  
+> When a process is created, a kernel stack is also allocated. This stack is specifically used for kernel-mode operations, such as handling system calls. It is stored in a protected memory area, separate from user processes, to maintain system security and stability.
+
+### Process States:
+A process can exist in various states during its lifecycle. States may vary slightly between operating systems, but the general states include:
+- **New**: The process is being created.
+- **Ready**: The process is waiting to be assigned to the CPU.
+- **Running**: The process is currently executing on the CPU.
+- **Waiting**: The process is paused, waiting for some event (e.g., I/O completion).
+- **Terminated**: The process has completed execution and is no longer active.
+
+### Process Control Block (PCB)
+The PCB is a critical data structure used by the OS to manage processes. It holds all the information needed to track, control, and manage a process's execution.
+
+#### Categories of Information Stored in a PCB:
+- **Process State**: The current state of the process (e.g., ready, running, waiting).
+- **Process Counter**: The address of the next instruction the CPU will execute.
+- **CPU Registers**: Current values of the CPU registers to be restored when the process resumes execution.
+- **CPU Scheduling Information**: Includes priority levels and other scheduling details (discussed further in later chapters).
+- **Memory Management Information**: Details like memory limits and allocated segments (more in later chapters).
+- **Accounting Information**: Tracks resources used, such as CPU time and process ID.
+- **I/O Status Information**: Information on I/O devices assigned to the process and open files.
+
+#### Summary:
+The PCB serves as a comprehensive record that contains all the necessary data to manage and resume a process’s execution efficiently.
+
+> **Additional Note (Not in Book)**:  
+> The PCB is typically stored in the lower address portion of the kernel stack, a secure memory area inaccessible to user processes, ensuring its integrity and protection.
+
 ### Multicore Programming (4.2)
 ### Multithreading Models (4.3)
 ### Threading Libraries (4.4)

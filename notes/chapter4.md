@@ -158,6 +158,64 @@
 Amdahl’s Law shows that the serial portion of a program disproportionately affects overall speedup. As the number of cores (N) increases towards infinity, the theoretical maximum speedup approaches \(\frac{1}{S}\), indicating the limit imposed by the non-parallelizable part of the program.
 
 ### Multithreading Models (4.3)
+# Section 4.3 - Multithreading Models
+
+## User vs. Kernel Threads
+
+### User Threads:
+- Managed at the user level within user code, without direct OS support.
+- Can be managed by a virtual machine (VM) or a threading library.
+- User threads are lightweight because they don’t involve the kernel, making them fast to create and manage.
+
+### Kernel Threads:
+- Managed directly by the kernel; the OS has native support and control over them.
+- Operating systems provide built-in support for kernel threads, enabling efficient multitasking and multithreading at the system level.
+
+## Relationships Between User and Kernel Threads
+
+### Many-to-One Model:
+- Many user threads are mapped to one kernel thread.
+- User threads are managed by a thread library in user space.
+
+> **Vacuums 🫢**: Imagine a landlord who has one vacuum (representing the kernel thread). Each apartment (process) can use the vacuum, but the landlord doesn’t monitor who in the apartment uses it. The landlord decides when to plug the vacuum into power (the CPU) for use.
+
+- **Pro**:
+  - Efficient as only one kernel thread is created, reducing the overhead of managing multiple kernel threads.
+- **Cons**:
+  - If one user thread makes a blocking system call, all user threads in that process are blocked because they all rely on the single kernel thread.
+  - True parallelism is not possible since only one kernel thread exists.
+- **Use**:
+  - Not used in modern systems because it cannot take advantage of multiple cores. Its purpose was primarily to provide concurrency at the process level before multi-core systems became common.
+
+### One-to-One Model:
+- Each user thread is mapped to a separate kernel thread.
+- This model is directly managed by the operating system.
+
+> **Vacuums Pt2**: Imagine a landlord who has many vacuums (threads). Each apartment (process) gets a vacuum, and each person in the apartment has their own. The landlord decides when to plug in each vacuum.
+
+- **Pro**:
+  - Increases concurrency since one thread blocking on a system call does not affect others, allowing threads to run in parallel.
+- **Con**:
+  - Requires a kernel thread for each user thread, increasing overhead when an application creates a large number of threads.
+- **Use**:
+  - This model is commonly used by Linux, Windows, and macOS because it supports parallelism and takes advantage of multi-core systems.
+
+### Many-to-Many Model:
+- Many user threads are mapped to an equal or fewer number of kernel threads.
+- Allows flexibility where the operating system can control the number of kernel threads available to each process.
+
+> **Vacuums Pt3 😏**: The landlord has many vacuums, and each apartment (process) may receive one or share with others. The landlord decides when to turn on each vacuum, regardless of who in the apartment uses it when shared.
+
+- **Pro**:
+  - Flexibility since the OS can determine the number of kernel threads allocated per process, balancing system load.
+  - Users can create as many threads as needed without overwhelming the system since the number of kernel threads is capped.
+- **Con**:
+  - This model is complex to implement effectively.
+  - With the advent of multi-core systems, managing and optimizing thread allocation becomes less challenging, but it still requires careful design.
+- **Use**:
+  - Example: Windows Fibers (lightweight user-level threads).
+  - Solaris OS uses this model to provide efficient thread management.
+
 ### Threading Libraries (4.4)
 - **User Space Library**
     - No kernel support.

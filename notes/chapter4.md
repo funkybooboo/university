@@ -96,6 +96,90 @@ The PCB serves as a comprehensive record that contains all the necessary data to
 > The PCB is typically stored in the lower address portion of the kernel stack, a secure memory area inaccessible to user processes, ensuring its integrity and protection.
 
 ### Multicore Programming (4.2)
+## Section 3.2 - Process Scheduling
+
+### Objective
+The goal of process scheduling is to keep the CPU and devices as busy as possible by maintaining a set of processes ready to run at any time. However, the specific goal can vary depending on the system environment.  
+Examples:
+- On a **desktop system**, the objective may be to maximize performance.
+- On a **mobile device**, the objective could focus on conserving battery life.
+
+### Scheduler
+The scheduler is a key component of the operating system that selects which process to execute next and attempts to maximize efficiency based on the OS’s objectives.  
+There are multiple algorithms for process scheduling (covered in Chapter 5). These algorithms determine the criteria and rules for selecting the next process to run.
+
+### Types of Processes
+- **I/O Bound Processes**: Processes that spend most of their time waiting for I/O operations to complete, with short bursts of CPU activity in between.  
+  Examples include disk operations or network communications.
+- **CPU Bound Processes**: Processes that require extensive CPU time and tend to have long CPU bursts with minimal I/O activity.  
+  Example: A process performing complex calculations.
+
+### Scheduling Queues
+- **Ready Queue**: Contains all the processes that are ready to execute and are waiting for CPU time.  
+  It’s important to note that even though these processes are "waiting," they are not in the wait queue; they are ready to execute as soon as the CPU becomes available.
+- **Wait Queue**: Holds any processes that are waiting for a particular event, such as the completion of an I/O operation.
+
+### Process Migration Between Queues
+Processes move between these queues throughout their lifecycle based on various events. A typical process cycle includes:
+- Moving from the **ready queue** to the **running state** when it’s assigned CPU time.
+- Entering the **wait queue** if it needs to wait for an I/O operation.
+- Returning to the **ready queue** once the I/O event is complete.
+- A process might also terminate and exit the queues entirely when it has finished execution.
+
+### Context Switch
+- Occurs when the operating system switches from executing one process to another.
+- During a context switch, the OS must save the state of the currently running process in its **Process Control Block (PCB)** so it can be resumed later.
+- Context switching is pure overhead because it doesn’t perform any productive work and takes thousands of CPU cycles. The efficiency of context switching depends on hardware support (e.g., the number of CPU registers that need saving/restoring can vary by architecture).
+
+---
+
+## Section 3.3 - Operations on Processes
+
+### Process Creation
+In most operating systems, processes are created by other processes, forming a hierarchical or tree structure. The initial process is started by the operating system itself.
+
+### Viewing Processes
+- **On Linux**: `ps -A` lists all processes, while `top` shows running processes; finding specific processes may be challenging.
+- **Common process identifiers for initial processes**:
+  - **Linux**: Process ID (PID) 1 is typically **systemd**.
+  - **MacOS**: PID 1 is **launchd**.
+  - **Windows**: PID 4 is the **System** process, viewable using the `tasklist` command.
+- The `pstree` command on Linux displays the process tree structure, showing the relationship between processes.
+
+### UNIX Process Creation
+- **`fork()`**: This system call creates a new child process that is an exact duplicate of the parent.
+  - Return values of `fork()`:
+    - **< 0**: Error occurred during process creation.
+    - **== 0**: Return value in the child process, indicates it is the new process created.
+    - **> 0**: The parent process receives the PID of the child process.
+- **`exec()` Family**: Functions that replace the current process image with a new one; effectively running a different program within the same process context.
+
+### Process Execution
+The parent process may or may not wait for the child process to complete. This depends on how the parent manages the child process:
+- **`wait()`**: System call that the parent process uses to determine if and when to wait for the child’s completion.
+  - **Blocking Behavior**: The parent process waits until the child process terminates before continuing execution.
+  - **Non-blocking Behavior**: The parent process continues executing concurrently with the child process.
+
+### Process Termination
+A process can terminate itself or be terminated by its parent:
+- **Self-termination**: The process can call `exit()`, optionally passing an exit code (integer value) that indicates the reason for termination or status.
+
+- **Parent Termination of a Child**:
+  - Using commands like `TerminateProcess` or `Abort` (OS Specific), a parent can terminate a child process.
+
+- **Reasons for termination**:
+  - The child process is using too many resources.
+  - The child’s task is no longer needed.
+  - The parent process itself is terminating, causing cascading termination of its children.
+
+### Key Points
+- The child process shares copied data from the parent.
+- The `exec()` function replaces the current process image, so any code after `exec()` doesn’t execute unless it fails.
+
+### Return Status Values
+- The child process can return a status value upon exiting.
+- Use macros like `WEXITSTATUS` to extract the return value from the integer returned by `wait()`, as the status integer contains extra information.
+
 ### Multithreading Models (4.3)
 ### Threading Libraries (4.4)
 - **User Space Library**

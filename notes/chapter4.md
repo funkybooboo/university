@@ -1,6 +1,74 @@
 ## Chapter 4
 
 ### Process vs. Thread (4.1)
+# Section 4.1 - Overview
+
+## Process vs. Thread
+
+- **Process**: A running instance of a program. It contains its own memory space, resources, and state, and the operating system manages multiple processes concurrently to utilize the CPU and other resources efficiently.
+  - A computer manages and executes many processes simultaneously, even if it has a single CPU, by rapidly switching between them (context switching).
+
+- **Thread**: The smallest unit of execution within a process.
+  - A process can contain one or multiple threads.
+  - Each thread within a process shares the same code, data, and resources but operates independently.
+
+> The book refers to threads using the term "task"—treating them in a manner similar to processes since they can be executed independently.
+
+### Shared/Unique Elements of Threads
+
+- **Shared**:
+  - **Code**: All threads in a process share the same code base, meaning they run the same program logic.
+  - **Data**: Global variables and dynamically allocated memory (heap) are accessible by all threads within the process.
+  - **Files and Resources**: Any files or system resources opened by one thread are accessible by others in the same process.
+
+- **Unique**:
+  - **Stack**: Each thread has its own stack, which stores information like function calls, local variables, and return addresses. This isolation prevents one thread’s local data from interfering with another’s.
+  - **Registers**: Threads maintain their own set of registers, such as the instruction pointer and stack pointer, ensuring that each thread has its independent state of execution.
+
+### Visualizing Threads
+
+- In a **single-threaded process**: Only one thread exists, and the process operates sequentially (handling one task at a time).
+- In a **multithreaded process**: Multiple threads exist, each capable of performing different parts of the program concurrently, improving efficiency and responsiveness.
+
+### Managing Threads vs. Processes
+
+- Managing threads and processes are similar, but threads **share** many resources within a process, while processes are **isolated** from each other.
+
+### Thread Control Block (TCB)
+
+- **TCB**: A data structure that contains all the information unique to an individual thread.
+- The TCB typically includes:
+  - A reference to the Process Control Block (PCB) of its parent process to access shared resources like code and files.
+  - Pointers to the parent thread and any child threads it creates, allowing the operating system to manage their relationships and dependencies.
+
+### Examples of Multithreaded Programs
+
+- **Photo Album Application**: Uses separate threads to generate image thumbnails while keeping the main interface responsive.
+- **Web Browser**: Uses threads to process images, handle user input, and download web page data concurrently.
+- **Word Processor**: Uses threads for different tasks such as spell-check, auto-saving, and responding to user keystrokes simultaneously; ensures a smooth user experience.
+
+### Motivation for Multithreading
+
+- Single applications often need to perform multiple tasks at once.
+  - For example, a media player must read files, decode data, and play audio/video concurrently.
+- Creating a process is resource-intensive; it involves allocating memory, setting up resources, and creating a separate execution environment.
+- Creating threads is less expensive since they share the process’s resources and memory space.
+
+### Benefits of Multithreading
+
+- **Responsiveness**:
+  - Multithreading allows different parts of an application to run concurrently—beneficial for applications with user interfaces, enabling the UI to remain responsive even when other tasks are blocked or taking time to complete (e.g., loading data or performing computations).
+
+- **Resource Sharing**:
+  - Since threads share the same address space, they can directly communicate and access shared resources without needing Interprocess Communication (IPC) mechanisms, which are necessary for processes.
+
+- **Economy**:
+  - Thread creation has much less overhead compared to process creation. The operating system doesn’t need to allocate a separate memory space or resources as it does for a new process.
+  - Switching between threads is more efficient than context switching between processes; threads share the same memory space and only need to save/restore a smaller set of state information.
+
+- **Scalability**:
+  - Multithreaded applications can better utilize multi-core processors by distributing threads across multiple cores.
+  - This allows a single process to execute multiple threads simultaneously, increasing performance and throughput.
 
 ### Multicore Programming (4.2)
 

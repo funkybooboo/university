@@ -71,6 +71,91 @@
   - This allows a single process to execute multiple threads simultaneously, increasing performance and throughput.
 
 ### Multicore Programming (4.2)
+# Section 4.2 - Multicore Programming
+
+## Concurrency vs. Parallelism
+
+### Concurrency:
+- A system supports concurrency when it allows multiple tasks to make progress at the same time.
+- This does not necessarily mean that the tasks are being executed simultaneously; rather, it gives the appearance or idea that they are.
+- Systems with concurrency use a single core. With efficient scheduling and context switching, they can manage and execute parts of multiple processes in an **interleaved** manner (interleaved: to arrange in or as if in alternate layers).
+- This allows processes to share time on the same core, providing the illusion of multitasking even when only one core is available.
+
+### Parallelism:
+- Systems are parallel if they can perform multiple tasks simultaneously.
+- This is the actual occurrence of more than one process or thread executing at the same time, but it requires multiple cores.
+- Parallelism takes advantage of multiple CPU cores to run processes or threads in a truly simultaneous fashion, increasing the system's efficiency and speed.
+- With multiple cores, each task or thread can be assigned to its own core, allowing parallel execution rather than the time-shared illusion created by concurrency.
+
+## Programming Challenges in Multicore Programming
+
+### Identifying Tasks:
+1. Identifying tasks within an application that can be executed concurrently.
+2. Not all tasks in a program are independent; finding those that can run simultaneously without conflicts is crucial for effective parallel programming.
+
+### Balancing Work:
+- Creating a separate task that doesn’t contribute significantly to the overall work may not be efficient. If the task is too small or trivial, the overhead of managing and coordinating it may outweigh the benefits of parallel execution.
+- The goal is to ensure that each task or thread performs a substantial amount of work to justify the cost of creating and managing it.
+
+### Data Splitting:
+- For parallel tasks to work efficiently, they need to operate on different pieces of data.
+- The program must ensure that the data is split appropriately so that each task can work independently without overlapping with or waiting for others.
+
+### Data Dependencies:
+- Different tasks might depend on the results produced by other tasks.
+- If one piece of data must be computed before another task can continue, it creates dependencies that complicate parallel execution.
+- Handling dependencies requires precise synchronization and coordination to avoid issues like race conditions or deadlocks.
+  - **Race Conditions**: When two or more threads (or processes) access shared data or resources concurrently, and the outcome of the execution depends on the order in which the threads are scheduled. This can lead to unpredictable and incorrect results because threads might "race" to access and modify the data.
+  - **Deadlocks**: When two or more processes or threads are blocked forever, each waiting for the other to release a resource they need to proceed. In other words, a deadlock is a situation where two or more threads are holding resources and waiting for each other in a circular dependency, causing them to be stuck indefinitely.
+
+### Testing & Debugging:
+- Testing and debugging parallel and multi-threaded programs is more challenging than debugging sequential programs due to the numerous execution paths and the timing differences with multi-core processing.
+- Bugs might only manifest under specific timing conditions or with particular hardware configurations, making them harder to reproduce and resolve.
+
+## Types of Parallelism
+
+### Data Parallelism:
+- Distributing subsets of data across multiple cores, with each core performing the same operation on its assigned subset.
+- This type of parallelism is ideal for tasks where the same computation can be applied independently across different pieces of data.
+- **Example**: In a summation calculation, the input data could be divided into ranges, and each core or thread could sum a specific range of values. Once all threads complete their summations, the results are combined.
+
+### Task Parallelism:
+- Distributing different tasks across multiple cores, with each task performing a different operation.
+- Tasks may work on the same data, which can cause problems if not managed properly.
+- **Example**: One task could be responsible for processing an image, while another task handles network communications simultaneously. Care must be taken to manage data access and dependencies correctly.
+
+### Visualizing Parallelism:
+- **Data Parallelism**: Emphasis on splitting data so that the same task is executed concurrently on different data subsets.
+- **Task Parallelism**: Emphasis on running different tasks that might interact with the same or different data sets.
+- The two types are not mutually exclusive—well-designed programs may use both strategies to maximize efficiency and performance.
+
+## Measuring/Estimating Speedup
+
+### Amdahl's Law:
+- Amdahl’s law is a formula used to estimate the potential performance gains of a multi-core system running a multi-threaded program.
+- It highlights the limitations of parallelization by focusing on the portion of the program that must remain sequential.
+
+**Formula**:  
+\[
+\text{Speedup} = \frac{1}{S + \frac{(1 - S)}{N}}
+\]
+
+- **S**: The serial portion of the program (the part that cannot be parallelized), expressed as a decimal fraction of the total execution time.
+- **N**: The number of processing cores available.
+
+**Example**:
+- A program that is 75% parallelizable (25% must be executed sequentially).
+  - If running on 1 core:  
+    \[
+    \text{Speedup} = \frac{1}{0.25 + \frac{(1 - 0.25)}{1}} = 1
+    \]  
+    Note: With only one core, the speedup will always be 1, as no parallelism can occur.
+  - If running on 2 cores:  
+    \[
+    \text{Speedup} = \frac{1}{0.25 + \frac{(1 - 0.25)}{2}} = 1.6
+    \]
+
+Amdahl’s Law shows that the serial portion of a program disproportionately affects overall speedup. As the number of cores (N) increases towards infinity, the theoretical maximum speedup approaches \(\frac{1}{S}\), indicating the limit imposed by the non-parallelizable part of the program.
 
 ### Multithreading Models (4.3)
 ### Threading Libraries (4.4)

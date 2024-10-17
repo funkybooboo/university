@@ -100,6 +100,18 @@ std::vector<std::string> WordTree::predict(const std::string& partial, const std
         return results;
     }
 
+    const auto currentNode = traverseToEndOfPartial(lowerPartial);
+    if (!currentNode)
+    {
+        return results;
+    }
+
+    collectPredictions(*currentNode, lowerPartial, results, howMany);
+    return results;
+}
+
+std::optional<std::shared_ptr<TreeNode>> WordTree::traverseToEndOfPartial(const std::string& lowerPartial) const
+{
     auto currentNode = *m_root;
 
     for (const char c : lowerPartial)
@@ -107,11 +119,20 @@ std::vector<std::string> WordTree::predict(const std::string& partial, const std
         auto childNodeOpt = currentNode->findChild(c);
         if (!childNodeOpt)
         {
-            return results;
+            return std::nullopt;
         }
         currentNode = *childNodeOpt;
     }
 
+    return currentNode;
+}
+
+void WordTree::collectPredictions(
+    const std::shared_ptr<TreeNode>& currentNode,
+    const std::string& lowerPartial,
+    std::vector<std::string>& results,
+    const std::uint8_t howMany)
+{
     std::queue<std::pair<std::shared_ptr<TreeNode>, std::string>> bfsQueue;
     bfsQueue.emplace(currentNode, lowerPartial);
 
@@ -130,8 +151,6 @@ std::vector<std::string> WordTree::predict(const std::string& partial, const std
             bfsQueue.emplace(childNode, currentWord + c);
         }
     }
-
-    return results;
 }
 
 std::size_t WordTree::size() const

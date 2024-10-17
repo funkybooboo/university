@@ -9,24 +9,6 @@
 #include <string>
 #include <vector>
 
-template <typename Out>
-void split(const std::string& s, const char delim, Out result)
-{
-    std::istringstream iss(s);
-    std::string item;
-    while (std::getline(iss, item, delim))
-    {
-        *result++ = item;
-    }
-}
-
-std::vector<std::string> split(const std::string& s, const char delim)
-{
-    std::vector<std::string> elems;
-    split(s, delim, std::back_inserter(elems));
-    return elems;
-}
-
 std::shared_ptr<WordTree> readDictionary(const std::string& filename)
 {
     auto wordTree = std::make_shared<WordTree>();
@@ -59,60 +41,111 @@ std::shared_ptr<WordTree> readDictionary(const std::string& filename)
     return wordTree;
 }
 
-void renderConsole(const std::shared_ptr<WordTree>& wordTree)
+class Console
+{
+  public:
+    static void render(const std::shared_ptr<WordTree>& wordTree);
+
+  private:
+    template <typename Out>
+    static void split(const std::string& s, char delim, Out result);
+
+    static std::vector<std::string> split(const std::string& s, char delim);
+
+    static void displayInput(const std::string& input);
+
+    static std::string updateLastWord(const std::string& input);
+
+    static void displayPredictions(const std::vector<std::string>& predictions);
+
+    static bool handleUserInput(std::string& input);
+};
+
+template <typename Out>
+void Console::split(const std::string& s, const char delim, Out result)
+{
+    std::istringstream iss(s);
+    std::string item;
+    while (std::getline(iss, item, delim))
+    {
+        *result++ = item;
+    }
+}
+
+std::vector<std::string> Console::split(const std::string& s, const char delim)
+{
+    std::vector<std::string> elems;
+    split(s, delim, std::back_inserter(elems));
+    return elems;
+}
+
+void Console::displayInput(const std::string& input)
+{
+    rlutil::locate(1, 1);
+    std::cout << input << std::endl;
+}
+
+std::string Console::updateLastWord(const std::string& input)
+{
+    if (auto words = split(input, ' '); !words.empty())
+    {
+        return words.back();
+    }
+    return "";
+}
+
+void Console::displayPredictions(const std::vector<std::string>& predictions)
+{
+    rlutil::locate(1, 3); // Move to the prediction line
+    std::cout << "--- prediction ---" << std::endl;
+    for (const auto& word : predictions)
+    {
+        std::cout << word << std::endl;
+    }
+}
+
+bool Console::handleUserInput(std::string& input)
+{
+    const int key = rlutil::getkey();
+    if (key == 27) // Escape key to exit
+    {
+        return false; // Signal to exit
+    }
+    if (key == rlutil::KEY_BACKSPACE)
+    {
+        if (!input.empty())
+        {
+            input.pop_back(); // Remove last character
+        }
+    }
+    else if (std::isprint(key))
+    {
+        input += static_cast<char>(key); // Append character to input
+    }
+    return true; // Continue running
+}
+
+void Console::render(const std::shared_ptr<WordTree>& wordTree)
 {
     std::string input;
-    std::string lastWord;
     std::vector<std::string> predictions;
 
     rlutil::cls();
 
     while (true)
     {
-        // Display the current input line
-        rlutil::locate(1, 1);
-        std::cout << "Input: " << input << std::endl;
+        displayInput(input);
 
-        // Split the input to get the last word
-        if (auto words = split(input, ' '); !words.empty())
-        {
-            lastWord = words.back();
-        }
-        else
-        {
-            lastWord.clear();
-        }
-
-        // Get predictions based on the last word
-        if (!lastWord.empty())
+        if (std::string lastWord = updateLastWord(input); !lastWord.empty())
         {
             predictions = wordTree->predict(lastWord, rlutil::trows() - 4); // Adjust for input line and title
         }
 
-        // Display predictions
-        rlutil::locate(1, 3); // Move to the prediction line
-        std::cout << "--- prediction ---" << std::endl;
-        for (const auto& word : predictions)
-        {
-            std::cout << word << std::endl;
-        }
+        displayPredictions(predictions);
 
-        // Capture user input
-        const int key = rlutil::getkey();
-        if (key == 27) // Escape key to exit
+        if (!handleUserInput(input))
         {
             break;
-        }
-        if (key == rlutil::KEY_BACKSPACE)
-        {
-            if (!input.empty())
-            {
-                input.pop_back(); // Remove last character
-            }
-        }
-        else if (std::isprint(key))
-        {
-            input += static_cast<char>(key); // Append character to input
         }
     }
 }
@@ -120,6 +153,6 @@ void renderConsole(const std::shared_ptr<WordTree>& wordTree)
 int main()
 {
     const std::shared_ptr<WordTree> wordTree = readDictionary("../data/dictionary.txt");
-    renderConsole(wordTree);
+    Console::render(wordTree);
     return 0;
 }

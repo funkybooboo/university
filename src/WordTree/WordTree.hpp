@@ -26,7 +26,7 @@ class WordTree
     void addHelper(const std::shared_ptr<TreeNode>& node, const std::string& word, size_t index);
     [[nodiscard]] bool findHelper(const std::shared_ptr<TreeNode>& node, const std::string& word, size_t index) const;
     [[nodiscard]] std::optional<std::shared_ptr<TreeNode>> traverseToEndOfPartial(const std::string& lowerPartial) const;
-    static void WordTree::collectPredictions(
+    static void collectPredictions(
         const std::shared_ptr<TreeNode>& currentNode,
         const std::string& lowerPartial,
         std::vector<std::string>& results,

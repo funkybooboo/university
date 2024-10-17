@@ -41,28 +41,8 @@ std::shared_ptr<WordTree> readDictionary(const std::string& filename)
     return wordTree;
 }
 
-class Console
-{
-  public:
-    static void render(const std::shared_ptr<WordTree>& wordTree);
-
-  private:
-    template <typename Out>
-    static void split(const std::string& s, char delim, Out result);
-
-    static std::vector<std::string> split(const std::string& s, char delim);
-
-    static void displayInput(const std::string& input);
-
-    static std::string updateLastWord(const std::string& input);
-
-    static void displayPredictions(const std::vector<std::string>& predictions);
-
-    static bool handleUserInput(std::string& input);
-};
-
 template <typename Out>
-void Console::split(const std::string& s, const char delim, Out result)
+void split(const std::string& s, const char delim, Out result)
 {
     std::istringstream iss(s);
     std::string item;
@@ -72,87 +52,37 @@ void Console::split(const std::string& s, const char delim, Out result)
     }
 }
 
-std::vector<std::string> Console::split(const std::string& s, const char delim)
+std::vector<std::string> split(const std::string& s, const char delim)
 {
     std::vector<std::string> elems;
     split(s, delim, std::back_inserter(elems));
     return elems;
 }
 
-void Console::displayInput(const std::string& input)
-{
-    rlutil::locate(1, 1);
-    std::cout << input << std::endl;
-}
-
-std::string Console::updateLastWord(const std::string& input)
-{
-    if (auto words = split(input, ' '); !words.empty())
-    {
-        return words.back();
-    }
-    return "";
-}
-
-void Console::displayPredictions(const std::vector<std::string>& predictions)
-{
-    rlutil::locate(1, 3); // Move to the prediction line
-    std::cout << "--- prediction ---" << std::endl;
-    for (const auto& word : predictions)
-    {
-        std::cout << word << std::endl;
-    }
-}
-
-bool Console::handleUserInput(std::string& input)
-{
-    const int key = rlutil::getkey();
-    if (key == 27) // Escape key to exit
-    {
-        return false; // Signal to exit
-    }
-    if (key == rlutil::KEY_BACKSPACE)
-    {
-        if (!input.empty())
-        {
-            input.pop_back(); // Remove last character
-        }
-    }
-    else if (std::isprint(key))
-    {
-        input += static_cast<char>(key); // Append character to input
-    }
-    return true; // Continue running
-}
-
-void Console::render(const std::shared_ptr<WordTree>& wordTree)
+void render(const std::shared_ptr<WordTree>& wordTree)
 {
     std::string input;
     std::vector<std::string> predictions;
 
     rlutil::cls();
 
+    // TODO move to 3rd line and print --- prediction ---
+
     while (true)
     {
-        displayInput(input);
-
-        if (std::string lastWord = updateLastWord(input); !lastWord.empty())
-        {
-            predictions = wordTree->predict(lastWord, rlutil::trows() - 4); // Adjust for input line and title
-        }
-
-        displayPredictions(predictions);
-
-        if (!handleUserInput(input))
-        {
-            break;
-        }
+        // TODO move to 1st line and wait for user char
+        // TODO clear screen
+        // TODO print users input on 1st line
+        // TODO move to 3rd line and print --- prediction ---
+        // TODO split user input and get last word
+        // TODO get predictions with that last word
+        // TODO move to 4th line and print all the predictions
     }
 }
 
 int main()
 {
     const std::shared_ptr<WordTree> wordTree = readDictionary("../data/dictionary.txt");
-    Console::render(wordTree);
+    render(wordTree);
     return 0;
 }

@@ -1,11 +1,21 @@
 #pragma once
 
-#include <unordered_map>
 #include <memory>
+#include <optional>
+#include <unordered_map>
 
-class TreeNode {
+class TreeNode
+{
+  public:
+    TreeNode();
 
-    private:
-        bool endOfWord;
-        std::unordered_map<char, std::shared_ptr<TreeNode>> children;
+    [[nodiscard]] bool isEndOfWord() const;
+    void setEndOfWord();
+
+    [[nodiscard]] std::optional<std::shared_ptr<TreeNode>> findChild(char c) const;
+    void addChild(char c);
+
+  private:
+    bool m_endOfWord;
+    std::unordered_map<char, std::shared_ptr<TreeNode>> m_children; // Use map directly
 };

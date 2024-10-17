@@ -18,7 +18,7 @@
 /// Define this to use ANSI escape sequences also on Windows
 /// (defaults to using WinAPI instead).
 #if 0
-#define RLUTIL_USE_ANSI
+    #define RLUTIL_USE_ANSI
 #endif
 
 /// Define: RLUTIL_STRING_T
@@ -26,46 +26,46 @@
 ///
 /// Defaults to std::string with C++ and char* with C.
 #if 0
-#define RLUTIL_STRING_T char*
+    #define RLUTIL_STRING_T char*
 #endif
 
 #ifndef RLUTIL_INLINE
-#ifdef _MSC_VER
-#define RLUTIL_INLINE __inline
-#else
-#define RLUTIL_INLINE static __inline__
-#endif
+    #ifdef _MSC_VER
+        #define RLUTIL_INLINE __inline
+    #else
+        #define RLUTIL_INLINE static __inline__
+    #endif
 #endif
 
 #ifdef __cplusplus
-/// Common C++ headers
-#include <cstdio> // for getch()
-#include <iostream>
-#include <string>
+    /// Common C++ headers
+    #include <cstdio> // for getch()
+    #include <iostream>
+    #include <string>
 /// Namespace forward declarations
 namespace rlutil
 {
     RLUTIL_INLINE void locate(int x, int y);
 }
 #else
-#include <stdio.h>  // for getch() / printf()
-#include <string.h> // for strlen()
+    #include <stdio.h>  // for getch() / printf()
+    #include <string.h> // for strlen()
 RLUTIL_INLINE void locate(int x,
                           int y); // Forward declare for C to avoid warnings
-#endif              // __cplusplus
+#endif                  // __cplusplus
 
 #ifdef _WIN32
-#include <windows.h> // for WinAPI and Sleep()
-#define _NO_OLDNAMES // for MinGW compatibility
-#include <conio.h>   // for getch() and kbhit()
-#define getch _getch
-#define kbhit _kbhit
+    #include <windows.h> // for WinAPI and Sleep()
+    #define _NO_OLDNAMES // for MinGW compatibility
+    #include <conio.h>   // for getch() and kbhit()
+    #define getch _getch
+    #define kbhit _kbhit
 #else
-#include <sys/ioctl.h> // for getkey()
-#include <sys/time.h>  // for kbhit()
-#include <sys/types.h> // for kbhit()
-#include <termios.h>   // for getch() and kbhit()
-#include <unistd.h>    // for getch(), kbhit() and (u)sleep()
+    #include <sys/ioctl.h> // for getkey()
+    #include <sys/time.h>  // for kbhit()
+    #include <sys/types.h> // for kbhit()
+    #include <termios.h>   // for getch() and kbhit()
+    #include <unistd.h>    // for getch(), kbhit() and (u)sleep()
 
 /// Function: getch
 /// Get character without waiting for Return to be pressed.
@@ -108,16 +108,16 @@ RLUTIL_INLINE int kbhit(void)
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
     return cnt; // Return number of characters
 }
-#endif                 // _WIN32
+#endif                     // _WIN32
 
 #ifndef gotoxy
 /// Function: gotoxy
 /// Same as <rlutil.locate>.
 RLUTIL_INLINE void gotoxy(int x, int y)
 {
-#ifdef __cplusplus
+    #ifdef __cplusplus
     rlutil::
-#endif
+    #endif
         locate(x, y);
 }
 #endif // gotoxy
@@ -132,49 +132,49 @@ namespace rlutil
 #endif
 
     /**
- * Defs: Internal typedefs and macros
- * RLUTIL_STRING_T - String type depending on which one of C or C++ is used
- * RLUTIL_PRINT(str) - Printing macro independent of C/C++
- */
+     * Defs: Internal typedefs and macros
+     * RLUTIL_STRING_T - String type depending on which one of C or C++ is used
+     * RLUTIL_PRINT(str) - Printing macro independent of C/C++
+     */
 
 #ifdef __cplusplus
-#ifndef RLUTIL_STRING_T
+    #ifndef RLUTIL_STRING_T
     typedef std::string RLUTIL_STRING_T;
-#endif // RLUTIL_STRING_T
+    #endif // RLUTIL_STRING_T
 
-#define RLUTIL_PRINT(st) \
-    do                   \
-    {                    \
-        std::cout << st; \
-    } while (false)
+    #define RLUTIL_PRINT(st) \
+        do                   \
+        {                    \
+            std::cout << st; \
+        } while (false)
 #else // __cplusplus
-#ifndef RLUTIL_STRING_T
+    #ifndef RLUTIL_STRING_T
 typedef const char* RLUTIL_STRING_T;
-#endif // RLUTIL_STRING_T
+    #endif // RLUTIL_STRING_T
 
-#define RLUTIL_PRINT(st) printf("%s", st)
+    #define RLUTIL_PRINT(st) printf("%s", st)
 #endif // __cplusplus
 
     /**
- * Enums: Color codes
- *
- * BLACK - Black
- * BLUE - Blue
- * GREEN - Green
- * CYAN - Cyan
- * RED - Red
- * MAGENTA - Magenta / purple
- * BROWN - Brown / dark yellow
- * GREY - Grey / dark white
- * DARKGREY - Dark grey / light black
- * LIGHTBLUE - Light blue
- * LIGHTGREEN - Light green
- * LIGHTCYAN - Light cyan
- * LIGHTRED - Light red
- * LIGHTMAGENTA - Light magenta / light purple
- * YELLOW - Yellow (bright)
- * WHITE - White (bright)
- */
+     * Enums: Color codes
+     *
+     * BLACK - Black
+     * BLUE - Blue
+     * GREEN - Green
+     * CYAN - Cyan
+     * RED - Red
+     * MAGENTA - Magenta / purple
+     * BROWN - Brown / dark yellow
+     * GREY - Grey / dark white
+     * DARKGREY - Dark grey / light black
+     * LIGHTBLUE - Light blue
+     * LIGHTGREEN - Light green
+     * LIGHTCYAN - Light cyan
+     * LIGHTRED - Light red
+     * LIGHTMAGENTA - Light magenta / light purple
+     * YELLOW - Yellow (bright)
+     * WHITE - White (bright)
+     */
     enum
     {
         BLACK,
@@ -196,40 +196,40 @@ typedef const char* RLUTIL_STRING_T;
     };
 
     /**
- * Consts: ANSI escape strings
- *
- * ANSI_CLS                - Clears screen
- * ANSI_CONSOLE_TITLE_PRE  - Prefix for changing the window title, print the
- * window title in between ANSI_CONSOLE_TITLE_POST - Suffix for changing the
- * window title, print the window title in between ANSI_ATTRIBUTE_RESET    -
- * Resets all attributes ANSI_CURSOR_HIDE        - Hides the cursor
- * ANSI_CURSOR_SHOW        - Shows the cursor
- * ANSI_CURSOR_HOME        - Moves the cursor home (0,0)
- * ANSI_BLACK              - Black
- * ANSI_RED                - Red
- * ANSI_GREEN              - Green
- * ANSI_BROWN              - Brown / dark yellow
- * ANSI_BLUE               - Blue
- * ANSI_MAGENTA            - Magenta / purple
- * ANSI_CYAN               - Cyan
- * ANSI_GREY               - Grey / dark white
- * ANSI_DARKGREY           - Dark grey / light black
- * ANSI_LIGHTRED           - Light red
- * ANSI_LIGHTGREEN         - Light green
- * ANSI_YELLOW             - Yellow (bright)
- * ANSI_LIGHTBLUE          - Light blue
- * ANSI_LIGHTMAGENTA       - Light magenta / light purple
- * ANSI_LIGHTCYAN          - Light cyan
- * ANSI_WHITE              - White (bright)
- * ANSI_BACKGROUND_BLACK   - Black background
- * ANSI_BACKGROUND_RED     - Red background
- * ANSI_BACKGROUND_GREEN   - Green background
- * ANSI_BACKGROUND_YELLOW  - Yellow background
- * ANSI_BACKGROUND_BLUE    - Blue background
- * ANSI_BACKGROUND_MAGENTA - Magenta / purple background
- * ANSI_BACKGROUND_CYAN    - Cyan background
- * ANSI_BACKGROUND_WHITE   - White background
- */
+     * Consts: ANSI escape strings
+     *
+     * ANSI_CLS                - Clears screen
+     * ANSI_CONSOLE_TITLE_PRE  - Prefix for changing the window title, print the
+     * window title in between ANSI_CONSOLE_TITLE_POST - Suffix for changing the
+     * window title, print the window title in between ANSI_ATTRIBUTE_RESET    -
+     * Resets all attributes ANSI_CURSOR_HIDE        - Hides the cursor
+     * ANSI_CURSOR_SHOW        - Shows the cursor
+     * ANSI_CURSOR_HOME        - Moves the cursor home (0,0)
+     * ANSI_BLACK              - Black
+     * ANSI_RED                - Red
+     * ANSI_GREEN              - Green
+     * ANSI_BROWN              - Brown / dark yellow
+     * ANSI_BLUE               - Blue
+     * ANSI_MAGENTA            - Magenta / purple
+     * ANSI_CYAN               - Cyan
+     * ANSI_GREY               - Grey / dark white
+     * ANSI_DARKGREY           - Dark grey / light black
+     * ANSI_LIGHTRED           - Light red
+     * ANSI_LIGHTGREEN         - Light green
+     * ANSI_YELLOW             - Yellow (bright)
+     * ANSI_LIGHTBLUE          - Light blue
+     * ANSI_LIGHTMAGENTA       - Light magenta / light purple
+     * ANSI_LIGHTCYAN          - Light cyan
+     * ANSI_WHITE              - White (bright)
+     * ANSI_BACKGROUND_BLACK   - Black background
+     * ANSI_BACKGROUND_RED     - Red background
+     * ANSI_BACKGROUND_GREEN   - Green background
+     * ANSI_BACKGROUND_YELLOW  - Yellow background
+     * ANSI_BACKGROUND_BLUE    - Blue background
+     * ANSI_BACKGROUND_MAGENTA - Magenta / purple background
+     * ANSI_BACKGROUND_CYAN    - Cyan background
+     * ANSI_BACKGROUND_WHITE   - White background
+     */
     const RLUTIL_STRING_T ANSI_CLS = "\033[2J\033[3J";
     const RLUTIL_STRING_T ANSI_CONSOLE_TITLE_PRE = "\033]0;";
     const RLUTIL_STRING_T ANSI_CONSOLE_TITLE_POST = "\007";
@@ -264,45 +264,45 @@ typedef const char* RLUTIL_STRING_T;
     // Remaining colors not supported as background colors
 
     /**
- * Enums: Key codes for keyhit()
- *
- * KEY_ESCAPE  - Escape
- * KEY_ENTER   - Enter
- * KEY_SPACE   - Space
- * KEY_INSERT  - Insert
- * KEY_HOME    - Home
- * KEY_END     - End
- * KEY_DELETE  - Delete
- * KEY_PGUP    - PageUp
- * KEY_PGDOWN  - PageDown
- * KEY_UP      - Up arrow
- * KEY_DOWN    - Down arrow
- * KEY_LEFT    - Left arrow
- * KEY_RIGHT   - Right arrow
- * KEY_F1      - F1
- * KEY_F2      - F2
- * KEY_F3      - F3
- * KEY_F4      - F4
- * KEY_F5      - F5
- * KEY_F6      - F6
- * KEY_F7      - F7
- * KEY_F8      - F8
- * KEY_F9      - F9
- * KEY_F10     - F10
- * KEY_F11     - F11
- * KEY_F12     - F12
- * KEY_NUMDEL  - Numpad del
- * KEY_NUMPAD0 - Numpad 0
- * KEY_NUMPAD1 - Numpad 1
- * KEY_NUMPAD2 - Numpad 2
- * KEY_NUMPAD3 - Numpad 3
- * KEY_NUMPAD4 - Numpad 4
- * KEY_NUMPAD5 - Numpad 5
- * KEY_NUMPAD6 - Numpad 6
- * KEY_NUMPAD7 - Numpad 7
- * KEY_NUMPAD8 - Numpad 8
- * KEY_NUMPAD9 - Numpad 9
- */
+     * Enums: Key codes for keyhit()
+     *
+     * KEY_ESCAPE  - Escape
+     * KEY_ENTER   - Enter
+     * KEY_SPACE   - Space
+     * KEY_INSERT  - Insert
+     * KEY_HOME    - Home
+     * KEY_END     - End
+     * KEY_DELETE  - Delete
+     * KEY_PGUP    - PageUp
+     * KEY_PGDOWN  - PageDown
+     * KEY_UP      - Up arrow
+     * KEY_DOWN    - Down arrow
+     * KEY_LEFT    - Left arrow
+     * KEY_RIGHT   - Right arrow
+     * KEY_F1      - F1
+     * KEY_F2      - F2
+     * KEY_F3      - F3
+     * KEY_F4      - F4
+     * KEY_F5      - F5
+     * KEY_F6      - F6
+     * KEY_F7      - F7
+     * KEY_F8      - F8
+     * KEY_F9      - F9
+     * KEY_F10     - F10
+     * KEY_F11     - F11
+     * KEY_F12     - F12
+     * KEY_NUMDEL  - Numpad del
+     * KEY_NUMPAD0 - Numpad 0
+     * KEY_NUMPAD1 - Numpad 1
+     * KEY_NUMPAD2 - Numpad 2
+     * KEY_NUMPAD3 - Numpad 3
+     * KEY_NUMPAD4 - Numpad 4
+     * KEY_NUMPAD5 - Numpad 5
+     * KEY_NUMPAD6 - Numpad 6
+     * KEY_NUMPAD7 - Numpad 7
+     * KEY_NUMPAD8 - Numpad 8
+     * KEY_NUMPAD9 - Numpad 9
+     */
     enum
     {
         KEY_ESCAPE = 0,
@@ -315,11 +315,11 @@ typedef const char* RLUTIL_STRING_T;
         KEY_DELETE = 5,
         KEY_END = 6,
         KEY_PGDOWN = 7,
-        #ifndef _WIN32
-            KEY_BACKSPACE = 127,
-        #else
-            KEY_BACKSPACE = 8,
-        #endif
+#ifndef _WIN32
+        KEY_BACKSPACE = 127,
+#else
+    KEY_BACKSPACE = 8,
+#endif
 
         KEY_UP = 14,
         KEY_DOWN = 15,
@@ -637,7 +637,7 @@ typedef const char* RLUTIL_STRING_T;
         // Based on
         // https://msdn.microsoft.com/en-us/library/windows/desktop/ms682022%28v=vs.85%29.aspx
         const HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-        const COORD coordScreen = {0, 0};
+        const COORD coordScreen = { 0, 0 };
         DWORD cCharsWritten;
         CONSOLE_SCREEN_BUFFER_INFO csbi;
 
@@ -668,14 +668,14 @@ typedef const char* RLUTIL_STRING_T;
         coord.Y = (SHORT)(y - 1); // Windows uses 0-based coordinates
         SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 #else // _WIN32 || USE_ANSI
-#ifdef __cplusplus
+    #ifdef __cplusplus
     RLUTIL_PRINT("\033[" << y << ";" << x << "H");
-#else  // __cplusplus
+    #else  // __cplusplus
     char buf[32];
     sprintf(buf, "\033[%d;%df", y, x);
     RLUTIL_PRINT(buf);
-#endif // __cplusplus
-#endif // _WIN32 || USE_ANSI
+    #endif // __cplusplus
+#endif     // _WIN32 || USE_ANSI
     }
 
 /// Function: setString
@@ -700,22 +700,22 @@ RLUTIL_INLINE void setString(RLUTIL_STRING_T str)
                                     csbi.dwCursorPosition, &numberOfCharsWritten);
 #else // _WIN32 || USE_ANSI
     RLUTIL_PRINT(str);
-#ifdef __cplusplus
+    #ifdef __cplusplus
     RLUTIL_PRINT("\033[" << len << 'D');
-#else  // __cplusplus
+    #else  // __cplusplus
     char buf[3 + 20 +
              1]; // 20 = max length of 64-bit unsigned int when printed as dec
     sprintf(buf, "\033[%uD", len);
     RLUTIL_PRINT(buf);
-#endif // __cplusplus
-#endif // _WIN32 || USE_ANSI
+    #endif // __cplusplus
+#endif     // _WIN32 || USE_ANSI
     }
 
     /// Function: setChar
     /// Sets the character at the cursor without advancing the cursor
     RLUTIL_INLINE void setChar(char ch)
     {
-        const char buf[] = {ch, 0};
+        const char buf[] = { ch, 0 };
         setString(buf);
     }
 
@@ -737,11 +737,17 @@ RLUTIL_INLINE void setString(RLUTIL_STRING_T str)
 
     /// Function: hidecursor
     /// Hides the cursor.
-    RLUTIL_INLINE void hidecursor(void) { setCursorVisibility(0); }
+    RLUTIL_INLINE void hidecursor(void)
+    {
+        setCursorVisibility(0);
+    }
 
     /// Function: showcursor
     /// Shows the cursor.
-    RLUTIL_INLINE void showcursor(void) { setCursorVisibility(1); }
+    RLUTIL_INLINE void showcursor(void)
+    {
+        setCursorVisibility(1);
+    }
 
     /// Function: msleep
     /// Waits given number of milliseconds before continuing.
@@ -769,18 +775,18 @@ RLUTIL_INLINE void setString(RLUTIL_STRING_T str)
             return csbi.srWindow.Bottom - csbi.srWindow.Top + 1; // Window height
                                                                  // return csbi.dwSize.Y; // Buffer height
 #else
-#ifdef TIOCGSIZE
+    #ifdef TIOCGSIZE
     struct ttysize ts;
     ioctl(STDIN_FILENO, TIOCGSIZE, &ts);
     return ts.ts_lines;
-#elif defined(TIOCGWINSZ)
+    #elif defined(TIOCGWINSZ)
     struct winsize ts;
     ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
     return ts.ws_row;
-#else  // TIOCGSIZE
+    #else  // TIOCGSIZE
     return -1;
-#endif // TIOCGSIZE
-#endif // _WIN32
+    #endif // TIOCGSIZE
+#endif     // _WIN32
     }
 
     /// Function: tcols
@@ -795,18 +801,18 @@ RLUTIL_INLINE void setString(RLUTIL_STRING_T str)
             return csbi.srWindow.Right - csbi.srWindow.Left + 1; // Window width
                                                                  // return csbi.dwSize.X; // Buffer width
 #else
-#ifdef TIOCGSIZE
+    #ifdef TIOCGSIZE
     struct ttysize ts;
     ioctl(STDIN_FILENO, TIOCGSIZE, &ts);
     return ts.ts_cols;
-#elif defined(TIOCGWINSZ)
+    #elif defined(TIOCGWINSZ)
     struct winsize ts;
     ioctl(STDIN_FILENO, TIOCGWINSZ, &ts);
     return ts.ws_col;
-#else  // TIOCGSIZE
+    #else  // TIOCGSIZE
     return -1;
-#endif // TIOCGSIZE
-#endif // _WIN32
+    #endif // TIOCGSIZE
+#endif     // _WIN32
     }
 
 /// Function: anykey

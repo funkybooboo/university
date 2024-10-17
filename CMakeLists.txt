@@ -4,11 +4,19 @@ cmake_minimum_required(VERSION 3.12)
 set(PROJECT TypeAhead)
 set(UNIT_TEST_RUNNER UnitTestRunner)
 
-set(HEADER_FILES src/WordTree.hpp src/rlutil.h)
-set(SOURCE_FILES src/WordTree.cpp)
-set(UNIT_TEST_FILES src/TestWordTree.cpp)
+set(HEADER_FILES
+        src/WordTree/WordTree.hpp
+        src/WordTree/TreeNode.hpp
+        src/rlutil.h
+)
+set(SOURCE_FILES
+        src/WordTree/WordTree.cpp
+        src/WordTree/TreeNode.cpp
+)
+set(UNIT_TEST_FILES
+        test/TestWordTree.cpp
+)
 
-# The rest should stay the same
 project(${PROJECT})
 add_executable(${PROJECT} ${HEADER_FILES} ${SOURCE_FILES} src/main.cpp)
 add_executable(${UNIT_TEST_RUNNER} ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES})
@@ -41,8 +49,8 @@ target_link_libraries(${UNIT_TEST_RUNNER} gtest_main)
 find_program(CLANG_FORMAT "clang-format")
 if (CLANG_FORMAT)
     unset(SOURCE_FILES_PATHS)
-    foreach(SOURCE_FILE ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES} main.cpp)
-        get_source_file_property(WHERE ${SOURCE_FILES} LOCATION)
+    foreach(SOURCE_FILE ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES} src/main.cpp)
+        get_source_file_property(WHERE ${SOURCE_FILE} LOCATION)
         set(SOURCE_FILES_PATHS ${SOURCE_FILES_PATHS} ${WHERE})
     endforeach ()
 

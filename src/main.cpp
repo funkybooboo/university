@@ -1,25 +1,27 @@
-#include "rlutil.h"
 #include "WordTree/WordTree.hpp"
+#include "rlutil.h"
 
-#include <iostream>
-#include <string>
-#include <sstream>
-#include <vector>
-#include <iterator>
-#include <fstream>
 #include <algorithm>
+#include <fstream>
+#include <iterator>
 #include <memory>
+#include <sstream>
+#include <string>
+#include <vector>
 
 template <typename Out>
-void split(const std::string& s, const char delim, Out result) {
+void split(const std::string& s, const char delim, Out result)
+{
     std::istringstream iss(s);
     std::string item;
-    while (std::getline(iss, item, delim)) {
+    while (std::getline(iss, item, delim))
+    {
         *result++ = item;
     }
 }
 
-std::vector<std::string> split(const std::string& s, const char delim) {
+std::vector<std::string> split(const std::string& s, const char delim)
+{
     std::vector<std::string> elems;
     split(s, delim, std::back_inserter(elems));
     return elems;
@@ -41,9 +43,15 @@ std::shared_ptr<WordTree> readDictionary(const std::string& filename)
         }
         // Keep only if everything is an alphabetic character -- Have to send isalpha an unsigned char or
         // it will throw exception on negative values; e.g., characters with accent marks.
-        if (std::ranges::all_of(word, [](unsigned char c) { return std::isalpha(c); }))
+        if (std::ranges::all_of(word, [](const unsigned char c)
+                                {
+                                    return std::isalpha(c);
+                                }))
         {
-            std::ranges::transform(word, word.begin(), [](const char c) { return static_cast<char>(std::tolower(c)); });
+            std::ranges::transform(word, word.begin(), [](const char c)
+                                   {
+                                       return static_cast<char>(std::tolower(c));
+                                   });
             wordTree->add(word);
         }
     }
@@ -51,7 +59,17 @@ std::shared_ptr<WordTree> readDictionary(const std::string& filename)
     return wordTree;
 }
 
-int main() {
-    std::cout << "Hello, World!" << std::endl;
+int main()
+{
+    std::shared_ptr<WordTree> wordTree = readDictionary("../data/dictionary.txt");
+
+    // TODO whenever they type a new char
+
+    // TODO split by space get the most to the right
+
+    // TODO get words from wordTree
+
+    // TODO display number of predictions that fit the screen
+
     return 0;
 }

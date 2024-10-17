@@ -1,6 +1,8 @@
 #include "WordTree.hpp"
 
 #include <algorithm>
+#include <cctype>
+#include <queue>
 
 WordTree::WordTree() :
     m_size(0), m_root(std::nullopt)
@@ -9,7 +11,7 @@ WordTree::WordTree() :
 
 void WordTree::add(const std::string& word)
 {
-    if (!isAlphaOnly(word))
+    if (!isAlphaOnly(word) || word.empty())
     {
         return;
     }
@@ -22,14 +24,35 @@ void WordTree::add(const std::string& word)
         m_root = std::make_shared<TreeNode>();
     }
 
-    auto currentNode = *m_root;
+    addHelper(*m_root, lowerWord, 0);
+}
 
-    // TODO implement
+void WordTree::addHelper(const std::shared_ptr<TreeNode>& node, const std::string& word, const size_t index)
+{
+    if (index == word.length())
+    {
+        if (!node->isEndOfWord())
+        {
+            node->setEndOfWord();
+            m_size++;
+        }
+        return;
+    }
+
+    const char c = word[index];
+    auto childNodeOpt = node->findChild(c);
+    if (!childNodeOpt)
+    {
+        node->addChild(c);
+        childNodeOpt = node->findChild(c);
+    }
+
+    addHelper(*childNodeOpt, word, index + 1);
 }
 
 bool WordTree::find(const std::string& word) const
 {
-    if (!isAlphaOnly(word))
+    if (!isAlphaOnly(word) || word.empty())
     {
         return false;
     }
@@ -42,9 +65,21 @@ bool WordTree::find(const std::string& word) const
         return false;
     }
 
-    auto currentNode = *m_root;
+    return findHelper(*m_root, lowerWord, 0);
+}
 
-    // TODO implement
+bool WordTree::findHelper(const std::shared_ptr<TreeNode>& node, const std::string& word, const size_t index) const
+{
+    if (index == word.length())
+    {
+        return node->isEndOfWord();
+    }
+
+    const char c = word[index];
+    if (const auto childNodeOpt = node->findChild(c))
+    {
+        return findHelper(*childNodeOpt, word, index + 1);
+    }
 
     return false;
 }
@@ -52,7 +87,7 @@ bool WordTree::find(const std::string& word) const
 std::vector<std::string> WordTree::predict(const std::string& partial, const std::uint8_t howMany) const
 {
     std::vector<std::string> results;
-    if (!isAlphaOnly(partial))
+    if (!isAlphaOnly(partial) || partial.empty() || howMany <= 0)
     {
         return results;
     }

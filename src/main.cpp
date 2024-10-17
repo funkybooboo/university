@@ -59,17 +59,68 @@ std::shared_ptr<WordTree> readDictionary(const std::string& filename)
     return wordTree;
 }
 
+void renderConsole(const std::shared_ptr<WordTree>& wordTree)
+{
+    std::string input;
+    std::string lastWord;
+    std::vector<std::string> predictions;
+
+    rlutil::cls();
+
+    while (true)
+    {
+        // Display the current input line
+        rlutil::locate(1, 1);
+        std::cout << "Input: " << input << std::endl;
+
+        // Split the input to get the last word
+        if (auto words = split(input, ' '); !words.empty())
+        {
+            lastWord = words.back();
+        }
+        else
+        {
+            lastWord.clear();
+        }
+
+        // Get predictions based on the last word
+        if (!lastWord.empty())
+        {
+            predictions = wordTree->predict(lastWord, rlutil::trows() - 4); // Adjust for input line and title
+        }
+
+        // Display predictions
+        rlutil::locate(1, 3); // Move to the prediction line
+        std::cout << "--- prediction ---" << std::endl;
+        for (const auto& word : predictions)
+        {
+            std::cout << word << std::endl;
+        }
+
+        // Capture user input
+        const int key = rlutil::getkey();
+        if (key == 27) // Escape key to exit
+        {
+            break;
+        }
+        if (key == rlutil::KEY_BACKSPACE)
+        {
+            if (!input.empty())
+            {
+                input.pop_back(); // Remove last character
+            }
+        }
+        else if (std::isprint(key))
+        {
+            input += static_cast<char>(key); // Append character to input
+        }
+    }
+}
+
+
 int main()
 {
-    std::shared_ptr<WordTree> wordTree = readDictionary("../data/dictionary.txt");
-
-    // TODO whenever they type a new char
-
-    // TODO split by space get the most to the right
-
-    // TODO get words from wordTree
-
-    // TODO display number of predictions that fit the screen
-
+    const std::shared_ptr<WordTree> wordTree = readDictionary("../data/dictionary.txt");
+    renderConsole(wordTree);
     return 0;
 }

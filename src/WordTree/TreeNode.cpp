@@ -15,16 +15,19 @@ void TreeNode::setEndOfWord()
     m_endOfWord = true;
 }
 
-std::optional<std::shared_ptr<TreeNode>> TreeNode::findChild(char c) const
+std::optional<std::shared_ptr<TreeNode>> TreeNode::findChild(const char c) const
 {
-    if (const auto it = m_children.find(c); it != m_children.end())
+    if (m_children.contains(c))
     {
-        return it->second;
+        return m_children.at(c);
     }
     return std::nullopt;
 }
 
-void TreeNode::addChild(char c)
+void TreeNode::addChild(const char c)
 {
-    m_children[c] = std::make_shared<TreeNode>();
+    if (!m_children.contains(c))
+    {
+        m_children[c] = std::make_shared<TreeNode>();
+    }
 }

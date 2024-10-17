@@ -59,24 +59,93 @@ std::vector<std::string> split(const std::string& s, const char delim)
     return elems;
 }
 
-void render(const std::shared_ptr<WordTree>& wordTree)
+void printNLines(const std::uint8_t n)
+{
+    for (std::uint8_t i = 0; i < n; i++)
+    {
+        std::cout << "\n";
+    }
+}
+
+[[noreturn]] void render(const std::shared_ptr<WordTree>& wordTree)
 {
     std::string input;
-    std::vector<std::string> predictions;
 
     rlutil::cls();
 
-    // TODO move to 3rd line and print --- prediction ---
+    printNLines(4);
+
+    rlutil::locate(3, 1);
+    std::cout << "--- prediction ---";
+
+    rlutil::locate(1, 1);
+    std::cout << input;
+
+    if (const int key = rlutil::getkey(); key == rlutil::KEY_BACKSPACE)
+    {
+        input.pop_back();
+    }
+    else
+    {
+        input.push_back(static_cast<char>(key));
+    }
+
+    std::vector<std::string> words = split(input, ' ');
+    std::string word = words.back();
+    std::vector<std::string> predictions = wordTree->predict(word, rlutil::trows() - 4);
+
+    rlutil::locate(4, 1);
+    for (const std::string& prediction : predictions)
+    {
+        std::cout << prediction << "\n";
+    }
 
     while (true)
     {
-        // TODO move to 1st line and wait for user char
-        // TODO clear screen
-        // TODO print users input on 1st line
-        // TODO move to 3rd line and print --- prediction ---
-        // TODO split user input and get last word
-        // TODO get predictions with that last word
-        // TODO move to 4th line and print all the predictions
+        rlutil::cls();
+
+        printNLines(4);
+
+        rlutil::locate(3, 1);
+        std::cout << "--- prediction ---";
+
+        rlutil::locate(4, 1);
+        for (const std::string& prediction : predictions)
+        {
+            std::cout << prediction << "\n";
+        }
+
+        rlutil::locate(1, 1);
+        std::cout << input;
+
+        if (const int key = rlutil::getkey(); key == rlutil::KEY_BACKSPACE)
+        {
+            input.pop_back();
+        }
+        else
+        {
+            input.push_back(static_cast<char>(key));
+        }
+
+        words = split(input, ' ');
+        word = words.back();
+        predictions = wordTree->predict(word, rlutil::trows() - 4);
+
+        rlutil::cls();
+
+        printNLines(4);
+
+        rlutil::locate(1, 1);
+        std::cout << input;
+
+        rlutil::locate(3, 1);
+        std::cout << "--- prediction ---";
+
+        rlutil::locate(4, 1);
+        for (const std::string& prediction : predictions)
+        {
+            std::cout << prediction << "\n";
+        }
     }
 }
 
@@ -84,5 +153,4 @@ int main()
 {
     const std::shared_ptr<WordTree> wordTree = readDictionary("../data/dictionary.txt");
     render(wordTree);
-    return 0;
 }

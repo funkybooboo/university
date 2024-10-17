@@ -102,7 +102,34 @@ std::vector<std::string> WordTree::predict(const std::string& partial, const std
 
     auto currentNode = *m_root;
 
-    // TODO implement
+    for (const char c : lowerPartial)
+    {
+        auto childNodeOpt = currentNode->findChild(c);
+        if (!childNodeOpt)
+        {
+            return results;
+        }
+        currentNode = *childNodeOpt;
+    }
+
+    std::queue<std::pair<std::shared_ptr<TreeNode>, std::string>> bfsQueue;
+    bfsQueue.emplace(currentNode, lowerPartial);
+
+    while (!bfsQueue.empty() && results.size() < howMany)
+    {
+        auto [node, currentWord] = bfsQueue.front();
+        bfsQueue.pop();
+
+        if (node->isEndOfWord())
+        {
+            results.push_back(currentWord);
+        }
+
+        for (const auto& [c, childNode] : node->getChildren())
+        {
+            bfsQueue.emplace(childNode, currentWord + c);
+        }
+    }
 
     return results;
 }

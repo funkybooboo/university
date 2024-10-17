@@ -117,7 +117,6 @@ void renderConsole(const std::shared_ptr<WordTree>& wordTree)
     }
 }
 
-
 int main()
 {
     const std::shared_ptr<WordTree> wordTree = readDictionary("../data/dictionary.txt");

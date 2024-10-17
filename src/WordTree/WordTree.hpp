@@ -19,7 +19,7 @@ class WordTree
 
   private:
     std::uint32_t m_size;
-    std::optional<std::shared_ptr<TreeNode>> m_root; // Keep m_root as optional
+    std::optional<std::shared_ptr<TreeNode>> m_root;
 
     static void tolower(std::string& word);
     static bool isAlphaOnly(const std::string& word);

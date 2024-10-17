@@ -15,7 +15,9 @@ class TreeNode
     [[nodiscard]] std::optional<std::shared_ptr<TreeNode>> findChild(char c) const;
     void addChild(char c);
 
+    [[nodiscard]] const std::unordered_map<char, std::shared_ptr<TreeNode>>& getChildren() const;
+
   private:
     bool m_endOfWord;
-    std::unordered_map<char, std::shared_ptr<TreeNode>> m_children; // Use map directly
+    std::unordered_map<char, std::shared_ptr<TreeNode>> m_children;
 };

@@ -31,3 +31,8 @@ void TreeNode::addChild(const char c)
         m_children[c] = std::make_shared<TreeNode>();
     }
 }
+
+const std::unordered_map<char, std::shared_ptr<TreeNode>>& TreeNode::getChildren() const
+{
+    return m_children;
+}

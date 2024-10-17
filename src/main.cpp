@@ -59,94 +59,9 @@ std::vector<std::string> split(const std::string& s, const char delim)
     return elems;
 }
 
-void printNLines(const std::uint8_t n)
+void render(const std::shared_ptr<WordTree>& wordTree)
 {
-    for (std::uint8_t i = 0; i < n; i++)
-    {
-        std::cout << "\n";
-    }
-}
 
-[[noreturn]] void render(const std::shared_ptr<WordTree>& wordTree)
-{
-    std::string input;
-
-    rlutil::cls();
-
-    printNLines(4);
-
-    rlutil::locate(3, 1);
-    std::cout << "--- prediction ---";
-
-    rlutil::locate(1, 1);
-    std::cout << input;
-
-    if (const int key = rlutil::getkey(); key == rlutil::KEY_BACKSPACE)
-    {
-        input.pop_back();
-    }
-    else
-    {
-        input.push_back(static_cast<char>(key));
-    }
-
-    std::vector<std::string> words = split(input, ' ');
-    std::string word = words.back();
-    std::vector<std::string> predictions = wordTree->predict(word, rlutil::trows() - 4);
-
-    rlutil::locate(4, 1);
-    for (const std::string& prediction : predictions)
-    {
-        std::cout << prediction << "\n";
-    }
-
-    while (true)
-    {
-        rlutil::cls();
-
-        printNLines(4);
-
-        rlutil::locate(3, 1);
-        std::cout << "--- prediction ---";
-
-        rlutil::locate(4, 1);
-        for (const std::string& prediction : predictions)
-        {
-            std::cout << prediction << "\n";
-        }
-
-        rlutil::locate(1, 1);
-        std::cout << input;
-
-        if (const int key = rlutil::getkey(); key == rlutil::KEY_BACKSPACE)
-        {
-            input.pop_back();
-        }
-        else
-        {
-            input.push_back(static_cast<char>(key));
-        }
-
-        words = split(input, ' ');
-        word = words.back();
-        predictions = wordTree->predict(word, rlutil::trows() - 4);
-
-        rlutil::cls();
-
-        printNLines(4);
-
-        rlutil::locate(1, 1);
-        std::cout << input;
-
-        rlutil::locate(3, 1);
-        std::cout << "--- prediction ---";
-
-        rlutil::locate(4, 1);
-        for (const std::string& prediction : predictions)
-        {
-            std::cout << prediction << "\n";
-        }
-    }
 }
 
 int main()

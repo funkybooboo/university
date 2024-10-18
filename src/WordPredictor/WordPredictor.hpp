@@ -16,10 +16,10 @@ class WordPredictor
   private:
     std::shared_ptr<WordTree> wordTree;
 
-    template <typename Out>
-    static void split(const std::string& s, char delim, Out result);
-
     static std::vector<std::string> split(const std::string& s, char delim);
+
+    template <typename Out>
+    static void splitHelper(const std::string& s, char delim, Out result);
 
     static void displayUserInput(const std::string& userInput);
 

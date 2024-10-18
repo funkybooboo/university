@@ -22,7 +22,7 @@ class WordTree
     [[nodiscard]] std::size_t size() const;
 
   private:
-    std::optional<std::shared_ptr<TreeNode>> m_root;
+    std::optional<std::shared_ptr<TreeNode>> m_rootOpt;
 
     static void tolower(std::string& word);
 

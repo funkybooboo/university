@@ -59,14 +59,7 @@ std::vector<std::string> split(const std::string& s, const char delim)
     return elems;
 }
 
-// rlutil::cls() - Clears the console
-// rlutil::locate(...) - Move the cursor to the specified location
-// rlutil::getkey() - (blocking) Wait for the user to press a key; returns the ASCII value of the key pressed
-// rlutil::setChar(...) - Write a specific character at the cursor location
-// rlutil::KEY_BACKSPACE - Keyboard code for the backspace keys
-// rlutil::trows() - Number of rows in the console
-
-void render(const std::shared_ptr<WordTree>& wordTree)
+[[noreturn]] void render(const std::shared_ptr<WordTree>& wordTree)
 {
     std::string userInput;
 
@@ -79,8 +72,15 @@ void render(const std::shared_ptr<WordTree>& wordTree)
         rlutil::locate(1, 1);   // Move cursor to the start
         std::cout << userInput; // Display current input
 
-        // Get predictions for the current input
-        std::vector<std::string> predictions = wordTree->predict(userInput, 10); // Get up to 10 predictions
+        // Split user input on spaces to get the last word or partial word
+        std::string lastWord;
+        if (auto words = split(userInput, ' '); !words.empty())
+        {
+            lastWord = words.back(); // Get the most recent word
+        }
+
+        // Get predictions for the last word
+        std::vector<std::string> predictions = wordTree->predict(lastWord, 10); // Get up to 10 predictions
 
         // Print prediction header
         rlutil::locate(1, 3); // Move cursor to the prediction header line
@@ -101,12 +101,8 @@ void render(const std::shared_ptr<WordTree>& wordTree)
                 userInput.pop_back(); // Remove last character
             }
         }
-        else if (key == '\r') // Enter key
-        {
-            break; // Exit loop
-        }
-        else if (isprint(static_cast<char>(key))) // Check if the key is printable
-        {
+        else if (isprint(static_cast<char>(key)) || key == ' ')
+        {                                        // Check if the key is printable or space
             userInput += static_cast<char>(key); // Append character to input
         }
     }

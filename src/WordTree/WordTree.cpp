@@ -141,14 +141,14 @@ void WordTree::collectPredictions(
         auto [node, currentWord] = bfsQueue.front();
         bfsQueue.pop();
 
-        if (node->isEndOfWord())
+        if (node->isEndOfWord() && currentWord != lowerPartial)
         {
             results.push_back(currentWord);
         }
 
-        for (const auto& [c, childNode] : node->getChildren())
+        for (const auto& [childChar, childNode] : node->getChildren())
         {
-            bfsQueue.emplace(childNode, currentWord + c);
+            bfsQueue.emplace(childNode, currentWord + childChar);
         }
     }
 }

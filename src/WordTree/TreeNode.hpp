@@ -1,12 +1,12 @@
 #pragma once
 
+#include <map>
 #include <memory>
 #include <optional>
-#include <map>
 
 class TreeNode
 {
-public:
+  public:
     TreeNode();
 
     [[nodiscard]] bool isEndOfWord() const;
@@ -19,7 +19,7 @@ public:
 
     [[nodiscard]] const std::map<char, std::shared_ptr<TreeNode>>& getChildren() const;
 
-private:
+  private:
     bool m_endOfWord;
 
     std::map<char, std::shared_ptr<TreeNode>> m_children;

@@ -59,52 +59,63 @@ std::vector<std::string> split(const std::string& s, const char delim)
     return elems;
 }
 
+void displayUserInput(const std::string& userInput)
+{
+    rlutil::locate(1, 1);   // Move cursor to the start
+    std::cout << userInput; // Display current input
+}
+
+std::string getLastWord(const std::string& userInput)
+{
+    if (auto words = split(userInput, ' '); !words.empty())
+    {
+        return words.back(); // Get the most recent word
+    }
+    return "";
+}
+
+void displayPredictions(const std::vector<std::string>& predictions)
+{
+    rlutil::locate(1, 3); // Move cursor to the prediction header line
+    std::cout << "--- prediction ---" << std::endl;
+
+    rlutil::locate(1, 4); // Move to prediction area
+    for (const auto& pred : predictions)
+    {
+        std::cout << pred << std::endl;
+    }
+}
+
+void handleUserInput(std::string& userInput)
+{
+    if (const int key = rlutil::getkey(); key == rlutil::KEY_BACKSPACE)
+    { // Handle backspace
+        if (!userInput.empty())
+        {
+            userInput.pop_back(); // Remove last character
+        }
+    }
+    else if (isprint(static_cast<char>(key)) || key == ' ')
+    {                                        // Check if the key is printable or space
+        userInput += static_cast<char>(key); // Append character to input
+    }
+}
+
 [[noreturn]] void render(const std::shared_ptr<WordTree>& wordTree)
 {
     std::string userInput;
 
     while (true)
     {
-        // Clear the console
-        rlutil::cls();
+        rlutil::cls(); // Clear the console
+        displayUserInput(userInput);
 
-        // Print the current user input
-        rlutil::locate(1, 1);   // Move cursor to the start
-        std::cout << userInput; // Display current input
+        std::string lastWord = getLastWord(userInput);
+        auto predictions = wordTree->predict(lastWord, rlutil::trows() - 4); // Get predictions
 
-        // Split user input on spaces to get the last word or partial word
-        std::string lastWord;
-        if (auto words = split(userInput, ' '); !words.empty())
-        {
-            lastWord = words.back(); // Get the most recent word
-        }
+        displayPredictions(predictions);
 
-        // Get predictions for the last word
-        std::vector<std::string> predictions = wordTree->predict(lastWord, 10); // Get up to 10 predictions
-
-        // Print prediction header
-        rlutil::locate(1, 3); // Move cursor to the prediction header line
-        std::cout << "--- prediction ---" << std::endl;
-
-        // Display predictions
-        rlutil::locate(1, 4); // Move to prediction area
-        for (const auto& pred : predictions)
-        {
-            std::cout << pred << std::endl;
-        }
-
-        // Wait for user input
-        if (const int key = rlutil::getkey(); key == rlutil::KEY_BACKSPACE)
-        { // Handle backspace
-            if (!userInput.empty())
-            {
-                userInput.pop_back(); // Remove last character
-            }
-        }
-        else if (isprint(static_cast<char>(key)) || key == ' ')
-        {                                        // Check if the key is printable or space
-            userInput += static_cast<char>(key); // Append character to input
-        }
+        handleUserInput(userInput);
     }
 }
 

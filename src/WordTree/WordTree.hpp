@@ -22,8 +22,6 @@ class WordTree
     [[nodiscard]] std::size_t size() const;
 
   private:
-    std::uint32_t m_size;
-
     std::optional<std::shared_ptr<TreeNode>> m_root;
 
     static void tolower(std::string& word);
@@ -41,4 +39,6 @@ class WordTree
         const std::string& lowerPartial,
         std::vector<std::string>& results,
         std::uint8_t howMany);
+
+    [[nodiscard]] static std::size_t countWords(const std::shared_ptr<TreeNode>& node);
 };

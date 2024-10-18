@@ -19,7 +19,7 @@ WordPredictor::WordPredictor(const std::shared_ptr<WordTree>& wordTree) :
         displayUserInput(userInput);
 
         std::string lastWord = getLastWord(userInput);
-        auto predictions = wordTree->predict(lastWord, 10); // Get predictions
+        auto predictions = wordTree->predict(lastWord, rlutil::trows() - 4);
 
         displayPredictions(predictions);
         handleUserInput(userInput);

@@ -3,9 +3,10 @@
 #include <algorithm>
 #include <cctype>
 #include <queue>
+#include <ranges>
 
 WordTree::WordTree() :
-    m_size(0), m_root(std::nullopt)
+    m_root(std::nullopt)
 {
 }
 
@@ -34,7 +35,6 @@ void WordTree::addHelper(const std::shared_ptr<TreeNode>& node, const std::strin
         if (!node->isEndOfWord())
         {
             node->setEndOfWord();
-            m_size++;
         }
         return;
     }
@@ -153,9 +153,20 @@ void WordTree::collectPredictions(
     }
 }
 
-std::size_t WordTree::size() const
-{
-    return m_size;
+std::size_t WordTree::size() const {
+    return m_root ? countWords(*m_root) : 0;
+}
+
+std::size_t WordTree::countWords(const std::shared_ptr<TreeNode>& node) {
+    if (!node) return 0;
+
+    std::size_t count = node->isEndOfWord() ? 1 : 0;
+
+    for (const auto& childNode : node->getChildren() | std::views::values) {
+        count += countWords(childNode);
+    }
+
+    return count;
 }
 
 void WordTree::tolower(std::string& word)

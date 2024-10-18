@@ -7,11 +7,13 @@ set(UNIT_TEST_RUNNER UnitTestRunner)
 set(HEADER_FILES
         src/WordTree/WordTree.hpp
         src/WordTree/TreeNode.hpp
-        src/rlutil.h
+        src/WordPredictor/WordPredictor.hpp
+        src/WordPredictor/rlutil.h
 )
 set(SOURCE_FILES
         src/WordTree/WordTree.cpp
         src/WordTree/TreeNode.cpp
+        src/WordPredictor/WordPredictor.cpp
 )
 set(UNIT_TEST_FILES
         test/TestWordTree.cpp

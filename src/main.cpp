@@ -61,6 +61,7 @@ std::vector<std::string> split(const std::string& s, const char delim)
 
 void render(const std::shared_ptr<WordTree>& wordTree)
 {
+
 }
 
 int main()

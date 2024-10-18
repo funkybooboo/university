@@ -2,11 +2,11 @@
 
 #include <memory>
 #include <optional>
-#include <unordered_map>
+#include <map>
 
 class TreeNode
 {
-  public:
+public:
     TreeNode();
 
     [[nodiscard]] bool isEndOfWord() const;
@@ -15,9 +15,9 @@ class TreeNode
     [[nodiscard]] std::optional<std::shared_ptr<TreeNode>> findChild(char c) const;
     void addChild(char c);
 
-    [[nodiscard]] const std::unordered_map<char, std::shared_ptr<TreeNode>>& getChildren() const;
+    [[nodiscard]] const std::map<char, std::shared_ptr<TreeNode>>& getChildren() const;
 
-  private:
+private:
     bool m_endOfWord;
-    std::unordered_map<char, std::shared_ptr<TreeNode>> m_children;
+    std::map<char, std::shared_ptr<TreeNode>> m_children;
 };

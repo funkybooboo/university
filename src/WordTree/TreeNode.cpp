@@ -32,7 +32,7 @@ void TreeNode::addChild(const char c)
     }
 }
 
-const std::unordered_map<char, std::shared_ptr<TreeNode>>& TreeNode::getChildren() const
+const std::map<char, std::shared_ptr<TreeNode>>& TreeNode::getChildren() const
 {
     return m_children;
 }

@@ -46,9 +46,9 @@ WordPredictor::WordPredictor(const std::shared_ptr<WordTree>& wordTree) :
  */
 std::vector<std::string> WordPredictor::split(const std::string& s, const char delim)
 {
-    std::vector<std::string> elems;             // Vector to hold the resulting tokens
+    std::vector<std::string> elems;                   // Vector to hold the resulting tokens
     splitHelper(s, delim, std::back_inserter(elems)); // Use the helper split function
-    return elems;                               // Return the vector of tokens
+    return elems;                                     // Return the vector of tokens
 }
 
 /**

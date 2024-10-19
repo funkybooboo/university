@@ -15,9 +15,118 @@
     "distractors": ["int main(double argc)", "int main(char* argv[], int argc)"]
   },
   "q4": {
-    "prompt": " Which of the following are valid C++ data types (select all that apply).",
+    "prompt": "Which of the following are valid C++ data types (select all that apply).",
     "answer": ["int", "float", "long int", "unsigned int", "bool"],
     "distractors": ["unsigned float", "boolean", "long bool"]
+  },
+  "q5": {
+    "prompt": "double value = 12345.678; Given the above declaration of a double value, which of the following is the correct way to type-cast a double to an int?",
+    "answer": ["int truncated = static_cast<int>(value)"],
+    "distractors": ["int truncated = const_cast<int>(value);", "int truncated = dynamic_cast<int>(value);", "int truncated = reinterpret_cast<int>(value);"]
+  },
+  "q6": {
+    "prompt": "From an std::string_view, it is possible to modify the value of the referenced string.",
+    "answer": ["False"],
+    "distractors": ["True"]
+  },
+  "q7": {
+    "prompt": "decltype might use the right-hand side of the expression to help infer the data type.",
+    "answer": ["True"],
+    "distractors": ["False"]
+  },
+  "q8": {
+    "prompt": "auto one = 1; Match the types with the automatic type inference statements.",
+    "answer": ["int"],
+    "distractors": ["double", "char* (a c-string)", "std::initializer_list", "bool", "int[4]", "std::string", "char", "float"]
+  },
+  "q9": {
+    "prompt": "auto twoptwo = 2.2; Match the types with the automatic type inference statements.",
+    "answer": ["double"],
+    "distractors": ["int", "char* (a c-string)", "std::initializer_list", "bool", "int[4]", "std::string", "char", "float"]
+  },
+  "q10": {
+    "prompt": "auto place = \"Logan\"; Match the types with the automatic type inference statements.",
+    "answer": ["char* (a c-string)"],
+    "distractors": ["int", "double", "std::initializer_list", "bool", "int[4]", "std::string", "char", "float"]
+  },
+  "q11": {
+    "prompt": "auto evens = { 2, 4, 6, 8 }; Match the types with the automatic type inference statements.",
+    "answer": ["std::initializer_list"],
+    "distractors": ["int", "double", "char* (a c-string)", "bool", "int[4]", "std::string", "char", "float"]
+  },
+  "q12": {
+    "prompt": "int a = 4; Given the following code, which of the following are correct C++ statements (select all that apply).",
+    "answer": ["decltype(auto) c = a;", "decltype(auto) d = (a);", "auto e = a;", "decltype(a) b = a;"],
+    "distractors": ["auto f = decltype(a);", "auto(decltype) g = a;", "decltype(int) h = a;"]
+  },
+  "q13": {
+    "prompt": "auto evens = { 2, 4, 6, 8 }; What is the inferred type for the following statement:",
+    "answer": ["std::initializer_list"],
+    "distractors": ["reference to an array", "int[4]", "std::vector<int>", "This is invalid C++ code"]
+  },
+  "q14": {
+    "prompt": "It is necessary to specify in the CMakeLists.txt file which platforms (OS & toolset combination) it can be used for.",
+    "answer": ["False"],
+    "distractors": ["True"]
+  },
+  "q15": {
+    "prompt": "The use of clang-format is better than requiring developers to manually format code",
+    "answer": ["Yes"],
+    "distractors": ["No"]
+  },
+  "q16": {
+    "prompt": "The cmake_minimum_required(...) statement is required in the CMakeLists.txt file",
+    "answer": ["False"],
+    "distractors": ["True"]
+  },
+  "q17": {
+    "prompt": "Which of the following are valid C++ array declarations (select all that apply).",
+    "answer": ["std::vector<int> a2{ 2, 3, 5, 7 };", "int a1[] = { 2, 3, 5, 7 };"],
+    "distractors": ["std::array<int> a4 = { 2, 3, 5, 7 };", "std::vector<int, 4> a3 = { 2, 3, 5, 7 };"]
+  },
+  "q18": {
+    "prompt": "An std::random_device should be used to seed a \"random engine\", assuming you want the \"random engine\" to produce a different sequence of numbers each time.",
+    "answer": ["True"],
+    "distractors": ["False"]
+  },
+  "q19": {
+    "prompt": "A \"random engine\" might use a hardware component on the computer as the source it uses to generate random numbers.",
+    "answer": ["False"],
+    "distractors": ["True"]
+  },
+  "q20": {
+    "prompt": "C++ reference types are pretty similar to Java references, the difference being that C++ references have the actual memory location stored in them, while Java references have a numeric lookup value the JVM uses to lookup the actual memory location of the object. ",
+    "answer": ["False"],
+    "distractors": ["True"]
+  },
+  "q21": {
+    "prompt": "\n\nConsider the following code...\n\nvoid doSomething(int& x, int& y)\n{\n   // the code does something with x and y\n}\n\nWhich of the following are valid calls to this function (select all that apply). You may assume any variables used in the calls are of the correct type and have previously been declared.",
+    "answer": ["doSomething(a, b);"],
+    "distractors": ["doSomething(8, 6);", "doSomething(&a, &b);", "doSomething(a, 6);"]
+  },
+  "q22": {
+    "prompt": "The following code demonstrates a valid if statement.\n\n#include <iostream>\n\nint getUserInput() {\n    //...pretend user input happens here\n    return 4;\n}\n\nint main()\n{\n    if (auto input = getUserInput(); input > 2 && input < 8) {\n        std::cout << \"The user selected something greater than 2 and less than 8\" << std::endl;\n    }\n\n    return 0;\n}",
+    "answer": ["True"],
+    "distractors": ["False"]
+  },
+  "q23": {
+    "prompt": "The following shows how to correctly define and then use a Google Test, Test Suite.\n\nTEST_SUITE(Suite1);\n\nTEST(Suite1)\n{\n...some testing code goes here...\n}",
+    "answer": ["False"],
+    "distractors": ["True"]
+  },
+  "q24": {
+    "prompt": "For Google Test, the difference between EXPECT_NEAR and ASSERT_NEAR is the number of digits of precision accepted for a computed value to be equal to the expected value.",
+    "answer": ["False"],
+    "distractors": ["True"]
+  },
+  "q25": {
+    "prompt": "A std::chrono::duration is composed of both a (time) period and a count, where the count is the number of periods represented by the duration.",
+    "answer": ["True"],
+    "distractors": ["False"]
+  },
+  "q26": {
+    "prompt": "The period used in a std::chrono duration is...",
+    "answer": ["a fraction relative to a second"],
+    "distractors": ["a fraction relative to one millisecond", "a fraction relative to one nanosecond", "a unitless fraction"]
   }
-
 }

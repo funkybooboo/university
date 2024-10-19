@@ -87,7 +87,7 @@ def question_prompt(prompt: str, options: List[str]) -> List[int]:
     print(Fore.CYAN + prompt + Style.RESET_ALL)
     for i, option in enumerate(options):
         print(f"\t{Fore.YELLOW}{i + 1}: {option}{Style.RESET_ALL}")
-
+    print()
     while True:
         choice: str = input(Fore.MAGENTA + "Your choice (numbers separated by spaces): " + Style.RESET_ALL)
         if choice.lower() == "exit":

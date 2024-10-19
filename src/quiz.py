@@ -3,7 +3,6 @@ import platform
 import json
 from random import shuffle
 from typing import List, Dict, Union
-
 from colorama import Fore, Style
 
 
@@ -43,58 +42,63 @@ def is_integer(s: str) -> bool:
 
 
 def quiz(questions: List[Dict[str, Union[str, List[str]]]]) -> None:
-    total_questions: int = len(questions)  # Get the total number of questions
-    correct_count: int = 0  # Counter for correct answers
-    incorrect_count: int = 0  # Counter for incorrect answers
+    total_questions: int = len(questions)
+    correct_count: int = 0
+    incorrect_count: int = 0
 
-    while questions:  # Loop while there are questions left
+    while questions:
         clear_screen()
-        current_question = questions.pop(0)  # Get the first question
+        current_question = questions.pop(0)
 
-        # Print the number of questions answered and remaining
         print(Fore.CYAN + f"Question: {total_questions - len(questions)}/{total_questions} "
                           f"{Fore.GREEN}Correct: {correct_count} {Fore.RED}Incorrect: {incorrect_count}" + Style.RESET_ALL)
 
         options: List[str] = current_question["distractors"] + current_question["answer"]
-        shuffle(options)  # Shuffle options for the current question
-        response: int = question_prompt(f"{current_question['prompt']}", options)  # Create a function to prompt user
+        shuffle(options)
 
-        if options[response] in current_question["answer"]:
-            correct_count += 1  # Increment correct count
+        selected_indices = question_prompt(f"{current_question['prompt']}", options)
+
+        # Extract selected answers
+        selected_answers = [options[i] for i in selected_indices]
+        correct_answers = current_question["answer"]
+
+        # Check if any selected answers are correct
+        if any(ans in selected_answers for ans in correct_answers):
+            correct_count += 1
             print(Fore.GREEN + "\nCorrect!")
-            # Allow the user to simply press Enter to proceed
-            print(Fore.RESET)
             input("Press Enter to continue...")
         else:
-            incorrect_count += 1  # Increment incorrect count
+            incorrect_count += 1
             print(Fore.RED + "\nIncorrect: ", end="")
-            print(f"The correct answer is {current_question['answer'][0]}")  # Display the first correct answer
+            print(f"The correct answer(s): {', '.join(correct_answers)}")
 
-            # Prompt user to retry the question
             retry: str = input(Fore.YELLOW + "Do you want to try this question again later? (yes/no): " + Style.RESET_ALL).strip().lower()
             if retry in ["yes", "y"]:
-                questions.append(current_question)  # Add question back to the list for reshuffling
-                total_questions += 1  # Increase the question count
-            print(Fore.RESET)
+                questions.append(current_question)
+                total_questions += 1
+        print(Fore.RESET)
 
     score: int = correct_count / total_questions
     print(f"Your score: {score * 100:.2f}%")
 
 
-def question_prompt(prompt: str, options: List[str]) -> int:
-    print(Fore.CYAN + prompt + Style.RESET_ALL)  # Color the prompt
+def question_prompt(prompt: str, options: List[str]) -> List[int]:
+    print(Fore.CYAN + prompt + Style.RESET_ALL)
     for i, option in enumerate(options):
-        print(f"\t{Fore.YELLOW}{i + 1}: {option}{Style.RESET_ALL}")  # Color the options
+        print(f"\t{Fore.YELLOW}{i + 1}: {option}{Style.RESET_ALL}")
 
     while True:
-        choice: str = input(Fore.MAGENTA + "Your choice (number): " + Style.RESET_ALL)
+        choice: str = input(Fore.MAGENTA + "Your choice (numbers separated by spaces): " + Style.RESET_ALL)
         if choice.lower() == "exit":
             print("Exiting the program.")
-            exit()  # Exit the program immediately
-        if choice.isdigit() and 1 <= int(choice) <= len(options):
-            return int(choice) - 1  # Return index of selected option
+            exit()
+
+        # Split input and convert to integers
+        choices = choice.split()
+        if all(c.isdigit() and 1 <= int(c) <= len(options) for c in choices):
+            return [int(c) - 1 for c in choices]  # Return a list of selected indices
         else:
-            print(Fore.RED + "Invalid choice. Please select a valid option." + Style.RESET_ALL)
+            print(Fore.RED + "Invalid choice. Please select valid options." + Style.RESET_ALL)
 
 
 def load_questions() -> Dict[str, Dict[str, Union[str, List[str]]]]:

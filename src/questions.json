@@ -1,14 +1,23 @@
 {
   "q1": {
-    "prompt": "",
-    "distractors": [
-      "",
-      "",
-      "",
-      ""
-    ],
-    "answer": [
-      ""
-    ]
+    "prompt": "Who, of the following names, is the originator of the C++ language (not C, but C++).",
+    "answer": ["Bjarne Stroustrup"],
+    "distractors": ["Ken Thompson", "Scott Meyers", "John Carmack", "Dennis Ritchie", "Linux Torvalds"]
+  },
+  "q2": {
+    "prompt": "All valid C code is also valid C++ code.",
+    "answer": ["True"],
+    "distractors": ["False"]
+  },
+  "q3": {
+    "prompt": "Which of the following are valid signatures for the entry point of a C++ program (select all that apply).  By valid, one that results in no compiler errors or warnings.",
+    "answer": ["int main()", "int main(int argc, char* argv[])"],
+    "distractors": ["int main(double argc)", "int main(char* argv[], int argc)"]
+  },
+  "q4": {
+    "prompt": " Which of the following are valid C++ data types (select all that apply).",
+    "answer": ["int", "float", "long int", "unsigned int", "bool"],
+    "distractors": ["unsigned float", "boolean", "long bool"]
   }
+
 }

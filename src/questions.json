@@ -20,7 +20,7 @@
     "distractors": ["unsigned float", "boolean", "long bool"]
   },
   "q5": {
-    "prompt": "double value = 12345.678; Given the above declaration of a double value, which of the following is the correct way to type-cast a double to an int?",
+    "prompt": "double value = 12345.678;\n\nGiven the above declaration of a double value, which of the following is the correct way to type-cast a double to an int?",
     "answer": ["int truncated = static_cast<int>(value)"],
     "distractors": ["int truncated = const_cast<int>(value);", "int truncated = dynamic_cast<int>(value);", "int truncated = reinterpret_cast<int>(value);"]
   },
@@ -35,12 +35,12 @@
     "distractors": ["False"]
   },
   "q8": {
-    "prompt": "auto one = 1; Match the types with the automatic type inference statements.",
+    "prompt": "auto one = 1;\n\nMatch the types with the automatic type inference statements.",
     "answer": ["int"],
     "distractors": ["double", "char* (a c-string)", "std::initializer_list", "bool", "int[4]", "std::string", "char", "float"]
   },
   "q9": {
-    "prompt": "auto twoptwo = 2.2; Match the types with the automatic type inference statements.",
+    "prompt": "auto twoptwo = 2.2;\n\nMatch the types with the automatic type inference statements.",
     "answer": ["double"],
     "distractors": ["int", "char* (a c-string)", "std::initializer_list", "bool", "int[4]", "std::string", "char", "float"]
   },
@@ -50,17 +50,17 @@
     "distractors": ["int", "double", "std::initializer_list", "bool", "int[4]", "std::string", "char", "float"]
   },
   "q11": {
-    "prompt": "auto evens = { 2, 4, 6, 8 }; Match the types with the automatic type inference statements.",
+    "prompt": "auto evens = { 2, 4, 6, 8 };\n\nMatch the types with the automatic type inference statements.",
     "answer": ["std::initializer_list"],
     "distractors": ["int", "double", "char* (a c-string)", "bool", "int[4]", "std::string", "char", "float"]
   },
   "q12": {
-    "prompt": "int a = 4; Given the following code, which of the following are correct C++ statements (select all that apply).",
+    "prompt": "int a = 4;\n\nGiven the following code, which of the following are correct C++ statements (select all that apply).",
     "answer": ["decltype(auto) c = a;", "decltype(auto) d = (a);", "auto e = a;", "decltype(a) b = a;"],
     "distractors": ["auto f = decltype(a);", "auto(decltype) g = a;", "decltype(int) h = a;"]
   },
   "q13": {
-    "prompt": "auto evens = { 2, 4, 6, 8 }; What is the inferred type for the following statement:",
+    "prompt": "auto evens = { 2, 4, 6, 8 };\n\nWhat is the inferred type for the following statement:",
     "answer": ["std::initializer_list"],
     "distractors": ["reference to an array", "int[4]", "std::vector<int>", "This is invalid C++ code"]
   },
@@ -100,7 +100,7 @@
     "distractors": ["True"]
   },
   "q21": {
-    "prompt": "\n\nConsider the following code...\n\nvoid doSomething(int& x, int& y)\n{\n   // the code does something with x and y\n}\n\nWhich of the following are valid calls to this function (select all that apply). You may assume any variables used in the calls are of the correct type and have previously been declared.",
+    "prompt": "Consider the following code...\n\nvoid doSomething(int& x, int& y)\n{\n   // the code does something with x and y\n}\n\nWhich of the following are valid calls to this function (select all that apply). You may assume any variables used in the calls are of the correct type and have previously been declared.",
     "answer": ["doSomething(a, b);"],
     "distractors": ["doSomething(8, 6);", "doSomething(&a, &b);", "doSomething(a, 6);"]
   },

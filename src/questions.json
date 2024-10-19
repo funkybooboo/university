@@ -45,7 +45,7 @@
     "distractors": ["int", "char* (a c-string)", "std::initializer_list", "bool", "int[4]", "std::string", "char", "float"]
   },
   "q10": {
-    "prompt": "auto place = \"Logan\"; Match the types with the automatic type inference statements.",
+    "prompt": "auto place = \"Logan\";\n\nMatch the types with the automatic type inference statements.",
     "answer": ["char* (a c-string)"],
     "distractors": ["int", "double", "std::initializer_list", "bool", "int[4]", "std::string", "char", "float"]
   },

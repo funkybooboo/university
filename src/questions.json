@@ -6,8 +6,8 @@
   },
   "q2": {
     "prompt": "All valid C code is also valid C++ code.",
-    "answer": ["True"],
-    "distractors": ["False"]
+    "answer": ["False"],
+    "distractors": ["True"]
   },
   "q3": {
     "prompt": "Which of the following are valid signatures for the entry point of a C++ program (select all that apply).  By valid, one that results in no compiler errors or warnings.",

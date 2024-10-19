@@ -83,6 +83,7 @@ def quiz(questions: List[Dict[str, Union[str, List[str]]]]) -> None:
 
 
 def question_prompt(prompt: str, options: List[str]) -> List[int]:
+    print()
     print(Fore.CYAN + prompt + Style.RESET_ALL)
     for i, option in enumerate(options):
         print(f"\t{Fore.YELLOW}{i + 1}: {option}{Style.RESET_ALL}")

@@ -5,22 +5,18 @@ set(PROJECT TypeAhead)
 set(UNIT_TEST_RUNNER UnitTestRunner)
 
 set(HEADER_FILES
-        src/WordTree/WordTree.hpp
-        src/WordTree/TreeNode.hpp
-        src/WordPredictor/WordPredictor.hpp
-        src/WordPredictor/rlutil.h
+        WordTree.hpp
+        rlutil.h
 )
 set(SOURCE_FILES
-        src/WordTree/WordTree.cpp
-        src/WordTree/TreeNode.cpp
-        src/WordPredictor/WordPredictor.cpp
+        WordTree.cpp
 )
 set(UNIT_TEST_FILES
-        test/TestWordTree.cpp
+        TestWordTree.cpp
 )
 
 project(${PROJECT})
-add_executable(${PROJECT} ${HEADER_FILES} ${SOURCE_FILES} src/main.cpp)
+add_executable(${PROJECT} ${HEADER_FILES} ${SOURCE_FILES} main.cpp)
 add_executable(${UNIT_TEST_RUNNER} ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES})
 
 set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD 20)
@@ -51,7 +47,7 @@ target_link_libraries(${UNIT_TEST_RUNNER} gtest_main)
 find_program(CLANG_FORMAT "clang-format")
 if (CLANG_FORMAT)
     unset(SOURCE_FILES_PATHS)
-    foreach(SOURCE_FILE ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES} src/main.cpp)
+    foreach(SOURCE_FILE ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES} main.cpp)
         get_source_file_property(WHERE ${SOURCE_FILE} LOCATION)
         set(SOURCE_FILES_PATHS ${SOURCE_FILES_PATHS} ${WHERE})
     endforeach ()
@@ -70,5 +66,5 @@ endif ()
 add_custom_command(
         TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${CMAKE_CURRENT_SOURCE_DIR}/data/dictionary.txt dictionary.txt
+        ${CMAKE_CURRENT_SOURCE_DIR}/dictionary.txt dictionary.txt
 )

@@ -6,6 +6,67 @@
 #include <ranges>
 
 /**
+ * @brief Default constructor for TreeNode.
+ * Initializes the end-of-word flag to false.
+ */
+WordTree::TreeNode::TreeNode() :
+    m_endOfWord(false) // Initialize endOfWord to false
+{
+}
+
+/**
+ * @brief Checks if this node marks the end of a word.
+ * @return True if this node is the end of a word, false otherwise.
+ */
+bool WordTree::TreeNode::isEndOfWord() const
+{
+    return m_endOfWord; // Return the end-of-word status
+}
+
+/**
+ * @brief Marks this node as the end of a word.
+ */
+void WordTree::TreeNode::setEndOfWord()
+{
+    m_endOfWord = true; // Set the end-of-word flag to true
+}
+
+/**
+ * @brief Finds a child node corresponding to the given character.
+ * @param c The character to find the child node for.
+ * @return An optional shared pointer to the child node if it exists, otherwise nullopt.
+ */
+std::optional<std::shared_ptr<WordTree::TreeNode>> WordTree::TreeNode::findChild(const char c) const
+{
+    if (m_children.contains(c))
+    {
+        return m_children.at(c); // Return the child node if found
+    }
+    return std::nullopt; // Return nullopt if the child does not exist
+}
+
+/**
+ * @brief Adds a child node for the given character if it does not already exist.
+ * @param c The character for which to add a child node.
+ */
+void WordTree::TreeNode::addChild(const char c)
+{
+    if (!m_children.contains(c))
+    {
+        m_children[c] = std::make_shared<TreeNode>(); // Create a new child node
+    }
+}
+
+/**
+ * @brief Retrieves all child nodes of this TreeNode.
+ * @return A constant reference to a map of child nodes.
+ */
+const std::map<char, std::shared_ptr<WordTree::TreeNode>>& WordTree::TreeNode::getChildren() const
+{
+    return m_children; // Return the map of child nodes
+}
+
+/**
  * @brief Default constructor for WordTree.
  * Initializes the root of the tree to null.
  */
@@ -163,7 +224,7 @@ std::vector<std::string> WordTree::predict(const std::string& partial, const std
  * @param lowerPartial The lowercase partial input.
  * @return An optional shared pointer to the end node if found.
  */
-std::optional<std::shared_ptr<TreeNode>> WordTree::traverseToEndOfPartial(const std::string& lowerPartial) const
+std::optional<std::shared_ptr<WordTree::TreeNode>> WordTree::traverseToEndOfPartial(const std::string& lowerPartial) const
 {
     if (!m_rootOpt)
     {

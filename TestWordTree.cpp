@@ -1,4 +1,4 @@
-#include "../src/WordTree/WordTree.hpp"
+#include "WordTree.hpp"
 
 #include <algorithm>
 #include <gtest/gtest.h>

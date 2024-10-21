@@ -1,8 +1,7 @@
 #pragma once
 
-#include "TreeNode.hpp"
-
 #include <cstdint>
+#include <map>
 #include <memory>
 #include <optional>
 #include <string>
@@ -22,6 +21,27 @@ class WordTree
     [[nodiscard]] std::size_t size() const;
 
   private:
+    class TreeNode
+    {
+      public:
+        TreeNode();
+
+        [[nodiscard]] bool isEndOfWord() const;
+
+        void setEndOfWord();
+
+        [[nodiscard]] std::optional<std::shared_ptr<TreeNode>> findChild(char c) const;
+
+        void addChild(char c);
+
+        [[nodiscard]] const std::map<char, std::shared_ptr<TreeNode>>& getChildren() const;
+
+      private:
+        bool m_endOfWord;
+
+        std::map<char, std::shared_ptr<TreeNode>> m_children;
+    };
+
     std::optional<std::shared_ptr<TreeNode>> m_rootOpt;
 
     static void tolower(std::string& word);

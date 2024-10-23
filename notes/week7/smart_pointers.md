@@ -9,8 +9,9 @@ You can copy shared pointers and have multiple of them pointing to the same memo
 value stored there, multiple pointers. Shared pointers keep track of when you copy them or they go out of scope. When
 the last copy goes out of scope, the memory is released automatically.
 
-You can also create a new smart pointer from a raw pointer from a deleter function. This will behave like normal except
-that your deleter function will be called when the last copy goes out of scope. See [Making Raw Pointers Smart](#making-raw-pointers-smart)
+You can also create a new smart pointer from a raw pointer and a deleter function. You create the deleter function and
+can make it do whatever you want. This will behave like normal except that your deleter function will be called when the
+last copy goes out of scope. See [Making Raw Pointers Smart](#making-raw-pointers-smart)
 
 ### Syntax
 Shared Pointers are a templated type, create a shared pointer to an integer with `std::shared_ptr<int> a`. Instead of
@@ -58,4 +59,18 @@ void cleanupArray(int* p)
 }
 //. . .
 std::shared_ptr<int[]> primes(new int[4]{2, 3, 5, 7}, cleanupArray); // new gives a raw pointer
+```
+
+## Preventing the Copy Penalty
+```cpp
+// Use a const reference to aovid copying a shared pointer
+std::uint64_t arraySum(const std::shared_ptr<int[]>& data, std::uint32_t length)
+{
+    long total = 0;
+    for (auto index = 0; index < length; index++)
+    {
+        total += data[index];
+    }
+    return total;
+}
 ```

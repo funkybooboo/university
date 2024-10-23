@@ -2,11 +2,11 @@ import java.util.Queue;
 
 /**
  * The simulation of the OS takes place here.  The specific scheduling
- * algorithm is passed in as a parameter to the contructor, as this
+ * algorithm is passed in as a parameter to the constructor, as this
  * code is unaware of the scheduling specifics.
  */
 public class Platform implements Logger {
-    private int cpuCount;
+    private final int cpuCount;
     private Process[] running;
     private int clockCounter;
 
@@ -17,14 +17,12 @@ public class Platform implements Logger {
     /**
      * This is the core of the platform simulation.  It advances by 1 clock count each time
      * through the loop.
-     * @param processes
      */
     public void simulate(Scheduler scheduler, Queue<Process> processes) {
         this.running = new Process[cpuCount];
         this.clockCounter = 0;
 
-        boolean done = simulationDone(processes);;
-        while (!done) {
+        while (!isSimulationDone(processes)) {
             //
             // Look at the queue of incoming processes and see if any of those need to be added to scheduler
             // as newly ready processes.
@@ -49,23 +47,22 @@ public class Platform implements Logger {
                 this.running[cpu] = scheduler.update(this.running[cpu], cpu);
             }
             clockCounter++;
-
-            done = simulationDone(processes);
         }
     }
 
     /**
-     * If there are no processes left in the list of processes and all of the CPUs have no
+     * If there are no processes left in the list of processes and all the CPUs have no
      * running processes, then we are done with the simulation.
      */
-    private boolean simulationDone(Queue<Process> processes) {
+    private boolean isSimulationDone(Queue<Process> processes) {
         boolean allEmpty = true;
         for (Process p : this.running) {
             if (p != null) {
                 allEmpty = false;
+                break;
             }
         }
-        return allEmpty && processes.size() == 0;
+        return allEmpty && processes.isEmpty();
     }
 
     /**

@@ -4,10 +4,10 @@
  * writing an actual operating system.
  */
 public class Process {
-    private String name;        // A name used to unique identify the process for reporting during the simulation
-    private int startTime;      // The arrival time, from the start of the simulation, of this process
-    private int burstTime;      // Length of the CPU burst
-    private int totalTime;      // Total execution time for the process
+    private final String name;        // A name used to unique identify the process for reporting during the simulation
+    private final int startTime;      // The arrival time, from the start of the simulation, of this process
+    private final int burstTime;      // Length of the CPU burst
+    private final int totalTime;      // Total execution time for the process
     private int elapsedBurst = 0;   // How long the current burst has executed
     private int elapsedTotal = 0;   // How long, in total, the process has executed
     private int priority = 0;       // Priority of the process, smaller number is higher priority

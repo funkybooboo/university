@@ -1,27 +1,29 @@
 /* Add a file (and path) as a commandline argument to process an input file. 
- * Otherwise hardcoded default values will apply. The default values do make 
+ * Otherwise, hardcoded default values will apply. The default values do make
  * it easier to see how the code works. 
 */
 import java.io.File;
-import java.io.IOException;
+import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.nio.file.Paths;
 
-public class Assn5 {
+public class Main {
     private static int cpuCount = 1;
     private static File inputFile;
-    public static void main(String[] args) {
 
-        // Setup a Scanner if there is a file given. Otherwise hardcoded defaults are used
+    public static void main(String[] args) throws FileNotFoundException {
+        // Set up a Scanner if there is a file given. Otherwise, hardcoded defaults are used
         if (args.length > 0) {
             String currentDir = System.getProperty("user.dir");
-            java.nio.file.Path filePath = java.nio.file.Paths.get(currentDir, args[0]);
+            Path filePath = Paths.get(currentDir, args[0]);
             inputFile = new File(filePath.toString());
             
-            cpuCount = Integer.parseInt(readSection("cpus").get(0)[0]);
+            cpuCount = Integer.parseInt(readSection("cpus").getFirst()[0]);
             System.out.println("did this!");
         }
 
@@ -49,7 +51,7 @@ public class Assn5 {
     /**
      * First-Come, First Served
      */
-    private static void demoFCFS() {
+    private static void demoFCFS() throws FileNotFoundException {
         Platform platform = new Platform(cpuCount);
         Queue<Process> processes = new LinkedList<>();
 
@@ -80,7 +82,7 @@ public class Assn5 {
     /**
      * Shortest Job First
      */
-    private static void demoSJF() {
+    private static void demoSJF() throws FileNotFoundException {
         Platform platform = new Platform(cpuCount);
         Queue<Process> processes = new LinkedList<>();
 
@@ -110,7 +112,7 @@ public class Assn5 {
     /**
      * Shortest Remaining Time First
      */
-    private static void demoSRTF() {
+    private static void demoSRTF() throws FileNotFoundException {
         Platform platform = new Platform(cpuCount);
         Queue<Process> processes = new LinkedList<>();
 
@@ -140,7 +142,7 @@ public class Assn5 {
     /**
      * Priority
      */
-    private static void demoPriority() {
+    private static void demoPriority() throws FileNotFoundException {
         Platform platform = new Platform(cpuCount);
         Queue<Process> processes = new LinkedList<>();
 
@@ -172,7 +174,7 @@ public class Assn5 {
     /**
      * Round Robin
      */
-    private static void demoRR() {
+    private static void demoRR() throws FileNotFoundException {
         Platform platform = new Platform(cpuCount);
         Queue<Process> processes = new LinkedList<>();
 
@@ -201,14 +203,9 @@ public class Assn5 {
     /**
      * Process a specific section of the input file
      */
-    private static ArrayList<String[]> readSection(String section) {
+    private static ArrayList<String[]> readSection(String section) throws FileNotFoundException {
         ArrayList<String[]> results = new ArrayList<>();
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(inputFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Scanner scanner = new Scanner(inputFile);;
 
         // Process file
         while (scanner.hasNextLine()) {

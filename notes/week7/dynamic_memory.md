@@ -53,7 +53,17 @@ Pointers can be passed as arguments to functions. They are still pass-by-value b
 made, but can also be passed by reference.
 
 # Examples
-## Memory management:
+## Pointer syntax
+```cpp
+int a = 5;
+int* a_pointer = &a;                                 //Pointer type, accessing the address of a
+std::cout << a_pointer << " = " << &a << std::endl;  // Show address in hexadecimal
+std::cout << *a_pointer << std::endl;                // Dereference the pointer, giving the value stored at a
+*a_pointer = 7;                                      // Use dereference operator to modify value at address
+std::cout << a << std::endl;                         // Observe that this has modified the value of a
+```
+
+## Memory management
 ```cpp
 int* a = new int(1);                            //Allocate an integer in the heap
 std::cout << "Safe: " <<  *a << std::endl;
@@ -63,16 +73,7 @@ a = nullptr;                                    // This just ensures that if you
 std::cout << "Seg fault: " <<  *a << std::endl;
 ```
 
-## Pointer syntax:
-```cpp
-int a = 5;
-int* a_pointer = &a; //Pointer type, accessing the address of a
-std::cout << *a_pointer << std::endl; // Dereference the pointer, giving the value stored at a
-*a_pointer = 7; // Use dereference operator to modify value at address
-std::cout << a << std::endl; // Observe that this has modified the value of a
-```
-
-## Arrays:
+## Arrays
 ```cpp
 // Heap array
 int* primes = new int[4];
@@ -90,10 +91,10 @@ primes = nullptr;
 // Stack array
 int primes[] = { 2, 3, 5, 7 };
 int* pointerToPrimes = primes;
-std::cout << primes[0] << " : " << pointerToPrimes[0] << std::endl;
-std::cout << primes[1] << " : " << pointerToPrimes[1] << std::endl;
-std::cout << primes[2] << " : " << pointerToPrimes[2] << std::endl;
-std::cout << primes[3] << " : " << pointerToPrimes[3] << std::endl;
+std::cout << primes[0] << " : " << pointerToPrimes[0] << " : " << *(primes + 0) << " : " << *(pointerToPrimes + 0) << std::endl;
+std::cout << primes[1] << " : " << pointerToPrimes[1] << " : " << *(primes + 1) << " : " << *(pointerToPrimes + 1) << std::endl;
+std::cout << primes[2] << " : " << pointerToPrimes[2] << " : " << *(primes + 2) << " : " << *(pointerToPrimes + 2) << std::endl;
+std::cout << primes[3] << " : " << pointerToPrimes[3] << " : " << *(primes + 3) << " : " << *(pointerToPrimes + 3) << std::endl;
 ```
 
 # Vocab List

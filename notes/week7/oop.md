@@ -83,3 +83,8 @@ delete r2;
 std::shared_ptr<Rectangle> r3 = std::make_shared<Rectangle>(6, 8);
 std::cout << "(width, height) = (" << r3->getWidth() << ", " << r3->getHeight() << ")" << std::endl;
 ```
+
+# Vocab
+- Value: Essentially a variable that isn't a pointer. Dr Mathias didn't give a precise definition and caveats that he
+uses it a little loosely.
+- Direct Initialization: Initializing members before the constructor body executes.

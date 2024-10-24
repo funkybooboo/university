@@ -74,3 +74,8 @@ std::uint64_t arraySum(const std::shared_ptr<int[]>& data, std::uint32_t length)
     return total;
 }
 ```
+
+# Vocab
+- Smart Pointer: Class that manages pointers for you.
+- Shared Pointer: Smart pointer that can be copied.
+- Unique Pointer: Smart pointer that cannot be copied.

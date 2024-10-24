@@ -1,19 +1,24 @@
-class SchedulerRR extends Scheduler {
-    Logger logger;
-    int q;
+import java.util.LinkedList;
+import java.util.Queue;
 
-    public SchedulerRR(Logger logger, int q) {
+public class SchedulerRR extends Scheduler {
+    private final Queue<Process> readyQueue;
+    private final Logger logger;
+    private final int quantum;
+
+    public SchedulerRR(Logger logger, int quantum) {
         this.logger = logger;
-        this.q = q;
+        this.quantum = quantum;
+        this.readyQueue = new LinkedList<>();
     }
 
     @Override
     void notifyNewProcess(Process process) {
-
+        readyQueue.add(process);
     }
 
     @Override
-    Process update(Process process, int cpu) {
+    Process update(Process currentProcess, int cpu) {
         return null;
     }
 }

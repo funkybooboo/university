@@ -15,7 +15,8 @@ public class Platform implements Logger {
     }
 
     /**
-     * This is the core of the platform simulation.  It advances by 1 clock count each time
+     * This is the core of the platform simulation.
+     * It advances by one clock count each time
      * through the loop.
      */
     public void simulate(Scheduler scheduler, Queue<Process> processes) {

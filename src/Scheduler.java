@@ -12,7 +12,7 @@ public abstract class Scheduler {
     public int getNumberOfContextSwitches() { return this.contextSwitches; }
 
     /**
-     * Used to notify the scheduler a new process has just entered the ready state.
+     * Used to notify the scheduler, a new process has just entered the ready state.
      */
     abstract void notifyNewProcess(Process process);
 

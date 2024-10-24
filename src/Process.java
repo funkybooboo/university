@@ -36,7 +36,7 @@ public class Process {
     }
 
     /**
-     * @return true if current burst has completed, false otherwise
+     * @return true if the current burst has completed, false otherwise
      */
     public boolean isBurstComplete() {
         boolean isComplete = this.elapsedBurst == this.burstTime;

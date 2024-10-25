@@ -21,16 +21,19 @@ public class SchedulerRR extends Scheduler {
     @Override
     Process update(Process currentProcess, int cpu) {
         if (currentProcess == null && readyQueue.isEmpty()) {
+            quantum = 0;
             return null;
         }
 
         if (currentProcess == null) {
+            quantum = 0;
             currentProcess = readyQueue.poll();
             logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
             return currentProcess;
         }
 
         if (currentProcess.isBurstComplete()) {
+            quantum = 0;
             logger.log("CPU "+cpu+" > Process "+currentProcess.getName()+" burst complete");
             if (currentProcess.isExecutionComplete()) {
                 logger.log("CPU "+cpu+" > Process "+currentProcess.getName()+" execution complete");
@@ -38,35 +41,30 @@ public class SchedulerRR extends Scheduler {
             else {
                 readyQueue.add(currentProcess);
             }
-            Process nextProcess = readyQueue.poll();
-            if (nextProcess == null) {
-                return null;
-            }
-            if (nextProcess != currentProcess) {
-                contextSwitches++;
-            }
-            currentProcess = nextProcess;
-            logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
-            return currentProcess;
+            return switchProcesses(currentProcess, cpu);
         }
 
         if (quantum >= maxQuantum) {
             quantum = 0;
             readyQueue.add(currentProcess);
             logger.log("CPU "+cpu+" > Time quantum complete for process "+currentProcess.getName());
-            Process nextProcess = readyQueue.poll();
-            if (nextProcess == null) {
-                return null;
-            }
-            if (nextProcess != currentProcess) {
-                contextSwitches++;
-            }
-            currentProcess = nextProcess;
-            logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
-            return currentProcess;
+            return switchProcesses(currentProcess, cpu);
         }
         
         quantum += 1;
+        return currentProcess;
+    }
+
+    private Process switchProcesses(Process currentProcess, int cpu) {
+        Process nextProcess = readyQueue.poll();
+        if (nextProcess == null) {
+            return null;
+        }
+        if (nextProcess != currentProcess) {
+            contextSwitches++;
+        }
+        currentProcess = nextProcess;
+        logger.log("CPU "+ cpu +" > Scheduled "+ currentProcess.getName());
         return currentProcess;
     }
 }

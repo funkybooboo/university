@@ -35,11 +35,14 @@ public class SchedulerFCFS extends Scheduler {
             else {
                 readyQueue.add(currentProcess);
             }
-            currentProcess = readyQueue.poll();
-            if (currentProcess == null) {
+            Process nextProcess = readyQueue.poll();
+            if (nextProcess == null) {
                 return null;
             }
-            contextSwitches++;
+            if (nextProcess != currentProcess) {
+                contextSwitches++;
+            }
+            currentProcess = nextProcess;
             logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
         }
 

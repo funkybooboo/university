@@ -17,6 +17,32 @@ public class SchedulerFCFS extends Scheduler {
 
     @Override
     Process update(Process currentProcess, int cpu) {
-        return null;
+        if (currentProcess == null && readyQueue.isEmpty()) {
+            return null;
+        }
+
+        if (currentProcess == null) {
+            currentProcess = readyQueue.poll();
+            logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
+            return currentProcess;
+        }
+
+        if (currentProcess.isBurstComplete()) {
+            logger.log("CPU "+cpu+" > Process "+currentProcess.getName()+" burst complete");
+            if (currentProcess.isExecutionComplete()) {
+                logger.log("CPU "+cpu+" > Process "+currentProcess.getName()+" execution complete");
+            }
+            else {
+                readyQueue.add(currentProcess);
+            }
+            currentProcess = readyQueue.poll();
+            if (currentProcess == null) {
+                return null;
+            }
+            contextSwitches++;
+            logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
+        }
+
+        return currentProcess;
     }
 }

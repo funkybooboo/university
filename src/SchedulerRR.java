@@ -5,7 +5,7 @@ public class SchedulerRR extends Scheduler {
     private final Queue<Process> readyQueue;
     private final Logger logger;
     private final int maxQuantum;
-    private int quantum;
+    private int quantum = 1;
 
     public SchedulerRR(Logger logger, int quantum) {
         this.logger = logger;
@@ -21,19 +21,19 @@ public class SchedulerRR extends Scheduler {
     @Override
     Process update(Process currentProcess, int cpu) {
         if (currentProcess == null && readyQueue.isEmpty()) {
-            quantum = 0;
+            quantum = 1;
             return null;
         }
 
         if (currentProcess == null) {
-            quantum = 0;
+            quantum = 1;
             currentProcess = readyQueue.poll();
             logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
             return currentProcess;
         }
 
         if (currentProcess.isBurstComplete()) {
-            quantum = 0;
+            quantum = 1;
             logger.log("CPU "+cpu+" > Process "+currentProcess.getName()+" burst complete");
             if (currentProcess.isExecutionComplete()) {
                 logger.log("CPU "+cpu+" > Process "+currentProcess.getName()+" execution complete");
@@ -45,7 +45,7 @@ public class SchedulerRR extends Scheduler {
         }
 
         if (quantum >= maxQuantum) {
-            quantum = 0;
+            quantum = 1;
             readyQueue.add(currentProcess);
             logger.log("CPU "+cpu+" > Time quantum complete for process "+currentProcess.getName());
             return switchProcesses(currentProcess, cpu);

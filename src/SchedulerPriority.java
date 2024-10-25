@@ -17,6 +17,35 @@ public class SchedulerPriority extends Scheduler {
 
     @Override
     Process update(Process currentProcess, int cpu) {
-        return null;
+        if (currentProcess == null && readyQueue.isEmpty()) {
+            return null;
+        }
+
+        if (currentProcess == null) {
+            currentProcess = readyQueue.poll();
+            logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
+            return currentProcess;
+        }
+
+        if (currentProcess.isBurstComplete()) {
+            logger.log("CPU "+cpu+" > Process "+currentProcess.getName()+" burst complete");
+            if (currentProcess.isExecutionComplete()) {
+                logger.log("CPU "+cpu+" > Process "+currentProcess.getName()+" execution complete");
+            }
+            else {
+                readyQueue.add(currentProcess);
+            }
+            Process nextProcess = readyQueue.poll();
+            if (nextProcess == null) {
+                return null;
+            }
+            if (nextProcess != currentProcess) {
+                contextSwitches++;
+            }
+            currentProcess = nextProcess;
+            logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
+        }
+
+        return currentProcess;
     }
 }

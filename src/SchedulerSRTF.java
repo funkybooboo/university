@@ -26,6 +26,7 @@ public class SchedulerSRTF extends Scheduler {
         if (currentProcess == null) {
             currentProcess = readyQueue.poll();
             logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
+            contextSwitches++;
             return currentProcess;
         }
 
@@ -41,6 +42,7 @@ public class SchedulerSRTF extends Scheduler {
         }
         Process nextProcess = readyQueue.poll();
         if (nextProcess == null) {
+            contextSwitches++;
             return null;
         }
         if (nextProcess != currentProcess) {
@@ -49,6 +51,7 @@ public class SchedulerSRTF extends Scheduler {
             }
             currentProcess = nextProcess;
             logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
+            contextSwitches++;
             contextSwitches++;
         }
 

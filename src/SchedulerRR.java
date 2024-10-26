@@ -29,6 +29,7 @@ public class SchedulerRR extends Scheduler {
             quantum = 1;
             currentProcess = readyQueue.poll();
             logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
+            contextSwitches++;
             return currentProcess;
         }
 
@@ -58,9 +59,11 @@ public class SchedulerRR extends Scheduler {
     private Process switchProcesses(Process currentProcess, int cpu) {
         Process nextProcess = readyQueue.poll();
         if (nextProcess == null) {
+            contextSwitches++;
             return null;
         }
         if (nextProcess != currentProcess) {
+            contextSwitches++;
             contextSwitches++;
         }
         currentProcess = nextProcess;

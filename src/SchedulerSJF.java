@@ -24,6 +24,7 @@ public class SchedulerSJF extends Scheduler {
         if (currentProcess == null) {
             currentProcess = readyQueue.poll();
             logger.log("CPU "+cpu+" > Scheduled "+currentProcess.getName());
+            contextSwitches++;
             return currentProcess;
         }
 
@@ -37,9 +38,11 @@ public class SchedulerSJF extends Scheduler {
             }
             Process nextProcess = readyQueue.poll();
             if (nextProcess == null) {
+                contextSwitches++;
                 return null;
             }
             if (nextProcess != currentProcess) {
+                contextSwitches++;
                 contextSwitches++;
             }
             currentProcess = nextProcess;

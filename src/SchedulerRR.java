@@ -67,38 +67,35 @@ public class SchedulerRR extends Scheduler {
             } else {
                 readyQueue.add(currentProcess); // Re-add the process to the queue if not complete
             }
-            return switchProcesses(currentProcess, cpu);
+            Process nextProcess = readyQueue.poll(); // Get the next process from the queue
+            if (nextProcess == null) {
+                contextSwitches++; // One context switch for going from no process running to a process running
+                return null; // No process to schedule
+            }
+            if (nextProcess != currentProcess) {
+                contextSwitches += 2; // Two context switches for switching processes
+            }
+            currentProcess = nextProcess; // Switch to the next process
+            logger.log("CPU " + cpu + " > Scheduled " + currentProcess.getName());
+            return currentProcess; // Return the new current process
         }
 
         if (quantum >= maxQuantum) {
             quantum = 1; // Reset quantum after reaching max
             readyQueue.add(currentProcess); // Add the current process back to the queue
             logger.log("CPU " + cpu + " > Time quantum complete for process " + currentProcess.getName());
-            return switchProcesses(currentProcess, cpu);
+            Process nextProcess = readyQueue.poll(); // Get the next process from the queue
+            if (nextProcess == null) {
+                contextSwitches++; // One context switch for going from no process running to a process running
+                return null; // No process to schedule
+            }
+            contextSwitches += 2; // Two context switches for switching processes
+            currentProcess = nextProcess; // Switch to the next process
+            logger.log("CPU " + cpu + " > Scheduled " + currentProcess.getName());
+            return currentProcess; // Return the new current process
         }
 
         quantum++; // Increment the quantum for the current process
         return currentProcess; // Return the current process since still within quantum
-    }
-
-    /**
-     * Switches the current process to the next process in the ready queue.
-     *
-     * @param currentProcess the currently executing process
-     * @param cpu the current CPU the process is running on
-     * @return the process that is scheduled to execute on the cpu
-     */
-    private Process switchProcesses(Process currentProcess, int cpu) {
-        Process nextProcess = readyQueue.poll(); // Get the next process from the queue
-        if (nextProcess == null) {
-            contextSwitches++; // One context switch for going from no process running to a process running
-            return null; // No process to schedule
-        }
-        if (nextProcess != currentProcess) {
-            contextSwitches += 2; // Two context switches for switching processes
-        }
-        currentProcess = nextProcess; // Switch to the next process
-        logger.log("CPU " + cpu + " > Scheduled " + currentProcess.getName());
-        return currentProcess; // Return the new current process
     }
 }

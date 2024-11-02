@@ -1,18 +1,36 @@
 #include "LifeSimulator.hpp"
 
+/**
+ * @brief Constructs a LifeSimulator object with specified dimensions.
+ *
+ * Initializes the grid with dead cells.
+ *
+ * @param sizeX The width of the simulation grid.
+ * @param sizeY The height of the simulation grid.
+ */
 LifeSimulator::LifeSimulator(const std::uint8_t sizeX, const std::uint8_t sizeY) :
     m_sizeX(sizeX),
     m_sizeY(sizeY),
-    m_grid(sizeY, std::vector(sizeX, false))
+    m_grid(sizeY, std::vector<bool>(sizeX, false)) // Initialize grid with dead cells
 {
 }
 
+/**
+ * @brief Inserts a pattern into the grid at specified coordinates.
+ *
+ * This function checks if the coordinates are within bounds
+ * and then inserts the pattern into the grid.
+ *
+ * @param pattern The pattern to insert.
+ * @param startX The x-coordinate to start inserting the pattern.
+ * @param startY The y-coordinate to start inserting the pattern.
+ */
 void LifeSimulator::insertPattern(const Pattern& pattern, const std::uint8_t startX, const std::uint8_t startY)
 {
     // Check if the starting coordinates are out of bounds
     if (startX >= m_sizeX || startY >= m_sizeY)
     {
-        return;
+        return; // Out of bounds, do nothing
     }
 
     // Insert the pattern into the grid
@@ -20,19 +38,27 @@ void LifeSimulator::insertPattern(const Pattern& pattern, const std::uint8_t sta
     {
         for (std::uint8_t x = 0; x < pattern.getSizeX(); x++)
         {
+            // Check if the pattern fits within the grid bounds
             if (startX + x >= m_sizeX || startY + y >= m_sizeY)
             {
-                continue;
+                continue; // Skip out-of-bounds cells
             }
-            m_grid[startY + y][startX + x] = pattern.getCell(x, y); // Cannot assign to rvalue
+            // Insert the cell state from the pattern into the grid
+            m_grid[startY + y][startX + x] = pattern.getCell(x, y);
         }
     }
 }
 
+/**
+ * @brief Updates the grid to the next generation according to the rules of the game.
+ *
+ * This function calculates the next state of the grid based on the current state
+ * and the number of live neighbors for each cell.
+ */
 void LifeSimulator::update()
 {
     // Create a new grid to hold the next generation
-    std::vector nextGrid(m_sizeY, std::vector(m_sizeX, false));
+    std::vector<std::vector<bool>> nextGrid(m_sizeY, std::vector<bool>(m_sizeX, false));
 
     for (std::uint8_t y = 0; y < m_sizeY; y++)
     {
@@ -56,7 +82,7 @@ void LifeSimulator::update()
                     // Check if the neighbor is within bounds
                     if (neighborX < 0 || neighborX >= m_sizeX || neighborY < 0 || neighborY >= m_sizeY)
                     {
-                        continue;
+                        continue; // Skip out-of-bounds neighbors
                     }
                     // Count live neighbors
                     if (m_grid[neighborY][neighborX])
@@ -69,25 +95,13 @@ void LifeSimulator::update()
             // Apply the rules of the Game of Life
             if (m_grid[y][x]) // If the cell is alive
             {
-                if (liveNeighbors < 2 || liveNeighbors > 3)
-                {
-                    nextGrid[y][x] = false; // Dies
-                }
-                else
-                {
-                    nextGrid[y][x] = true; // Lives on
-                }
+                // Cell dies if it has fewer than 2 or more than 3 live neighbors
+                nextGrid[y][x] = (liveNeighbors == 2 || liveNeighbors == 3);
             }
             else // If the cell is dead
             {
-                if (liveNeighbors == 3)
-                {
-                    nextGrid[y][x] = true; // Becomes alive
-                }
-                else
-                {
-                    nextGrid[y][x] = false; // Stays dead
-                }
+                // Cell becomes alive if it has exactly 3 live neighbors
+                nextGrid[y][x] = (liveNeighbors == 3);
             }
         }
     }
@@ -96,12 +110,19 @@ void LifeSimulator::update()
     m_grid = std::move(nextGrid);
 }
 
+/**
+ * @brief Gets the state of a specific cell in the grid.
+ *
+ * @param x The x-coordinate of the cell.
+ * @param y The y-coordinate of the cell.
+ * @return True if the cell is alive, false if it is dead.
+ */
 [[nodiscard]] bool LifeSimulator::getCell(const std::uint8_t x, const std::uint8_t y) const
 {
-    // Check if the starting coordinates are out of bounds
+    // Check if the coordinates are out of bounds
     if (x >= m_sizeX || y >= m_sizeY)
     {
-        return false;
+        return false; // Out of bounds, assume dead
     }
-    return m_grid[y][x];
+    return m_grid[y][x]; // Return the cell's state
 }

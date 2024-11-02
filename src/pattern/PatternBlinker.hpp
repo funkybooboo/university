@@ -2,20 +2,28 @@
 
 #include "Pattern.hpp"
 
+#include <cstdint>
+#include <vector>
+
 class PatternBlinker final : public Pattern
 {
-public:
-    PatternBlinker() = default;
+  public:
+    PatternBlinker();
 
     [[nodiscard]] std::uint8_t getSizeX() const override
     {
-        return 1;
+        return m_sizeX;
     }
 
     [[nodiscard]] std::uint8_t getSizeY() const override
     {
-        return 3;
+        return m_sizeY;
     }
 
     [[nodiscard]] bool getCell(std::uint8_t x, std::uint8_t y) const override;
+
+  private:
+    std::uint8_t m_sizeX;
+    std::uint8_t m_sizeY;
+    std::vector<std::vector<bool>> m_grid;
 };

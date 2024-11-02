@@ -1,13 +1,31 @@
 #include "PatternPulsar.hpp"
 
+PatternPulsar::PatternPulsar() :
+    m_sizeX(13),
+    m_sizeY(13)
+{
+    m_grid = {
+        { false, false, true, true, true, false, false, false, true, true, true, false, false },
+        { false, false, false, false, false, false, false, false, false, false, false, false, false },
+        { true, false, false, false, false, true, false, true, false, false, false, false, true },
+        { true, false, false, false, false, true, false, true, false, false, false, false, true },
+        { true, false, false, false, false, true, false, true, false, false, false, false, true },
+        { false, false, true, true, true, false, false, false, true, true, true, false, false },
+        { false, false, false, false, false, false, false, false, false, false, false, false, false },
+        { false, false, true, true, true, false, false, false, true, true, true, false, false },
+        { true, false, false, false, false, true, false, true, false, false, false, false, true },
+        { true, false, false, false, false, true, false, true, false, false, false, false, true },
+        { true, false, false, false, false, true, false, true, false, false, false, false, true },
+        { false, false, false, false, false, false, false, false, false, false, false, false, false },
+        { false, false, true, true, true, false, false, false, true, true, true, false, false },
+    };
+}
+
 [[nodiscard]] bool PatternPulsar::getCell(const std::uint8_t x, const std::uint8_t y) const
 {
-    return (x == 5 && y == 1) || (x == 5 && y == 2) ||
-           (x == 6 && y == 1) || (x == 6 && y == 2) ||
-           (x == 3 && y == 3) || (x == 4 && y == 3) ||
-           (x == 5 && y == 3) || (x == 6 && y == 3) ||
-           (x == 7 && y == 3) || (x == 8 && y == 4) ||
-           (x == 2 && y == 5) || (x == 3 && y == 6) ||
-           (x == 2 && y == 6) || (x == 1 && y == 7) ||
-           (x == 0 && y == 7) || (x == 1 && y == 8);
+    if (x >= m_sizeX || y >= m_sizeY)
+    {
+        return false;
+    }
+    return m_grid[y][x];
 }

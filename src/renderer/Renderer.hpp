@@ -4,7 +4,7 @@
 
 class Renderer
 {
-public:
+  public:
     virtual ~Renderer() = default;
     virtual void render(const LifeSimulator& simulation) = 0;
 };

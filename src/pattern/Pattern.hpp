@@ -4,7 +4,7 @@
 
 class Pattern
 {
-public:
+  public:
     virtual ~Pattern() = default;
     [[nodiscard]] virtual std::uint8_t getSizeX() const = 0;
     [[nodiscard]] virtual std::uint8_t getSizeY() const = 0;

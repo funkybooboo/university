@@ -1,10 +1,5 @@
 #include "LifeSimulator.hpp"
 
-// using Grid = std::vector<std::vector<bool>>; // Type alias for the grid
-// std::uint8_t m_sizeX;
-// std::uint8_t m_sizeY;
-// Grid m_grid; // Use the alias for the grid type
-
 LifeSimulator::LifeSimulator(const std::uint8_t sizeX, const std::uint8_t sizeY) :
     m_sizeX(sizeX),
     m_sizeY(sizeY),
@@ -20,17 +15,15 @@ void LifeSimulator::insertPattern(const Pattern& pattern, const std::uint8_t sta
         return;
     }
 
-    // Check if the pattern fits within the grid
-    if ((startX + pattern.getSizeX() > m_sizeX) || (startY + pattern.getSizeY() > m_sizeY))
-    {
-        return;
-    }
-
     // Insert the pattern into the grid
     for (std::uint8_t y = 0; y < pattern.getSizeY(); y++)
     {
         for (std::uint8_t x = 0; x < pattern.getSizeX(); x++)
         {
+            if (startX + x >= m_sizeX || startY + y >= m_sizeY)
+            {
+                continue;
+            }
             m_grid[startY + y][startX + x] = pattern.getCell(x, y); // Cannot assign to rvalue
         }
     }
@@ -39,17 +32,17 @@ void LifeSimulator::insertPattern(const Pattern& pattern, const std::uint8_t sta
 void LifeSimulator::update()
 {
     // Create a new grid to hold the next generation
-    std::vector nextGrid(m_sizeY, std::vector<bool>(m_sizeX, false));
+    std::vector nextGrid(m_sizeY, std::vector(m_sizeX, false));
 
-    for (std::uint8_t y = 0; y < m_sizeY; ++y)
+    for (std::uint8_t y = 0; y < m_sizeY; y++)
     {
-        for (std::uint8_t x = 0; x < m_sizeX; ++x)
+        for (std::uint8_t x = 0; x < m_sizeX; x++)
         {
             // Count the live neighbors
             int liveNeighbors = 0;
-            for (int dy = -1; dy <= 1; ++dy)
+            for (int dy = -1; dy <= 1; dy++)
             {
-                for (int dx = -1; dx <= 1; ++dx)
+                for (int dx = -1; dx <= 1; dx++)
                 {
                     // Skip the cell itself
                     if (dx == 0 && dy == 0)
@@ -57,17 +50,18 @@ void LifeSimulator::update()
                         continue;
                     }
                     // Calculate the neighbor's coordinates
-                    const int neighborX = x + dx;
-                    const int neighborY = y + dy;
+                    const auto neighborX = static_cast<std::int8_t>(x + dx);
+                    const auto neighborY = static_cast<std::int8_t>(y + dy);
 
                     // Check if the neighbor is within bounds
-                    if (neighborX >= 0 && neighborX < m_sizeX && neighborY >= 0 && neighborY < m_sizeY)
+                    if (neighborX < 0 || neighborX >= m_sizeX || neighborY < 0 || neighborY >= m_sizeY)
                     {
-                        // Count live neighbors
-                        if (m_grid[neighborY][neighborX])
-                        {
-                            liveNeighbors++;
-                        }
+                        continue;
+                    }
+                    // Count live neighbors
+                    if (m_grid[neighborY][neighborX])
+                    {
+                        liveNeighbors++;
                     }
                 }
             }
@@ -104,6 +98,10 @@ void LifeSimulator::update()
 
 [[nodiscard]] bool LifeSimulator::getCell(const std::uint8_t x, const std::uint8_t y) const
 {
+    // Check if the starting coordinates are out of bounds
+    if (x >= m_sizeX || y >= m_sizeY)
+    {
+        return false;
+    }
     return m_grid[y][x];
 }
-

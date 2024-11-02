@@ -1,6 +1,6 @@
 #include "PatternGlider.hpp"
 
-[[nodiscard]] bool PatternGlider::getCell(const std::uint8_t x, const std::uint8_t y) const override
+[[nodiscard]] bool PatternGlider::getCell(const std::uint8_t x, const std::uint8_t y) const
 {
     return (x == 0 && y == 1) ||
            (x == 1 && y == 2) ||

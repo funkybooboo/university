@@ -2,7 +2,7 @@
 
 #include "PatternGosperGliderGun.hpp"
 
-[[nodiscard]] bool getCell(const std::uint8_t x, const std::uint8_t y) const override
+[[nodiscard]] bool PatternGosperGliderGun::getCell(const std::uint8_t x, const std::uint8_t y) const
 {
     return (x == 5 && y == 1) || (x == 5 && y == 2) ||
            (x == 6 && y == 1) || (x == 6 && y == 2) ||

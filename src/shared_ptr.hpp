@@ -6,7 +6,7 @@
 namespace usu
 {
     /**
-     * A thread-safe, reference-counted smart pointer for managing a single dynamically allocated object.
+     * A reference-counted smart pointer for managing a single dynamically allocated object.
      *
      * @tparam T The type of the object being managed.
      */

@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
 
-    protected static int MAX_PAGE_REFERENCE = 250;
+    private static final int MAX_PAGE_REFERENCE = 250;
 
     public static void main(String[] args) {
         long startTime = System.currentTimeMillis();
@@ -17,17 +17,13 @@ public class Main {
         int[][] pageFaultsLRUs = new int[1000][101];   // Stores page faults for LRU
         int[][] pageFaultsMRUs = new int[1000][101];   // Stores page faults for MRU
 
-        // Simulate over 1000 iterations
         for (int simulation_id = 0; simulation_id < 1000; simulation_id++) { // Start from 0
-            // Generate a random page reference sequence
             int[] sequence = getRandomSequence(1000);
 
-            // Run simulations for memory sizes from 1 to 100 frames
             for (int maxMemoryFrames = 1; maxMemoryFrames <= 100; maxMemoryFrames++) {
-                // Create tasks for FIFO, LRU, and MRU algorithms
-                Task taskFIFO = new TaskFIFO(sequence, maxMemoryFrames, MAX_PAGE_REFERENCE, pageFaultsFIFOs[simulation_id]);
-                Task taskLRU = new TaskLRU(sequence, maxMemoryFrames, MAX_PAGE_REFERENCE, pageFaultsLRUs[simulation_id]);
-                Task taskMRU = new TaskMRU(sequence, maxMemoryFrames, MAX_PAGE_REFERENCE, pageFaultsMRUs[simulation_id]);
+                Runnable taskFIFO = new TaskFIFO(sequence, maxMemoryFrames, MAX_PAGE_REFERENCE, pageFaultsFIFOs[simulation_id]);
+                Runnable taskLRU = new TaskLRU(sequence, maxMemoryFrames, MAX_PAGE_REFERENCE, pageFaultsLRUs[simulation_id]);
+                Runnable taskMRU = new TaskMRU(sequence, maxMemoryFrames, MAX_PAGE_REFERENCE, pageFaultsMRUs[simulation_id]);
 
                 // Submit tasks to the executor
                 executor.submit(taskFIFO);
@@ -48,7 +44,7 @@ public class Main {
 
         // End timing the simulation
         long endTime = System.currentTimeMillis();
-        System.out.println("Total Simulation Time: " + (endTime - startTime) + " ms");
+        System.out.println("Simulation took: " + (endTime - startTime) + " ms");
 
         // Now compute results for each frame size (1-100)
         int fifoMinPF = 0;
@@ -71,7 +67,6 @@ public class Main {
         for (int maxMemoryFrames = 1; maxMemoryFrames <= 100; maxMemoryFrames++) {
             // Track which algorithm had the minimum page faults for this frame size across all simulations
             int minPageFaults = Integer.MAX_VALUE;
-            int minPageFaultsAlgorithm = -1;
 
             for (int simulation_id = 0; simulation_id < 1000; simulation_id++) {
                 int fifoPageFaults = pageFaultsFIFOs[simulation_id][maxMemoryFrames];
@@ -81,22 +76,17 @@ public class Main {
                 // Track min page faults across algorithms
                 if (fifoPageFaults < minPageFaults) {
                     minPageFaults = fifoPageFaults;
-                    minPageFaultsAlgorithm = 0;
+                    fifoMinPF++;
                 }
                 if (lruPageFaults < minPageFaults) {
                     minPageFaults = lruPageFaults;
-                    minPageFaultsAlgorithm = 1;
+                    lruMinPF++;
                 }
                 if (mruPageFaults < minPageFaults) {
                     minPageFaults = mruPageFaults;
-                    minPageFaultsAlgorithm = 2;
+                    mruMinPF++;
                 }
             }
-
-            // Count how many times each algorithm had the minimum page faults
-            if (minPageFaultsAlgorithm == 0) fifoMinPF++;
-            if (minPageFaultsAlgorithm == 1) lruMinPF++;
-            if (minPageFaultsAlgorithm == 2) mruMinPF++;
 
             // Check for Belady's Anomaly between consecutive frame sizes
             if (maxMemoryFrames > 1) {
@@ -130,7 +120,6 @@ public class Main {
                                 simulation_id, pageFaultsMRUs[simulation_id][maxMemoryFrames], maxMemoryFrames,
                                 pageFaultsMRUs[simulation_id][maxMemoryFrames - 1], maxMemoryFrames - 1, delta));
                     }
-
                 }
             }
         }
@@ -142,16 +131,16 @@ public class Main {
 
         // Print Belady's Anomaly report for FIFO, LRU, and MRU
         System.out.println("\nBelady's Anomaly Report for FIFO");
-        System.out.println("Anomaly detected " + anomalyCountFIFO + " times with a max delta of " + maxDeltaFIFO);
         anomaliesFIFO.forEach(System.out::println);
-
+        System.out.println("Anomaly detected " + anomalyCountFIFO + " times with a max delta of " + maxDeltaFIFO);
+        
         System.out.println("\nBelady's Anomaly Report for LRU");
-        System.out.println("Anomaly detected " + anomalyCountLRU + " times with a max delta of " + maxDeltaLRU);
         anomaliesLRU.forEach(System.out::println);
+        System.out.println("Anomaly detected " + anomalyCountLRU + " times with a max delta of " + maxDeltaLRU);
 
         System.out.println("\nBelady's Anomaly Report for MRU");
-        System.out.println("Anomaly detected " + anomalyCountMRU + " times with a max delta of " + maxDeltaMRU);
         anomaliesMRU.forEach(System.out::println);
+        System.out.println("Anomaly detected " + anomalyCountMRU + " times with a max delta of " + maxDeltaMRU);
     }
 
     // Generate a random page reference sequence of given length

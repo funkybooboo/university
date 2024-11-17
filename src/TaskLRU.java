@@ -55,7 +55,7 @@ public class TaskLRU implements Runnable {
     @Override
     public void run() {
         // A linked list to maintain the order of pages in memory (for LRU)
-        LinkedList<Integer> memory pageFaultsFIFOs= new LinkedList<>();
+        LinkedList<Integer> memory = new LinkedList<>();
 
         // A set to track the pages currently in memory for fast look-up
         Set<Integer> memorySet = new HashSet<>();

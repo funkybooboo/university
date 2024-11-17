@@ -3,7 +3,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-public class Main {
+public class Assign6 {
 
     private static final int MAX_PAGE_REFERENCE = 250;
     private static final int MAX_SIMULATIONS = 1000;

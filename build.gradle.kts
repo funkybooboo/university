@@ -25,6 +25,6 @@ sourceSets {
 
 // Custom run task to execute the Main class
 tasks.register("run", JavaExec::class) {
-    mainClass.set("Main")  // No package, just the class name
+    mainClass.set("Assign6")  // No package, just the class name
     classpath = sourceSets["main"].runtimeClasspath  // Use the classpath for the main source set
 }

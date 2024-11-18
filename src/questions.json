@@ -278,5 +278,25 @@
     "prompt": "Compiler deduction of types can be achieved using which of the following keywords",
     "answer": ["decltype", "auto"],
     "distractors": ["var", "infer", "typeof"]
+  },
+  "q57": {
+    "prompt": "\n\nFor the following code, on the second line, the * character is called what?\n\nint* a = new int(10);\nint b = *a;\n\n",
+    "answer": ["Dereference operator"],
+    "distractors": [" Reference operator", "Address of (or Address) operator", "Pointer operator"]
+  },
+  "q58": {
+    "prompt": "Which of the following is the correct way to declare and dynamically allocate an array of integers",
+    "answer": ["int* data = new int[10];"],
+    "distractors": ["int data = new int[10];", "int& data = new int[10];", "int[] data = new int[10];"]
+  },
+  "q59": {
+    "prompt": "\n\nGiven this code segment, which of the following are valid ways send the value (10) stored in 'a' to the console. (more than one may be correct)\n\nint* a = new int(10);\nint*& b = a;\n\n",
+    "answer": ["std::cout << *a;", "std::cout << *b;"],
+    "distractors": ["std::cout << a;", "std::cout << &a;", "std::cout << b;"]
+  },
+  "q60": {
+    "prompt": "Direct initialization occurs before the body of the constructor executes.",
+    "answer": ["True"],
+    "distractors": ["False"]
   }
 }

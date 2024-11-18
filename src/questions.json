@@ -447,5 +447,240 @@
     "prompt": "What term describes the case where a process is only released from the cpu when it voluntarily does so?",
     "distractors": ["Non-volatile", "Concurrency", "Volatile", "Preemptive"],
     "answer": ["Non-preemptive"]
+  },
+  "q61": {
+    "prompt": "What term describes a metric of scheduling performance that measures the amount of time from when process is created until it is completed?",
+    "distractors": ["Throughput", "CPU Utilization", "Wait Time", "Response Time"],
+    "answer": ["Turnaround Time"]
+  },
+  "q62": {
+    "prompt": "What is the average wait time of the following Shortest Remaining Time First scheduling algorithm that uses the following processes?\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
+    "distractors": ["3.5", "8", "4.5", "1.75"],
+    "answer": ["2.25"]
+  },
+  "q63": {
+    "prompt": "Note, this is the same chart as the previous question.\nWhat process is executing at time 9?\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
+    "distractors": ["P1", "P2", "P3", "Either P1 or P4"],
+    "answer": ["P4"]
+  },
+  "q64": {
+    "prompt": "Note, this is the same chart as the previous question.\n\nHow many context switches are there? Only count when one ends and another begins, do not count the first (where only one begins) or the last (where only one ends).\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
+    "distractors": ["2", "6", "8", "10"],
+    "answer": ["4"]
+  },
+  "q65": {
+    "prompt": "What scheduling algorithm is provably the best in terms of Average Wait Time, but cannot realistically be implemented?",
+    "distractors": ["Round Robin", "Shortest Wait Last", "First Come First Served", "Priority"],
+    "answer": ["Shortest Job First"]
+  },
+  "q66": {
+    "prompt": "What is an important consideration when creating a priority-based scheduling algorithm? Pick the answer that is most unique to a priority system.",
+    "distractors": ["Ready queue", "Wait time", "Multi-level queue", "Throughput"],
+    "answer": ["Starvation"]
+  },
+  "q67": {
+    "prompt": "As the time quantum for a preemptive scheduling algorithm increases, the throughput always improves.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q68": {
+    "prompt": "The remaining questions use this same table. Perform a Round Robin with preemption using a time quantum of 5. When a new process arrives it should be the next process to be scheduled (it goes to the front of the round robin queue).\nProcess \tBurst Time \tArrival Time\nP1 \t21 \t0\nP2 \t17 \t0\nP3 \t9 \t4\nP4 \t12 \t17\n\n \n\nWhat is the average wait time?\n",
+    "distractors": ["32.25", "33.50", "36.25", "41.25"],
+    "answer": ["38.75"]
+  },
+  "q69": {
+    "prompt": "What process is executing at time 23?",
+    "distractors": ["P1", "P2", "P3"],
+    "answer": ["P4"]
+  },
+  "q70": {
+    "prompt": "At what time does P2 finish?",
+    "distractors": ["56", "60", "72", "69"],
+    "answer": ["64"]
+  },
+  "q71": {
+    "prompt": "Which Process has the longest total wait time?",
+    "distractors": ["P1", "P3", "P4"],
+    "answer": ["P2"]
+  },
+  "q72": {
+    "prompt": "A critical section is a shared piece of code that only one process can enter at a time.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q73": {
+    "prompt": "What term describes a hardware solution where a variable value can be modified as if it happens all at once (as if it is a single instruction)?",
+    "distractors": ["Mutex", "Monitor", "Test and Swap", "Speed Chain"],
+    "answer": ["Atomic Variable"]
+  },
+  "q74": {
+    "prompt": "A key difference between a Mutex and a Semaphore is that a Mutex works on boolean values while a Semaphore uses integer values.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q75": {
+    "prompt": "What does processor affinity seek to maximize the use of?",
+    "distractors": ["CPU Cycles", "Context Switches", "Memory Stalls", "Memory"],
+    "answer": ["CPU Cache"]
+  },
+  "q76": {
+    "prompt": "Choose all that are required for a solution to the Critical Section Problem. You must be exactly right to get full credit.",
+    "distractors": ["Preemption", "Non-Preemption"],
+    "answer": ["Mutual Exclusion", "Bounded Waiting", "Progress"]
+  },
+  "q77": {
+    "prompt": "A race condition is the result of an event where the output is wrong because instructions were not executed in the proper order.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q78": {
+    "prompt": "Push and Pull migration is a solution to load balance processes in a symmetric multi-processing system where each processor has its own ready queue.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q79": {
+    "prompt": "What is the following code implementing?\n\nboolean function_name(boolean* target) {\n    boolean rv = *target;\n    *target = True;\n    return rv;\n}\n\n",
+    "distractors": ["Atomic Variable", "SMP", "Compare and Swap", "Lock and Load"],
+    "answer": ["Test and Set"]
+  },
+  "q80": {
+    "prompt": "An OS actually schedules hardware threads, not kernel threads.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q81": {
+    "prompt": "What is the term for the hardware support solution that forces all loads and stores to complete before a new load or store can begin?",
+    "distractors": ["Test and Set", "Synchronized", "Kernel Memory Call", "Hardware Instruction"],
+    "answer": ["Memory Barrier"]
+  },
+  "q82": {
+    "prompt": "Which of the following is NOT a section of code that needs to be considered in the Critical Section Problem?",
+    "distractors": ["Critical Section", "Remainder Section", "Exit Section", "Entry Section"],
+    "answer": ["Shared Section"]
+  },
+  "q83": {
+    "prompt": "What is the term that describes a case where a set of processes are unable to progress because they each hold a lock, but are waiting for another in the set to release a lock?",
+    "distractors": ["Busy Wait", "Priority Inversion", "Process Stall", "Stalemate"],
+    "answer": ["Deadlock"]
+  },
+  "q84": {
+    "prompt": "What is the starting semaphore value for the empty semaphore in the Bounded Buffer problem?",
+    "distractors": ["half of the number of buffers", "1", "0", "2"],
+    "answer": ["It is equal to the number of buffers"]
+  },
+  "q85": {
+    "prompt": "The Page Table is managed by the OS. It is a single table to track all pages for all processes currently running.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q86": {
+    "prompt": "Which is NOT one of the times address binding can occur?",
+    "distractors": ["Execution Time", "Compile Time", "Load Time", "None of the Above"],
+    "answer": ["Interrupt Time"]
+  },
+  "q87": {
+    "prompt": "What is the term used to describe when system libraries are made available to user programs while executing?",
+    "distractors": ["Compile Time Delay Connection", "Memory Remapping", "Dynamic Loading", "MMU"],
+    "answer": ["Dynamic Linking"]
+  },
+  "q88": {
+    "prompt": "The base register holds a physical memory address of the starting point of a process in memory. The limit register value stores the size of the process in memory.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q89": {
+    "prompt": "The Memory Management Unit's purpose is to translate logical addresses created at load time to physical addresses that the CPU uses.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q90": {
+    "prompt": "With contiguous memory allocation, which of the following is the worst performing memory allocation scheme?",
+    "distractors": ["No difference between the three", "First Fit", "Best Fit", "Worst Fit and First Fit are equally bad"],
+    "answer": ["Worst Fit"]
+  },
+  "q91": {
+    "prompt": "What is the major problem the Dining Philosophers may face?",
+    "distractors": ["Starvation", "Overflow", "Inefficient", "Contagious Disease (This is a joke. Don't choose this)"],
+    "answer": ["Deadlock"]
+  },
+  "q92": {
+    "prompt": "When the await() method is called on a Condition object as part of Java's reentrant lock, what happens to the object that calls the method?",
+    "distractors": ["It creates a new lock", "It notifies all waiting objects that a lock is available", "It notifies one waiting object that a lock is available", "It verifies that it is holding a lock"],
+    "answer": ["It releases a lock"]
+  },
+  "q93": {
+    "prompt": "What are the two parts of a logical address called? (choose two answers)",
+    "distractors": ["Frame number", "Page Table", "Frame offset"],
+    "answer": ["Page number", "Page offset"]
+  },
+  "q94": {
+    "prompt": "Paging only has external fragmentation, but does not suffer from internal fragmentation.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q95": {
+    "prompt": "What one term best describes the problem found in the first and second readers-writers problem?",
+    "distractors": ["Inefficiency", "Incomplete", "Complicated", "Slow"],
+    "answer": ["Starvation"]
+  },
+  "q96": {
+    "prompt": "Pure Demand Paging starts by automatically writing only a small number of pages into memory when a program starts up.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q97": {
+    "prompt": "Which of the following is NOT one of the benefits of virtual memory and page swapping?",
+    "distractors": ["Less I/O due to swapping (as compared to standard process swapping)", "Can run processes with more total memory needs than actual physical memory available", "Faster startup"],
+    "answer": ["Elimination of internal fragmentation"]
+  },
+  "q98": {
+    "prompt": "Thanks to the speed of modern computing systems, the penalty for swapping a page into memory because it was not already loaded is extremely small in terms of computation time.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q99": {
+    "prompt": "There is a free frame list associated with each process that identifies the frames that a process may use, but isn't using at the moment. It is stored as part of the PCB.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q100": {
+    "prompt": "With demand paging, the valid/invalid bit in the page table has more than two distinct meanings. A page that is invalid may mean the entry in the table is not valid, or____________________.",
+    "distractors": ["It does not have another meaning", "The associate frame has been corrupted", "The required page in not loaded in memory", "The required page is read only"],
+    "answer": ["The required page is write only"]
+  },
+  "q101": {
+    "prompt": "What is the purpose of an ASID?",
+    "distractors": ["A block of contiguous frames in memory", "A measure of the efficiency of memory read/write speed", "Protects memory by only allowing reading from a page", "Increases capacity of a page table"],
+    "answer": ["Identify a process associated with a page stored in a frame"]
+  },
+  "q102": {
+    "prompt": "What terms describes when a virtual memory address is used, but an associated physical memory location cannot be accessed because the necessary data is not loaded into memory?",
+    "distractors": ["Demand Target", "Frame Table Mishap", "TLB Miss", "Context Switch"],
+    "answer": ["Page Fault"]
+  },
+  "q103": {
+    "prompt": "What is the name of the special hardware table that enables a faster access to physical memory than what is required for a standard page table conversion for a logical address.",
+    "distractors": ["Frame Table", "Page Table", "Level 2 Cache", "Address Table Cache Look Up"],
+    "answer": ["Translation Look-Aside Buffer"]
+  },
+  "q104": {
+    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nWhat is the size, in bits, of the offset portion of the logical address?\n\nJust enter a number once again.\n",
+    "distractors": ["15", "6", "12", "19"],
+    "answer": ["10"]
+  },
+  "q105": {
+    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nWhat is the size of the logical address in bits?\n\nRemember, just enter a number.\n",
+    "distractors": ["18", "28", "20", "10"],
+    "answer": ["16"]
+  },
+  "q106": {
+    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nHow many bytes of internal fragmentation are there? Remember, just put in a number, don't add \"bytes\" at the end.",
+    "distractors": ["91", "85", "98", "81"],
+    "answer": ["89"]
+  },
+  "q107": {
+    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nHow many pages are needed?",
+    "distractors": ["80", "43", "56", "51"],
+    "answer": ["55"]
   }
 }

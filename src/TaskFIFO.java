@@ -54,28 +54,29 @@ public class TaskFIFO implements Runnable {
      */
     @Override
     public void run() {
-        Queue<Integer> memory = new LinkedList<>();
+        // A queue to simulate memory frames, storing pages in a FIFO order
+        Queue<Integer> frames = new LinkedList<>();
 
-        // Variable to track the number of page faults that occur during the simulation
+        // Variable to track the number of page faults during the simulation
         int pageFaultCount = 0;
 
-        // Loop through each page reference in the sequence
-        for (int page : sequence) {
-            // If the page is not already in memory, it's a page fault
-            if (!memory.contains(page)) {
+        // Process each page reference in the sequence
+        for (int pageReference : sequence) {
+            // If the page is not in memory, it's a page fault
+            if (!frames.contains(pageReference)) {
                 pageFaultCount++;
 
-                // If memory is full, remove the oldest page
-                if (memory.size() == maxMemoryFrames) {
-                    memory.poll();
+                // If memory is full, remove the oldest page (the first page in the queue)
+                if (frames.size() == maxMemoryFrames) {
+                    frames.poll();
                 }
 
-                // Add the new page to memory
-                memory.offer(page);
+                // Add the new page to the memory
+                frames.offer(pageReference);
             }
         }
 
-        // Record the number of page faults for the current number of memory frames
+        // Store the number of page faults for the current number of memory frames
         pageFaults[maxMemoryFrames] = pageFaultCount;
     }
 }

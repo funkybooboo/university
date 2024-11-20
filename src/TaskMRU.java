@@ -56,25 +56,29 @@ public class TaskMRU implements Runnable {
      */
     @Override
     public void run() {
-        // LinkedList to simulate memory as a queue
-        LinkedList<Integer> memory = new LinkedList<>();
+        // LinkedList to simulate frames as a queue
+        LinkedList<Integer> frames = new LinkedList<>();
 
         // Variable to count the number of page faults
         int pageFaultCount = 0;
 
         // Loop through each page reference in the sequence
         for (int page : sequence) {
-            // If the page is not in memory, it's a page fault
-            if (!memory.contains(page)) {
+            // If the page is not in frames, it's a page fault
+            if (!frames.contains(page)) {
                 pageFaultCount++;
 
-                // If memory is full, remove the most recently used page (last element in the list)
-                if (memory.size() == maxMemoryFrames) {
-                    memory.removeLast();
+                // If frames is full, remove the most recently used page (last element in the list)
+                if (frames.size() == maxMemoryFrames) {
+                    frames.removeLast();
                 }
 
-                // Add the new page to memory
-                memory.add(page);
+                // Add the new page to frames
+                frames.add(page);
+            } else {
+                // If the page is already in frames, remove it and add it back to the end (most recently used)
+                frames.remove((Integer) page);
+                frames.add(page);
             }
         }
 

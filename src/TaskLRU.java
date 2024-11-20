@@ -54,36 +54,29 @@ public class TaskLRU implements Runnable {
      */
     @Override
     public void run() {
-        // A linked list to maintain the order of pages in memory (for LRU)
-        LinkedList<Integer> memory = new LinkedList<>();
+        // A linked list to simulate memory frames and maintain the order of pages (for LRU)
+        LinkedList<Integer> frames = new LinkedList<>();
 
-        // A set to track the pages currently in memory for fast look-up
-        Set<Integer> memorySet = new HashSet<>();
-
-        // Variable to track the number of page faults that occur during the simulation
+        // Variable to count the number of page faults during the simulation
         int pageFaultCount = 0;
 
         // Loop through each page reference in the sequence
-        for (int page : sequence) {
+        for (int pageReference : sequence) {
             // If the page is not already in memory, it's a page fault
-            if (!memorySet.contains(page)) {
+            if (!frames.contains(pageReference)) {
                 pageFaultCount++;
 
-                // If memory is full, remove the least recently used page
-                if (memory.size() == maxMemoryFrames) {
-                    Integer leastRecentlyUsed = memory.pollFirst();
-                    if (leastRecentlyUsed != null) {
-                        memorySet.remove(leastRecentlyUsed);
-                    }
+                // If memory is full, remove the least recently used page (the first in the list)
+                if (frames.size() == maxMemoryFrames) {
+                    frames.pollFirst();  // Remove the oldest page
                 }
 
-                // Add the new page to memory (end of the list, most recently used)
-                memory.addLast(page);
-                memorySet.add(page);
+                // Add the new page to memory (most recently used, at the end of the list)
+                frames.addLast(pageReference);
             } else {
-                // If the page is already in memory, move it to the end of the list (most recently used)
-                memory.remove((Integer) page);
-                memory.addLast(page);
+                // If the page is already in memory, move it to the end (most recently used)
+                frames.remove((Integer) pageReference);
+                frames.addLast(pageReference);
             }
         }
 

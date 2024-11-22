@@ -1,25 +1,24 @@
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.15)
 
 # Config from project to project
-set(PROJECT Memory)
+set(PROJECT Vector)
 set(UNIT_TEST_RUNNER UnitTestRunner)
 
 set(HEADER_FILES
-    src/shared_ptr.hpp
-    src/unique_ptr.hpp
+    src/vector.hpp
 )
 set(SOURCE_FILES
 )
 set(UNIT_TEST_FILES
-    test/TestMemory.cpp
+    test/TestVector.cpp
 )
 
 project(${PROJECT})
 add_executable(${PROJECT} ${HEADER_FILES} ${SOURCE_FILES} src/main.cpp)
 add_executable(${UNIT_TEST_RUNNER} ${HEADER_FILES} ${SOURCE_FILES} ${UNIT_TEST_FILES})
 
-set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD 20)
-set_property(TARGET ${UNIT_TEST_RUNNER} PROPERTY CXX_STANDARD 20)
+set_property(TARGET ${PROJECT} PROPERTY CXX_STANDARD 23)
+set_property(TARGET ${UNIT_TEST_RUNNER} PROPERTY CXX_STANDARD 23)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
     target_compile_options(${PROJECT} PRIVATE /W4 /permissive-)

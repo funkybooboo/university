@@ -32,7 +32,7 @@ namespace usu
         explicit vector(const size_type size)
         {
             m_size = size;
-            m_capacity = m_resize(m_size);
+            m_capacity = std::max(InitialCapacity, m_resize(m_size));
             m_data = std::make_shared<T[]>(m_capacity);
         }
 
@@ -250,14 +250,14 @@ namespace usu
                 return m_data[m_pos];
             }
 
-            bool operator==(const iterator& rhs)
+            bool operator==(const iterator& rhs) const
             {
-                return m_pos == rhs.m_pos;
+                return m_pos == rhs.m_pos && m_data == rhs.m_data;
             }
 
-            bool operator!=(const iterator& rhs)
+            bool operator!=(const iterator& rhs) const
             {
-                return m_pos != rhs.m_pos;
+                return !(*this == rhs);
             }
 
           private:

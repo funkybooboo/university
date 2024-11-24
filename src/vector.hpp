@@ -22,39 +22,35 @@ namespace usu
 
         // Default constructor that initializes an empty vector,
         // using the default non-type template parameter initial capacity
-        vector()
+        vector() noexcept
         {
             vector(0);
-            m_capacity = InitialCapacity;
         }
 
         // Overloaded constructor that takes a size_type and creates a vector of that size
-        explicit vector(const size_type size)
+        explicit vector(const size_type size) noexcept
         {
             m_size = size;
             m_capacity = std::max(InitialCapacity, m_resize(m_size));
             m_data = std::make_shared<T[]>(m_capacity);
         }
 
-        // Overloaded constructor that take a resize_type
-        // and creates an empty vector using the resize_type parameter as the function
-        // to determine how to update the capacity of the internal storage.
-        explicit vector(resize_type resize) :
+        // Overloaded constructor that takes a resize_type
+        explicit vector(resize_type resize) noexcept :
             vector()
         {
             m_resize = std::move(resize);
         }
 
-        // I know you can figure this one out
-        vector(const size_type size, resize_type resize) :
+        // Overloaded constructor that takes size and resize_type
+        vector(const size_type size, resize_type resize) noexcept :
             vector(size)
         {
             m_resize = std::move(resize);
         }
 
-        // Overloaded constructor
-        // that takes an std::initializer_list of values and initializes the vector with those values.
-        vector(std::initializer_list<value_type> list) :
+        // Overloaded constructor that takes an std::initializer_list
+        vector(std::initializer_list<value_type> list) noexcept :
             vector()
         {
             for (const value_type item : list)
@@ -63,8 +59,8 @@ namespace usu
             }
         }
 
-        // I know you can figure this one out
-        vector(std::initializer_list<value_type> list, resize_type resize) :
+        // Overloaded constructor with initializer_list and resize_type
+        vector(std::initializer_list<value_type> list, resize_type resize) noexcept :
             vector()
         {
             for (const value_type item : list)
@@ -76,7 +72,7 @@ namespace usu
 
         // Returns a reference to the value at the position index.
         // If an invalid index is specified throw a std::range_error exception.
-        reference operator[](size_type index)
+        [[nodiscard]] reference operator[](size_type index) noexcept(false)
         {
             if (index >= m_size)
             {
@@ -86,7 +82,7 @@ namespace usu
         }
 
         // Adds a new value at the end of the vector
-        void add(value_type value)
+        void add(value_type value) noexcept
         {
             ensure_capacity();
             m_data[m_size] = value;
@@ -95,7 +91,7 @@ namespace usu
 
         // Inserts a value before the position index in the vector.
         // If an invalid position is specified, throw a std::range_error exception.
-        void insert(const size_type index, const value_type value)
+        void insert(const size_type index, const value_type value) noexcept(false)
         {
             if (index > m_size)
             {
@@ -110,9 +106,9 @@ namespace usu
             m_data[index] = value;
         }
 
-        //  Removes the item at position index from the vector.
-        //  If an invalid position is specified, throw a std::range_error exception.
-        void remove(const size_type index)
+        // Removes the item at position index from the vector.
+        // If an invalid position is specified, throw a std::range_error exception.
+        void remove(const size_type index) noexcept(false)
         {
             if (index >= m_size)
             {
@@ -125,8 +121,8 @@ namespace usu
             m_size -= 1;
         }
 
-        // thought it would be fun to make this pop method
-        value_type pop()
+        // Pops the last element and returns it
+        [[nodiscard]] value_type pop() noexcept
         {
             value_type value = m_data[m_size - 1];
             remove(m_size - 1);
@@ -134,25 +130,25 @@ namespace usu
         }
 
         // Removes all items in the vector (just sets the size to 0), does not change the capacity
-        void clear()
+        void clear() noexcept
         {
             m_size = 0;
         }
 
         // Returns the number of items in the vector
-        [[nodiscard]] size_type size() const
+        [[nodiscard]] size_type size() const noexcept
         {
             return m_size;
         }
 
         // Returns the total capacity in the vector
-        [[nodiscard]] size_type capacity() const
+        [[nodiscard]] size_type capacity() const noexcept
         {
             return m_capacity;
         }
 
-        //  Applies the function to all items in the vector
-        void map(std::function<void(reference)> func)
+        // Applies the function to all items in the vector
+        void map(std::function<void(reference)> func) noexcept
         {
             for (size_type i = 0; i < m_size; ++i)
             {
@@ -160,30 +156,30 @@ namespace usu
             }
         }
 
-        // Got from professors class notes
+        // Iterator class
         class iterator
         {
           public:
             using iterator_category = std::forward_iterator_tag;
 
-            iterator() :
+            iterator() noexcept :
                 iterator(nullptr) // DefaultConstructable
             {
             }
 
-            explicit iterator(pointer ptr) :
+            explicit iterator(pointer ptr) noexcept :
                 m_pos(0),
                 m_data(ptr)
             {
             }
 
-            iterator(const size_type pos, pointer ptr) :
+            iterator(const size_type pos, pointer ptr) noexcept :
                 m_pos(pos),
                 m_data(ptr)
             {
             }
 
-            iterator(const iterator& obj) // CopyConstructable
+            iterator(const iterator& obj) noexcept // CopyConstructable
             {
                 this->m_pos = obj.m_pos;
                 this->m_data = obj.m_data;
@@ -197,38 +193,34 @@ namespace usu
                 obj.m_data = nullptr;
             }
 
-            iterator operator++() // incrementable e.g., ++r
+            iterator& operator++() noexcept // incrementable e.g., ++r
             {
                 m_pos++;
                 return *this;
             }
 
-            iterator operator++(int) // incrementable e.g., r++
+            iterator operator++(int) noexcept // incrementable e.g., r++
             {
                 iterator i = *this;
                 m_pos++;
                 return i;
             }
 
-            iterator operator--() // incrementable e.g., --r
+            iterator& operator--() noexcept // decrementable e.g., --r
             {
                 m_pos--;
                 return *this;
             }
 
-            iterator operator--(int) // incrementable e.g., r--
+            iterator operator--(int) noexcept // decrementable e.g., r--
             {
                 iterator i = *this;
                 m_pos--;
                 return i;
             }
 
-            iterator& operator=(const iterator& rhs) // CopyAssignable
-            {
-                this->m_pos = rhs.m_pos;
-                this->m_data = rhs.m_data;
-                return *this;
-            }
+            iterator& operator=(const iterator& rhs) noexcept // CopyAssignable
+            = default;
 
             iterator& operator=(iterator&& rhs) noexcept // MoveAssignable
             {
@@ -240,22 +232,22 @@ namespace usu
                 return *this;
             }
 
-            T* operator->()
+            T* operator->() noexcept
             {
                 return &m_data[m_pos];
             }
 
-            reference operator*() // Derefrenceable
+            reference operator*() noexcept // Dereferenceable
             {
                 return m_data[m_pos];
             }
 
-            bool operator==(const iterator& rhs) const
+            bool operator==(const iterator& rhs) const noexcept
             {
                 return m_pos == rhs.m_pos && m_data == rhs.m_data;
             }
 
-            bool operator!=(const iterator& rhs) const
+            bool operator!=(const iterator& rhs) const noexcept
             {
                 return !(*this == rhs);
             }
@@ -266,13 +258,13 @@ namespace usu
         };
 
         // Returns an iterator to the first item in the vector (or .end() if nothing in the vector)
-        iterator begin()
+        [[nodiscard]] iterator begin() noexcept
         {
             return iterator(m_data);
         }
 
         // Returns an iterator to the "end" of the vector
-        iterator end()
+        [[nodiscard]] iterator end() noexcept
         {
             return iterator(m_size, m_data);
         }
@@ -281,12 +273,13 @@ namespace usu
         size_type m_size{ 0 };
         size_type m_capacity{ InitialCapacity };
         pointer m_data{ std::make_shared<value_type[]>(m_capacity) };
-        resize_type m_resize = [](const size_type capacity) -> size_type
+        resize_type m_resize = [](const size_type capacity) noexcept -> size_type
         {
             return capacity * 2;
         };
 
-        void ensure_capacity()
+        // Ensures that the vector has enough capacity for new elements
+        void ensure_capacity() noexcept
         {
             while (m_size >= m_capacity)
             {

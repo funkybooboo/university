@@ -3,10 +3,7 @@
 #include <exception>
 #include <functional>
 #include <initializer_list>
-#include <iterator>
 #include <memory>
-#include <stdexcept>
-#include <utility>
 
 namespace usu
 {
@@ -219,8 +216,7 @@ namespace usu
                 return i;
             }
 
-            iterator& operator=(const iterator& rhs) noexcept // CopyAssignable
-            = default;
+            iterator& operator=(const iterator& rhs) noexcept = default; // CopyAssignable
 
             iterator& operator=(iterator&& rhs) noexcept // MoveAssignable
             {

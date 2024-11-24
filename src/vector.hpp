@@ -1,25 +1,23 @@
 #pragma once
 
-#include <memory>
-#include <functional>
-#include <utility>
 #include <exception>
+#include <functional>
 #include <initializer_list>
 #include <iterator>
+#include <memory>
 #include <stdexcept>
+#include <utility>
 
 namespace usu
 {
     template <typename T, size_t InitialCapacity = 10>
     class vector
     {
-    public:
-        // The data type returned for the number of items in the vector
+      public:
         using size_type = std::size_t;
-        using reference = T&;
-        using pointer = std::shared_ptr<T[]>;
-        // The data type of the values stored in the vector
         using value_type = T;
+        using reference = value_type&;
+        using pointer = std::shared_ptr<value_type[]>;
         using resize_type = std::function<size_type(size_type)>;
 
         // Default constructor that initializes an empty vector,
@@ -28,7 +26,6 @@ namespace usu
         {
             vector(0);
             m_capacity = InitialCapacity;
-            m_data[m_capacity];
         }
 
         // Overloaded constructor that takes a size_type and creates a vector of that size
@@ -36,37 +33,41 @@ namespace usu
         {
             m_size = size;
             m_capacity = m_resize(m_size);
-            m_data[m_capacity];
+            m_data = std::make_shared<T[]>(m_capacity);
         }
 
         // Overloaded constructor that take a resize_type
         // and creates an empty vector using the resize_type parameter as the function
         // to determine how to update the capacity of the internal storage.
-        explicit vector(resize_type resize) : vector()
+        explicit vector(resize_type resize) :
+            vector()
         {
             m_resize = std::move(resize);
         }
 
         // I know you can figure this one out
-        vector(const size_type size, resize_type resize) : vector(size)
+        vector(const size_type size, resize_type resize) :
+            vector(size)
         {
             m_resize = std::move(resize);
         }
 
         // Overloaded constructor
         // that takes an std::initializer_list of values and initializes the vector with those values.
-        vector(std::initializer_list<value_type> list) : vector(list.size())
+        vector(std::initializer_list<value_type> list) :
+            vector(list.size())
         {
-            for (const reference item : list)
+            for (const value_type item : list)
             {
                 add(item);
             }
         }
 
         // I know you can figure this one out
-        vector(std::initializer_list<value_type> list, resize_type resize) : vector(list.size())
+        vector(std::initializer_list<value_type> list, resize_type resize) :
+            vector(list.size())
         {
-            for (const reference item : list)
+            for (const value_type item : list)
             {
                 add(item);
             }
@@ -83,7 +84,7 @@ namespace usu
             }
             return m_data[index];
         }
-        
+
         // Adds a new value at the end of the vector
         void add(value_type value)
         {
@@ -153,41 +154,41 @@ namespace usu
         //  Applies the function to all items in the vector
         void map(std::function<void(reference)> func)
         {
-            for (reference datum : m_data)
+            for (size_type i = 0; i < m_size; ++i)
             {
-                func(datum);
+                func(m_data[i]);
             }
         }
 
         // Got from professors class notes
         class iterator
         {
-        public:
+          public:
             using iterator_category = std::forward_iterator_tag;
-        
+
             iterator() :
                 iterator(nullptr) // DefaultConstructable
             {
             }
-                
+
             explicit iterator(pointer ptr) :
                 m_pos(0),
                 m_data(ptr)
             {
             }
-                
+
             iterator(const size_type pos, pointer ptr) :
                 m_pos(pos),
                 m_data(ptr)
             {
             }
-                
+
             iterator(const iterator& obj) // CopyConstructable
             {
                 this->m_pos = obj.m_pos;
                 this->m_data = obj.m_data;
             }
-        
+
             iterator(iterator&& obj) noexcept // MoveConstructable
             {
                 this->m_pos = obj.m_pos;
@@ -201,20 +202,20 @@ namespace usu
                 m_pos++;
                 return *this;
             }
-        
+
             iterator operator++(int) // incrementable e.g., r++
             {
                 iterator i = *this;
-                m_pos--;
+                m_pos++;
                 return i;
             }
 
             iterator operator--() // incrementable e.g., --r
             {
-                m_pos++;
+                m_pos--;
                 return *this;
             }
-        
+
             iterator operator--(int) // incrementable e.g., r--
             {
                 iterator i = *this;
@@ -228,7 +229,7 @@ namespace usu
                 this->m_data = rhs.m_data;
                 return *this;
             }
-                
+
             iterator& operator=(iterator&& rhs) noexcept // MoveAssignable
             {
                 if (this != &rhs)
@@ -253,12 +254,13 @@ namespace usu
             {
                 return m_pos == rhs.m_pos;
             }
-        
+
             bool operator!=(const iterator& rhs)
             {
                 return m_pos != rhs.m_pos;
             }
-        private:
+
+          private:
             size_type m_pos;
             pointer m_data;
         };
@@ -274,10 +276,11 @@ namespace usu
         {
             return iterator(m_size, m_data);
         }
-    private:
-        size_type m_size{};
-        size_type m_capacity{};
-        value_type m_data[];
+
+      private:
+        size_type m_size{ 0 };
+        size_type m_capacity{ InitialCapacity };
+        pointer m_data{ std::make_shared<value_type[]>(m_capacity) };
         resize_type m_resize = [](const size_type capacity) -> size_type
         {
             return capacity * 2;
@@ -285,10 +288,10 @@ namespace usu
 
         void ensure_capacity()
         {
-            if (m_size == m_capacity)
+            while (m_size >= m_capacity)
             {
                 m_capacity = m_resize(m_capacity);
-                value_type new_data[m_capacity];
+                pointer new_data = std::make_shared<value_type[]>(m_capacity);
                 for (size_type i = 0; i < m_size; i++)
                 {
                     new_data[i] = m_data[i];

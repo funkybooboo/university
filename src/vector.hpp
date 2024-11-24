@@ -4,6 +4,7 @@
 #include <functional>
 #include <initializer_list>
 #include <memory>
+#include <stdexcept>
 
 namespace usu
 {
@@ -280,14 +281,14 @@ namespace usu
     }
 
     template <typename T, size_t InitialCapacity>
-    vector<T, InitialCapacity>::iterator::iterator(const iterator& obj) noexcept 
+    vector<T, InitialCapacity>::iterator::iterator(const iterator& obj) noexcept
     {
         m_pos = obj.m_pos;
         m_data = obj.m_data;
     }
 
     template <typename T, size_t InitialCapacity>
-    vector<T, InitialCapacity>::iterator::iterator(iterator&& obj) noexcept 
+    vector<T, InitialCapacity>::iterator::iterator(iterator&& obj) noexcept
     {
         m_pos = obj.m_pos;
         m_data = obj.m_data;
@@ -296,14 +297,14 @@ namespace usu
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator++() noexcept 
+    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator++() noexcept
     {
         ++m_pos;
         return *this;
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator vector<T, InitialCapacity>::iterator::operator++(int) noexcept 
+    typename vector<T, InitialCapacity>::iterator vector<T, InitialCapacity>::iterator::operator++(int) noexcept
     {
         iterator tmp = *this;
         ++m_pos;
@@ -311,14 +312,14 @@ namespace usu
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator--() noexcept 
+    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator--() noexcept
     {
         --m_pos;
         return *this;
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator vector<T, InitialCapacity>::iterator::operator--(int) noexcept 
+    typename vector<T, InitialCapacity>::iterator vector<T, InitialCapacity>::iterator::operator--(int) noexcept
     {
         iterator tmp = *this;
         --m_pos;

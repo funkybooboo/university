@@ -280,14 +280,14 @@ namespace usu
     }
 
     template <typename T, size_t InitialCapacity>
-    vector<T, InitialCapacity>::iterator::iterator(const iterator& obj) noexcept // Copy constructor
+    vector<T, InitialCapacity>::iterator::iterator(const iterator& obj) noexcept 
     {
         m_pos = obj.m_pos;
         m_data = obj.m_data;
     }
 
     template <typename T, size_t InitialCapacity>
-    vector<T, InitialCapacity>::iterator::iterator(iterator&& obj) noexcept // Move constructor
+    vector<T, InitialCapacity>::iterator::iterator(iterator&& obj) noexcept 
     {
         m_pos = obj.m_pos;
         m_data = obj.m_data;
@@ -296,14 +296,14 @@ namespace usu
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator++() noexcept // Pre-increment
+    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator++() noexcept 
     {
         ++m_pos;
         return *this;
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator vector<T, InitialCapacity>::iterator::operator++(int) noexcept // Post-increment
+    typename vector<T, InitialCapacity>::iterator vector<T, InitialCapacity>::iterator::operator++(int) noexcept 
     {
         iterator tmp = *this;
         ++m_pos;
@@ -311,14 +311,14 @@ namespace usu
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator--() noexcept // Pre-decrement
+    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator--() noexcept 
     {
         --m_pos;
         return *this;
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator vector<T, InitialCapacity>::iterator::operator--(int) noexcept // Post-decrement
+    typename vector<T, InitialCapacity>::iterator vector<T, InitialCapacity>::iterator::operator--(int) noexcept 
     {
         iterator tmp = *this;
         --m_pos;
@@ -326,7 +326,7 @@ namespace usu
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator=(const iterator& rhs) noexcept // Copy assignment
+    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator=(const iterator& rhs) noexcept
     {
         if (this != &rhs)
         {
@@ -337,7 +337,7 @@ namespace usu
     }
 
     template <typename T, size_t InitialCapacity>
-    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator=(iterator&& rhs) noexcept // Move assignment
+    typename vector<T, InitialCapacity>::iterator& vector<T, InitialCapacity>::iterator::operator=(iterator&& rhs) noexcept
     {
         if (this != &rhs)
         {

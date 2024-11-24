@@ -407,7 +407,7 @@ namespace usu
     vector<T, InitialCapacity>::vector(std::initializer_list<value_type> list) noexcept :
         vector()
     {
-        for (const value_type item : list)
+        for (const value_type& item : list)
         {
             add(item);
         }

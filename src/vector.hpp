@@ -55,7 +55,7 @@ namespace usu
         // Overloaded constructor
         // that takes an std::initializer_list of values and initializes the vector with those values.
         vector(std::initializer_list<value_type> list) :
-            vector(list.size())
+            vector()
         {
             for (const value_type item : list)
             {
@@ -65,7 +65,7 @@ namespace usu
 
         // I know you can figure this one out
         vector(std::initializer_list<value_type> list, resize_type resize) :
-            vector(list.size())
+            vector()
         {
             for (const value_type item : list)
             {
@@ -97,15 +97,15 @@ namespace usu
         // If an invalid position is specified, throw a std::range_error exception.
         void insert(const size_type index, const value_type value)
         {
-            if (index >= m_size)
+            if (index > m_size)
             {
                 throw std::range_error("Index out of bounds");
             }
-            m_size += 1;
             ensure_capacity();
-            for (size_type i = index; i < m_size; i++)
+            m_size += 1;
+            for (size_type i = m_size - 1; i > index; --i)
             {
-                m_data[i + 1] = m_data[i];
+                m_data[i] = m_data[i - 1];
             }
             m_data[index] = value;
         }
@@ -118,7 +118,7 @@ namespace usu
             {
                 throw std::range_error("Index out of bounds");
             }
-            for (size_type i = index; i < m_size; i++)
+            for (size_type i = index; i < m_size - 1; i++)
             {
                 m_data[i] = m_data[i + 1];
             }

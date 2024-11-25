@@ -688,7 +688,7 @@
     "distractors": [
         "It must be a page associated with same process of the page needing to be written into memory.",
         "It must have been the page that has been in memory the longest.",
-        "It must be written to the backing store even if it hasn't been modified.",
+        "It must be written to the backing store even if it hasn't been modified."
     ],
     "answer": [
         "It is a page that will be removed from memory to make space for another page.",
@@ -701,7 +701,7 @@
         "Local",
         "Proportional",
         "Priority",
-        "Equal",
+        "Equal"
     ],
     "answer": ["Global"]
   },
@@ -718,7 +718,7 @@
         "Frame Table Load",
         "Delayed Page Replication",
         "Efficiency Write Mechanism",
-        "Exec",
+        "Exec"
     ],
     "answer": ["Copyon Write"]
   },
@@ -727,7 +727,7 @@
     "distractors": [
         "More time is spent paging than executing process instructions",
         "A page is swapped out, then very quickly needs to be accessed",
-        "Excessive page faulting results in high I/O",
+        "Excessive page faulting results in high I/O"
     ],
     "answer": ["CPU utilization is so high the system slows down"]
   },
@@ -739,38 +739,35 @@
     "answer": ["False"]
   },
   "q114": {
-    "prompt": " Pages: 8 \n Page Sequence:  1  0  1  2  5  6  1  2  6  1  7  4  0  6  2  1  0  6  2  0  1  6  0 \n
-        How many page faults are there using a FIFO page replacement algorithm if there are three frames?",
+    "prompt": " Pages: 8 \n Page Sequence:  1  0  1  2  5  6  1  2  6  1  7  4  0  6  2  1  0  6  2  0  1  6  0 \nHow many page faults are there using a FIFO page replacement algorithm if there are three frames?",
     "distractors": [
         "12",
         "19",
         "11",
         "17",
-        "9",
+        "9"
     ],
     "answer": ["18"]
   },
   "q115": {
-    "prompt": " Pages: 8 \n Page Sequence:  1  0  1  2  5  6  1  2  6  1  7  4  0  6  2  1  0  6  2  0  1  6  0 \n
-        How many page faults are there using a LRU page replacement algorithm if there are three frames?",
+    "prompt": " Pages: 8 \n Page Sequence:  1  0  1  2  5  6  1  2  6  1  7  4  0  6  2  1  0  6  2  0  1  6  0 \nHow many page faults are there using a LRU page replacement algorithm if there are three frames?",
     "distractors": [
         "12",
         "19",
         "11",
         "17",
-        "9",
+        "9"
     ],
     "answer": ["18"]
   },
   "q116": {
-    "prompt": " Pages: 8 \n Page Sequence:  1  0  1  2  5  6  1  2  6  1  7  4  0  6  2  1  0  6  2  0  1  6  0 \n
-        How many page faults are there using a OPTIMAL page replacement algorithm if there are three frames?",
+    "prompt": " Pages: 8 \n Page Sequence:  1  0  1  2  5  6  1  2  6  1  7  4  0  6  2  1  0  6  2  0  1  6  0 \nHow many page faults are there using a OPTIMAL page replacement algorithm if there are three frames?",
     "distractors": [
         "12",
         "19",
         "13",
         "18",
-        "9",
+        "9"
     ],
     "answer": ["11"]
   },
@@ -780,5 +777,5 @@
         "True"
     ],
     "answer": ["False"]
-  },
+  }
 }

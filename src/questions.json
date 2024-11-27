@@ -10,12 +10,12 @@
     "answer": ["2.25"]
   },
   "q63": {
-    "prompt": "Note, this is the same chart as the previous question.\nWhat process is executing at time 9?\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
+    "prompt": "Following Shortest Remaining Time First scheduling algorithm that uses the following processes?\nWhat process is executing at time 9?\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
     "distractors": ["P1", "P2", "P3", "Either P1 or P4"],
     "answer": ["P4"]
   },
   "q64": {
-    "prompt": "Note, this is the same chart as the previous question.\n\nHow many context switches are there? Only count when one ends and another begins, do not count the first (where only one begins) or the last (where only one ends).\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
+    "prompt": "Following Shortest Remaining Time First scheduling algorithm that uses the following processes?\n\nHow many context switches are there? Only count when one ends and another begins, do not count the first (where only one begins) or the last (where only one ends).\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
     "distractors": ["2", "6", "8", "10"],
     "answer": ["4"]
   },
@@ -35,22 +35,22 @@
     "answer": ["False"]
   },
   "q68": {
-    "prompt": "The remaining questions use this same table. Perform a Round Robin with preemption using a time quantum of 5. When a new process arrives it should be the next process to be scheduled (it goes to the front of the round robin queue).\nProcess \tBurst Time \tArrival Time\nP1 \t21 \t0\nP2 \t17 \t0\nP3 \t9 \t4\nP4 \t12 \t17\n\n \n\nWhat is the average wait time?\n",
+    "prompt": "The remaining questions use this same table. Perform a Round Robin with preemption using a time quantum of 5. When a new process arrives it should be the next process to be scheduled (it goes to the front of the round robin queue).\nProcess \tBurst Time \tArrival Time\nP1 \t21 \t0\nP2 \t17 \t0\nP3 \t9 \t4\nP4 \t12 \t17\n\nWhat is the average wait time?\n",
     "distractors": ["32.25", "33.50", "36.25", "41.25"],
     "answer": ["38.75"]
   },
   "q69": {
-    "prompt": "What process is executing at time 23?",
+    "prompt": "The remaining questions use this same table. Perform a Round Robin with preemption using a time quantum of 5. When a new process arrives it should be the next process to be scheduled (it goes to the front of the round robin queue).\nProcess \tBurst Time \tArrival Time\nP1 \t21 \t0\nP2 \t17 \t0\nP3 \t9 \t4\nP4 \t12 \t17\n\nWhat process is executing at time 23?",
     "distractors": ["P1", "P2", "P3"],
     "answer": ["P4"]
   },
   "q70": {
-    "prompt": "At what time does P2 finish?",
+    "prompt": "The remaining questions use this same table. Perform a Round Robin with preemption using a time quantum of 5. When a new process arrives it should be the next process to be scheduled (it goes to the front of the round robin queue).\nProcess \tBurst Time \tArrival Time\nP1 \t21 \t0\nP2 \t17 \t0\nP3 \t9 \t4\nP4 \t12 \t17\n\nAt what time does P2 finish?",
     "distractors": ["56", "60", "72", "69"],
     "answer": ["64"]
   },
   "q71": {
-    "prompt": "Which Process has the longest total wait time?",
+    "prompt": "The remaining questions use this same table. Perform a Round Robin with preemption using a time quantum of 5. When a new process arrives it should be the next process to be scheduled (it goes to the front of the round robin queue).\nProcess \tBurst Time \tArrival Time\nP1 \t21 \t0\nP2 \t17 \t0\nP3 \t9 \t4\nP4 \t12 \t17\n\nWhich Process has the longest total wait time?",
     "distractors": ["P1", "P3", "P4"],
     "answer": ["P2"]
   },
@@ -215,22 +215,22 @@
     "answer": ["Translation Look-Aside Buffer"]
   },
   "q104": {
-    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nWhat is the size, in bits, of the offset portion of the logical address?\n\nJust enter a number once again.\n",
+    "prompt": "Process Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nWhat is the size, in bits, of the offset portion of the logical address?\n\nJust enter a number once again.\n",
     "distractors": ["15", "6", "12", "19"],
     "answer": ["10"]
   },
   "q105": {
-    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nWhat is the size of the logical address in bits?\n\nRemember, just enter a number.\n",
+    "prompt": "Process Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nWhat is the size of the logical address in bits?\n\nRemember, just enter a number.\n",
     "distractors": ["18", "28", "20", "10"],
     "answer": ["16"]
   },
   "q106": {
-    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nHow many bytes of internal fragmentation are there? Remember, just put in a number, don't add \"bytes\" at the end.",
+    "prompt": "Process Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nHow many bytes of internal fragmentation are there? Remember, just put in a number, don't add \"bytes\" at the end.",
     "distractors": ["91", "85", "98", "81"],
     "answer": ["89"]
   },
   "q107": {
-    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nHow many pages are needed?",
+    "prompt": "Process Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nHow many pages are needed?",
     "distractors": ["80", "43", "56", "51"],
     "answer": ["55"]
   },
@@ -270,17 +270,17 @@
     "answer": ["False"]
   },
   "q115": {
-    "prompt": "Pages: 8\nPage Sequence: \n1 \t0 \t1 \t2 \t5 \t6 \t1 \t2 \t6 \t1 \t7 \t4 \t0 \t6 \t2 \t1 \t0 \t6 \t2 \t0 \t1 \t6 \t0\n\nYou should be able to copy and paste this into a spreadsheet to make it easy.\n\nHow many page faults are there using a FIFO page replacement algorithm if there are three frames?\n",
+    "prompt": "Pages: 8\nPage Sequence: \n1 | 0 | 1 | 2 | 5 | 6 | 1 | 2 | 6 | 1 | 7 | 4 | 0 | 6 | 2 | 1 | 0 | 6 | 2 | 0 | 1 | 6 | 0\n\nYou should be able to copy and paste this into a spreadsheet to make it easy.\n\nHow many page faults are there using a FIFO page replacement algorithm if there are three frames?\n",
     "distractors": ["15", "11", "21", "22"],
     "answer": ["18"]
   },
   "q116": {
-    "prompt": "Pages: 8\nPage Sequence: \n1 \t0 \t1 \t2 \t5 \t6 \t1 \t2 \t6 \t1 \t7 \t4 \t0 \t6 \t2 \t1 \t0 \t6 \t2 \t0 \t1 \t6 \t0\n\nYou should be able to copy and paste this into a spreadsheet to make it easy.\n\nHow many page faults are there using a LRU page replacement algorithm if there are three frames?",
+    "prompt": "Pages: 8\nPage Sequence: \n1 | 0 | 1 | 2 | 5 | 6 | 1 | 2 | 6 | 1 | 7 | 4 | 0 | 6 | 2 | 1 | 0 | 6 | 2 | 0 | 1 | 6 | 0\n\nYou should be able to copy and paste this into a spreadsheet to make it easy.\n\nHow many page faults are there using a LRU page replacement algorithm if there are three frames?",
     "distractors": ["14", "17", "20", "24"],
     "answer": ["18"]
   },
   "q117": {
-    "prompt": "Pages: 8\nPage Sequence: \n1 \t0 \t1 \t2 \t5 \t6 \t1 \t2 \t6 \t1 \t7 \t4 \t0 \t6 \t2 \t1 \t0 \t6 \t2 \t0 \t1 \t6 \t0\n\nYou should be able to copy and paste this into a spreadsheet to make it easy.\n\nHow many page faults are there using an OPTIMAL page replacement algorithm if there are three frames?",
+    "prompt": "Pages: 8\nPage Sequence: \n1 | 0 | 1 | 2 | 5 | 6 | 1 | 2 | 6 | 1 | 7 | 4 | 0 | 6 | 2 | 1 | 0 | 6 | 2 | 0 | 1 | 6 | 0\n\nYou should be able to copy and paste this into a spreadsheet to make it easy.\n\nHow many page faults are there using an OPTIMAL page replacement algorithm if there are three frames?",
     "distractors": ["12", "17", "19", "9"],
     "answer": ["11"]
   }

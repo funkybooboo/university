@@ -1,0 +1,781 @@
+{
+  "q1": {
+    "prompt": "What are the main jobs of an OS?",
+    "distractors": [
+      "Manage resources",
+      "Control programs",
+      "Manage the hardware and give them power",
+      "Schedule tasks"
+    ],
+    "answer": [
+      "Manage resources and control programs."
+    ]
+  },
+  "q2": {
+    "prompt": "Order the memory hierarcy from fastest to slowest.",
+    "distractors": [
+      "registers, main memory, cache, non-volitile memory, SDD, HDD, optical disk, magnegtic tape",
+      "non-volitile memory, SDD, HDD, optical disk, magnegtic tape, registers, main memory, cache",
+      "magnegtic tape, optical disk, HDD, SDD, non-volitile memory, main memory, cache, registers,",
+
+      "registers, cache, non-volitile memory, HDD, SDD, magnegtic tape, optical disk, main memory"
+    ],
+    "answer": [
+      "registers, cache, main memory non-volitile memory, SDD, HDD, optical disk, magnegtic tape"
+    ]
+  },
+  "q3": {
+    "prompt": "Which type of multiprocessing has a boss worker relationship?",
+    "distractors": [
+      "Symmetric Multi-Processing"
+    ],
+    "answer": [
+      "Asymmetric Multi-Processing"
+    ]
+  },
+  "q4": {
+    "prompt": "What is the part of an operating system called that runs all the time?",
+    "distractors": [
+      "Microsoft Edge",
+      "Window Manager",
+      "Scheduler",
+      "Interrupt",
+      "CPU",
+      "Process Manager"
+    ],
+    "answer": [
+      "Kernal"
+    ]
+  },
+  "q5": {
+    "prompt": "Which is NOT a basic component of a Computer System",
+    "distractors": [
+      "Device Controller",
+      "CPU",
+      "Shared Memory",
+      "Common Bus"
+    ],
+    "answer": [
+      "Network Adapter"
+    ]
+  },
+  "q6": {
+    "prompt": "What is the name for the instructions that are executed when a certain event happens such as a keyboard key being pressed?",
+    "distractors": [
+      "Kernel",
+      "Catch and Dispatch",
+      "Interrupt Vector",
+      "Interrupt Signal"
+    ],
+    "answer": [
+      "Interrupt Service Routine"
+    ]
+  },
+  "q7": {
+    "prompt": "Memory is considered non-volatile because its data disappears when the power is cut off.",
+    "distractors": [
+      "True"
+    ],
+    "answer": [
+      "False"
+    ]
+  },
+  "q8": {
+    "prompt": "Fault tolerance is one of the key advantages of a multi-processor system over a single- processor system.",
+    "distractors": [
+      "False"
+    ],
+    "answer": [
+      "True"
+    ]
+  },
+  "q9": {
+    "prompt": "Which type of processor configurations makes a shared cache on the CPU possible?",
+    "distractors": [
+      "Symmetric",
+      "Single Chip",
+      "Multi-chip",
+      "Clustered"
+    ],
+    "answer": [
+      "Multi-core"
+    ]
+  },
+  "q10": {
+    "prompt": "What is the main purpose of having DMA?",
+    "distractors": [
+      "Utilize multile CPU's for efficiency.",
+      "Device drivers are abvle to use less cache",
+      "Enhance security of data while being transferred",
+      "DMA isn't a thing"
+    ],
+    "answer": [
+      "Reduce the burden on the CPU for performing I/O"
+    ]
+  },
+  "q11": {
+    "prompt": "What is the main purpose of having DMA?",
+    "distractors": [
+      "Utilize multile CPU's for efficiency.",
+      "Device drivers are abvle to use less cache",
+      "Enhance security of data while being transferred",
+      "DMA isn't a thing"
+    ],
+    "answer": [
+      "Reduce the burden on the CPU for performing I/O"
+    ]
+  },
+  "q12": {
+    "prompt": "What is the startup process called to get the Operating System running when a computer is turned on?",
+    "distractors": [
+      "Asymmetric Startup",
+      "Interrupt Service Routine",
+      "Multiprocessing",
+      "Multitasking"
+    ],
+    "answer": [
+      "Bootstrapping"
+    ]
+  },
+  "q13": {
+    "prompt": "Which of the following is NOT one of the resource management responsibilites of the OS?",
+    "distractors": [
+      "Process Management",
+      "Memory Management",
+      "File System Management",
+      "Mass Storage Management",
+      "Cache Management",
+      "I/O Subsystem Management"
+    ],
+    "answer": [
+      "None of the Above"
+    ]
+  },
+  "q14": {
+    "prompt": "What security term describes ensuring that data is correct, authentic, and reliable?",
+    "distractors": [
+      "Safeguard",
+      "Availability",
+      "Protection",
+      "Confidentiality"
+    ],
+    "answer": [
+      "Integrity"
+    ]
+  },
+  "q15": {
+    "prompt": "Mounting and Unmounting are part of File System Management.",
+    "distractors": [
+      "True"
+    ],
+
+    "answer": [
+      "False"
+    ]
+  },
+  "q16": {
+    "prompt": "What is the command used in a Linux shell to display the current working directory path?",
+    "distractors": [
+      "ls",
+      "PATH",
+      "cd",
+      "echo"
+    ],
+    "answer": [
+      "pwd"
+    ]  
+},
+  "q17": {
+    "prompt": "Which is NOT one of the three main categories of User Interfaces for an OS?",
+    "distractors": [
+      "Command Line",
+      "GUI",
+      "Touch"
+    ],
+      "answer": [
+      "Voice"
+    ]
+  },
+  "q18": {
+    "prompt": "What is a system call?",
+    "distractors": [
+      "Another term for interrupt",
+      "The function call stack for a kernel process",
+      "A category of resource allocation techinques",
+      "A command typed in on the command line"
+    ],
+    "answer": [
+      "Interface between a running process and the OS"
+    ]
+  },
+  "q19": {
+    "prompt": "A function call made in a program is always the actual OS system call.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q20": {
+    "prompt": "What OS structure has a lot of communication overhead and therefore is not commonly used, but the model is used in computer networking?",
+    "distractors": [
+      "Modular",
+      "Sysmmetric Highspeed Information Transfer",
+      "Micorkernel",
+      "Monolithic"
+    ],
+    "answer": ["Layered"]
+  },
+  "q21": {
+    "prompt": "What is the name of the type of structure of an OS where the kernel is in a single static binary file and is executed in a single address space?",
+    "distractors": [
+      "Layered",
+      "Microkernel",
+      "Modular",
+      "Angular"
+    ],
+    "answer": ["Monolithic"]
+  },
+  "q22": {
+    "prompt": "A single command such as cp (copy a file), may require a maximum of 4 or 5 actual system calls.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q23": {
+    "prompt": "It is best if mechanisms and policies are combined in the implementation of a omputer system for effciency and speed.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q24": {
+    "prompt": "Using a register to pass data from a user mode process to the OS running in kernel mode is not possible on modern computer systems.",
+    "distractors": [
+      "True"
+    ],
+    "answer": ["False"]
+  },
+  "q25": {
+    "prompt": "In prcatice, what is the most commonly used OS structure?",
+    "distractors": [
+      "MicorKernel",
+      "Modular",
+      "Monolithic",
+      "Layered"
+    ],
+    "answer": ["Hybrid"]
+  },
+  "q26": {
+    "prompt": "Which of the following is NOT a category of System services?",
+    "distractors": [
+      "System Status Information",
+      "Program Loading and Execution",
+      "File Manipulation",
+      "Background services"
+    ],
+    "answer": ["Protection"]
+  },
+  "q27": {
+    "prompt": "CPU registers can be used to pass data from a user mode process to the OS running in kernel mode. An advantage is that using registers is very fast, but a drawback is that they are small and few in number.",
+    "distractors": [
+      "False"
+    ],
+    "answer": ["True"]
+  },
+  "q28": {
+    "prompt": "What is the name of the state where a process must be before moving to the running state?",
+    "distractors": ["Waiting", "Queued", "Scheduled", "New"],
+    "answer": ["Ready"]
+  },
+  "q29": {
+    "prompt": "What does UEFI use that is synonymous with the MBR in BIOS?",
+    "distractors": ["Overhead", "Rootkit", "EEPROM", "Firmware Interface"],
+    "answer": ["GUID Partition Table"]
+  },
+  "q30": {
+    "prompt": "The terms program and process mean the same thing.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q31": {
+    "prompt": "What is the name of the system call used to create a new child process?",
+    "distractors": ["new", "split", "exec", "wait"],
+    "answer": ["fork"]
+  },
+  "q32": {
+    "prompt": "Changing processes on the CPU requires overhead cpu cycles to manage the change. What best describes the number of cycles it takes to perform this change?",
+    "distractors": ["10's of cycles", "100's of cycles", "10,000's of cycles"],
+    "answer": ["1,000's of cycles"]
+  },
+  "q33": {
+    "prompt": "The Process Control Block contains information to enable a process to be loaded back to the CPU to begin executing where it left off.",
+    "distractors": ["Overhead", "Kernel Change", "Instruction State Record", "Queue Swap"],
+    "answer": ["Context Switch"]
+  },
+  "q34": {
+    "prompt": "What terms describes the process of changing the process that is running on the CPU?",
+    "distractors": ["Overhead", "Kernel Change", "Instruction State Record", "Queue Swap"],
+    "answer": ["Context Switch"]
+  },
+  "q35": {
+    "prompt": "A process is a program that is in memory and is executing. A Process Control Block is another name for the location of the program in memory.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q36": {
+    "prompt": "A process in memory has a number of different sections. Which sections of the process are dynamic in size? Mark all that apply. You must get all correct to receive full credit.",
+    "distractors": ["data", "text", "No other answers are correct"],
+    "answer": ["Heap", "Stack"]
+  },
+  "q37": {
+    "prompt": "BIOS (Basic Input Output System) is the most common way modern systems execute the system startup process. BIOS can run with a GUI interface and allows for much larger sized hard drives than earlier system startup processes.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q38": {
+    "prompt": "RMI is an example of what?",
+    "distractors": ["Non-Buffered", "Bounded Buffer", "Shared Memory", "Pipe"],
+    "answer": ["Message Passing"]
+  },
+  "q39": {
+    "prompt": "Data Parallelism focuses on distributing subsets of data across multiple cores, and performing unique operations on each core.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q40": {
+    "prompt": "Threads share process instructions, data, files, and register values, but each thread has its own stack.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q41": {
+    "prompt": "In what case does the Sender always block on the receiver?",
+    "distractors": ["Empty Bounded Capacity Buffer", "Bounded Capacity Buffer", "Unbounded Capacity Buffer"],
+    "answer": ["Zero Capacity Buffer"]
+  },
+  "q42": {
+    "prompt": "______________________ estimates the maximum speedup a program can achieve based on the percentage of a program that must be serial.",
+    "distractors": ["Murphy's Law", "Moore's Law", "Principle of Power", "Law of Diminishing Marginal Returns"],
+    "answer": ["Amdahl's Law"]
+  },
+  "q43": {
+    "prompt": "The Consumer Producer model is outdated because in Today's computing almost all systems are both producers and consumers.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q44": {
+    "prompt": "Which is NOT one of the main benefits of multi-threaded programs?",
+    "distractors": ["Resource Sharing", "Responsiveness", "Scalability", "Economy"],
+    "answer": ["Parallelism"]
+  },
+  "q45": {
+    "prompt": "In what type of communication is never necessary for processes to know about other processes?",
+    "distractors": ["Rendezvous", "Non-Blocking Send", "Direct Communication", "Blocking Send"],
+    "answer": ["Indirect Communication"]
+  },
+  "q46": {
+    "prompt": "Ordinary Pipes are uni-directional",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q47": {
+    "prompt": "In the Shared Memory model, the shared memory must be located within the kernel memory space.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q48": {
+    "prompt": "In a Bounded Buffer model that is implemented as a circular queue, what is an item that is NOT necessary to keep track of?",
+    "distractors": ["Write Location", "Buffer Size", "Read Location"],
+    "answer": ["Number of Producers"]
+  },
+  "q49": {
+    "prompt": "In an Asynchronous thread execution strategy, which of the following is true?",
+    "distractors": ["Children threads wait for the parent thread to give a signal before starting", "The parent creates a child thread then waits for a single child to complete", "The parent creates child threads then chooses one child as the favorite", "Children threads of the main thread create other children threads"],
+    "answer": ["The parent creates child threads then continues execution"]
+  },
+  "q50": {
+    "prompt": "Which Threading approach is similar to a divide and conquer recursion solution?",
+    "distractors": ["Thread Pool", "Google Thread Building Blocks", "Grand Central Dispatch", "OpenMP"],
+    "answer": ["Fork Join"]
+  },
+  "q51": {
+    "prompt": "In the ___________________________ thread model, a system call made by one thread will never block another thread.",
+    "distractors": ["Many-to-One", "Many-to-Many", "Blocker Preventing", "None of the Above"],
+    "answer": ["One-to-One"]
+  },
+  "q52": {
+    "prompt": "PThreads are an implementation of a standard design.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q53": {
+    "prompt": "In practice, the distribution of cpu burst durations is pretty even with the number of short and long cpu bursts being somewhat equal.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q54": {
+    "prompt": "In the __________________________ thread model, kernel threads are not used at all and only user threads are used.",
+    "distractors": ["Many-to-One", "Many-to-Many", "One-to-One", "Singular"],
+    "answer": ["None of the Above"]
+  },
+  "q55": {
+    "prompt": "What is the term describing pushing creation and management of threads to run-time libraries and compilers, instead of requiring a developer to manage it?",
+    "distractors": ["Compiler Threading", "Fork This Threading", "Explicit Threading", "Auto Threading"],
+    "answer": ["Implicit Threading"]
+  },
+  "q56": {
+    "prompt": "Java threads can be created by creating a Runnable object and passing it to a Thread constructor.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q57": {
+    "prompt": "What best describes a CPU burst?",
+    "distractors": ["Total amount of time a process needs to fully execute a program", "CPU time equal to the duration of an OS timer", "Total time spent in the ready queue", "Total time for cpu and I/O processing"],
+    "answer": ["The amount of cpu time a process needs before voluntarily stopping"]
+  },
+  "q58": {
+    "prompt": "What term best describes the time between one process finishing/stopping execution and another one starting?",
+    "distractors": ["Interrupt Latency", "Preemptive", "Context Switch", "Event Latency"],
+    "answer": ["Dispatch Latency"]
+  },
+  "q59": {
+    "prompt": "Which Threading approach is used by the Java Executor service?",
+    "distractors": ["Grand Central Dispatch", "Fork Join", "OpenMP", "Google Thread Building Blocks"],
+    "answer": ["Thread Pool"]
+  },
+  "q60": {
+    "prompt": "What term describes the case where a process is only released from the cpu when it voluntarily does so?",
+    "distractors": ["Non-volatile", "Concurrency", "Volatile", "Preemptive"],
+    "answer": ["Non-preemptive"]
+  },
+  "q61": {
+    "prompt": "What term describes a metric of scheduling performance that measures the amount of time from when process is created until it is completed?",
+    "distractors": ["Throughput", "CPU Utilization", "Wait Time", "Response Time"],
+    "answer": ["Turnaround Time"]
+  },
+  "q62": {
+    "prompt": "What is the average wait time of the following Shortest Remaining Time First scheduling algorithm that uses the following processes?\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
+    "distractors": ["3.5", "8", "4.5", "1.75"],
+    "answer": ["2.25"]
+  },
+  "q63": {
+    "prompt": "Note, this is the same chart as the previous question.\nWhat process is executing at time 9?\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
+    "distractors": ["P1", "P2", "P3", "Either P1 or P4"],
+    "answer": ["P4"]
+  },
+  "q64": {
+    "prompt": "Note, this is the same chart as the previous question.\n\nHow many context switches are there? Only count when one ends and another begins, do not count the first (where only one begins) or the last (where only one ends).\nProcess \tBurst Time \tArrival Time\nP1 \t6 \t0\nP2 \t3 \t2\nP3 \t2 \t5\nP4 \t4 \t7",
+    "distractors": ["2", "6", "8", "10"],
+    "answer": ["4"]
+  },
+  "q65": {
+    "prompt": "What scheduling algorithm is provably the best in terms of Average Wait Time, but cannot realistically be implemented?",
+    "distractors": ["Round Robin", "Shortest Wait Last", "First Come First Served", "Priority"],
+    "answer": ["Shortest Job First"]
+  },
+  "q66": {
+    "prompt": "What is an important consideration when creating a priority-based scheduling algorithm? Pick the answer that is most unique to a priority system.",
+    "distractors": ["Ready queue", "Wait time", "Multi-level queue", "Throughput"],
+    "answer": ["Starvation"]
+  },
+  "q67": {
+    "prompt": "As the time quantum for a preemptive scheduling algorithm increases, the throughput always improves.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q68": {
+    "prompt": "The remaining questions use this same table. Perform a Round Robin with preemption using a time quantum of 5. When a new process arrives it should be the next process to be scheduled (it goes to the front of the round robin queue).\nProcess \tBurst Time \tArrival Time\nP1 \t21 \t0\nP2 \t17 \t0\nP3 \t9 \t4\nP4 \t12 \t17\n\n \n\nWhat is the average wait time?\n",
+    "distractors": ["32.25", "33.50", "36.25", "41.25"],
+    "answer": ["38.75"]
+  },
+  "q69": {
+    "prompt": "What process is executing at time 23?",
+    "distractors": ["P1", "P2", "P3"],
+    "answer": ["P4"]
+  },
+  "q70": {
+    "prompt": "At what time does P2 finish?",
+    "distractors": ["56", "60", "72", "69"],
+    "answer": ["64"]
+  },
+  "q71": {
+    "prompt": "Which Process has the longest total wait time?",
+    "distractors": ["P1", "P3", "P4"],
+    "answer": ["P2"]
+  },
+  "q72": {
+    "prompt": "A critical section is a shared piece of code that only one process can enter at a time.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q73": {
+    "prompt": "What term describes a hardware solution where a variable value can be modified as if it happens all at once (as if it is a single instruction)?",
+    "distractors": ["Mutex", "Monitor", "Test and Swap", "Speed Chain"],
+    "answer": ["Atomic Variable"]
+  },
+  "q74": {
+    "prompt": "A key difference between a Mutex and a Semaphore is that a Mutex works on boolean values while a Semaphore uses integer values.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q75": {
+    "prompt": "What does processor affinity seek to maximize the use of?",
+    "distractors": ["CPU Cycles", "Context Switches", "Memory Stalls", "Memory"],
+    "answer": ["CPU Cache"]
+  },
+  "q76": {
+    "prompt": "Choose all that are required for a solution to the Critical Section Problem. You must be exactly right to get full credit.",
+    "distractors": ["Preemption", "Non-Preemption"],
+    "answer": ["Mutual Exclusion", "Bounded Waiting", "Progress"]
+  },
+  "q77": {
+    "prompt": "A race condition is the result of an event where the output is wrong because instructions were not executed in the proper order.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q78": {
+    "prompt": "Push and Pull migration is a solution to load balance processes in a symmetric multi-processing system where each processor has its own ready queue.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q79": {
+    "prompt": "What is the following code implementing?\n\nboolean function_name(boolean* target) {\n    boolean rv = *target;\n    *target = True;\n    return rv;\n}\n\n",
+    "distractors": ["Atomic Variable", "SMP", "Compare and Swap", "Lock and Load"],
+    "answer": ["Test and Set"]
+  },
+  "q80": {
+    "prompt": "An OS actually schedules hardware threads, not kernel threads.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q81": {
+    "prompt": "What is the term for the hardware support solution that forces all loads and stores to complete before a new load or store can begin?",
+    "distractors": ["Test and Set", "Synchronized", "Kernel Memory Call", "Hardware Instruction"],
+    "answer": ["Memory Barrier"]
+  },
+  "q82": {
+    "prompt": "Which of the following is NOT a section of code that needs to be considered in the Critical Section Problem?",
+    "distractors": ["Critical Section", "Remainder Section", "Exit Section", "Entry Section"],
+    "answer": ["Shared Section"]
+  },
+  "q83": {
+    "prompt": "What is the term that describes a case where a set of processes are unable to progress because they each hold a lock, but are waiting for another in the set to release a lock?",
+    "distractors": ["Busy Wait", "Priority Inversion", "Process Stall", "Stalemate"],
+    "answer": ["Deadlock"]
+  },
+  "q84": {
+    "prompt": "What is the starting semaphore value for the empty semaphore in the Bounded Buffer problem?",
+    "distractors": ["half of the number of buffers", "1", "0", "2"],
+    "answer": ["It is equal to the number of buffers"]
+  },
+  "q85": {
+    "prompt": "The Page Table is managed by the OS. It is a single table to track all pages for all processes currently running.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q86": {
+    "prompt": "Which is NOT one of the times address binding can occur?",
+    "distractors": ["Execution Time", "Compile Time", "Load Time", "None of the Above"],
+    "answer": ["Interrupt Time"]
+  },
+  "q87": {
+    "prompt": "What is the term used to describe when system libraries are made available to user programs while executing?",
+    "distractors": ["Compile Time Delay Connection", "Memory Remapping", "Dynamic Loading", "MMU"],
+    "answer": ["Dynamic Linking"]
+  },
+  "q88": {
+    "prompt": "The base register holds a physical memory address of the starting point of a process in memory. The limit register value stores the size of the process in memory.",
+    "distractors": ["False"],
+    "answer": ["True"]
+  },
+  "q89": {
+    "prompt": "The Memory Management Unit's purpose is to translate logical addresses created at load time to physical addresses that the CPU uses.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q90": {
+    "prompt": "With contiguous memory allocation, which of the following is the worst performing memory allocation scheme?",
+    "distractors": ["No difference between the three", "First Fit", "Best Fit", "Worst Fit and First Fit are equally bad"],
+    "answer": ["Worst Fit"]
+  },
+  "q91": {
+    "prompt": "What is the major problem the Dining Philosophers may face?",
+    "distractors": ["Starvation", "Overflow", "Inefficient", "Contagious Disease (This is a joke. Don't choose this)"],
+    "answer": ["Deadlock"]
+  },
+  "q92": {
+    "prompt": "When the await() method is called on a Condition object as part of Java's reentrant lock, what happens to the object that calls the method?",
+    "distractors": ["It creates a new lock", "It notifies all waiting objects that a lock is available", "It notifies one waiting object that a lock is available", "It verifies that it is holding a lock"],
+    "answer": ["It releases a lock"]
+  },
+  "q93": {
+    "prompt": "What are the two parts of a logical address called? (choose two answers)",
+    "distractors": ["Frame number", "Page Table", "Frame offset"],
+    "answer": ["Page number", "Page offset"]
+  },
+  "q94": {
+    "prompt": "Paging only has external fragmentation, but does not suffer from internal fragmentation.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q95": {
+    "prompt": "What one term best describes the problem found in the first and second readers-writers problem?",
+    "distractors": ["Inefficiency", "Incomplete", "Complicated", "Slow"],
+    "answer": ["Starvation"]
+  },
+  "q96": {
+    "prompt": "Pure Demand Paging starts by automatically writing only a small number of pages into memory when a program starts up.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q97": {
+    "prompt": "Which of the following is NOT one of the benefits of virtual memory and page swapping?",
+    "distractors": ["Less I/O due to swapping (as compared to standard process swapping)", "Can run processes with more total memory needs than actual physical memory available", "Faster startup"],
+    "answer": ["Elimination of internal fragmentation"]
+  },
+  "q98": {
+    "prompt": "Thanks to the speed of modern computing systems, the penalty for swapping a page into memory because it was not already loaded is extremely small in terms of computation time.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q99": {
+    "prompt": "There is a free frame list associated with each process that identifies the frames that a process may use, but isn't using at the moment. It is stored as part of the PCB.",
+    "distractors": ["True"],
+    "answer": ["False"]
+  },
+  "q100": {
+    "prompt": "With demand paging, the valid/invalid bit in the page table has more than two distinct meanings. A page that is invalid may mean the entry in the table is not valid, or____________________.",
+    "distractors": ["It does not have another meaning", "The associate frame has been corrupted", "The required page in not loaded in memory", "The required page is read only"],
+    "answer": ["The required page is write only"]
+  },
+  "q101": {
+    "prompt": "What is the purpose of an ASID?",
+    "distractors": ["A block of contiguous frames in memory", "A measure of the efficiency of memory read/write speed", "Protects memory by only allowing reading from a page", "Increases capacity of a page table"],
+    "answer": ["Identify a process associated with a page stored in a frame"]
+  },
+  "q102": {
+    "prompt": "What terms describes when a virtual memory address is used, but an associated physical memory location cannot be accessed because the necessary data is not loaded into memory?",
+    "distractors": ["Demand Target", "Frame Table Mishap", "TLB Miss", "Context Switch"],
+    "answer": ["Page Fault"]
+  },
+  "q103": {
+    "prompt": "What is the name of the special hardware table that enables a faster access to physical memory than what is required for a standard page table conversion for a logical address.",
+    "distractors": ["Frame Table", "Page Table", "Level 2 Cache", "Address Table Cache Look Up"],
+    "answer": ["Translation Look-Aside Buffer"]
+  },
+  "q104": {
+    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nWhat is the size, in bits, of the offset portion of the logical address?\n\nJust enter a number once again.\n",
+    "distractors": ["15", "6", "12", "19"],
+    "answer": ["10"]
+  },
+  "q105": {
+    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nWhat is the size of the logical address in bits?\n\nRemember, just enter a number.\n",
+    "distractors": ["18", "28", "20", "10"],
+    "answer": ["16"]
+  },
+  "q106": {
+    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nHow many bytes of internal fragmentation are there? Remember, just put in a number, don't add \"bytes\" at the end.",
+    "distractors": ["91", "85", "98", "81"],
+    "answer": ["89"]
+  },
+  "q107": {
+    "prompt": "All questions are based on the following scenario for a Process.\n\nProcess Sizes; 56,231 bytes\n\nPage Size: 1024 bytes\n\nHow many pages are needed?",
+    "distractors": ["80", "43", "56", "51"],
+    "answer": ["55"]
+  },
+  "q108": {
+    "prompt": "Choose ALL that are true about victim pages. (must get all right to get full credit)",
+    "distractors": [
+        "It must be a page associated with same process of the page needing to be written into memory.",
+        "It must have been the page that has been in memory the longest.",
+        "It must be written to the backing store even if it hasn't been modified."
+    ],
+    "answer": [
+        "It is a page that will be removed from memory to make space for another page.",
+        "The page table for the process associated with the victim frame must be updated."
+    ]
+  },
+  "q109": {
+    "prompt": "What term describes a policy where a page may replace any other page in a frame in user space (memory)?",
+    "distractors": [
+        "Local",
+        "Proportional",
+        "Priority",
+        "Equal"
+    ],
+    "answer": ["Global"]
+  },
+  "q110": {
+    "prompt": "Increasing the number of available frames always reduces the number of page faults.",
+    "distractors": [
+        "True"
+    ],
+    "answer": ["False"]
+  },
+  "q111": {
+    "prompt": "What term describes a process whereby after a fork() call, two processes share all pages of the original process. When a process makes a write to a page, then the page is duplicated and the new page is written to?",
+    "distractors": [
+        "Frame Table Load",
+        "Delayed Page Replication",
+        "Efficiency Write Mechanism",
+        "Exec"
+    ],
+    "answer": ["Copyon Write"]
+  },
+  "q112": {
+    "prompt": "Which of the following is NOT true about thrashing?",
+    "distractors": [
+        "More time is spent paging than executing process instructions",
+        "A page is swapped out, then very quickly needs to be accessed",
+        "Excessive page faulting results in high I/O"
+    ],
+    "answer": ["CPU utilization is so high the system slows down"]
+  },
+  "q113": {
+    "prompt": "First-In-First-Out is the most commonly used page replacement algorithm.",
+    "distractors": [
+        "True"
+    ],
+    "answer": ["False"]
+  },
+  "q114": {
+    "prompt": " Pages: 8 \n Page Sequence:  1  0  1  2  5  6  1  2  6  1  7  4  0  6  2  1  0  6  2  0  1  6  0 \nHow many page faults are there using a FIFO page replacement algorithm if there are three frames?",
+    "distractors": [
+        "12",
+        "19",
+        "11",
+        "17",
+        "9"
+    ],
+    "answer": ["18"]
+  },
+  "q115": {
+    "prompt": " Pages: 8 \n Page Sequence:  1  0  1  2  5  6  1  2  6  1  7  4  0  6  2  1  0  6  2  0  1  6  0 \nHow many page faults are there using a LRU page replacement algorithm if there are three frames?",
+    "distractors": [
+        "12",
+        "19",
+        "11",
+        "17",
+        "9"
+    ],
+    "answer": ["18"]
+  },
+  "q116": {
+    "prompt": " Pages: 8 \n Page Sequence:  1  0  1  2  5  6  1  2  6  1  7  4  0  6  2  1  0  6  2  0  1  6  0 \nHow many page faults are there using a OPTIMAL page replacement algorithm if there are three frames?",
+    "distractors": [
+        "12",
+        "19",
+        "13",
+        "18",
+        "9"
+    ],
+    "answer": ["11"]
+  },
+  "q117": {
+    "prompt": "A FIFO page replacement algorithm with 4 frames illustrates Belady's Anomaly.",
+    "distractors": [
+        "True"
+    ],
+    "answer": ["False"]
+  }
+}

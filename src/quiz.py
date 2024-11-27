@@ -104,7 +104,7 @@ def question_prompt(prompt: str, options: List[str]) -> List[int]:
 
 
 def load_questions() -> Dict[str, Dict[str, Union[str, List[str]]]]:
-    with open('all_questions.json', 'r') as file:
+    with open('questions.json', 'r') as file:
         return json.load(file)
 
 

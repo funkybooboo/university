@@ -1,46 +1,61 @@
 package org.example.page;
 
-/**
- * The Assign6 class simulates page replacement algorithms (FIFO, LRU, and MRU)
- * and evaluates their performance through a series of simulations.
- * It tracks page faults for each algorithm and performs a comparison to detect 
- * Belady's Anomaly, where the page fault count increases with more frames.
- */
+import java.util.Scanner;
+
 public class Paging {
     
+    // Helper method to get page reference sequence and frame count from user input
+    private static int[] getUserInputSequence() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the page reference sequence (space-separated):");
+        String input = scanner.nextLine();
+        String[] parts = input.split("\\s+");
+        int[] sequence = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            sequence[i] = Integer.parseInt(parts[i].trim());
+        }
+        return sequence;
+    }
+
+    private static int getUserInputFrameCount() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the number of memory frames:");
+        return scanner.nextInt();
+    }
+
+    // Running the FIFO algorithm
     public static void calcFIFO() {
-        int[] pageFaults = new int[2];
+        int[] sequence = getUserInputSequence();
+        int frameCount = getUserInputFrameCount();
 
-        int[] sequence = new int[1]; // TODO ask them for the sequence and frame count
-
-        FIFO fifo = new FIFO(sequence, 1, pageFaults);
+        FIFO fifo = new FIFO(sequence, frameCount, new int[frameCount]);
         fifo.run();
     }
 
+    // Running the LRU algorithm
     public static void calcLRU() {
-        int[] pageFaults = new int[2];
+        int[] sequence = getUserInputSequence();
+        int frameCount = getUserInputFrameCount();
 
-        int[] sequence = new int[1]; // TODO ask them for the sequence and frame count
-
-        LRU lru = new LRU(sequence, 1, pageFaults);
+        LRU lru = new LRU(sequence, frameCount, new int[frameCount]);
         lru.run();
     }
 
+    // Running the MRU algorithm
     public static void calcMRU() {
-        int[] pageFaults = new int[2];
+        int[] sequence = getUserInputSequence();
+        int frameCount = getUserInputFrameCount();
 
-        int[] sequence = new int[1]; // TODO ask them for the sequence and frame count
-
-        MRU mru = new MRU(sequence, 1, pageFaults);
+        MRU mru = new MRU(sequence, frameCount, new int[frameCount]);
         mru.run();
     }
 
+    // Running the OPT algorithm
     public static void calcOPT() {
-        int[] pageFaults = new int[2];
+        int[] sequence = getUserInputSequence();
+        int frameCount = getUserInputFrameCount();
 
-        int[] sequence = new int[1]; // TODO ask them for the sequence and frame count
-
-        OPT opt = new OPT(sequence, 1, pageFaults);
+        OPT opt = new OPT(sequence, frameCount, new int[frameCount]);
         opt.run();
     }
 }

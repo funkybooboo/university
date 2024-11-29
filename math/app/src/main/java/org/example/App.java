@@ -26,7 +26,8 @@ public class App {
             System.out.println("10. Optimal Page Replacement");
             System.out.println("q to quit");
             System.out.print("Enter: ");
-            choice = scanner.nextLine();
+            
+            choice = scanner.nextLine();  // Read input safely
 
             switch (choice) {
                 case "1":
@@ -90,4 +91,3 @@ public class App {
         scanner.close();
     }
 }
-

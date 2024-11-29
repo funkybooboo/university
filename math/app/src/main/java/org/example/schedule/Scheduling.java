@@ -1,7 +1,4 @@
-package org.example.schedule;/* Add a file (and path) as a commandline argument to process an input file. 
- * Otherwise, hardcoded default values will apply. The default values do make
- * it easier to see how the code works. 
-*/
+package org.example.schedule;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -27,27 +24,54 @@ public class Scheduling {
         int[] burstTimes = new int[numProcesses];
         int[] totalTimes = new int[numProcesses];
 
-        // Ask the user for the start times
-        System.out.println("Enter the start times for the processes:");
-        for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter start time for Process %d: ", i + 1);
-            startTimes[i] = scanner.nextInt();
+        // Ask the user to enter start times as a space-separated list
+        System.out.print("Enter the start times for the processes (space-separated): ");
+        String startTimesInput = scanner.nextLine();
+        String[] startTimeStrings = startTimesInput.split("\\s+");
+
+        // Ensure that the number of start times matches the number of processes
+        if (startTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of start times does not match the number of processes.");
+            return;
         }
 
-        // Ask the user for the burst times
-        System.out.println("Enter the burst times for the processes:");
+        // Parse the start times into the array
         for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter burst time for Process %d: ", i + 1);
-            burstTimes[i] = scanner.nextInt();
+            startTimes[i] = Integer.parseInt(startTimeStrings[i]);
         }
 
-        // Ask the user for the total times (completion times)
-        System.out.println("Enter the total times (completion times) for the processes:");
-        for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter total time for Process %d: ", i + 1);
-            totalTimes[i] = scanner.nextInt();
+        // Ask the user to enter burst times as a space-separated list
+        System.out.print("Enter the burst times for the processes (space-separated): ");
+        String burstTimesInput = scanner.nextLine();
+        String[] burstTimeStrings = burstTimesInput.split("\\s+");
+
+        // Ensure that the number of burst times matches the number of processes
+        if (burstTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of burst times does not match the number of processes.");
+            return;
         }
-        
+
+        // Parse the burst times into the array
+        for (int i = 0; i < numProcesses; i++) {
+            burstTimes[i] = Integer.parseInt(burstTimeStrings[i]);
+        }
+
+        // Ask the user to enter total times (completion times) as a space-separated list
+        System.out.print("Enter the total times (completion times) for the processes (space-separated): ");
+        String totalTimesInput = scanner.nextLine();
+        String[] totalTimeStrings = totalTimesInput.split("\\s+");
+
+        // Ensure that the number of total times matches the number of processes
+        if (totalTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of total times does not match the number of processes.");
+            return;
+        }
+
+        // Parse the total times into the array
+        for (int i = 0; i < numProcesses; i++) {
+            totalTimes[i] = Integer.parseInt(totalTimeStrings[i]);
+        }
+
         // Create processes with the user-provided data
         for (int i = 0; i < numProcesses; i++) {
             String processName = "P" + (i + 1); // Naming convention like P1, P2, P3, etc.
@@ -88,25 +112,52 @@ public class Scheduling {
         int[] burstTimes = new int[numProcesses];
         int[] totalTimes = new int[numProcesses];
 
-        // Ask the user for the start times
-        System.out.println("Enter the start times for the processes:");
-        for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter start time for Process %d: ", i + 1);
-            startTimes[i] = scanner.nextInt();
+        // Ask the user to enter start times as a space-separated list
+        System.out.print("Enter the start times for the processes (space-separated): ");
+        String startTimesInput = scanner.nextLine();
+        String[] startTimeStrings = startTimesInput.split("\\s+");
+
+        // Ensure that the number of start times matches the number of processes
+        if (startTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of start times does not match the number of processes.");
+            return;
         }
 
-        // Ask the user for the burst times
-        System.out.println("Enter the burst times for the processes:");
+        // Parse the start times into the array
         for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter burst time for Process %d: ", i + 1);
-            burstTimes[i] = scanner.nextInt();
+            startTimes[i] = Integer.parseInt(startTimeStrings[i]);
         }
 
-        // Ask the user for the total times (completion times)
-        System.out.println("Enter the total times (completion times) for the processes:");
+        // Ask the user to enter burst times as a space-separated list
+        System.out.print("Enter the burst times for the processes (space-separated): ");
+        String burstTimesInput = scanner.nextLine();
+        String[] burstTimeStrings = burstTimesInput.split("\\s+");
+
+        // Ensure that the number of burst times matches the number of processes
+        if (burstTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of burst times does not match the number of processes.");
+            return;
+        }
+
+        // Parse the burst times into the array
         for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter total time for Process %d: ", i + 1);
-            totalTimes[i] = scanner.nextInt();
+            burstTimes[i] = Integer.parseInt(burstTimeStrings[i]);
+        }
+
+        // Ask the user to enter total times (completion times) as a space-separated list
+        System.out.print("Enter the total times (completion times) for the processes (space-separated): ");
+        String totalTimesInput = scanner.nextLine();
+        String[] totalTimeStrings = totalTimesInput.split("\\s+");
+
+        // Ensure that the number of total times matches the number of processes
+        if (totalTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of total times does not match the number of processes.");
+            return;
+        }
+
+        // Parse the total times into the array
+        for (int i = 0; i < numProcesses; i++) {
+            totalTimes[i] = Integer.parseInt(totalTimeStrings[i]);
         }
 
         // Create processes with the user-provided data
@@ -149,25 +200,52 @@ public class Scheduling {
         int[] burstTimes = new int[numProcesses];
         int[] totalTimes = new int[numProcesses];
 
-        // Ask the user for the start times
-        System.out.println("Enter the start times for the processes:");
-        for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter start time for Process %d: ", i + 1);
-            startTimes[i] = scanner.nextInt();
+        // Ask the user to enter start times as a space-separated list
+        System.out.print("Enter the start times for the processes (space-separated): ");
+        String startTimesInput = scanner.nextLine();
+        String[] startTimeStrings = startTimesInput.split("\\s+");
+
+        // Ensure that the number of start times matches the number of processes
+        if (startTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of start times does not match the number of processes.");
+            return;
         }
 
-        // Ask the user for the burst times
-        System.out.println("Enter the burst times for the processes:");
+        // Parse the start times into the array
         for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter burst time for Process %d: ", i + 1);
-            burstTimes[i] = scanner.nextInt();
+            startTimes[i] = Integer.parseInt(startTimeStrings[i]);
         }
 
-        // Ask the user for the total times (completion times)
-        System.out.println("Enter the total times (completion times) for the processes:");
+        // Ask the user to enter burst times as a space-separated list
+        System.out.print("Enter the burst times for the processes (space-separated): ");
+        String burstTimesInput = scanner.nextLine();
+        String[] burstTimeStrings = burstTimesInput.split("\\s+");
+
+        // Ensure that the number of burst times matches the number of processes
+        if (burstTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of burst times does not match the number of processes.");
+            return;
+        }
+
+        // Parse the burst times into the array
         for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter total time for Process %d: ", i + 1);
-            totalTimes[i] = scanner.nextInt();
+            burstTimes[i] = Integer.parseInt(burstTimeStrings[i]);
+        }
+
+        // Ask the user to enter total times (completion times) as a space-separated list
+        System.out.print("Enter the total times (completion times) for the processes (space-separated): ");
+        String totalTimesInput = scanner.nextLine();
+        String[] totalTimeStrings = totalTimesInput.split("\\s+");
+
+        // Ensure that the number of total times matches the number of processes
+        if (totalTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of total times does not match the number of processes.");
+            return;
+        }
+
+        // Parse the total times into the array
+        for (int i = 0; i < numProcesses; i++) {
+            totalTimes[i] = Integer.parseInt(totalTimeStrings[i]);
         }
 
         // Create processes with the user-provided data
@@ -211,32 +289,68 @@ public class Scheduling {
         int[] totalTimes = new int[numProcesses];
         int[] priorities = new int[numProcesses];
 
-        // Ask the user for the start times
-        System.out.println("Enter the start times for the processes:");
-        for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter start time for Process %d: ", i + 1);
-            startTimes[i] = scanner.nextInt();
+        // Ask the user to enter start times as a space-separated list
+        System.out.print("Enter the start times for the processes (space-separated): ");
+        String startTimesInput = scanner.nextLine();
+        String[] startTimeStrings = startTimesInput.split("\\s+");
+
+        // Ensure that the number of start times matches the number of processes
+        if (startTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of start times does not match the number of processes.");
+            return;
         }
 
-        // Ask the user for the burst times
-        System.out.println("Enter the burst times for the processes:");
+        // Parse the start times into the array
         for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter burst time for Process %d: ", i + 1);
-            burstTimes[i] = scanner.nextInt();
+            startTimes[i] = Integer.parseInt(startTimeStrings[i]);
         }
 
-        // Ask the user for the total times (completion times)
-        System.out.println("Enter the total times (completion times) for the processes:");
-        for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter total time for Process %d: ", i + 1);
-            totalTimes[i] = scanner.nextInt();
+        // Ask the user to enter burst times as a space-separated list
+        System.out.print("Enter the burst times for the processes (space-separated): ");
+        String burstTimesInput = scanner.nextLine();
+        String[] burstTimeStrings = burstTimesInput.split("\\s+");
+
+        // Ensure that the number of burst times matches the number of processes
+        if (burstTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of burst times does not match the number of processes.");
+            return;
         }
 
-        // Ask the user for the priority of each process
-        System.out.println("Enter the priorities for the processes:");
+        // Parse the burst times into the array
         for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter priority for Process %d: ", i + 1);
-            priorities[i] = scanner.nextInt();
+            burstTimes[i] = Integer.parseInt(burstTimeStrings[i]);
+        }
+
+        // Ask the user to enter total times (completion times) as a space-separated list
+        System.out.print("Enter the total times (completion times) for the processes (space-separated): ");
+        String totalTimesInput = scanner.nextLine();
+        String[] totalTimeStrings = totalTimesInput.split("\\s+");
+
+        // Ensure that the number of total times matches the number of processes
+        if (totalTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of total times does not match the number of processes.");
+            return;
+        }
+
+        // Parse the total times into the array
+        for (int i = 0; i < numProcesses; i++) {
+            totalTimes[i] = Integer.parseInt(totalTimeStrings[i]);
+        }
+
+        // Ask the user to enter priorities as a space-separated list
+        System.out.print("Enter the priorities for the processes (space-separated): ");
+        String prioritiesInput = scanner.nextLine();
+        String[] priorityStrings = prioritiesInput.split("\\s+");
+
+        // Ensure that the number of priorities matches the number of processes
+        if (priorityStrings.length != numProcesses) {
+            System.out.println("Error: Number of priorities does not match the number of processes.");
+            return;
+        }
+
+        // Parse the priorities into the array
+        for (int i = 0; i < numProcesses; i++) {
+            priorities[i] = Integer.parseInt(priorityStrings[i]);
         }
 
         // Create processes with the user-provided data
@@ -279,25 +393,52 @@ public class Scheduling {
         int[] burstTimes = new int[numProcesses];
         int[] totalTimes = new int[numProcesses];
 
-        // Ask the user for the start times
-        System.out.println("Enter the start times for the processes:");
-        for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter start time for Process %d: ", i + 1);
-            startTimes[i] = scanner.nextInt();
+        // Ask the user to enter start times as a space-separated list
+        System.out.print("Enter the start times for the processes (space-separated): ");
+        String startTimesInput = scanner.nextLine();
+        String[] startTimeStrings = startTimesInput.split("\\s+");
+
+        // Ensure that the number of start times matches the number of processes
+        if (startTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of start times does not match the number of processes.");
+            return;
         }
 
-        // Ask the user for the burst times
-        System.out.println("Enter the burst times for the processes:");
+        // Parse the start times into the array
         for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter burst time for Process %d: ", i + 1);
-            burstTimes[i] = scanner.nextInt();
+            startTimes[i] = Integer.parseInt(startTimeStrings[i]);
         }
 
-        // Ask the user for the total times (completion times)
-        System.out.println("Enter the total times (completion times) for the processes:");
+        // Ask the user to enter burst times as a space-separated list
+        System.out.print("Enter the burst times for the processes (space-separated): ");
+        String burstTimesInput = scanner.nextLine();
+        String[] burstTimeStrings = burstTimesInput.split("\\s+");
+
+        // Ensure that the number of burst times matches the number of processes
+        if (burstTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of burst times does not match the number of processes.");
+            return;
+        }
+
+        // Parse the burst times into the array
         for (int i = 0; i < numProcesses; i++) {
-            System.out.printf("Enter total time for Process %d: ", i + 1);
-            totalTimes[i] = scanner.nextInt();
+            burstTimes[i] = Integer.parseInt(burstTimeStrings[i]);
+        }
+
+        // Ask the user to enter total times (completion times) as a space-separated list
+        System.out.print("Enter the total times (completion times) for the processes (space-separated): ");
+        String totalTimesInput = scanner.nextLine();
+        String[] totalTimeStrings = totalTimesInput.split("\\s+");
+
+        // Ensure that the number of total times matches the number of processes
+        if (totalTimeStrings.length != numProcesses) {
+            System.out.println("Error: Number of total times does not match the number of processes.");
+            return;
+        }
+
+        // Parse the total times into the array
+        for (int i = 0; i < numProcesses; i++) {
+            totalTimes[i] = Integer.parseInt(totalTimeStrings[i]);
         }
 
         // Ask for the time quantum

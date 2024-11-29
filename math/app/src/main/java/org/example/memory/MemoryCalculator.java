@@ -14,20 +14,20 @@ public class MemoryCalculator {
         System.out.print("Enter the page size in bytes: ");
         int pageSize = scanner.nextInt();
 
-        // Calculate the number of pages required
-        int numberOfPages = (int) Math.round((double) processSize / pageSize);
+        // Calculate the number of pages required (using integer arithmetic for ceiling)
+        int numberOfPages = (processSize + pageSize - 1) / pageSize;
 
         // Calculate total space (number of pages * page size)
         int totalSpace = numberOfPages * pageSize;
 
-        // Calculate internal fragmentation
+        // Calculate internal fragmentation (unused space in last page)
         int internalFragmentation = totalSpace - processSize;
 
         // Calculate number of bits required for the page number
-        int bitsForPageNumber = (int) Math.round(Math.log(numberOfPages) / Math.log(2));
+        int bitsForPageNumber = (int) Math.ceil(Math.log(numberOfPages) / Math.log(2));
 
-        // Calculate offset bits
-        int offsetBits = (int) ((int) Math.log(pageSize) / Math.log(2));
+        // Calculate offset bits (bits needed to address a location within a page)
+        int offsetBits = (int) Math.ceil(Math.log(pageSize) / Math.log(2));
 
         // Calculate the total number of bits required for the logical address
         int totalBitsForLogicalAddress = bitsForPageNumber + offsetBits;

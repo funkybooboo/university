@@ -28,7 +28,7 @@ public class Paging {
         int[] sequence = getUserInputSequence();
         int frameCount = getUserInputFrameCount();
 
-        FIFO fifo = new FIFO(sequence, frameCount, new int[frameCount]);
+        FIFO fifo = new FIFO(sequence, frameCount, new int[frameCount + 1]);
         fifo.run();
     }
 
@@ -37,7 +37,7 @@ public class Paging {
         int[] sequence = getUserInputSequence();
         int frameCount = getUserInputFrameCount();
 
-        LRU lru = new LRU(sequence, frameCount, new int[frameCount]);
+        LRU lru = new LRU(sequence, frameCount, new int[frameCount + 1]);
         lru.run();
     }
 
@@ -46,7 +46,7 @@ public class Paging {
         int[] sequence = getUserInputSequence();
         int frameCount = getUserInputFrameCount();
 
-        MRU mru = new MRU(sequence, frameCount, new int[frameCount]);
+        MRU mru = new MRU(sequence, frameCount, new int[frameCount + 1]);
         mru.run();
     }
 
@@ -55,7 +55,7 @@ public class Paging {
         int[] sequence = getUserInputSequence();
         int frameCount = getUserInputFrameCount();
 
-        OPT opt = new OPT(sequence, frameCount, new int[frameCount]);
+        OPT opt = new OPT(sequence, frameCount, new int[frameCount + 1]);
         opt.run();
     }
 }

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "exam-study-guide"
+name = "quiz"
 version = "0.1.0"
 description = ""
 authors = ["Nate Stott <nate.stott@pm.me>"]

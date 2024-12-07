@@ -21,7 +21,7 @@
   },
   "q5": {
     "prompt": "double value = 12345.678;\n\nGiven the above declaration of a double value, which of the following is the correct way to type-cast a double to an int?",
-    "answer": ["int truncated = static_cast<int>(value)"],
+    "answer": ["int truncated = static_cast<int>(value);"],
     "distractors": ["int truncated = const_cast<int>(value);", "int truncated = dynamic_cast<int>(value);", "int truncated = reinterpret_cast<int>(value);"]
   },
   "q6": {
@@ -140,161 +140,146 @@
     "distractors": ["True"]
   },
   "q29": {
-    "prompt": "All valid C code is valid C++ code.",
-    "answer": ["False"],
-    "distractors": ["True"]
-  },
-  "q30": {
     "prompt": "Is the following valid code...\n\n    std::string s = \"This is a string\";\n    std::string_view v = s;\n    v[0] = 't';\n    std::cout << v << std::endl;",
     "answer": ["False"],
     "distractors": ["True"]
   },
-  "q31": {
+  "q30": {
     "prompt": "The use of double quotes \"\" in an #include statement tells the preprocessor to first look for the header file in the project defined folders (or possibly just the current folder).",
     "answer": ["True"],
     "distractors": ["False"]
   },
-  "q32": {
+  "q31": {
     "prompt": "C++ requires all implementations of a class's methods are provided in one .cpp file.",
     "answer": ["False"],
     "distractors": ["True"]
   },
-  "q33": {
+  "q32": {
     "prompt": "Separate compilation is the concept that type and definition code are placed in separate files (header and implementation files respectively), having the definition compiled one time, and the type information used and compiled only where/as needed.",
     "answer": ["True"],
     "distractors": ["False"]
   },
-  "q34": {
+  "q33": {
     "prompt": "Assuming the existence of the getNextPrime function, would you expect this function to result in a reliable program?\n\nint* generate10Primes()\n{\n    int primes[10];\n    primes[0] = 1;\n    \n    for (int i = 1; i < 10; i++)\n    {\n        primes[i] = getNextPrime(primes[i - 1]);\n    }\n    \n    return primes;\n}",
     "answer": ["False"],
     "distractors": ["True"]
   },
-  "q35": {
+  "q34": {
     "prompt": "A std::chrono::duration is composed of both a (time) period and a count, where the count is the number of periods represented by the duration.",
     "answer": ["True"],
     "distractors": ["False"]
   },
-  "q36": {
+  "q35": {
     "prompt": "What is the default value for (uninitialized) primitive numeric types (e.g., int, double) in C++.",
     "answer": ["no default is specified"],
     "distractors": ["the largest possible positive value of the type", "0", "1", "-1"]
   },
-  "q37": {
+  "q36": {
     "prompt": "Given the following code, select the true statement.\n\n#include <iostream>\n#include <memory>\n\nclass Monster\n{\n    public:\n        int health{ 100 };\n};\n\nclass Hero\n{\n    public:\n        int health{ 100 };\n};\n\nint main()\n{\n    Monster* enemies = new Monster[10];\n    std::shared_ptr<Hero[]> heros = std::make_shared<Hero[]>(10);\n    \n    std::cout << enemies[0].health << std::endl;\n    std::cout << heros[0].health << std::endl;\n\n    delete[] enemies;\n    \n    return 0;\n}",
     "answer": ["The code compiles and runs correctly."],
     "distractors": ["The code compiles, but an exception occurs when reporting the health of the hero.", "The code does not compile because the -> operator should be used on the enemies array.", "The code compiles and runs correctly.", "The code compiles, but an exception occurs when reporting the health of the enemy."]
   },
-  "q38": {
+  "q37": {
     "prompt": "Which of the following is a strongly typed, or scoped, enumeration.",
     "answer": ["enum class State {};"],
     "distractors": ["enum State : unsigned int {};", "enum State {};", "enum scope State {};"]
   },
-  "q39": {
+  "q38": {
     "prompt": "Which of the following attributes is recommended to use in a switch case statement you intend for execution to continue to the next case statement.",
     "answer": ["[[fallthrough]]"],
     "distractors": ["[[noreturn]]", "[[nodiscard]]", "[[nobreak]]", "[[continue]]"]
   },
-  "q40": {
+  "q39": {
     "prompt": "Which of the following is a correct way to declare a constant in C++.",
     "answer": ["const double PI = 3.14159;"],
     "distractors": ["final double PI = 3.14159;", "readonly double PI = 3.14159;", "#define PI = 3.14159;"]
   },
-  "q41": {
+  "q40": {
     "prompt": "If not specified, the default visibility within a class is...",
     "answer": ["private"],
     "distractors": ["protected", "internal", "namespace public", "public"]
   },
-  "q42": {
+  "q41": {
     "prompt": "What is the type of primes, in the statement below?\n\nauto primes = { 2, 3, 5, 7 };",
     "answer": ["std::initializer_list of ints"],
     "distractors": ["raw array of ints: int[4]", "type inference fails for this statement", "std::array of ints: std::array<int, 4>"]
   },
-  "q43": {
-    "prompt": "double value = 12345.678;\n\nGiven the above declaration of a double value, which of the following is the correct way to type-cast a double to an int?",
-    "answer": ["int truncated = static_cast<int>(value);"],
-    "distractors": ["int truncated = type_cast<int>(value);", "int truncated = const_cast<int>(value);", "int truncated = reinterpret_cast<int>(value);"]
-  },
-  "q44": {
+  "q42": {
     "prompt": "The following is an example of...\n\nSomeClass::SomeClass(std::string param1, int param2, bool param3) :\n   m_field1(param1),\n   m_field2(param2),\n   m_field3(param3)\n{\n}",
     "answer": ["Direct initialization"],
     "distractors": ["Parameter-wise copy", "Data field parameterization", "Initialization by value"]
   },
-  "q45": {
+  "q43": {
     "prompt": "Which of the following characters are used to indicate a preprocessor directive.",
     "answer": ["#"],
     "distractors": ["/*", "$", "//", "@"]
   },
-  "q46": {
-    "prompt": "Who of the following is the originator of the C++ language.",
-    "answer": ["Bjarne Stroustrup"],
-    "distractors": ["Dennis Ritchie", "Ulf Jönsson", "Ken Thompson", "Scott Meyers"]
-  },
-  "q47": {
+  "q44": {
     "prompt": "Which of the following are true statements about how C++ function/method parameters may be passed.",
     "answer": ["Pass by reference", "Pass by value"],
     "distractors": ["Pass by indirection", "Pass by name"]
   },
-  "q48": {
+  "q45": {
     "prompt": "Given the following code segment, select the true statements about the code; following execution.\n\n    int a = 2;\n    int* b = new int(3);\n    int* c = &a;\n    c = b;\n    *c = 5;\n    *b = 7;",
     "answer": ["The variable 'a' is on the stack.", "The value of 'a' is 2.", "The value pointed to by 'b' is 7."],
     "distractors": ["The variable 'a' is on the heap.", "The value pointed to by 'c' is 5."]
   },
-  "q49": {
+  "q46": {
     "prompt": "Given the following code, select the true statements.\n\n    int empty[4];\n    int primes[4] = {2, 3, 5, 7 };\n    int evens[] { 2, 4, 6, 8 };\n    int* dynPrimes = new int[4] { 2, 3, 5, 7 };",
     "answer": ["The array elements for 'dynPrimes' are on the heap.", "The array elements for 'evens' are on the stack.", "The array elements for 'primes' are on the stack.", "The array elements for 'empty' are on the stack."],
     "distractors": ["The array elements for 'empty' are on the heap.", "The array elements for 'evens' are on the heap.", "The array elements for 'dynPrimes' are on the stack.", "The array elements for 'primes' are on the heap"]
   },
-  "q50": {
+  "q47": {
     "prompt": "Which of the following result in arrays that are ready to use.  In other words, arrays that have a valid declaration and space to store elements.",
     "answer": ["int* primes = new int[4]{ 2, 3, 5, 7 };", "int* primes = new int[4];", "int primes[] = {2, 3, 5, 7 };", "int primes[4];"],
     "distractors": ["int[] primes = { 2, 3, 5, 7 }", "int* primes = new int(4);"]
   },
-  "q51": {
+  "q48": {
     "prompt": "Given the following code, select the statements that will correctly report the speed of 20 to the console.\n\n#include <iostream>\n#include <memory>\n\nclass Ship\n{\n    public:\n        int speed = 20;\n};\n\nint main()\n{\n    auto myShip = std::make_shared<Ship>();\n      \n    return 0;\n}",
     "answer": ["std::cout << (*myShip).speed << std::endl;", "std::cout << myShip->speed << std::endl;"],
     "distractors": ["std::cout << (&myShip)->speed << std::endl;", "std::cout << *myShip.speed << std::endl;", "std::cout << &myShip.speed << std::endl;"]
   },
-  "q52": {
+  "q49": {
     "prompt": "Which of the following is the correct way to define a type alias.",
     "answer": ["using my_string = std::string;"],
     "distractors": ["using std::string = my_string;", "using typedef my_string std::string;", "using { my_string, std::string };"]
   },
-  "q53": {
+  "q50": {
     "prompt": "Given this code segment, which of the following are valid ways to send the value (10) stored in 'a' to the console. (more than one may be correct)\n\nint* a = new int(10);\nint& b = *a;",
     "answer": ["std::cout << *a;", "std::cout << b;"],
     "distractors": ["std::cout << &b;", "std::cout << *b;", "std::cout << &a;", "std::cout << a;"]
   },
-  "q54": {
+  "q51": {
     "prompt": "Given the following function prototype, select the choice(s) that are valid calls to the function; you may assume any variables used in the calls are of type int.\n\nvoid doSomething(int& x, int& y);",
     "answer": ["doSomething(a, b);"],
     "distractors": ["doSomething(1, 2);", "doSomething(nullptr, a);", "doSomething(a, 2);"]
   },
-  "q55": {
+  "q52": {
     "prompt": "Which of the following are valid ways to create an std::vector and/or std::array.",
     "answer": ["std::vector<int> array;", "std::array<int, 4> array;"],
     "distractors": ["std::vector<int> array = new std::vector<int>(4);", "std::array<int,4> array = new std::array<int, 4>();", "std::vector<int, 4> array;", "std::array<int> array;"]
   },
-  "q56": {
+  "q53": {
     "prompt": "Compiler deduction of types can be achieved using which of the following keywords",
     "answer": ["decltype", "auto"],
     "distractors": ["var", "infer", "typeof"]
   },
-  "q57": {
+  "q54": {
     "prompt": "\n\nFor the following code, on the second line, the * character is called what?\n\nint* a = new int(10);\nint b = *a;\n\n",
     "answer": ["Dereference operator"],
     "distractors": [" Reference operator", "Address of (or Address) operator", "Pointer operator"]
   },
-  "q58": {
+  "q55": {
     "prompt": "Which of the following is the correct way to declare and dynamically allocate an array of integers",
     "answer": ["int* data = new int[10];"],
     "distractors": ["int data = new int[10];", "int& data = new int[10];", "int[] data = new int[10];"]
   },
-  "q59": {
+  "q56": {
     "prompt": "\n\nGiven this code segment, which of the following are valid ways send the value (10) stored in 'a' to the console. (more than one may be correct)\n\nint* a = new int(10);\nint*& b = a;\n\n",
     "answer": ["std::cout << *a;", "std::cout << *b;"],
     "distractors": ["std::cout << a;", "std::cout << &a;", "std::cout << b;"]
   },
-  "q60": {
+  "q57": {
     "prompt": "Direct initialization occurs before the body of the constructor executes.",
     "answer": ["True"],
     "distractors": ["False"]

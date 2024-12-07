@@ -1,3 +1,6 @@
+# Code
+For Dean's example code, check [here](../../class/code/Operators/)
+
 # Operator Overloading
 Operator overloading allows your classes to function with operators such `+`, `()`, `[]`, `->`, etc. You will provide a
 method that takes the necessary arguments and returns the necessary value to make the operator work. These methods are
@@ -22,7 +25,18 @@ automatically give you `<=`. You still have to do `<=` individually.
 
 While not required, many operators make the most sense as a part of a larger package of operators. If you
 already have `<`, it probably makes sense to also have `>`, `<=`, `>=`, and `==`. This gives rise to the "Rule of Five",
-which is discussed in [Move/Copy notes](../week11/move_copy.md).
+which is discussed in [Move/Copy notes](../week11/move_copy.md#rule-of-five).
+
+# Increment / Decrement
+Post vs pre incrememnt/decrement can get a little weird, so here is what those look like.
+The integer paramter is just an indicator, you don't actually use it. When implementing these, post-increment will make
+a copy, modify the *actual* value, and then return the copy. The caller gets the same value back as it put in, but the
+increment takes place. Pre-increment is easy, increment the object and return a reference (*this)
+
+```c++
+class operator++(int); // post-increment
+class& operator++();   // pre-increment
+```
 
 # Move/Copy operators
 Move and copy have a constructor form and an operator form, so I gave them their own [file](../week11/move_copy.md).

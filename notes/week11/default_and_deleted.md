@@ -18,7 +18,8 @@ Default constructor and operator provide a member-by-member move similar to copy
 It seems the default destructor will call the destructor of each member in reverse order of their declaration.
 
 # Deleting Defaults
-Defaults can be explicitly accepted or deleted with `default` or `delete`.
+Defaults can be explicitly accepted or deleted with `default` or `delete`. If you provide any constructor, no default
+constructor will be generated. That is why you would use `default` to ensure the default is used anyway.
 
 ```c++
 class CantCopyMe

@@ -298,5 +298,115 @@
         "0 0",
         "Compilation error"
       ]
+  },
+  "q31": {
+    "prompt": "What is one major difference between C++ smart pointers and Java's garbage collection?",
+    "answer": [
+      "Smart pointers in C++ automatically release memory as soon as the last reference goes out of scope, while Java's garbage collector determines the timing of memory reclamation."
+    ],
+    "distractors": [
+      "Smart pointers in C++ can only manage memory for primitive types, while Java's garbage collector manages memory for all objects.",
+      "Java's garbage collector is faster because it releases memory immediately after it is no longer needed, whereas C++ smart pointers require manual intervention to release memory.",
+      "Smart pointers in C++ require the use of the new operator, while Java's garbage collector does not."
+    ]
+  },
+  "q32": {
+    "prompt": "Which statement about managing raw arrays with std::shared_ptr in C++ is correct?",
+    "answer": [
+      "Using a custom deleter function allows std::shared_ptr to manage raw arrays effectively, even before C++20."
+    ],
+    "distractors": [
+      "Before C++20, std::make_shared could directly accept an initializer list to create a shared pointer for raw arrays.",
+      "The std::shared_ptr for raw arrays cannot prevent accidental modifications to the managed data.",
+      "Passing a std::shared_ptr by reference to a function introduces a significant performance penalty."
+    ]
+  },
+  "q33": {
+    "prompt": "What is the primary purpose of a functor in C++?",
+    "answer": [
+      "To enable functional parameterization of algorithms in the standard library by overloading the () operator."
+    ],
+    "distractors": [
+      "To encapsulate data and functions within a single object for object-oriented design.",
+      "To overload the [] operator for more convenient array manipulation.",
+      "To provide an alternative to raw pointers for memory management."
+    ]
+  },
+  "q34": {
+    "prompt": "What is the primary purpose of the capture clause in a C++ lambda function?",
+    "answer": [
+      "To define which variables from the enclosing scope can be accessed by the lambda and how they are captured."
+    ],
+    "distractors": [
+      "To specify the return type of the lambda function explicitly.",
+      "To enforce exception safety in the lambda function.",
+      "To enable overloading of the lambda function for multiple parameter sets."
+    ]
+  },
+  "q35": {
+    "prompt": "Which of the following is true about operator overloading in C++?",
+    "answer": [
+      "Overloaded operators must be explicitly implemented for each specific operator."
+    ],
+    "distractors": [
+      "Overloading the + operator automatically overloads the += operator.",
+      "Overloading the == operator prevents the compiler from generating a default member-by-member assignment operator.",
+      "The += operator must return a copy of the modified object."
+    ]
+  },
+  "q36": {
+    "prompt": "Which of the following best describes the purpose of a move constructor in C++?",
+    "answer": [
+      "To initialize an object by transferring ownership of resources from a temporary object."
+    ],
+    "distractors": [
+      "To create a deep copy of an object by duplicating all its resources.",
+      "To assign the contents of one object to another existing object.",
+      "To provide a default initialization for an object when no arguments are passed."
+    ]
+  },
+  "q37": {
+    "prompt": "What is the purpose of the = delete; specifier in C++?",
+    "answer": [
+      "To ensure a method is always implemented using default behavior provided by the compiler."
+    ],
+    "distractors": [
+      "To ensure a method is always implemented using default behavior provided by the compiler.",
+      "To make a method private, restricting its use to within the class only.",
+      "To ensure a method is overridden in a derived class."
+    ]
+  },
+  "q38": {
+    "prompt": "What happens when a template is instantiated in C++?",
+    "answer": [
+      "The compiler generates a new function or class for each type used with the template."
+    ],
+    "distractors": [
+      "The compiler automatically deduces the types of all template parameters.",
+      "The template is replaced with a generic implementation that works for any type.",
+      "The template is only instantiated when the function or class is explicitly called."
+    ]
+  },
+  "q39": {
+    "prompt": "What is the primary purpose of variadic templates in C++?",
+    "answer": [
+      "To define a template that can accept any number of template parameters."
+    ],
+    "distractors": [
+      "To create a template function that can accept a variable number of arguments at runtime.",
+      "To allow templates to accept only a fixed number of parameters.",
+      "To enable a template to deduce types for all its parameters."
+    ]
+  },
+  "q40": {
+    "prompt": "Which of the following is a requirement for a custom iterator to meet the ForwardIterator specifications in C++?",
+    "answer": [
+      "It must support both copy and move constructors."
+    ],
+    "distractors": [
+      "It must implement the equality (==) and inequality (!=) relational operators.",
+      "It must be able to increment the iterator both before and after accessing the element.",
+      "It must implement a destructor to clean up memory associated with the container."
+    ]
   }
 }

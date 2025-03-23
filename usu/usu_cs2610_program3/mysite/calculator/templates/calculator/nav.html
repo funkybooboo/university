@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Navigation</title>
+      {% load static %}
+      <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
+  </head>
+  <body>
+    <div class="link">
+        <span><a href="{% url 'calculator:calculator' %}">Calculator</a></span>
+        <span><a href="{% url 'calculator:recent_expressions' %}">Recent Expressions</a></span>
+        <span><a href="{% url 'calculator:undefined_expressions' %}">Undefined Expressions</a></span>
+        <span><a href="{% url 'calculator:disagreeing_results' %}">Disagreeing Results</a></span>
+        <span><a href="{% url 'calculator:expressions_by_operator' %}">Expressions By Operator</a></span>
+        <span><a href="{% url 'calculator:plan' %}">Software Development Plan</a></span>
+        <span>{% now "SHORT_DATETIME_FORMAT" %}</span>
+    </div>
+  </body>
+</html>

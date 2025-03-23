@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Calculator</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
+    </head>
+    <body>
+        <div id="token">{% csrf_token %}</div>
+        <input type="hidden" id="recordPath" value="{% url 'calculator:record' %}">
+        <input type="hidden" id="lastID" value="{{ lastID }}">
+        {% include 'calculator/nav.html'%}
+        <div id="calc" class="calc">
+            <h1 class="header">JavaScript Calculator</h1>
+            <h3>Create an expression:</h3>
+            <span>
+                <label>
+                    <input id="num1" name="num1" type="number">
+                </label>
+                <label>
+                    <select id="operator" name="operator">
+                        <option value="+">+</option>
+                        <option value="-">-</option>
+                        <option value="*">*</option>
+                        <option value="/">/</option>
+                        <option value="**">**</option>
+                        <option value="%">%</option>
+                    </select>
+                </label>
+                <label>
+                    <input id="num2" name="num2" type="number">
+                </label>
+                <input id="submit" type="submit" value="Submit">
+            </span>
+        </div>
+        <div id="dynamic" class="dynamic">
+            <h3>Fresh expressions appear here</h3>
+            <div id="container"></div>
+        </div>
+        {% if latest_expression_list %}
+        <div id="saved" class="saved">
+            <h3>Latest saved expressions</h3>
+            {% for expression in latest_expression_list %}
+            <form class="valid" method="post" action="{% url 'calculator:removeRecord' expression.id %}">
+                {% csrf_token %}
+                <span>Expression #{{expression.id}}</span>
+                <span class="math">{{expression.num1}} {{expression.operator.symbol}} {{expression.num2}} = {{expression.PYAnswer}}</span>
+                <span><input type="submit" value="X"></span>
+                <input type="hidden" value="calculator" name="cameFrom">
+            </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <script src="{% static 'calculator/script.js' %}" type="text/javascript"></script>
+    </body>
+</html>

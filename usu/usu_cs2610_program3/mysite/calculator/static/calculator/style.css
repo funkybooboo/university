@@ -1,0 +1,188 @@
+body {
+    background-color: whitesmoke;
+    color: black;
+    font-family: "American Typewriter", serif;
+    font-style: normal;
+    font-size: medium;
+    padding: 10px;
+    margin: 10px;
+}
+
+.link {
+    background-color: lightblue;
+    color: black;
+    padding: inherit;
+    border-radius: 20px;
+
+}
+
+span {
+    padding: inherit;
+}
+
+img {
+    padding: inherit;
+    max-height: 400px;
+    max-width: 400px;
+}
+
+a {
+    padding: unset;
+}
+
+div {
+    padding: inherit;
+}
+
+li {
+    padding: inherit;
+}
+
+p {
+    padding: inherit;
+}
+
+.div0 {
+    background-color: azure;
+}
+
+.div1 {
+    background-color: plum;
+}
+
+.group1 {
+    background-color: honeydew;
+}
+
+.group2 {
+    background-color: cadetblue;
+}
+
+.group3 {
+    background-color: lavender;
+}
+
+.group4 {
+    background-color: dodgerblue;
+}
+
+.group5 {
+    background-color: darkkhaki;
+}
+
+.group6 {
+    background-color: darkseagreen;
+}
+
+.sheet li:nth-child(2n) {
+    background-color: lightblue;
+}
+
+.sheet li:nth-child(2n-1) {
+    background-color: lightskyblue;
+}
+
+.calc {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: white;
+}
+
+.dynamic {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: azure;
+}
+
+.valid {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: aquamarine;
+}
+
+.saved {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: lavender;
+}
+
+.undefined {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: orangered;
+}
+
+.math {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: lightyellow;
+}
+
+.element {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: transparent;
+    border: lightgray 1px solid;
+}
+
+.plus {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: honeydew;
+}
+
+.minus {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: lavender;
+}
+
+.multiply {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: powderblue;
+}
+
+.divide {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: darkkhaki;
+}
+
+.exponent {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: darkturquoise;
+}
+
+.modulus {
+    border-radius: 20px;
+    text-align: center;
+    margin: 0 auto;
+    padding: inherit;
+    background-color: limegreen;
+}

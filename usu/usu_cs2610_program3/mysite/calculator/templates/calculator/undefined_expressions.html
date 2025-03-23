@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        <meta charset="UTF-8">
+        <title>Undefined Expressions</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
+    </head>
+    <body>
+        {% include 'calculator/nav.html'%}
+        <h1>Undefined Expressions {{undefined_expression_list|length}}</h1>
+        {% if undefined_expression_list %}
+        <div id="saved" class="saved">
+            {% for expression in undefined_expression_list %}
+            <form class="valid" method="post" action="{% url 'calculator:removeRecord' expression.id %}">
+                {% csrf_token %}
+                <span>Expression #{{expression.id}}</span>
+                <span class="math">{{expression.num1}} {{expression.operator.symbol}} {{expression.num2}} = {{expression.PYAnswer}}</span>
+                <span><input type="submit" value="X"></span>
+                <input type="hidden" value="recent_expressions" name="cameForm" id="cameFrom">
+            </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </body>
+</html>

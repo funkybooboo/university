@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" class="html">
+    <head>
+        <meta charset="UTF-8">
+        <title>Software Development Plan</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+    </head>
+    <body>
+        {% include 'calculator/nav.html'%}
+        <h1>Software Development Plan</h1>
+        <div class="group1">
+            <h2>Phase 0: Requirements Specification (20%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Re-write the instructions in your own words.</li>
+                <li>If you don't do this, you won't know what you're supposed to do!</li>
+                <li>Don't leave out details!</li>
+                <li>Explain the problem this program aims to solve.</li>
+                <li>Describe what a *good* solution looks like.</li>
+                <li>List what you already know how to do.</li>
+                <li>Point out any challenges that you can foresee.</li>
+                <li>List all of the data that is used by the program, making note of where it comes from.</li>
+                <li>Explain what form the output will take.</li>
+                <li>Describe what algorithms and formulae will be used (but don't write them yet).</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I am to make a website using the django framework that calculates values given by the user.</li>
+                <li>Values will be shown on a temporary list and if the user wants they can either save or delete the calculation.</li>
+                <li>Once it is saved the values will be organised on other pages for easy look up.</li>
+                <li>Each organisation page will work more or less the same way, so it will be good to make a way to cut down on code</li>
+                <li>When the user wants to calculate an expression some javascript code will calculate the client side answer and also validate the users input</li>
+                <li>Then the data will be sent to the server so that the server can also work out the answer independent of the javascript calculation.
+                    once both calculations are done and the user has hit save that his when the user figures out what categories the expression belongs to</li>
+                <li>A good solution should look clean and easy to use.</li>
+                <li>It should be obvious how to use the website and how to navigate it.</li>
+                <li>I have never deleted something from the database, so I think that may be different</li>
+                <li>The program will need to keep track of some data but not a ton such as what numbers are used and what the answers</li>
+            </ol>
+        </div>
+        <div class="group2">
+            <h2>Phase 1: Design (30%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Function signatures that include:</li>
+                <li>Descriptive names.</li>
+                <li>Parameter lists.</li>
+                <li>Documentation strings that explain the purpose, inputs and outputs.</li>
+                <li>Pseudocode that captures how each function works.</li>
+                <li>Pseudocode != source code.  Do not paste your finished source code into this part of the plan.</li>
+                <li>Explain what happens in the face of good and bad input.</li>
+                <li>Write a few specific examples that occurred to you.</li>
+            </ul>
+            <h4>Example:</h4>
+            <code>def foo(a, b, c):</code>
+            <p># line by line detail in psuedocode</p>
+            <code>def bar(x, y, z):</code>
+            <p># line by line detail in psuedocode</p>
+            <h4>Answers:</h4>
+            <ol>
+                <li>There will need to be a view function for each of the pages on the website</li>
+                <li>calculator() will serve the calculator page to the client as well as the JS as well as send any relevant data</li>
+                <li>disagreeing_results() will serve the disagreeing_results page to the client as well as send any relevant data</li>
+                <li>expressions_by_operator() will serve the expressions_by_operator page to the client as well as send any relevant data</li>
+                <li>recent_expressions() will serve the recent_expressions page to the client as well as send any relevant data</li>
+                <li>undefined_expressions() will serve the undefined_expressions page to the client as well as send any relevant data</li>
+                <li>removeRecord() will remove the given record for the database and then return the user back to the page they were on</li>
+                <li>record() will record an expression that the user saves and then return the user back to the calculate page</li>
+                <li>dealing with django brings a lot of small steps also such as updating the urls file and building the models for the database and well as making sure that the settings file is right</li>
+                <li>in the models file I will need to make two models. one for the expression and one for the operator as instructed. the expression will have a tie to an operator</li>
+            </ol>
+        </div>
+        <div class="group3">
+            <h2>Phase 2: Implementation (15%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>(More or less) working code.</li>
+                <li>Note any relevant and interesting events that happened while you wrote the code.</li>
+                <li>e.g. things you learned, things that didn't go according to plan</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I think things went pretty good all tho I think I have a lot of ruff edges to work out.</li>
+                <li>It was hard getting the client to be able to post to the server</li>
+            </ol>
+        </div>
+        <div class="group4">
+            <h2>Phase 3: Testing & Debugging (30%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>A set of test cases that you have personally run on your computer.</li>
+                <li>Include a description of what happened for each test case.</li>
+                <li>For any bugs discovered, describe their cause and remedy.</li>
+                <li>Write your test cases in plain language such that a non-coder could run them and replicate your experience.</li>
+            </ul>
+            <h4>Example:</h4>
+            <p># Command: [Command you ran in the shell]</p>
+            <p># Bug Found: [If the test failed, what was the output?  Keep it brief]</p>
+            <p># Bug Fixed: [Your solution]</p>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I had my girlfriend try to break my website, and she couldn't. I also tried running a lot of tests that I could think of and again there were no errors on the client or server side.</li>
+                <li>I edited the html form and everything still worked</li>
+            </ol>
+        </div>
+        <div class="group5">
+            <h2>Phase 4: Deployment (5%)</h2>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Your repository pushed to GitLab.</li>
+                <li>Verify that your final commit was received by browsing to its project page on GitLab.</li>
+                <li>Ensure the project's URL is correct.</li>
+                <li>Review the project to ensure that all required files are present and in correct locations.</li>
+                <li>Check that unwanted files have not been included.</li>
+                <li>Make any final touches to documentation, including the Sprint Signature and this Plan.</li>
+                <li>Validate that your submission is complete and correct by cloning it to a new location on your computer and re-running it.</li>
+                <li>Run your program from the command line so you can see how it will behave when your grader runs it. Running it in PyCharm is not good enough!</li>
+                <li>Run through your test cases to avoid nasty surprises.</li>
+                <li>Check that your documentation files are all present.</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>Got it all done and everything looked good</li>
+            </ol>
+        </div>
+        <div class="group6">
+            <h2>Phase 5: Maintenance (N/A)</h2>
+            <p>In the real world, the duration of this phase completely dominates the others.  For this assignment, spend a few minutes writing thoughtful answers to the following questions</p>
+            <h4>Deliver:</h4>
+            <ul>
+                <li>Write brief and honest answers to these questions: (Note: do this before you complete Phase 4: Deployment)</li>
+                <li>What parts of your program are sloppily written and hard to understand?</li>
+                <li>Are there parts of your program which you aren't quite sure how/why they work?</li>
+                <li>If a bug is reported in a few months, how long would it take you to find the cause?</li>
+                <li>Will your documentation make sense to...</li>
+                <li>...anybody besides yourself?</li>
+                <li>...yourself in six month's time?</li>
+                <li>How easy will it be to add a new feature to this program in a year?</li>
+                <li>Will your program continue to work after upgrading...</li>
+                <li>...your computer's hardware?</li>
+                <li>...the operating system?</li>
+                <li>...to the next version of Python?</li>
+                <li>Respond to the Assignment Reflection Survey on Canvas.</li>
+            </ul>
+            <h4>Answers:</h4>
+            <ol>
+                <li>I think my javascript is pretty sloppy but then again its one of my first time writing javascript and also javascript is a weird language</li>
+                <li>I know how all the parts of my program work but there is a lot of parts so its hard to grasp if you try to understand it all at once. Understanding in parts is easy.</li>
+                <li>It wouldnt take that long to fix a bug since the project isnt that large.</li>
+                <li>I think my documentation is good but more than that I think my code speaks for itself. I use good varible names and I think I wrote everything pretty darn readable.</li>
+                <li>To add a new feature would be pretty easy I would just need to make a new page or add a new section to a page.</li>
+                <li>My program will run for the foreseeable future</li>
+            </ol>
+        </div>
+    </body>
+</html>

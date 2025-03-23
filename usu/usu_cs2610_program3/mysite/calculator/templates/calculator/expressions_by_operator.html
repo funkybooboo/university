@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <title>Expressions by Operator</title>
+      {% load static %}
+      <link rel="stylesheet" href="{% static 'calculator/style.css' %}">
+    </head>
+    <body>
+        {% include 'calculator/nav.html'%}
+        <h1>Expressions by Operator {{latest_expression_list|length}}</h1>
+        {% if plusList %}
+        <div class="plus">
+            <h3>Addition Expressions (+) {{plusList|length}}</h3>
+            {% for expression in plusList %}
+                <form class="plus element" method="post" action="{% url 'calculator:removeRecord' expression.id %}">
+                {% csrf_token %}
+                <span>Expression #{{expression.id}}</span>
+                <span class="math">{{expression.num1}} {{expression.operator.symbol}} {{expression.num2}} = {{expression.PYAnswer}}</span>
+                <span><input type="submit" value="X"></span>
+                <input type="hidden" value="expressions_by_operator" name="cameFrom">
+            </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if minusList %}
+        <div class="minus">
+            <h3>Subtraction Expressions (-) {{minusList|length}}</h3>
+            {% for expression in minusList %}
+                <form class="minus element" method="post" action="{% url 'calculator:removeRecord' expression.id %}">
+                {% csrf_token %}
+                <span>Expression #{{expression.id}}</span>
+                <span class="math">{{expression.num1}} {{expression.operator.symbol}} {{expression.num2}} = {{expression.PYAnswer}}</span>
+                <span><input type="submit" value="X"></span>
+                <input type="hidden" value="expressions_by_operator" name="cameFrom">
+            </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if multiplyList %}
+        <div class="multiply">
+            <h3>Multiplication Expressions (+) {{multiplyList|length}}</h3>
+            {% for expression in multiplyList %}
+                <form class="multiply element" method="post" action="{% url 'calculator:removeRecord' expression.id %}">
+                {% csrf_token %}
+                <span>Expression #{{expression.id}}</span>
+                <span class="math">{{expression.num1}} {{expression.operator.symbol}} {{expression.num2}} = {{expression.PYAnswer}}</span>
+                <span><input type="submit" value="X"></span>
+                <input type="hidden" value="expressions_by_operator" name="cameFrom">
+            </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if divideList %}
+        <div class="divide">
+            <h3>Division Expressions (+) {{divideList|length}}</h3>
+            {% for expression in divideList %}
+                <form class="divide element" method="post" action="{% url 'calculator:removeRecord' expression.id %}">
+                {% csrf_token %}
+                <span>Expression #{{expression.id}}</span>
+                <span class="math">{{expression.num1}} {{expression.operator.symbol}} {{expression.num2}} = {{expression.PYAnswer}}</span>
+                <span><input type="submit" value="X"></span>
+                <input type="hidden" value="expressions_by_operator" name="cameFrom">
+            </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if exponentList %}
+        <div class="exponent">
+            <h3>Exponential Expressions (+) {{exponentList|length}}</h3>
+            {% for expression in exponentList %}
+                <form class="exponent element" method="post" action="{% url 'calculator:removeRecord' expression.id %}">
+                    {% csrf_token %}
+                    <span>Expression #{{expression.id}}</span>
+                    <span class="math">{{expression.num1}} {{expression.operator.symbol}} {{expression.num2}} = {{expression.PYAnswer}}</span>
+                    <span><input type="submit" value="X"></span>
+                    <input type="hidden" value="expressions_by_operator" name="cameFrom">
+                </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% if modulusList %}
+        <div class="modulus">
+            <h3>Modulus Expressions (+) {{modulusList|length}}</h3>
+            {% for expression in modulusList %}
+                <form class="modulus element" method="post" action="{% url 'calculator:removeRecord' expression.id %}">
+                {% csrf_token %}
+                <span>Expression #{{expression.id}}</span>
+                <span class="math">{{expression.num1}} {{expression.operator.symbol}} {{expression.num2}} = {{expression.PYAnswer}}</span>
+                <span><input type="submit" value="X"></span>
+                <input type="hidden" value="expressions_by_operator" name="cameFrom">
+            </form>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </body>
+</html>

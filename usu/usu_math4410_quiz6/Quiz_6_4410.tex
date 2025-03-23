@@ -1,0 +1,132 @@
+\documentclass[10pt, AMS Euler]{article}
+\textheight=9.25in \textwidth=7in \topmargin=-.75in
+\oddsidemargin=-0.25in
+\evensidemargin=-0.25in
+\usepackage{url}  % The bib file uses this
+\usepackage{graphicx} %to import pictures
+\usepackage{amsmath, amssymb, color, wasysym}
+\usepackage{theorem, concrete, multicol,tikz}
+\usepackage[normalem]{ulem} %for strikethrough (\sout{blah})
+\usepackage{enumitem}
+
+\setlength{\intextsep}{5mm} \setlength{\textfloatsep}{5mm}
+\setlength{\floatsep}{5mm}
+
+
+{\theorembodyfont{\rmfamily}
+	\newtheorem{definition}{Definition}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{example}{Example}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{lemma}{Lemma}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{theorem}{Theorem}[section]}
+{\theorembodyfont{\rmfamily} \newenvironment{proof}{\par{\it
+			Proof:}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+{\theorembodyfont{\rmfamily}
+	\newenvironment{solution}{\par{\bf{Solution:}}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\newcommand{\mymk}[1]{%
+	\tikz[baseline=(char.base)]\node[anchor=south west, draw,rectangle, rounded corners, inner sep=2pt, minimum size=7mm,
+	text height=2mm](char){\ensuremath{#1}} ;}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+%%%%  SHORTCUT COMMANDS  %%%%
+\newcommand{\ds}{\displaystyle}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\arc}{\rightarrow}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\stirling}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+
+%%%%  footnote style %%%%
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{empty}
+\begin{document}
+	
+	\noindent{\bf \large MATH 4410 }\\
+        \noindent{\bf \large Nate Stott A02386053 }\\
+	
+	\noindent \underline{\hspace{2in}}\\
+	
+	{\bf Quiz \#6; Due 11:59 pm, 2/14/2024}\\
+
+        \newpage
+	\begin{enumerate}
+		\item Count the number of $n$-piece fruit baskets satisfying the following totally sensible and real-world-inspired constraints: 
+		\begin{enumerate}
+			\item At most 1 banana; 
+			\item At most $3$ guavas;
+			\item A multiple of $4$ apples;
+			\item An odd number of oranges;
+			\item At least one kiwi.
+		\end{enumerate} 
+        \end{enumerate}
+
+        Got help from recitation
+
+        $$ a) 1 + x $$
+        $$ b) 1 + x + x^2 + x^3 $$
+        $$ c) \frac{1}{1-x^4} $$
+        $$ d) \frac{x}{1-x^2} $$
+        $$ e) \frac{x}{1-x} $$
+
+        Multiply them together
+        $$ F(x) = (1 + x)(1 + x + x^2 + x^3)(\frac{1}{1-x^4})(\frac{x}{1-x^2})(\frac{x}{1-x}) $$
+        $$ = \frac{(1+x)(1+x+x^2+x^3)(x^2)}{(1-x^4)(1-x^2)(1-x)} $$
+        Simplified with wolfram
+        $$ = - \frac{x^2}{(x-1)^3} $$
+        $$ = - \frac{x^2}{(-1-(-x))^3}$$
+        $$ = \frac{x^2}{(1-x)^3} $$
+
+        Alright so
+        $$ F(x) = \frac{x^2}{(1-x)^3} $$
+        $$ = \sum_{n\geq0} \binom{n+3-1}{n} x^n $$
+        $$ = \sum_{n\geq0} \binom{n+2}{2} x^{n+2} $$
+        $$ = \sum_{n\geq2} \binom{n}{2} x^n $$
+        The sum at 0 and 1 is 0 so its ok to move the index
+        $$ = \sum_{n\geq0} \binom{n}{2} x^n $$
+        $$ = \sum_{n\geq0} \frac{n(n-1)}{2} x^n $$
+        Dropping the sum and $x^n$
+        $$ f(n) = \frac{n(n-1)}{2} $$
+        So the generating function containing the valid fruit basket sequence is
+        $$ F(x) = \frac{x^2}{(1-x)^3} $$
+        The closed form formula is 
+        $$ f(n) = \frac{n(n-1)}{2} $$
+        
+	\newpage
+	\begin{enumerate}[resume]
+		\item count the number of alien mRNA sequences of length $n$ built from the proteins named $W$, $X$, $Y$, and $Z$ noting that there must be an even number of $W$s and an odd number of $Z$s. 
+	\end{enumerate}
+
+        Got help from recitation
+	
+	$$ X(x) = Y(x) = e^x = \sum_{n\geq0} \frac{x^n}{n!} $$
+        $$ W(x) = \frac{e^x + e^{-x}}{2} = \sum_{n\geq0} \frac{x^{2n}}{2n!} $$
+        $$ Z(x) = \frac{e^x - e^{-x}}{2} = \sum_{n\geq0} \frac{x^{2n+1}}{(2n+1)!} $$
+
+        $$ G(x) = X(x)Y(x)W(x)Z(x) = (e^x)(e^x)(\frac{e^x + e^{-x}}{2})(\frac{e^x - e^{-x}}{2}) $$
+        
+        Simplified with wolfram
+        $$ = \frac{e^{4x}}{4} - \frac{1}{4} $$
+        Time to find the closed form solution
+        $$ = -\frac{1}{4} + \frac{1}{4} \sum_{n\geq0} \frac{4^n}{n!} x^n $$
+        Dropping the summation and $x^n$ and define $[n=0]$ to give $\frac{1}{4}$ if true and 0 otherwise.
+        $$ g(n) = \frac{1}{4} (4^n) - [n=0] $$
+        $$ =  4^{n-1} - [n=0] $$
+        Alright so the generating function for the problem is
+        $$ G(x) = \frac{e^{4x}}{4} - \frac{1}{4} $$
+        The closed formula is
+        $$ g(n) =  4^{n-1} - [n=0] $$
+	
+	\noindent \underline{\hspace{3in}}\\
+	
+	
+	
+	
+\end{document}

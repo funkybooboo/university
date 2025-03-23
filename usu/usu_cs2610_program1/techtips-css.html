@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" style="padding: 10px; margin: 10px; background-color: white; font-family: American Typewriter, serif;">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="icon" href="pictures/favicon.ico">
+        <title>Tech Tips without CSS</title>
+    </head>
+    <body style="background-color: beige; padding: 10px;">
+        <div style="padding: 10px; background-color: aquamarine">
+            <span style="padding: 10px"><a href="index.html">Main page</a></span>
+            <span style="padding: 10px;"><a href="about.html">About Me</a></span>
+            <span style="padding: 10px;"><a href="techtips+css.html">Tech Tips with CSS</a></span>
+            <span style="padding: 10px;"><a href="techtips-css.html">Tech Tips without CSS</a></span>
+            <span style="padding: 10px;"><a href="debugging.html">Server Debugging Page</a></span>
+            <span style="padding: 10px;"><a href="plan.html">Software Development Plan</a></span>
+        </div>
+        <h1>Tech Tips without CSS</h1>
+        <div id="group1" style="background-color: honeydew; padding: inherit;">
+            <h2>HTML Elements</h2>
+            <div class="div0" style="background-color: azure; padding: inherit;">
+                <h2><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/div"><code>&lt;div&gt;</code></a></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">Default display: inline</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Break up content into manageable chunks making it easy to style those chunks.</li>
+                </ul>
+            </div>
+            <div class="div1" style="background-color: plum; padding: inherit;">
+                <h2><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/pre"><code>&lt;pre&gt;</code></a></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">Default display: inline</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Allows you to put text where you would like on the page with no worry of the text moving all to one line, great to use instead of the <code>&lt;p&gt;</code> tag.</li>
+                </ul>
+            </div>
+            <div  class="div0" style="background-color: azure; padding: inherit;">
+                <h2><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a"><code>&lt;a&gt;</code></a></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">Default display: block-level</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">You can make links to other pages, such as another page on your site, or another page out on the internet.</li>
+                </ul>
+            </div>
+            <div class="div1" style="background-color: plum; padding: inherit;">
+                <h2><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img"><code>&lt;img&gt;</code></a></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">Default display: inline</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">You can put a link to an image file that is saved on your hard drive or out on the internet. If image isn't found that puts a message out on the page.</li>
+                </ul>
+            </div>
+        </div>
+        <div id="group2" style="background-color: cadetblue; padding: inherit;">
+            <h2>HTML Character Entities</h2>
+            <div class="div0" style="background-color: azure; padding: inherit;">
+                <h2><code>Copyright Sign: &#169;</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">Used to show if a name is from a company.</li>
+                </ul>
+            </div>
+            <div class="div1" style="background-color: plum; padding: inherit;">
+                <h2><code>Cent Sign: &#162;</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">Used before a number of cents. Such as &#162;22.</li>
+                </ul>
+            </div>
+            <div class="div0" style="background-color: azure; padding: inherit;">
+                <h2><code>One Half Fraction: &#189;</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">Used to show one half of something.</li>
+                </ul>
+            </div>
+        </div>
+        <div id="group3" style="background-color: lavender; padding: inherit;">
+            <h2>CSS Selectors</h2>
+            <div class="div0" style="background-color: azure; padding: inherit;">
+                <h2><code>type</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">With this selector you can give general attributes to any tag.</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Such as giving all <code>&lt;p&gt;</code> tags the same <code>background-color</code>.</li>
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">You use them by going to your CSS page and naming the tag you want to use without anything in front of it and then brackets.</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Any CSS properties in the brackets will be applied to all of the tags of that type.</li>
+                </ul>
+                <pre>
+                        tag {
+
+                        }
+                    </pre>
+            </div>
+            <div class="div1" style="background-color: plum; padding: inherit;">
+                <h2><code>.class</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">With this selector you can give multiple tags a class name identifier.</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Give the tags you want to have the same CSS attributes the same class name and they all will be effected.</li>
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">You use them by going to your CSS page and naming the class name that you gave to your tags and then brackets.</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Any CSS properties in the brackets will be applied to all of the tags of that class.</li>
+                </ul>
+                <pre>
+                        .name {
+
+                        }
+                    </pre>
+            </div>
+            <div class="div0" style="background-color: azure; padding: inherit;">
+                <h2><code>#id</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">With this selector you can give a tag an id with a name identifier.</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Give the tag you want to have a set of particular CSS attributes.</li>
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">You use them by going to your CSS page and naming the id name that you gave to your tag and then brackets.</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Any CSS properties in the brackets will be applied to all of the tags of that id.</li>
+                </ul>
+                <pre>
+                        #name {
+
+                        }
+                    </pre>
+            </div>
+            <div class="div1" style="background-color: plum; padding: inherit;">
+                <h2><code>:nth-child</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">With this selector you can specify how many children down from another selector you want to gave attributes.</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Use them by naming the type, id, or class you are talking about than a colon then nth-child() with a An+B going into the parentheses</li>
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">A is an integer size</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">B is an integer offset</li>
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">n is all non-negative integers, starting from 0.</li>
+                </ul>
+                <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/:nth-child">Got my info from MDN</a>
+                <pre>
+                        attribute:nth-child(An+B) {
+
+                        }
+                    </pre>
+            </div>
+        </div>
+        <div id="group4" style="background-color: dodgerblue; padding: inherit;">
+            <h2>CSS Properties</h2>
+            <div class="div0" style="background-color: azure; padding: inherit;">
+                <h2><code>padding</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">With this property you can select how much spacing you would like the tag to have from other tags or the edge of the screen.</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Some possible values include: 15px, inherit, length, ect...</li>
+                </ul>
+            </div>
+            <div class="div1" style="background-color: plum; padding: inherit;">
+                <h2><code>background-color</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">With this property you can color the background in the selected attribute.</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Some possible values include: yellow, black, white, ect...</li>
+                </ul>
+            </div>
+            <div class="div0" style="background-color: azure; padding: inherit;">
+                <h2><code>color</code></h2>
+                <ul class="sheet">
+                    <li class="li0" style="background-color: lightskyblue; padding: inherit">With this property you can color the text in the selected attribute</li>
+                    <li class="li1" style="background-color: lightblue; padding: inherit">Some possible values include: red, blue, green, ect...</li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

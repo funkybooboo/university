@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Archive page</title>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'blog/style.css' %}">
+    </head>
+    <body>
+        <div class="link">
+            <span><a href="{% url 'blog:home' %}">Home</a></span>
+            <span><a href="{% url 'blog:archive' %}">Archive</a></span>
+            <span><a href="{% url 'blog:blogPost' %}">Post</a></span>
+            <span><a href="{% url 'blog:about' %}">About Me</a></span>
+            <span><a href="{% url 'blog:techtips+css' %}">Tech Tips with CSS</a></span>
+            <span><a href="{% url 'blog:techtips-css' %}">Tech Tips without CSS</a></span>
+            <span><a href="{% url 'blog:plan' %}">Software Development Plan</a></span>
+            <span>{{todays_date}}</span>
+            <span>{{users_ip}}</span>
+        </div>
+        <h1>Archive</h1>
+            {% if latest_blog_list %}
+                {% for blog in latest_blog_list %}
+                <div id="entry">
+                    <h3><a href="/blog/entry/{{ blog.id }}/">{{ blog.title_text }}</a> by {{ blog.author_text }}</h3>
+                    <p>{{ blog.content_text|truncatewords:100 }}</p>
+                    <p>{{ blog.posted_date }}</p>
+                    <div id="comments">
+                        {% for key, value in blogCommentCount.items %}
+                            {% if key == blog.id %}
+                                <h4>Comments: {{ value }}</h4>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+            <p>No blogs are available.</p>
+            {% endif %}
+    </body>
+</html>

@@ -1,0 +1,349 @@
+-enter REPL
+gprolog
+-exit REPL
+halt.
+-working directory needs to have a file called db.pl
+-load db two ways
+[db].
+consult('db.pl')
+
+-see contents of db
+listing.
+
+-to print
+write('Hello World'), nl, write('Let\'s Program').
+
+- in db
+loves(romeo, juliet).
+
+loves(juliet, romeo) :- loves(romeo, juliet).
+
+- predicate(atom1, atom2, ...)
+- :- is an if
+
+loves(romeo, juliet).
+
+loves(romeo, X).
+
+- lowcase is an atom
+- uppercase is a verible
+- X is a verible that is asking who loves romeo
+
+- facts
+- with a fact write the relationship first followed by objects placed between () followed by a .
+
+listing(male).
+-gives a listing of all male predicates
+
+- will show all the combinations of what X and Y could be, use ; to cycle through.
+male(X), female(Y).
+
+
+-- Rules
+happy(albert).
+happy(alice).
+happy(bob).
+happy(bill).
+with_albert(alice).
+
+runs(albert) :-
+    happy(albert).
+
+dances(alice) :-
+    happy(alice),
+    with_albert(alice).
+
+does_alice_dance :- dances(alice),
+    write('When Alice is happy and with Albert she dances').
+
+parent(albert, bob).
+parent(albert, betsy).
+parent(albert, bill).
+
+parent(alice, bob).
+parent(alice, betsy).
+parent(alice, bill).
+
+parent(bob, carl).
+parent(bob, charlie).
+
+-command
+parent(Y, carl),
+parent(X, Y).
+
+get_grandchild :-
+    parent(albert, X),
+    parent(X, Y),
+    write('Alberts grandchild is '),
+    write(Y), nl.
+
+-commands
+get_grandchild.
+- output
+Alberts grandchild is carl
+
+get_grandparent :-
+    parent(Z, X),
+    parent(Y, Z),
+    format('~w ~s grandparent ~n', [X, "is the"]).
+
+blushes(X) :- human(X).
+human(derek).
+
+stabs(tybalt, mercutio, sword).
+hates(romeo, X) :- stabs(X, mercutio, sword).
+
+- Anonymous variables
+males(_).
+
+what_grade(6) :-
+    write('Go to 1st grade').
+
+what_grade(Other) :-
+    Grade is Other - 5,
+    format('Go to grade ~w', [Grade]).
+
+-- Structures
+
+has(albert, olive).
+
+- functure and arity
+female(alice).
+
+owns(albert, pet(cat, olive)).
+
+customer(tom, smith, 20.55).
+customer(sally, smith, 120.55).
+
+- the customer sally with whatever last name get her Balance
+customer(sally, _, Bal)
+
+get_cust_bal(FName, LName) :-
+    customer(FName, LName, Bal),
+    write(FName), tab(1),
+    format('~w owes us $~2f ~n', [LName, Bal]).
+
+vertical(line(point(X, Y), point(X, Y2))).
+
+horizontal(line(point(X, Y), point(X2, Y))).
+
+- the same
+alice = alice.
+'alice' = alice.
+
+- not the same
+\+ (alice = albert).
+
+3 > 15.
+
+3 >= 15.
+
+3 =< 15.
+
+W = alice.
+
+Rand1 = Rand2.
+
+rich(money, X) = rich(Y, no_debt).
+
+
+-- Debugging
+trace.
+
+notrace.
+
+- and = ,
+- or = ;
+
+related(X, Y) :-
+    parent(X, Y).
+
+ - recursion
+related(X, Y) :-
+    parent(X,Z),
+    related(Z, Y).
+
+X is 2 + 2.
+X is 3 + (2 * 10).
+50 > 30.
+(3*10) >= (50/2).
+\+ (3 = 10).
+5+4 =:= 4+5.
+5+4 =\= 4+5.
+5 > 10 ; 10 < 100.
+X is mod(7,2).
+double_digit(X,Y) :-
+    Y is X * 2.
+
+random(0, 10, X).
+between(0,10,X).
+succ(2,X).
+X is abs(-8).
+X is max(10,5).
+X is min(10,5).
+X is round(10.56).
+X is truncate(10.56).
+X is floor(10.56).
+X is ceiling(10.6).
+X is 2 ** 3
+
+is_even(X) :-
+    Y is X // 2, X =:= 2 * Y
+
+- more math functions
+% sqrt, sin, cos, tan, asin, acos, atan, atan2, sinh, asinh, acosh, atanh, log, log10, exp, pi, e
+
+write('you saw me'), nl.
+writeq('I show quotes'), nl.
+
+say_hi :-
+    write('What is your name?'),
+    read(X),
+    write('Hi '),
+    write(X).
+
+say_hi.
+'Derek'.
+
+fav_char :-
+    write('What is your fav character?'),
+    get(X),
+    format('The Ascii value ~w is ', [X]),
+    put(X), nl.
+
+write_to_file(File, Text) :-
+    open(File, write, Steam),
+    write(Stream, Text), nl,
+    close(Stream).
+
+read_file(File) :-
+    open(File, read, Stream),
+    get_char(Stream, Char1),
+    process_steam(Char1, Stream),
+    close(Stream).
+
+process_stream(end_of_file, _) :- !.
+process_stream(Char, Stream) :-
+    write(Char),
+    get_char(Stream, Char2),
+    process_steam(Char2, Stream).
+
+count_to_10(10) :- write(10), nl.
+
+count_to_10(X) :-
+    write(X), nl,
+    Y is X + 1
+    count_to_10(Y).
+
+count_down(Low, High) :-
+    between(Low, High, Y),
+    Z is High - Y,
+    write(Z), nl.
+
+count_up(Low, High) :-
+    between(Low, High, Y),
+    Z is Y + Low,
+    write(Z), nl.
+
+guess_num :- loop(start).
+loop(15) :- write('You guessed it').
+loop(X) :-
+    X \= 15,
+    write('Guess Number '),
+    read(Guess),
+    write(Guess),
+    write( 'is not the number'), nl,
+    loop(Guess).
+
+:- dynamic(father/2).
+:- dynamic(likes/2).
+:- dynamic(friend/2).
+:- dynamic(stabs/3).
+
+father(lord_montague, romeo).
+father(lord_capulet, juliet).
+
+likes(mercutio, dancing).
+likes(benvolio, dancing)
+likes(romeo, juliet).
+likes(juliet, romeo).
+likes(juliet, dancing).
+
+friend(romeo, mercutio).
+friend(romeo, benvolio).
+
+stabs(tybalt, mercutio, sword).
+stabs(romeo, tybalt, sword).
+
+- after
+assert(friend(benvolio, mercutio)).
+
+- before
+asserta(friend(mercutio, benvolio)).
+
+retract(likes(mercutio, dancing)).
+
+retractall(father(_,_)).
+
+retranctall(likes(_,dancing)).
+
+-- lists
+
+write([albert|[alice, bob]]), nl.
+
+length([1,2,3], X).
+
+[H|T] = [a, b, c].
+
+[X1, X2, X3, X4|T] = [1, b, c, d].
+
+[_, X2, _, _|T] = [a,b,c,d].
+
+[_, _, [X|Y], _, Z|T] = [a, b, [c, d, e], f, g, h]
+
+List1 = [a,b,c].
+
+member(a, List1).
+
+member(X, [a,b,c,d]).
+
+reverse([1,2,3,4,5]).
+
+append([1,2,3], [4,5,6], X).
+
+write_list([]).
+write_list(Head | Tail) :-
+    write(Head), nl,
+    write_list(Tail).
+
+name('A random string', X).
+
+name(X, [1,2,3,4,5].
+- output X = 'A random string'
+
+join_str(S1, S2, S3) :-
+    name(S1, SL1),
+    name(S2, SL2),
+    append(SL1, SL2, SL3),
+    name(S3, SL3).
+
+name('Derek', List),
+    nth0(0, List, FChar),
+    put(FChar).
+
+atom_length('Derek', X).
+
+
+flight(slc,lax).
+flight(slc,jfk).
+flight(lax,sfo).
+flight(sfo,syd).
+
+tc(X,Y) :- flight(X,Y).
+tc(X,Y) :- flight(X,W), tc(W,Y).
+
+fact(0,1).
+fact(X,Y) :-
+    X > 0,
+    W is X-1, fact(W,Z),
+    Y is Z*X.

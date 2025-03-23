@@ -1,0 +1,14 @@
+A:q,a,g,o,u,e,h,s,i,f,v,k,b
+B:l,t,m,u,s,a
+C:m,t,x,j,s,n,i,w,h,v,g,a,l
+D:d,c,k
+E:i,u,v,r,e,g
+F:h,v,e,d,l,n,m,a,r,t,j,o,b,q,x,k
+G:o,m,a
+H:t,d,o,v,c,e,n,h,x,r,f
+I:q,k,g,a,j,u,o,d
+J:s,e,a,p,l,g,j,t,k,m,i,x,n,b,f
+K:h,t,q,p,v,m,u
+L:x,i,v,o,n,g,w,d,j,a
+M:i,t,x,a,b
+N:a,v,h,u,c,x,p

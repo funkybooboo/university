@@ -1,0 +1,7 @@
+a:A,G
+b:D
+c:D,A
+d:E
+e:E,G
+f:A,B
+g:C

@@ -1,0 +1,60 @@
+body {
+    background-color: darkseagreen;
+}
+
+.box {
+    border-radius: 5px;
+    text-align: center;
+    padding: 10px;
+    margin: 10px;
+}
+
+.whiteblue {
+    background-color: aliceblue;
+    border: darkslategray 2px solid;
+}
+
+.blue {
+    background-color: cornflowerblue;
+    border: aquamarine 2px solid;
+}
+
+.tan {
+    background-color: cornsilk;
+    border: darkolivegreen 2px solid;
+}
+
+.cyan {
+    background-color: floralwhite;
+    border: cyan 2px solid;
+}
+
+#red {
+    padding: 5px;
+    color: red;
+}
+
+#grey {
+    padding: 5px;
+    color: grey;
+}
+
+#green {
+    padding: 5px;
+    color: green;
+}
+
+.b_grey {
+    background-color: grey;
+    border: gainsboro 2px solid;
+}
+
+.b_red {
+    background-color: red;
+    border: indianred 2px solid;
+}
+
+.b_green {
+    background-color: green;
+    border: greenyellow 2px solid;
+}

@@ -1,0 +1,183 @@
+\documentclass[10pt, AMS Euler]{article}
+\textheight=9.25in \textwidth=7in \topmargin=-.75in
+\oddsidemargin=-0.25in
+\evensidemargin=-0.25in
+\usepackage{url}  % The bib file uses this
+\usepackage{graphicx} %to import pictures
+\usepackage{amsmath, amssymb, color, wasysym}
+\usepackage{theorem, concrete, multicol,tikz}
+\usepackage[normalem]{ulem} %for strikethrough (\sout{blah})
+\usepackage{enumitem}
+
+
+\setlength{\intextsep}{5mm} \setlength{\textfloatsep}{5mm}
+\setlength{\floatsep}{5mm}
+
+
+{\theorembodyfont{\rmfamily}
+	\newtheorem{definition}{Definition}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{example}{Example}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{lemma}{Lemma}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{theorem}{Theorem}[section]}
+{\theorembodyfont{\rmfamily} \newenvironment{proof}{\par{\it
+			Proof:}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+{\theorembodyfont{\rmfamily}
+	\newenvironment{solution}{\par{\bf{Solution:}}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\newcommand{\mymk}[1]{%
+	\tikz[baseline=(char.base)]\node[anchor=south west, draw,rectangle, rounded corners, inner sep=2pt, minimum size=7mm,
+	text height=2mm](char){\ensuremath{#1}} ;}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+%%%%  SHORTCUT COMMANDS  %%%%
+\newcommand{\ds}{\displaystyle}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\arc}{\rightarrow}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\stirling}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+
+%%%%  footnote style %%%%
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{empty}
+\begin{document}
+
+	\noindent{\bf \large MATH 4410 }\\
+    \noindent{\bf \large Nate Stott A02386053 }\\
+	\noindent \underline{\hspace{2in}}\\
+ 
+	{\bf Quiz \#1; Due 11:59 pm, 1/16/2024}\\
+ 
+        \newpage
+    	\begin{enumerate}
+        \item Write $n^4$ as a sum of falling powers: $n^4 = c_0\cdot n^{\underline{0}} + c_1 n^{\underline{1}}+c_2 n^{\underline{2}} +c_3 n^{\underline{3}} +c_4 n^{\underline{4}}$.
+        \end{enumerate}
+            
+            I used a python program I made to make the difference table. 
+            Here is the code on github if you want to see: 
+            \newline \newline
+            \url{https://github.com/funkybooboo/MATH4110_DifferanceTable} 
+            \newline \newline
+            The program produced the numbers in the following table. However I don't know Latex that well so I copied the table you made and checked that our numbers matched then edited it to look how I like.
+            \begin{center}
+                \begin{tabular}{l|ccccccccc}
+                    {\bf $n$ } & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7  \\
+                    \hline
+                    {$\Delta^{(0)} n^4$} & 0 & 1 & 16 & 81 & 256 & 625 & 1296 & 2401   \\
+                    {$\Delta^{(1)} n^4$} & 1& 15 & 65 & 175 & 369 & 671 & 1105 &    \\
+                    {$\Delta^{(2)}n^4$} &  14 & 50 & 110 & 194 & 302 & 434 &  &   \\
+                    {$\Delta^{(3)}n^4$} & 36 & 60 & 84 & 108 & 132 &  &  &    \\
+                    {$\Delta^{(4)}n^4$} & 24 & 24 & 24 & 24 &  &  &  &    \\
+                    {$\Delta^{(5)}n^4$} & 0 & 0 & 0 &  &  &  &  &    \\
+                \end{tabular}
+            \end{center}
+            Then I wanted to prove that this statement is true to make sure you weren't pulling any trickery.
+            $$\ds\binom{n}{k} = \frac{n!}{k!(n-k)!} = \frac{n^{\underline{k}}}{k!}$$
+            Start proof.
+            \newline
+            Lets focus in.
+            $$ \frac{n!}{k!(n-k)!} = \frac{n^{\underline{k}}}{k!} $$
+            We can eliminate $k!$.
+            $$ \frac{n!}{(n-k)!} = n^{\underline{k}} $$
+            Wait $\frac{n!}{(n-k)!} = n^{\underline{k}}$ is the definition of $n^{\underline{k}}$ so I guess you weren't pulling anything there.
+            \newline
+            End proof.
+            \newline
+            Lets use The Discrete Taylor Theorem to find a falling power representation for $n^4$.
+            $$f(n)=\sum_{k \geq 0}\Delta^{(k)}f(a)\ds\binom{n-a}{k}$$
+            Let $a=0$ so that we can get the first item of every row on the difference table.
+            $$f(n)=n^4=\sum_{k \geq 0}\Delta^{(k)}f(0)\ds\binom{n}{k}=0\ds\binom{n}{0}+1\ds\binom{n}{1}+14\ds\binom{n}{2}+36\ds\binom{n}{3}+24\ds\binom{n}{4}+0\ds\binom{n}{5}+0\ds\binom{n}{6}+0\ds\binom{n}{7}+...$$
+            We can through out the terms with 0 as the leading coefficient.
+            $$=1\ds\binom{n}{1}+14\ds\binom{n}{2}+36\ds\binom{n}{3}+24\ds\binom{n}{4}$$
+            OK so now I can use $\ds\binom{n}{k} = \frac{n^{\underline{k}}}{k!}$ to my advantage. 
+            $$=1(\frac{n^{\underline{1}}}{1!})+14(\frac{n^{\underline{2}}}{2!})+36(\frac{n^{\underline{3}}}{3!})+24(\frac{n^{\underline{4}}}{4!})$$
+            Simplifying.
+            $$=n^{\underline{1}}+14(\frac{n^{\underline{2}}}{2})+36(\frac{n^{\underline{3}}}{6})+24(\frac{n^{\underline{4}}}{24})$$
+            $$=n^{\underline{1}}+7n^{\underline{2}}+6n^{\underline{3}}+n^{\underline{4}}$$
+            There you have it.
+            $$n^4=n^{\underline{1}}+7n^{\underline{2}}+6n^{\underline{3}}+n^{\underline{4}}$$
+            
+        \newpage
+        \begin{enumerate}[resume]
+		\item Create a function that is a polynomial in $n$ (ideally with no falling powers, but simplifying is not necessary) for the $\ds\sum_{i=0}^n i^4$. 
+        \end{enumerate}
+
+            $$\ds\sum_{i=0}^n i^4=\ds\sum_{i=0}^n (i^{\underline{1}}+7i^{\underline{2}}+6i^{\underline{3}}+i^{\underline{4}})$$
+            I know the summation doesn't distribute but you know what I'm doing
+            $$=\ds\sum_{i=0}^n i^{\underline{1}}+\ds\sum_{i=0}^n 7i^{\underline{2}}+\ds\sum_{i=0}^n 6i^{\underline{3}}+\ds\sum_{i=0}^n i^{\underline{4}}$$
+            $$=\ds\left .\frac{i^{\underline{2}}}{2}\right|_{i=0}^{i=n+1} + 7(\ds\left .\frac{i^{\underline{3}}}{3}\right|_{i=0}^{i=n+1}) + 6(\ds\left .\frac{i^{\underline{4}}}{4}\right|_{i=0}^{i=n+1}) + \ds\left .\frac{i^{\underline{5}}}{5}\right|_{i=0}^{i=n+1} $$
+            $$=(\frac{(n+1)^{\underline{2}}}{2}-\frac{(0)^{\underline{3}}}{3})+7(\frac{(n+1)^{\underline{3}}}{3}-\frac{(0)^{\underline{3}}}{3})+6(\frac{(n+1)^{\underline{4}}}{4}-\frac{(0)^{\underline{4}}}{4})+(\frac{(n+1)^{\underline{5}}}{5}-\frac{(0)^{\underline{5}}}{5})$$
+            $$=\frac{(n+1)^{\underline{2}}}{2}+7(\frac{(n+1)^{\underline{3}}}{3})+6(\frac{(n+1)^{\underline{4}}}{4})+\frac{(n+1)^{\underline{5}}}{5}$$
+            $$=\frac{(n+1)(n)}{2}+7(\frac{(n+1)(n)(n-1)}{3})+6(\frac{(n+1)(n)(n-1)(n-2)}{4})+\frac{(n+1)(n)(n-1)(n-2)(n-3)}{5}$$
+            $$=\frac{n^2+n}{2}+7(\frac{n^3-n}{3})+6(\frac{n^4-2n^3-n+2}{4})+\frac{n^5-5n^4+5n^3+5n^2-6n}{5}$$
+            Simplify
+            $$=\frac{n^5}{5}+\frac{n^4}{2}+\frac{n^3}{3}+\frac{3n^2}{2}-\frac{68n}{15}+3$$
+            There you have it
+            $$\ds\sum_{i=0}^n i^4 = \frac{n^5}{5}+\frac{n^4}{2}+\frac{n^3}{3}+\frac{3n^2}{2}-\frac{68n}{15}+3$$
+
+        \newpage
+		\begin{enumerate}[resume]
+		\item Show that $\ds\sum_{i = 0}^n (4i^3 +6i^2+4i+1) = (n+1)^4$.
+        \end{enumerate}
+            Start proof
+            
+            $$\ds\sum_{i = 0}^n (4i^3 +6i^2+4i+1) = (n+1)^4 $$
+            $$\ds\sum_{i = 0}^n (4i^3 +6i^2+4i+1) = n^4+4n^3+6n^2+4n+1 $$
+            focus in on left side
+            $$=\ds\sum_{i = 0}^n (4(i^{\underline{3}}+3i^{\underline{2}}+i^{\underline{1}})+6(i^{\underline{2}}+i^{\underline{1}})+4(i^{\underline{1}})+1) $$
+            I know the summation doesn't distribute but you know
+            $$=\ds\sum_{i = 0}^n 4(i^{\underline{3}}+3i^{\underline{2}}+i^{\underline{1}})+\ds\sum_{i = 0}^n 6(i^{\underline{2}}+i^{\underline{1}})+\ds\sum_{i = 0}^n 4(i^{\underline{1}})+\ds\sum_{i = 0}^n 1$$
+            $$=4 \ds\sum_{i = 0}^n (i^{\underline{3}}+3i^{\underline{2}}+i^{\underline{1}})+6 \ds\sum_{i = 0}^n (i^{\underline{2}}+i^{\underline{1}})+4 \ds\sum_{i = 0}^n i^{\underline{1}}+n+1$$
+            $$=4( \ds\sum_{i = 0}^n i^{\underline{3}}+ 3\ds\sum_{i = 0}^n i^{\underline{2}}+\ds\sum_{i = 0}^n i^{\underline{1}})+6 (\ds\sum_{i = 0}^n i^{\underline{2}}+\ds\sum_{i = 0}^n i^{\underline{1}})+4 \ds\sum_{i = 0}^n i^{\underline{1}}+n+1$$
+            $$=4( \ds\left .\frac{i^{\underline{4}}}{4}\right|_{i=0}^{i=n+1} + 3 (\ds\left .\frac{i^{\underline{3}}}{3}\right|_{i=0}^{i=n+1})+\ds\left .\frac{i^{\underline{2}}}{2}\right|_{i=0}^{i=n+1})+ 6 (\ds\left .\frac{i^{\underline{3}}}{3}\right|_{i=0}^{i=n+1}+\ds\left .\frac{i^{\underline{2}}}{2}\right|_{i=0}^{i=n+1})+4 (\ds\left .\frac{i^{\underline{2}}}{2}\right|_{i=0}^{i=n+1})+n+1$$
+            $$=4( \frac{(n+1)^{\underline{4}}}{4} + 3 (\frac{(n+1)^{\underline{3}}}{3})+\frac{(n+1)^{\underline{2}}}{2})+ 6 (\frac{(n+1)^{\underline{3}}}{3}+\frac{(n+1)^{\underline{2}}}{2}+4 (\frac{(n+1)^{\underline{2}}}{2})+n+1$$
+            $$=4(\frac{(n+1)n(n-1)(n-2)}{4}+3(\frac{(n+1)n(n-1)}{3})+\frac{(n+1)(n)}{2})+6(\frac{(n+1)n(n-1)}{3}+\frac{(n+1)n}{2})+4(\frac{(n+1)n}{2})+n+1$$
+            $$=n^4+4n^3+6n^2+4n+1$$
+            There you go
+            $$\ds\sum_{i = 0}^n (4i^3 +6i^2+4i+1) = (n+1)^4 $$
+            End proof
+            
+            
+            
+        
+        \newpage
+        \begin{enumerate}[resume]
+		\item Compute $\stirling{7}{3}$ using the difference table for $n^7$.
+        \end{enumerate}
+        
+		      \begin{center}
+                \begin{tabular}{l|ccccccccc}
+                    {\bf $n$ } & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8\\
+                    \hline
+                    {$\Delta^{(0)} n^7$} & 0 & 1 & 128 & 2187 & 16384 & 78125 & 279936 & 823543 & 2097152 \\
+                    {$\Delta^{(1)} n^7$} & 1 & 127 & 2059 & 14197 & 61741 & 201811 & 543607 &  1273609  \\
+                    {$\Delta^{(2)}n^7$} & 126 & 1932 & 12138 & 47544 & 140070 & 341796 &  730002 \\
+                    {$\Delta^{(3)}n^7$} & 1806 & 10206 & 35406 & 92526 & 201726 &  388206  \\
+                    {$\Delta^{(4)}n^7$} & 8400 & 25200 & 57120 & 109200 &   186480  \\
+                    {$\Delta^{(5)}n^7$} & 16800 & 31920 & 52080 &  77280   \\
+                    {$\Delta^{(6)}n^7$} & 15120 & 20160 & 25200  \\
+                    {$\Delta^{(7)}n^7$} & 5040 & 5040   \\
+                    {$\Delta^{(8)}n^7$} & 0 &   \\
+                \end{tabular}
+            \end{center}
+            Given
+            $$\stirling{k}{j} = \frac{\Delta^{(j)}[(0)^k]}{j!}$$
+            Compute
+            $$\stirling{7}{3} = \frac{\Delta^{(3)}[(0)^7]}{3!}=\frac{1806}{3!}=301$$
+            
+	
+	
+	\noindent \underline{\hspace{3in}}\\
+	
+	
+	
+	
+\end{document}

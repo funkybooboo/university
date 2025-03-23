@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shipment Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>Shipment Tracker</h1>
+    <div>
+        <input type="text" id="shipmentId" placeholder="Enter Shipment ID">
+        <button onclick="startTracking()">Track</button>
+    </div>
+    <div id="shipmentList">
+        <!-- Shipment cards will be dynamically added here -->
+    </div>
+</div>
+
+<script>
+    let websocket;
+
+    function sendCommand(command) {
+        if (!websocket || websocket.readyState !== WebSocket.OPEN) {
+            openWebSocket();
+        }
+        websocket.send(command);
+    }
+
+    function openWebSocket() {
+        websocket = new WebSocket("ws://localhost:3000/track-shipments");
+
+        websocket.onopen = function(event) {
+            console.log("WebSocket opened");
+        };
+
+        websocket.onmessage = function(event) {
+            const message = event.data;
+
+            if (message.startsWith("Shipment not found")) {
+                alert(message);
+            } else {
+                const shipment = JSON.parse(message);
+                console.log("Received:", shipment);
+                updateUI(shipment);
+            }
+        };
+
+        websocket.onclose = function(event) {
+            console.log("WebSocket closed");
+        };
+
+        websocket.onerror = function(event) {
+            console.error("WebSocket error:", event);
+            alert("WebSocket error occurred. Please check console for details.");
+        };
+    }
+
+    function updateUI(shipment) {
+        const shipmentListDiv = document.getElementById('shipmentList');
+        const existingCard = document.getElementById(shipment.id);
+
+        function createOrUpdateCard(cardId, htmlContent) {
+            if (existingCard) {
+                existingCard.innerHTML = htmlContent;
+            } else {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = 'card';
+                cardDiv.id = cardId;
+                cardDiv.innerHTML = htmlContent;
+                shipmentListDiv.appendChild(cardDiv);
+            }
+        }
+
+        const updatesList = shipment.updateHistory.map(update => {
+            console.log("Update timestamp:", update.timestamp);
+            const date = new Date(parseInt(update.timestamp));
+            const formattedDate = date.toLocaleString();
+            return `<li><strong>Went from </strong>${update.previousStatus}<strong> to </strong>${update.newStatus}<strong> at </strong>${formattedDate}</li>`;
+        }).join('');
+
+        const notesList = shipment.notes.map(note =>
+            `<li><strong>Note:</strong> ${note.note}</li>`
+        ).join('');
+
+        const abnormalOccurrencesList = shipment.abnormalOccurrences.map(occurrence =>
+            `<li><strong>Abnormal Occurrence:</strong> ${occurrence.abnormalOccurrence}</li>`
+        ).join('');
+
+        const lastUpdateStatus = shipment.updateHistory.slice(-1)[0]?.newStatus || 'None';
+
+        const cardContent = `
+            <div class="card-header">
+                <h2>Shipment ID: ${shipment.id}</h2>
+                <p><strong>Shipment Type:</strong> ${shipment.shipmentType}</p>
+                <p><strong>Status:</strong> ${lastUpdateStatus}</p>
+                <p><strong>Location:</strong> ${shipment.location}</p>
+                <p><strong>Expected Delivery:</strong> ${shipment.expectedDelivery}</p>
+            </div>
+
+            <div class="card-body">
+                <div class="updates-section">
+                    <h3>Updates:</h3>
+                    <ul>${updatesList}</ul>
+                </div>
+
+                <div class="notes-section">
+                    <h3>Notes:</h3>
+                    <ul>${notesList}</ul>
+                </div>
+
+                <div class="abnormal-section">
+                    <h3>Abnormal Occurrences:</h3>
+                    <ul>${abnormalOccurrencesList}</ul>
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <button class="stop-tracking-btn" onclick="stopTracking('${shipment.id}')">Stop Tracking</button>
+            </div>
+        `;
+
+        createOrUpdateCard(shipment.id, cardContent);
+    }
+
+    function startTracking() {
+        const shipmentId = document.getElementById('shipmentId').value.trim();
+        document.getElementById('shipmentId').value = '';
+        if (shipmentId !== "") {
+            const command = `START_TRACKING: ${shipmentId}`;
+            sendCommand(command);
+        } else {
+            alert("Please enter a shipment id");
+        }
+    }
+
+    function stopTracking(shipmentId) {
+        const command = `STOP_TRACKING: ${shipmentId}`;
+        sendCommand(command);
+
+        // Remove the specific card from the shipmentListDiv
+        const shipmentListDiv = document.getElementById('shipmentList');
+        const cardToRemove = document.getElementById(shipmentId);
+
+        if (cardToRemove) {
+            shipmentListDiv.removeChild(cardToRemove);
+        }
+    }
+
+    // Open WebSocket connection when the page loads
+    document.addEventListener("DOMContentLoaded", function() {
+        openWebSocket();
+    });
+</script>
+</body>
+</html>

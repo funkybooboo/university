@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="33fb0e5f-0983-4003-b832-57630ee53b69" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/generate.py" beforeDir="false" afterPath="$PROJECT_DIR$/data/generate.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/shipments0.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/shipments1.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/shipments2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ShipmentTracker.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ShipmentTracker.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/BulkShipment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/BulkShipment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/ExpressShipment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/ExpressShipment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/OvernightShipment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/OvernightShipment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/Shipment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/Shipment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/ShipmentFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/subject/shipment/ShipmentFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/update.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/update.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/listener/FileReaderTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/listener/FileReaderTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/listener/UpdateServerTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/observer/TrackerServerTest.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/BulkShipmentTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/BulkShipmentTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/ExpressShipmentTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/ExpressShipmentTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/OvernightShipmentTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/OvernightShipmentTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/ShipmentFactoryTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/ShipmentFactoryTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/StandardShipmentTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/subject/shipment/StandardShipmentTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/subject/update/UpdateFactoryTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/subject/update/UpdateFactoryTest.kt" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="CS5700_Program3" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="CS5700_Program3" type="f1a62948:ProjectNode" />
+                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin File" />
+        <option value="Kotlin Interface" />
+        <option value="HTML File" />
+        <option value="Kotlin Object" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2jLzcg2TYafxjz7oneIrS2yeZFo" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showMembers" value="true" />
+    <option name="sortByType" value="true" />
+    <option name="sortKey" value="BY_TYPE" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Gradle.Build CS5700_Program3.executor": "Run",
+    "Gradle.BulkShipmentTest (1).executor": "Run",
+    "Gradle.BulkShipmentTest.executor": "Run",
+    "Gradle.BulkShipmentTest.testFailValidate (1).executor": "Run",
+    "Gradle.BulkShipmentTest.testFailValidate.executor": "Run",
+    "Gradle.BulkShipmentTest.testPassValidate (1).executor": "Run",
+    "Gradle.BulkShipmentTest.testPassValidate.executor": "Debug",
+    "Gradle.ExpressShipmentTest.executor": "Run",
+    "Gradle.FileReaderTest.executor": "Run",
+    "Gradle.FileReaderTest.testInvalidConstruction.executor": "Run",
+    "Gradle.FileReaderTest.testListen (1).executor": "Run",
+    "Gradle.FileReaderTest.testListen.executor": "Run",
+    "Gradle.OvernightShipmentTest.executor": "Run",
+    "Gradle.OvernightShipmentTest.testFailValidate.executor": "Run",
+    "Gradle.OvernightShipmentTest.testPassValidate.executor": "Run",
+    "Gradle.ShipmentFactoryTest.executor": "Run",
+    "Gradle.ShipmentTest.executor": "Run",
+    "Gradle.ShippedTest.executor": "Run",
+    "Gradle.StandardShipmentTest.executor": "Run",
+    "Gradle.Tests in 'CS5700_Program3.test' (1).executor": "Coverage",
+    "Gradle.Tests in 'CS5700_Program3.test'.executor": "Coverage",
+    "Gradle.UpdateFactoryTest.executor": "Run",
+    "Gradle.UpdateFactoryTest.testCreateNoteAddedUpdate_OvernightShipment (1).executor": "Run",
+    "Gradle.UpdateFactoryTest.testCreateNoteAddedUpdate_OvernightShipment.executor": "Run",
+    "Gradle.UpdateServerTest.executor": "Run",
+    "Gradle.UpdateServerTest.testGetUpdatePage.executor": "Debug",
+    "Gradle.UpdateServerTest.testPostUpdate.executor": "Run",
+    "Gradle.UpdateServerTest.testRoot.executor": "Run",
+    "Gradle.desktop.executor": "Run",
+    "Kotlin.MainKt.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/nate/Software/School/CS5700_Program3/src/test/kotlin",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "kotlin-gradle-user-dirs": [
+      "/home/nate/.gradle"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/kotlin" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/kotlin" />
+      <recent name="$PROJECT_DIR$/src/main/resources/static" />
+      <recent name="$PROJECT_DIR$/docs" />
+    </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="subject.shipment" />
+      <recent name="subject" />
+      <recent name="" />
+      <recent name="observer" />
+      <recent name="tracker" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Kotlin.MainKt">
+    <configuration name="Tests in 'CS5700_Program3.test' (1)" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UpdateServerTest.testGetUpdatePage" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;UpdateServerTest.testGetUpdatePage&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UpdateServerTest.testPostUpdate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;UpdateServerTest.testPostUpdate&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="UpdateServerTest.testRoot" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;listener.UpdateServerTest.testRoot&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="MainKt" type="JetRunConfigurationType" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="MainKt" />
+      <module name="CS5700_Program3.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Kotlin.MainKt" />
+        <item itemvalue="Gradle.Tests in 'CS5700_Program3.test' (1)" />
+        <item itemvalue="Gradle.UpdateServerTest.testGetUpdatePage" />
+        <item itemvalue="Gradle.UpdateServerTest.testPostUpdate" />
+        <item itemvalue="Gradle.UpdateServerTest.testRoot" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="33fb0e5f-0983-4003-b832-57630ee53b69" name="Changes" comment="" />
+      <created>1721181226072</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1721181226072</updated>
+      <workItem from="1721181227387" duration="618000" />
+      <workItem from="1721181860835" duration="7652000" />
+      <workItem from="1721256717413" duration="17187000" />
+      <workItem from="1721308510769" duration="17000" />
+      <workItem from="1721341650784" duration="5778000" />
+      <workItem from="1721354566292" duration="798000" />
+      <workItem from="1721355394720" duration="166000" />
+      <workItem from="1721355574463" duration="1024000" />
+      <workItem from="1721431327371" duration="135000" />
+      <workItem from="1721431475760" duration="5460000" />
+      <workItem from="1721436955415" duration="1402000" />
+      <workItem from="1721441380358" duration="17731000" />
+      <workItem from="1721509315613" duration="524000" />
+      <workItem from="1721509890133" duration="248000" />
+      <workItem from="1721510512181" duration="623000" />
+      <workItem from="1721511152525" duration="20000" />
+      <workItem from="1721511186975" duration="265000" />
+      <workItem from="1721511469516" duration="17000" />
+      <workItem from="1721511503261" duration="10381000" />
+      <workItem from="1721574786818" duration="6588000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="kotlin-line">
+          <url>file://$PROJECT_DIR$/src/main/kotlin/subject/shipment/ExpressShipment.kt</url>
+          <line>37</line>
+          <properties>
+            <option name="lambda-ordinal" value="-1" />
+          </properties>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/CS5700_Program3$Tests_in__CS5700_Program3_test___1_.ic" NAME="Tests in 'CS5700_Program3.test' (1) Coverage Results" MODIFIED="1721579114311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+    <SUITE FILE_PATH="coverage/CS5700_Program3$Tests_in__CS5700_Program3_test_.ic" NAME="Tests in 'CS5700_Program3.test' Coverage Results" MODIFIED="1721578095329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true" />
+  </component>
+</project>

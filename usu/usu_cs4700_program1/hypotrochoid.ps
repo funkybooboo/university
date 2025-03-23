@@ -1,0 +1,54 @@
+%!PS
+
+% Author: Nate Stott
+% Date: Sep 6 2023
+% Assignment 1 part 4/5 for Curtis Dyreson CS4700 USU 
+
+% Use examples:
+% 100 25 40 1 hypotrochoid -> -
+% 99 100 25 40 1 hypotrochoid -> 99 100 25 40 1
+% 4 5 6 hypotrochoid -> 4 5 6
+
+% NOTE
+% The graphics environment is restored to what it was before the prosedure is called.
+% Please give a traslation before calling prosedure. (200 200 tranlate -> -)
+% Prosedure will draw a cool shape based off the values given.
+
+/hypotrochoid 
+{
+    1 dict begin
+        count 4 eq
+        {
+            /r exch def     % numberOfTimesAround
+            /d exch def     % lengthOfArm
+            /b exch def     % radiusOfSmallCircle
+            /a exch def     % radiusOfBigCircle
+
+            /i 0 def
+            gsave
+                newpath
+                    0 0 moveto
+                    361 % repet loop in 360 degrees
+                    {
+                        /t i r mul def  % t = i * r
+                        /x a b sub t cos mul d a b sub t mul b div cos mul add def  % x(t) = ((a - b) * cos(t)) + (d * cos( ((a-b) * t)/b ))
+                        /y a b sub t sin mul d a b sub t mul b div sin mul sub def  % y(t) = ((a - b) * sin(t)) - (d * sin( ((a-b) * t)/b ))
+                        i 0 eq 
+                        {   % move to the starting line
+                            x y moveto 
+                        }
+                        {   % draw lines
+                            x y lineto 
+                        }
+                        ifelse
+                        /i i 1 add def  % incriment i
+                    }
+                    repeat
+                stroke
+                showpage
+            grestore
+        }
+        if
+    end
+} 
+def

@@ -1,0 +1,44 @@
+%!PS
+
+% Author: Nate Stott
+% Date: Sep 6 2023
+% Assignment 1 part 2/5 for Curtis Dyreson CS4700 USU 
+
+% Use examples:
+% 1 2 3 4 5 {4 eq} filter -> 1 2 3 5
+% 1 2 3 4 filter -> error
+% 1 2 3 4 5 {2 gt} filter -> 1 2
+% 2 2 4 {2 eq} filter -> 4
+% {3 eq} filter -> -
+% filter -> -
+
+/filter 
+{	
+	1 dict begin 
+		count 2 gt 	% check that there is at least two items on the stack
+		{
+			/func exch def	% map the top condition/prosegure on the stack to /func
+			count
+			{
+				dup /func load exec		% check if the top item on the stack fits the condition mapped to /func
+				{
+					pop					% if it does then take that item off the stack
+				}
+				{
+					count 1 roll		% if it doesnt then move it to the bottom of the stack
+				}
+				ifelse
+			}
+			repeat
+		}
+		{
+			count 1 ge		% check that that is one item on the stack
+			{
+				pop			% if there is then remove it from the stack
+			}
+			if
+		}
+		ifelse
+	end
+} 
+def

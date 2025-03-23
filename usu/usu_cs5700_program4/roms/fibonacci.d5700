@@ -1,0 +1,53 @@
+; Initialize the Fibonacci sequence
+0040  ; STORE 0 in r0 (first Fibonacci number = 0)
+0141  ; STORE 1 in r1 (second Fibonacci number = 1)
+
+; Set counter to 0
+0200  ; STORE 0 in r2 (counter = 0)
+
+; Loop to calculate Fibonacci numbers
+; r0 = previous number, r1 = current number, r2 = counter
+A000  ; SET A to 0 (start of screen position)
+F000  ; DRAW the first number
+
+; Start loop
+A002  ; SET A to 2 (initial position)
+D000  ; CONVERT r0 to base-10 and store in A, A+1, A+2
+E000  ; CONVERT r0 to ASCII
+F000  ; DRAW the ASCII character
+
+D100  ; CONVERT r1 to base-10 and store in A, A+1, A+2
+E010  ; CONVERT r1 to ASCII
+F000  ; DRAW the ASCII character
+
+; Compute the next Fibonacci number
+1010  ; ADD r0 to r1, result in r3
+A003  ; SET A to 3 (new position)
+D100  ; CONVERT r3 to base-10
+E020  ; CONVERT r3 to ASCII
+F000  ; DRAW the ASCII character
+
+; Update registers
+2020  ; STORE r1 in r0
+2030  ; STORE r3 in r1
+
+; Increment counter
+A004  ; SET A to 4 (increment counter)
+D000  ; CONVERT counter to base-10
+E030  ; CONVERT counter to ASCII
+F000  ; DRAW the ASCII character
+
+; Check if we have printed 10 numbers
+A005  ; SET A to 5
+D010  ; CONVERT r2 to base-10
+E040  ; CONVERT r2 to ASCII
+F000  ; DRAW the ASCII character
+
+A006  ; SET A to 6 (check if counter < 10)
+9120  ; SKIP_NOT_EQUAL r2 with 10 (if not equal, skip next instruction)
+
+; Loop until done
+3000  ; JUMP to start of loop
+
+; End program
+0000  ; HALT

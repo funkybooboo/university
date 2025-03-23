@@ -1,0 +1,170 @@
+\documentclass[10pt, AMS Euler]{article}
+\textheight=9.25in \textwidth=7in \topmargin=-.75in
+\oddsidemargin=-0.25in
+\evensidemargin=-0.25in
+\usepackage{url}  % The bib file uses this
+\usepackage{graphicx} %to import pictures
+\usepackage{amsmath, amssymb, color, wasysym}
+\usepackage{theorem, concrete, multicol,tikz}
+\usepackage[normalem]{ulem} %for strikethrough (\sout{blah})
+
+
+\setlength{\intextsep}{5mm} \setlength{\textfloatsep}{5mm}
+\setlength{\floatsep}{5mm}
+
+
+{\theorembodyfont{\rmfamily}
+	\newtheorem{definition}{Definition}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{example}{Example}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{lemma}{Lemma}[section]}
+{\theorembodyfont{\rmfamily} \newtheorem{theorem}{Theorem}[section]}
+{\theorembodyfont{\rmfamily} \newenvironment{proof}{\par{\it
+			Proof:}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+{\theorembodyfont{\rmfamily}
+	\newenvironment{solution}{\par{\bf{Solution:}}}{\nopagebreak[4]\rule{2mm}{2mm}}}
+
+\usetikzlibrary{arrows}
+\usetikzlibrary{shapes}
+\newcommand{\mymk}[1]{%
+	\tikz[baseline=(char.base)]\node[anchor=south west, draw,rectangle, rounded corners, inner sep=2pt, minimum size=7mm,
+	text height=2mm](char){\ensuremath{#1}} ;}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+
+
+%%%%  SHORTCUT COMMANDS  %%%%
+\newcommand{\ds}{\displaystyle}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\arc}{\rightarrow}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+
+%%%%  footnote style %%%%
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\pagestyle{empty}
+\begin{document}
+	
+	\noindent{\bf \large MATH 4410 }\\
+        \noindent{\bf \large Nate Stott A02386053 }\\
+	
+	\noindent \underline{\hspace{2in}}\\
+	
+	\noindent {\bf Quiz \#7; Due 11:59 pm, 3/20/2024}\\
+
+        \newpage
+	\noindent {\bf \large What Would Euclid Not Do?}\\
+	
+	\noindent {\bf Measuring Problem.}  Suppose we have two irregularly-shaped and non-graduated jugs $A$ and $B$ with positive integer capacities $a$ and $b$ units, respectively.
+	Suppose also that $a \leq b$.
+	We must use these jugs to precisely measure $N$ units of water, where $0 \leq N \leq b$;
+	the desired quantity of water will be in jug $B$.\\
+	
+	\noindent The goal is to prove the following theorem.\\
+	
+	\noindent {\bf Willis-Jackson Theorem:} \emph{We can precisely measure $N$ units of water with two jugs of capacities $a$ and $b$, where $0 \leq N \leq b$
+		and $N$ is a multiple of $d$, where $d = \gcd(a,b)$.}\\
+	
+	\noindent The proof of the theorem will be facilitated by the following algorithm.  
+	
+	\begin{description}
+		\item[Willis-Jackson Algorithm.] \emph{Algorithm for Precisely Measuring Water with $A$ and $B$.}
+		\item[Step One.] Fill $A$;
+		\item[Step Two.] Pour the contents of $A$ into $B$ and if $B$ ever becomes full, empty it and continue pouring $A$ into $B$.
+	\end{description}
+	\emph{Note:} An iteration of the Willis-Jackson algorithm is completed at the moment when $A$ becomes empty after being non-empty.\\
+	
+	
+	\begin{enumerate}
+
+            \newpage
+		\item Please prove the following lemma:
+		
+		{\bf Lemma 1.} \emph{If $L$ is an integer linear combination of $a$ and $b$, then the coefficient on $a$ can be chosen so that it is positive.}\\
+
+            Start proof \\
+            
+                $$ L = ax + by $$
+                $$ L = ax + by +ab-ab $$
+                $$ L = ax+ab + by-ab $$
+                $$ L = a(x+b) + b(y-a) $$
+                Same logic would follow if we added $2ab-2ab$ \\
+                $$ L = a(x+2b) + b(y-2a) $$
+                $$ L = a(x+3b) + b(y-3a) $$
+                $$...$$
+                $$ L = a(x+kb) + b(y-ka) $$
+                As set up the coefficient on a will be positive if k is large enough \\
+
+            End proof \\
+
+            \newpage
+		
+		While implementing the Willis-Jackson Algorithm, there are \emph{iterations} and \emph{states}.  An iteration, as noted above, is complete when (after being filled) $A$ is emptied ($B$ may not be empty at the end of an iteration).  
+		A \emph{state} is, informally, any condition the jugs $A$ and $B$ can be observed to be in while the Willis-Jackson algorithm is being executed.  
+		A state is concisely denoted as an ordered pair $(x,y)$, where $x$ is the amount of water in $A$ and $y$ is the amount of water in $B$ at the moment the jugs are observed.
+		
+		Below are states we may observe with arrows between them indicating what state can be had from another. Note that under the Willis-Jackson algorithm, not all the states are encountered; for example, the transitions at lines 3 and 5 never occur because the Willis-Jackson algorithm has us empty $A$ \emph{into} $B$ (not into thin air), and we never fill a partially-filled $A$.  
+		
+		\begin{align*} (0,0) & \to  (a,0) &\mbox{ Fill $A$} \\
+			(0,0)  & \to  (0,b) & \mbox{ Fill $B$}\\
+			(j_1, j_2) & \to  (0,j_2)  & \mbox{ $A$ is emptied}\\
+			(j_1,j_2) & \to  (j_1,0)  & \mbox{ $B$ is emptied}\\
+			(j_1,j_2) & \to  (a, j_2) & \mbox{ $A$ is filled with water already present}\\
+			(j_1,j_2) & \to  (j_1, b)  & \mbox{ $B$ is filled with water already present}\\
+			(j_1,j_2) & \to  (0, j_1+j_2) & \mbox{ (if  $j_1+j_2 \leq b$) $A$ is poured into $B$} \\
+			(j_1, j_2) & \to  (j_1 -(b - j_2), b) & \mbox{ (if $b \leq j_1 + j_2$) pour what you can into $B$ from $A$}  \\
+			(j_1,j_2) & \to  (j_1+j_2,0) & \mbox{ (if  $j_1+j_2 \leq a$) pour $B$ into $A$} \\
+			(j_1, j_2) & \to  (a, j_2 - (a - j_1)) & \mbox{ (if $a \leq j_1 + j_2$)  pour what you can into $A$ from $B$} \\
+		\end{align*}
+		
+		\item Use the Principle of Mathematical induction to prove the following lemma. (You do not need to prove the corollary -- it follows from the lemma.) \\
+		
+		{\bf Lemma 2.} \emph{Let $d$ be a positive integer, $a$ and $b$ the capacities of jugs $A$ and $B$, and $j_1$ and $j_2$ are amounts of water found in jugs $A$ and $B$ at some state. If $d \mid a$ and $d \mid b$, then $d \mid j_1$ and $d \mid j_2$.} 
+		
+		{\bf Corollary.} \emph{$d \mid X$, where $X$ is any
+			amount that results from a sequence of the states and transitions described above; in particular,  $d \mid X$, where $X$ is any amount of water in jug $B$ obtained from the Willis-Jackson Algorithm.}\\
+
+            Start proof
+            
+                Let $w$, $x$, $y$, $z$ be integers \\
+                The definition of divisibility \\
+                $$ j_1 = wd $$
+                $$ j_2 = xd $$
+                $$ a = yd $$
+                $$ b = zd $$
+                
+                $ j_1 + j_2 = wd + xd = (w + x) d  $ Because I know that $w$ and $x$ are integers I know that the coefficient on $d$ is an integer. This makes d a divisor of $j_1 + j_2$ \\
+    
+                $ j_1 -(b - j_2) = wd -(zd - xd) = wd - zd + xd = (w - z + x)d $ Same logic as above \\
+    
+                $ j_2 - (a - j_1) = xd - (yd - wd) = xd - yd + wd = (x - y + w)d $ Same logic as above \\
+
+            End proof \\
+  
+		\newpage
+		\item Please prove the following lemma, and explain how the Willis-Jackson Theorem follows.
+		
+		{\bf Lemma 3.} \emph{Suppose $d = \gcd(a,b)$ and that $d \mid N$. If $N = ak + by$, where $k$ is a positive integer, $y$ an integer, and $0 \leq N \leq b$, then jug $B$ will contain $N$ units of water after $k$ iterations of the Willis-Jackson Algorithm.}
+            
+            Start proof \\
+
+                i. Because $0 \leq N \leq b$ that means $N$ has the same bounds as $j_2$. \\
+
+                ii. Because $d \mid N$ that means $N = ak + by$ will always have a solution where $k$ is a positive integer, $y$ an integer (see question 1). \\
+
+                iii. Because $d \mid j_2$ (see question 2) and $d \mid N$ that means $j_2$ and $N$ are bound by the same set and are further restricted by numbers in that set that are also divisible by $d$. The math notation is something like $N, j_2 \in \{d\;|\; n : 0 \geq n \geq b => n \in \Z \}$. \\
+
+                iiii. Because $N$, and $j_2$ are in the same set and by the definition of the algorithm we stop when $j_2$ and $N$ are equal this means that we guarantee that after $k$ iterations $j_2$ and $N$ will be the same. \\
+
+                iiiii. Because of i., ii., iii., and iiii. it follows that jug $B$ will contain $N$ units of water after $k$ iterations of the Willis-Jackson Algorithm. \\
+
+            End proof \\
+		
+	\end{enumerate}
+	
+	\noindent \underline{\hspace{3in}}\\
+	
+\end{document}

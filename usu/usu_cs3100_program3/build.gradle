@@ -1,0 +1,30 @@
+plugins {
+    id 'java' // Apply the Java plugin
+    id 'application' // Apply the Application plugin
+}
+
+sourceCompatibility = '21' // Set the source compatibility to Java 21
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src'] // Specify the source directory for the main source set
+        }
+    }
+}
+
+application {
+    mainClassName = 'Main' // Set the main class for the application
+}
+
+run {
+    standardInput = System.in // Allow standard input for the application
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'Main' // Specify the main class in the JAR manifest
+    }
+}
+
+archivesBaseName = 'Main' // Set the base name for the archive

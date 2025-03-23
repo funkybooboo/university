@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "program2"
+version = "0.1.0"
+description = ""
+authors = ["Nate Stott <nate.stott@pm.me>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+scipy = "^1.14.1"
+numpy = "^2.1.1"
+matplotlib = "^3.9.2"
+black = "^24.8.0"
+
+[tool.black]
+line-length = 88                # Default line length (can be set to 79 for PEP 8 compliance)
+target-version = ['py310']      # Specify target Python versions (e.g., py310, py39)
+skip-string-normalization = true # Skip normalizing string quotes
+exclude = '''
+/(
+    \.eggs         # exclude eggs directory
+    | \.git        # exclude git directory
+    | \.venv       # exclude virtual environments
+    | node_modules  # exclude node modules
+)/
+'''
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

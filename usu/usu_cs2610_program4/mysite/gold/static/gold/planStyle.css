@@ -1,0 +1,77 @@
+body {
+    background-color: whitesmoke;
+    color: black;
+    font-family: "American Typewriter", serif;
+    font-style: normal;
+    font-size: medium;
+    padding: 10px;
+    margin: 10px;
+}
+
+.link {
+    background-color: lightblue;
+    color: black;
+    padding: inherit;
+    border-radius: 20px;
+
+}
+
+span {
+    padding: inherit;
+}
+
+a {
+    padding: unset;
+}
+
+div {
+    padding: inherit;
+}
+
+li {
+    padding: inherit;
+}
+
+p {
+    padding: inherit;
+}
+
+.div0 {
+    background-color: azure;
+}
+
+.div1 {
+    background-color: plum;
+}
+
+.group1 {
+    background-color: honeydew;
+}
+
+.group2 {
+    background-color: cadetblue;
+}
+
+.group3 {
+    background-color: lavender;
+}
+
+.group4 {
+    background-color: dodgerblue;
+}
+
+.group5 {
+    background-color: darkkhaki;
+}
+
+.group6 {
+    background-color: darkseagreen;
+}
+
+.sheet li:nth-child(2n) {
+    background-color: lightblue;
+}
+
+.sheet li:nth-child(2n-1) {
+    background-color: lightskyblue;
+}

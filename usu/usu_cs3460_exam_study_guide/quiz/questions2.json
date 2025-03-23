@@ -1,0 +1,412 @@
+{
+  "q1": {
+    "prompt": "What is the primary difference between a unique_ptr and a shared_ptr in C++?",
+    "answer": ["unique_ptr provides exclusive ownership, while shared_ptr allows multiple pointers to manage the same resource"],
+    "distractors": [
+      "unique_ptr is faster than shared_ptr", 
+      "shared_ptr can be converted to unique_ptr directly", 
+      "unique_ptr supports weak references",
+      "There is no significant difference between them"
+    ]
+  },
+  "q2": {
+    "prompt": "Consider the following lambda expression: [&x](int y) { x += y; }. What does the capture [&x] mean?",
+    "answer": ["The lambda captures the variable x by reference, allowing modification of the original variable"],
+    "distractors": [
+      "The lambda creates a copy of x",
+      "The lambda captures x as a const reference",
+      "The lambda cannot modify x",
+      "The capture means x is passed by value"
+    ]
+  },
+  "q3": {
+    "prompt": "Which of the following is true about move constructors in C++?",
+    "answer": ["They transfer resources from one object to another, leaving the source object in a non-useful state"],
+    "distractors": [
+      "They create a deep copy of an object",
+      "They are called only for temporary objects",
+      "They always create a new memory allocation",
+      "They cannot be used with non-pointer members"
+    ]
+  },
+  "q4": {
+    "prompt": "What does the '=' operator do when overloaded for a custom class?",
+    "answer": ["Defines the assignment operation for objects of the class"],
+    "distractors": [
+      "Creates a new object",
+      "Compares two objects",
+      "Moves resources between objects",
+      "Deletes the object"
+    ]
+  },
+  "q5": {
+    "prompt": "Which of the following best describes polymorphism in C++?",
+    "answer": ["The ability of objects of different types to respond to the same method call differently"],
+    "distractors": [
+      "Creating multiple constructors for a class",
+      "Inheriting all methods from a base class",
+      "Overloading operators",
+      "Creating template classes"
+    ]
+  },
+  "q6": {
+    "prompt": "What does the '= default' specifier do when declared for a special member function?",
+    "answer": ["Tells the compiler to generate the default implementation of the function"],
+    "distractors": [
+      "Makes the function inline",
+      "Prevents the function from being called",
+      "Creates a pure virtual function",
+      "Marks the function as deprecated"
+    ]
+  },
+  "q7": {
+    "prompt": "In template programming, what does the typename keyword typically signify?",
+    "answer": ["Declares a template type parameter that can be any type"],
+    "distractors": [
+      "Creates a new type",
+      "Limits the template to only class types",
+      "Defines a type alias",
+      "Checks type compatibility at compile-time"
+    ]
+  },
+  "q8": {
+    "prompt": "What is the primary purpose of std::optional in modern C++?",
+    "answer": ["To represent an optional value that may or may not be present"],
+    "distractors": [
+      "To create optional function parameters",
+      "To implement nullable pointer semantics",
+      "To provide thread-safe value storage",
+      "To create default constructor behavior"
+    ]
+  },
+  "q9": {
+    "prompt": "What characterizes an iterator in the C++ standard library?",
+    "answer": ["An object that allows traversal of container elements and provides access to their values"],
+    "distractors": [
+      "A pointer to the first element of a container",
+      "A method for sorting container elements",
+      "A way to create deep copies of containers",
+      "A mechanism for dynamic memory allocation"
+    ]
+  },
+  "q10": {
+    "prompt": "What does structured binding allow you to do in modern C++?",
+    "answer": ["Decompose a tuple or struct into individual variables"],
+    "distractors": [
+      "Create compile-time constants",
+      "Define complex inheritance hierarchies",
+      "Implement operator overloading",
+      "Generate template metaprograms"
+    ]
+  },
+  "q11": {
+    "prompt": "What is the primary benefit of using constexpr in C++?",
+    "answer": ["Enables compile-time computation and evaluation of expressions"],
+    "distractors": [
+      "Makes variables constant",
+      "Improves runtime performance",
+      "Prevents type conversions",
+      "Creates thread-safe variables"
+    ]
+  },
+  "q12": {
+    "prompt": "What is a functor in C++?",
+    "answer": ["A class that overloads the function call operator (), allowing objects to be called like functions"],
+    "distractors": [
+      "A function that creates functionals",
+      "A lambda expression",
+      "A template specialization",
+      "A virtual function"
+    ]
+  },
+  "q13": {
+    "prompt": "What is the primary difference between public, protected, and private inheritance?",
+    "answer": ["They control the accessibility of base class members in the derived class"],
+    "distractors": [
+      "They determine object creation methods",
+      "They affect memory allocation",
+      "They define constructor behavior",
+      "They control template instantiation"
+    ]
+  },
+  "q14": {
+    "prompt": "What does the R-value reference (&&) primarily enable in C++?",
+    "answer": ["Move semantics and perfect forwarding"],
+    "distractors": [
+      "Creating constant references",
+      "Implementing multiple inheritance",
+      "Generating compile-time constants",
+      "Preventing object copying"
+    ]
+  },
+  "q15": {
+    "prompt": "What is a concept in modern C++ (C++20)?",
+    "answer": ["A compile-time predicate that constrains template parameters"],
+    "distractors": [
+      "A way to create runtime polymorphism",
+      "An alternative to inheritance",
+      "A method for dynamic type checking",
+      "A mechanism for creating singleton classes"
+    ]
+  },
+  "q16": {
+    "prompt": "What does std::filesystem primarily provide in modern C++?",
+    "answer": ["A portable way to interact with file systems and perform file-related operations"],
+    "distractors": [
+      "A method for serializing objects",
+      "A cross-platform networking library",
+      "A mechanism for memory management",
+      "A way to create database connections"
+    ]
+  },
+  "q17": {
+    "prompt": "What does the '= delete' specifier do when used with a member function?",
+    "answer": ["Explicitly prevents the compiler from generating the specified function"],
+    "distractors": [
+      "Marks the function as deprecated",
+      "Creates a pure virtual function",
+      "Allows infinite function calls",
+      "Enables runtime type checking"
+    ]
+  },
+  "q18": {
+    "prompt": "What is the primary purpose of std::ranges in modern C++?",
+"answer": ["To provide composable range algorithms and views with improved syntax and performance"],
+    "distractors": [
+      "To create multidimensional arrays",
+      "To implement parallel processing",
+      "To manage memory allocation",
+      "To define custom container types"
+    ]
+  },
+  "q19": {
+    "prompt": "What does the capture clause [] in a lambda expression do?",
+    "answer": ["Specifies how external variables are captured by the lambda"],
+    "distractors": [
+      "Defines the lambda's return type",
+      "Creates a new scope for the lambda",
+      "Limits the lambda's complexity",
+      "Determines the lambda's runtime behavior"
+    ]
+  },
+  "q20": {
+    "prompt": "What is Return Value Optimization (RVO) in C++?",
+    "answer": ["An optimization technique where the compiler eliminates unnecessary copying of objects"],
+    "distractors": [
+      "A method for creating virtual functions",
+      "A technique for memory allocation",
+      "A way to implement move semantics",
+      "A compile-time type checking mechanism"
+    ]
+  },
+  "q21": {
+    "prompt": "What is the primary purpose of a copy constructor?",
+    "answer": ["To create a new object as a copy of an existing object"],
+    "distractors": [
+      "To move resources between objects",
+      "To create default object initialization",
+      "To implement runtime polymorphism",
+      "To prevent object creation"
+    ]
+  },
+  "q22": {
+    "prompt": "In the context of C++ templates, what is template specialization?",
+    "answer": ["A way to provide a specific implementation for a particular type or set of types"],
+    "distractors": [
+      "A method for creating runtime polymorphism",
+      "A technique for memory management",
+      "A way to limit template instantiation",
+      "A mechanism for creating default constructors"
+    ]
+  },
+  "q23": {
+      "prompt": "What will be the output of the following code?\n```cpp\nint x = 10;\nauto y = [&x]() { x *= 2; return x; }();\nstd::cout << x << ' ' << y;\n```",
+      "answer": ["20 20"],
+      "distractors": [
+        "10 20",
+        "20 10", 
+        "10 10",
+        "Compilation error"
+      ]
+    },
+    "q24": {
+      "prompt": "Which of the following is a valid syntax for a function template with a trailing return type?",
+      "answer": ["template <typename T> auto func(T x) -> decltype(x + 1)"],
+      "distractors": [
+        "template <typename T> decltype(x + 1) func(T x)",
+        "template <typename T> auto func(T x) -> T + 1",
+        "template <typename T> func(T x) -> decltype(x)",
+        "template <typename T> auto func(T x) => decltype(x)"
+      ]
+  },
+  "q25": {
+    "prompt": "Consider the following code. What will happen?\n```cpp\nstd::unique_ptr<int> p1(new int(42));\nstd::unique_ptr<int> p2 = std::move(p1);\nif (p1) {\n    std::cout << *p1;\n}\n```",
+    "answer": ["Undefined behavior, as p1 is now null after moving"],
+    "distractors": [
+      "Compilation error",
+      "Prints 42",
+      "Throws a runtime exception",
+      "Segmentation fault"
+    ]
+  },
+  "q26": {
+    "prompt": "What will be the output of the following code?\n```cpp\nclass Base {\npublic:\n    virtual void print() { std::cout << \"Base\"; }\n};\n\nclass Derived : public Base {\npublic:\n    void print() override { std::cout << \"Derived\"; }\n};\n\nint main() {\n    Base* ptr = new Derived();\n    ptr->print();\n    delete ptr;\n    return 0;\n}\n```",
+    "answer": ["Derived"],
+    "distractors": [
+      "Base",
+      "Compilation error",
+      "Undefined behavior",
+      "Empty output"
+    ]
+  },
+  "q27": {
+    "prompt": "Which of the following is a syntactically valid way to declare a variadic template function?",
+    "answer": ["template <typename... Args> void func(Args... args)"],
+    "distractors": [
+      "template <type... Args> void func(Args... args)",
+      "template <typename Args...> void func(Args args)",
+      "template <typename T> void func(T... args)",
+      "template <args... typename> void func(Args... args)"
+    ]
+  },
+  "q28": {
+    "prompt": "What does the following code demonstrate?\n```cpp\ntemplate <typename T>\nrequires std::is_integral_v<T>\nT add(T a, T b) {\n    return a + b;\n}\n```",
+    "answer": ["A function template with a concept constraint that only works with integral types"],
+    "distractors": [
+      "A function that adds two floating-point numbers",
+      "A compile-time type conversion",
+      "A runtime type checking mechanism",
+      "An overloaded addition operator"
+    ]
+  },
+  "q29": {
+    "prompt": "Consider the syntax: `std::tuple<int, double, std::string> t(10, 3.14, \"hello\");`. How would you use structured bindings to decompose this tuple?",
+    "answer": ["auto [x, y, z] = t;"],
+    "distractors": [
+      "std::tuple_element(t, x, y, z);",
+      "std::decompose(t, x, y, z);",
+      "auto {x, y, z} = t;",
+      "std::unpack(t, x, y, z);"
+    ]
+  },
+  "q30": {
+      "prompt": "What is the output of the following code?\n```cpp\ntemplate <typename T>\nclass Widget {\npublic:\n    static int count;\n    Widget() { ++count; }\n    ~Widget() { --count; }\n};\n\ntemplate <typename T>\nint Widget<T>::count = 0;\n\nint main() {\n    Widget<int> w1;\n    Widget<double> w2;\n    Widget<int> w3;\n    std::cout << Widget<int>::count << ' ' << Widget<double>::count;\n    return 0;\n}\n```",
+      "answer": ["2 1"],
+      "distractors": [
+        "1 1",
+        "2 2",
+        "0 0",
+        "Compilation error"
+      ]
+  },
+  "q31": {
+    "prompt": "What is one major difference between C++ smart pointers and Java's garbage collection?",
+    "answer": [
+      "Smart pointers in C++ automatically release memory as soon as the last reference goes out of scope, while Java's garbage collector determines the timing of memory reclamation."
+    ],
+    "distractors": [
+      "Smart pointers in C++ can only manage memory for primitive types, while Java's garbage collector manages memory for all objects.",
+      "Java's garbage collector is faster because it releases memory immediately after it is no longer needed, whereas C++ smart pointers require manual intervention to release memory.",
+      "Smart pointers in C++ require the use of the new operator, while Java's garbage collector does not."
+    ]
+  },
+  "q32": {
+    "prompt": "Which statement about managing raw arrays with std::shared_ptr in C++ is correct?",
+    "answer": [
+      "Using a custom deleter function allows std::shared_ptr to manage raw arrays effectively, even before C++20."
+    ],
+    "distractors": [
+      "Before C++20, std::make_shared could directly accept an initializer list to create a shared pointer for raw arrays.",
+      "The std::shared_ptr for raw arrays cannot prevent accidental modifications to the managed data.",
+      "Passing a std::shared_ptr by reference to a function introduces a significant performance penalty."
+    ]
+  },
+  "q33": {
+    "prompt": "What is the primary purpose of a functor in C++?",
+    "answer": [
+      "To enable functional parameterization of algorithms in the standard library by overloading the () operator."
+    ],
+    "distractors": [
+      "To encapsulate data and functions within a single object for object-oriented design.",
+      "To overload the [] operator for more convenient array manipulation.",
+      "To provide an alternative to raw pointers for memory management."
+    ]
+  },
+  "q34": {
+    "prompt": "What is the primary purpose of the capture clause in a C++ lambda function?",
+    "answer": [
+      "To define which variables from the enclosing scope can be accessed by the lambda and how they are captured."
+    ],
+    "distractors": [
+      "To specify the return type of the lambda function explicitly.",
+      "To enforce exception safety in the lambda function.",
+      "To enable overloading of the lambda function for multiple parameter sets."
+    ]
+  },
+  "q35": {
+    "prompt": "Which of the following is true about operator overloading in C++?",
+    "answer": [
+      "Overloaded operators must be explicitly implemented for each specific operator."
+    ],
+    "distractors": [
+      "Overloading the + operator automatically overloads the += operator.",
+      "Overloading the == operator prevents the compiler from generating a default member-by-member assignment operator.",
+      "The += operator must return a copy of the modified object."
+    ]
+  },
+  "q36": {
+    "prompt": "Which of the following best describes the purpose of a move constructor in C++?",
+    "answer": [
+      "To initialize an object by transferring ownership of resources from a temporary object."
+    ],
+    "distractors": [
+      "To create a deep copy of an object by duplicating all its resources.",
+      "To assign the contents of one object to another existing object.",
+      "To provide a default initialization for an object when no arguments are passed."
+    ]
+  },
+  "q37": {
+    "prompt": "What is the purpose of the = delete; specifier in C++?",
+    "answer": [
+      "To ensure a method is always implemented using default behavior provided by the compiler."
+    ],
+    "distractors": [
+      "To ensure a method is always implemented using default behavior provided by the compiler.",
+      "To make a method private, restricting its use to within the class only.",
+      "To ensure a method is overridden in a derived class."
+    ]
+  },
+  "q38": {
+    "prompt": "What happens when a template is instantiated in C++?",
+    "answer": [
+      "The compiler generates a new function or class for each type used with the template."
+    ],
+    "distractors": [
+      "The compiler automatically deduces the types of all template parameters.",
+      "The template is replaced with a generic implementation that works for any type.",
+      "The template is only instantiated when the function or class is explicitly called."
+    ]
+  },
+  "q39": {
+    "prompt": "What is the primary purpose of variadic templates in C++?",
+    "answer": [
+      "To define a template that can accept any number of template parameters."
+    ],
+    "distractors": [
+      "To create a template function that can accept a variable number of arguments at runtime.",
+      "To allow templates to accept only a fixed number of parameters.",
+      "To enable a template to deduce types for all its parameters."
+    ]
+  },
+  "q40": {
+    "prompt": "Which of the following is a requirement for a custom iterator to meet the ForwardIterator specifications in C++?",
+    "answer": [
+      "It must support both copy and move constructors."
+    ],
+    "distractors": [
+      "It must implement the equality (==) and inequality (!=) relational operators.",
+      "It must be able to increment the iterator both before and after accessing the element.",
+      "It must implement a destructor to clean up memory associated with the container."
+    ]
+  }
+}
